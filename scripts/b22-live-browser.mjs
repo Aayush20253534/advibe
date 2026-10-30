@@ -54,12 +54,13 @@ try{
    if(path==="/businesses")return json(200,[{id:ownerId,displayName:"Business Example"}]);
    if(path==="/creatives")return json(200,[{id:creativeId,title:"Creative One",approval:"approved"}]);
    if(path==="/campaigns")return json(200,[{id:campaignId,title:"Verified Campaign",status:"draft"}]);
-   if(path.startsWith("/campaigns/"))return json(200,{id:campaignId,title:"Verified Campaign",status:"draft"});
+   if(path.startsWith("/campaigns/"))return json(200,{id:campaignId,ownerBusinessId:ownerId,creativeId,title:"Verified Campaign",status:"draft",revision:1,startDate:"2027-01-12",endDate:"2027-01-19",weekdays:[1,2,3,4,5],timeWindow:{start:"09:00",end:"21:00"}});
    if(path==="/notifications")return json(200,[{id:uid,title:"Service updated",body:"There is a new update",kind:"support",readAt:null}]);
    return json(200,[]);
   });
   await ensure(page,"/"+role);
-  await page.getByText("Live session required").waitFor();
+  if(role==="advertiser")await page.getByText("Secure advertiser access").waitFor();
+   else await page.getByText("Live session required").waitFor();
   assert.equal(await page.getByText("Continue as demo "+role).count(),0);
   await ensure(page,"/login?next=%2F"+role);
   await page.getByLabel("Email").fill("verified@example.invalid");
@@ -94,9 +95,8 @@ try{
    await ensure(page,"/advertiser/create-campaign");
    // Dedicated advertiser wizard uses the same real campaign creation contract.
    await page.getByRole("button",{name:"Save campaign draft"}).waitFor({timeout:15000});
-   await page.locator("select").first().selectOption(ownerId);
-   await page.locator("select").nth(1).selectOption(creativeId);
-   await page.getByLabel("Campaign title").fill("Example verified draft");
+   await page.getByLabel("Creative",{exact:true}).selectOption(creativeId);
+   await page.getByLabel("Title",{exact:true}).fill("Example verified draft");
    await page.getByLabel("Start date").fill("2027-01-12");
    await page.getByLabel("End date").fill("2027-01-19");
    await page.getByRole("button",{name:"Save campaign draft"}).click();
