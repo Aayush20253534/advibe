@@ -44,6 +44,7 @@ try{
     return json(200,{id:uid});
    }
    if(path==="/admin/reports")return json(200,{
+    period:{from:"2026-10-01",to:"2026-10-31",timezone:"UTC"},definition:"Recorded backend results",
     counts:{newUsers:4,paidBookings:2},financial:{confirmedBookingGrossPaise:"37000",
      confirmedRefundsPaise:"7000"},currency:"INR"});
    if(path.startsWith("/admin/users"))return json(200,[{id:ownerId,
@@ -60,6 +61,7 @@ try{
   });
   await ensure(page,"/"+role);
   if(role==="advertiser")await page.getByText("Secure advertiser access").waitFor();
+   else if(role==="admin")await page.getByText("Secure Admin access").waitFor();
    else await page.getByText("Live session required").waitFor();
   assert.equal(await page.getByText("Continue as demo "+role).count(),0);
   await ensure(page,"/login?next=%2F"+role);
@@ -72,17 +74,18 @@ try{
    await page.getByRole("button",{name:"Verify authenticator"}).click();
   }
   if(role==="advertiser")await page.getByText("Advertiser workspace").waitFor();
+   else if(role==="admin")await page.getByText("Server-backed Admin operations").waitFor();
    else await page.getByText("LIVE API").waitFor();
   assert.equal(await page.getByText("DEMO DRIVER PORTAL").count(),0);
   if(role==="admin"){
    await ensure(page,"/admin");
-   await page.getByText("Confirmed Booking Gross Paise").waitFor();
+   await page.getByText(/confirmed Booking Gross Paise/i).waitFor();
    await ensure(page,"/admin/users");
    await page.getByText("Driver Example").waitFor();
-   page.on("dialog",dialog=>void dialog.accept(dialog.type()==="prompt"?
-    "Reviewed and approved suspension for a test driver account":undefined));
    await page.getByRole("button",{name:"Manage"}).first().click();
-   await page.waitForTimeout(250);
+   await page.getByLabel("Audit reason (minimum 20 characters)").fill("Reviewed suspension of test driver for verified policy violation.");
+   await page.getByRole("button",{name:"Confirm account change"}).click();
+   await page.getByRole("button",{name:"Manage"}).first().waitFor();
    assert.ok(mutations.some(x=>x.path.endsWith("/status")&&x.method==="PATCH"&&x.key));
   }else if(role==="driver"){
    await ensure(page,"/driver/earnings");

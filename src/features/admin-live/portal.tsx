@@ -6,7 +6,7 @@ import {portalNavigation} from "@/config/navigation";
 import {api,liveSession} from "@/services/api-client";
 import type {LiveSession} from "@/services/api-client";
 import {AdminContext,Alert,secondary,explain} from "./common";
-import {CampaignReviews,CreativeReviews,DriverReviews,Approvals} from "./reviews";
+import {CampaignReviews,DriverReviews,Approvals} from "./reviews";
 import {Overview,Users,Support,Analytics,Audit,Payments,Bookings,Settlements,Notifications,Settings} from "./operations";
 import {Geo,Screens,Formats,Pricing} from "./catalog";
 const nav=portalNavigation.admin;

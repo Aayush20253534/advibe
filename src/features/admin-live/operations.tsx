@@ -91,7 +91,6 @@ export function Support(){
  const [selected,setSelected]=React.useState<Ticket|null>(null);
  const [detail,setDetail]=React.useState<(Ticket&{messages:Array<{id:string;body:string;visibility:string;createdAt:string}>})|null>(null);
  const [error,setError]=React.useState(""),[reply,setReply]=React.useState(""),[visibility,setVisibility]=React.useState("PUBLIC");
- const [nextStatus,setNextStatus]=React.useState("IN_PROGRESS");
  const statusAction=useAction(),messageAction=useAction();
  React.useEffect(()=>{
   if(!selected)return;
@@ -105,7 +104,7 @@ export function Support(){
  async function advance(){
   if(!detail)return;
   const next=permitted(detail.status);
-  if(!next||nextStatus!==next)return;
+  if(!next)return;
   const ok=await statusAction.mutate("/admin/support/tickets/"+detail.id,"PATCH",{
    expectedVersion:detail.version,status:next
   },"Support ticket state updated and audited.");
@@ -150,7 +149,7 @@ export function Support(){
  </Card>;
 }
 export function Analytics(){
- const report=useReport(),[error,setError]=React.useState("");
+ const [error,setError]=React.useState("");
  async function download(path:string,name:string){
   setError("");try{await downloadApiCsv(path,name);}catch(e){setError(explain(e));}
  }
@@ -230,7 +229,6 @@ export function Settlements(){
  </Card>;
 }
 export function Notifications(){
- const {session}=useAdmin();
  const rows=useRows<{id:string;title:string;body:string;kind:string;readAt:string|null;createdAt:string}>("/notifications?limit=50");
  const action=useAction();
  async function mark(id:string){

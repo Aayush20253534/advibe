@@ -9,13 +9,13 @@ export type PortalRole = "admin" | "advertiser" | "driver";
 export type NavItem = { label: string; href: string; icon: LucideIcon; description: string; group?: "main" | "management" | "account"; keywords?: string[] };
 export const portalNames: Record<PortalRole,string> = { admin: "Admin Portal", advertiser: "Advertiser Portal", driver: "Driver Partner Portal" };
 export const portalPeople: Record<PortalRole,{name:string;subtitle:string;initials:string}> = {
-  admin:{name:"Admin",subtitle:"Super Admin · Demo",initials:"A"},
+  admin:{name:"Admin",subtitle:"Authenticated Admin",initials:"A"},
   advertiser:{name:"Demo Advertiser",subtitle:"Advertiser · Demo",initials:"DA"},
   driver:{name:"Demo Driver",subtitle:"Driver Partner · Demo",initials:"DP"},
 };
 export const portalNavigation: Record<PortalRole,NavItem[]> = {
   admin:[
-    {label:"Dashboard",href:"/admin",icon:House,description:"Fictional platform KPIs, reviews and quick actions"},
+    {label:"Dashboard",href:"/admin",icon:House,description:"Server-computed operations and confirmed financial records"},
     {label:"Campaigns",href:"/admin/campaigns",icon:Megaphone,description:"Campaign operations and monitoring"},
     {label:"Advertisers",href:"/admin/advertisers",icon:Users,description:"Advertiser accounts and activity"},
     {label:"Driver Partners",href:"/admin/drivers",icon:CarFront,description:"Driver onboarding and verification",keywords:["applications","kyc"]},
@@ -25,11 +25,11 @@ export const portalNavigation: Record<PortalRole,NavItem[]> = {
     {label:"Pricing & Commercial",href:"/admin/pricing",icon:SlidersHorizontal,description:"Rate cards, discounts and commercial rules"},
     {label:"Approvals",href:"/admin/approvals",icon:ClipboardCheck,description:"Campaign, driver and creative review"},
     {label:"Bookings & Schedule",href:"/admin/bookings",icon:CalendarDays,description:"Screen reservations and delivery schedules"},
-    {label:"Payments & Refunds",href:"/admin/payments",icon:CreditCard,description:"Fictional payment ledger; real refunds disabled",group:"management"},
-    {label:"Driver Settlements",href:"/admin/settlements",icon:Banknote,description:"Sample settlement amounts and status workflow",group:"management"},
+    {label:"Payments & Refunds",href:"/admin/payments",icon:CreditCard,description:"Recorded payment attempts and provider-gated refunds",group:"management"},
+    {label:"Driver Settlements",href:"/admin/settlements",icon:Banknote,description:"Provider-gated settlement status and controls",group:"management"},
     {label:"Reports & Analytics",href:"/admin/analytics",icon:ChartNoAxesCombined,description:"Revenue, reach and network analytics",group:"management"},
-    {label:"Users & Roles",href:"/admin/users",icon:UserRound,description:"Fictional account roles, active flags and access boundaries",group:"management"},
-    {label:"Audit History",href:"/admin/audit",icon:ReceiptText,description:"Search recorded browser-local demo actions",group:"management"},
+    {label:"Users & Roles",href:"/admin/users",icon:UserRound,description:"Real account permissions and audited status changes",group:"management"},
+    {label:"Audit History",href:"/admin/audit",icon:ReceiptText,description:"Immutable backend audit events and CSV export",group:"management"},
     {label:"Notifications",href:"/admin/notifications",icon:Bell,description:"System and approval notifications",group:"account"},
     {label:"Support & Disputes",href:"/admin/support",icon:CircleHelp,description:"Tickets, disputes and refunds",group:"account"},
     {label:"Settings",href:"/admin/settings",icon:Settings,description:"Roles, security and platform configuration",group:"account"},
