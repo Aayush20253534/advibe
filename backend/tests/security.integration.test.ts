@@ -139,6 +139,19 @@ test("B4 admin password -> MFA ticket -> replay-safe TOTP -> session; tenant iso
     const outsiderLogin = await post("/login", { email: stranger.email, password });
     assert.equal(outsiderLogin.status, 201);
     const outsiderCookie = (outsiderLogin.headers.get("set-cookie") || "").split(";")[0]!;
+    // Advertiser inventory is public-catalog metadata, never unrestricted device data.
+    const inventoryUrl = base.slice(0,-"/auth".length)+"/inventory/screens?limit=10";
+    assert.equal((await fetch(inventoryUrl)).status,401);
+    assert.equal((await fetch(inventoryUrl,{headers:{Cookie:outsiderCookie}})).status,403);
+    assert.equal((await fetch(inventoryUrl,{headers:{Cookie:adminCookie}})).status,403);
+    const inventoryResponse=await fetch(inventoryUrl,{headers:{Cookie:ownerCookie}});
+    assert.equal(inventoryResponse.status,200);
+    const inventoryData=await inventoryResponse.json() as {data:Array<Record<string,unknown>>};
+    assert.ok(Array.isArray(inventoryData.data));
+    for(const screen of inventoryData.data){
+      for(const secret of ["driverUserId","vehicleId","credential","installationReference","registrationTokenHash"])
+        assert.equal(secret in screen,false,"Advertiser inventory leaked "+secret);
+    }
     const path = "/permissions/businesses/" + business.id;
     assert.equal((await get(path, ownerCookie)).status, 200);
     assert.equal((await get(path, outsiderCookie)).status, 404,
