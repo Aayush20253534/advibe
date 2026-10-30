@@ -76,7 +76,7 @@ export function CampaignEditor(){
  const [weekdays,setWeekdays]=React.useState<number[]>([0,1,2,3,4,5,6]);
  const [fromTime,setFromTime]=React.useState("09:00"),[toTime,setToTime]=React.useState("21:00");
  const [busy,setBusy]=React.useState(false),[error,setError]=React.useState("");
- React.useEffect(()=>setCreativeId(""),[business?.id]);
+
  async function submit(e:React.FormEvent){
   e.preventDefault();if(!business||busy)return;
   if(!validDates(start,end)||!weekdays.length||toTime<=fromTime){setError("Choose a valid 1–60 day schedule and a valid time window.");return;}
@@ -174,7 +174,7 @@ export function CreativeLibrary(){
  const [file,setFile]=React.useState<File|null>(null),[asset,setAsset]=React.useState<Asset|null>(null);
  const [name,setName]=React.useState(""),[placement,setPlacement]=React.useState<string>(options[0]);
  const [busy,setBusy]=React.useState(false),[error,setError]=React.useState(""),[notice,setNotice]=React.useState("");
- React.useEffect(()=>{setAsset(null);setFile(null);setError("");setNotice("");},[business?.id]);
+
  async function upload(){
   if(!business||!file||busy)return;
   setError("");setNotice("");setBusy(true);

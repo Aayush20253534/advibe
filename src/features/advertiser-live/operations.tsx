@@ -17,7 +17,7 @@ export function BusinessSettings(){
  const [busy,setBusy]=React.useState(false),[error,setError]=React.useState(""),[success,setSuccess]=React.useState("");
  const [newBusiness,setNewBusiness]=React.useState(false);
  React.useEffect(()=>{let active=true;void api<UserProfile>("/me").then(u=>{if(active){setProfile(u);setDisplay(u.displayName);setCity(u.city??"");}}).catch(e=>{if(active)setError(message(e));});return ()=>{active=false;};},[]);
- React.useEffect(()=>{setBrand(newBusiness?"":business?.displayName??"");setBrandCity(newBusiness?"":business?.city??"");setLegal(newBusiness?"":business?.legalName??"");},[business?.id,business?.displayName,business?.city,business?.legalName,newBusiness]);
+ React.useEffect(()=>{let active=true;void Promise.resolve().then(()=>{if(active){setBrand(newBusiness?"":business?.displayName??"");setBrandCity(newBusiness?"":business?.city??"");setLegal(newBusiness?"":business?.legalName??"");}});return ()=>{active=false;};},[business?.id,business?.displayName,business?.city,business?.legalName,newBusiness]);
  async function saveProfile(e:React.FormEvent){
   e.preventDefault();setBusy(true);setError("");setSuccess("");
   try{await api("/me",{method:"PATCH",csrfToken:session.csrfToken,
@@ -109,7 +109,7 @@ export function MoneyAndQuotes(){
  const [selected,setSelected]=React.useState<string[]>([]);
  const [discount,setDiscount]=React.useState("");
  const [busy,setBusy]=React.useState(false),[error,setError]=React.useState(""),[success,setSuccess]=React.useState("");
- React.useEffect(()=>{setCampaignId("");setSelected([]);},[business?.id]);
+
  const chosen=campaigns.rows.find(c=>c.id===campaignId);
  async function quote(e:React.FormEvent){
   e.preventDefault();if(!business||!chosen||!selected.length)return;
