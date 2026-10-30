@@ -2,7 +2,7 @@
 import * as React from "react";
 import Link from "next/link";
 import {useRouter,useSearchParams} from "next/navigation";
-import {api,ApiError,type LiveRole} from "@/services/api-client";
+import {api,ApiError,liveSession} from "@/services/api-client";
 import {safeAuthNext} from "@/lib/auth-navigation.mjs";
 type Mode="login"|"signup"|"verify"|"forgot"|"reset";
 const field="block w-full rounded-xl border border-slate-300 bg-white p-3 text-slate-900 focus:border-blue-600 focus:outline-none";
@@ -12,7 +12,7 @@ export function ApiAuthScreen({mode}:{mode:Mode}){
  const [role,setRole]=React.useState<"advertiser"|"driver">(params.get("role")==="driver"?"driver":"advertiser");
  const [email,setEmail]=React.useState(""),[password,setPassword]=React.useState("");
  const [displayName,setDisplayName]=React.useState(""),[code,setCode]=React.useState("");
- const [challengeId,setChallengeId]=React.useState(params.get("challengeId")??""),[ticket,setTicket]=React.useState("");
+ const [challengeId,setChallengeId]=React.useState(mode==="verify"?params.get("challengeId")??"":""),[ticket,setTicket]=React.useState("");
  const [loading,setLoading]=React.useState(false),[error,setError]=React.useState("");
  const [notice,setNotice]=React.useState("");
  const [resetToken,setResetToken]=React.useState("");
@@ -24,9 +24,10 @@ export function ApiAuthScreen({mode}:{mode:Mode}){
   try{
    if(mode==="login"){
     if(challengeId){
-     const result=await api<{userId:string;role:LiveRole}>("/auth/mfa/verify",{
+     await api("/auth/mfa/verify",{
       method:"POST",body:{challengeId,ticket,code}});
-     router.replace(safeAuthNext(params.get("next"),result.role));router.refresh();return;
+     const session=await liveSession();
+     router.replace(safeAuthNext(params.get("next"),session.role));router.refresh();return;
     }
     const result=await api<{challengeId?:string;ticket?:string}>("/auth/login",{
      method:"POST",body:{email:email.trim().toLowerCase(),password}});
@@ -34,7 +35,7 @@ export function ApiAuthScreen({mode}:{mode:Mode}){
      setChallengeId(result.challengeId);setTicket(result.ticket);
      setPassword("");setNotice("Enter your authenticator's 6-digit code.");return;
     }
-    const session=await api<{role:LiveRole}>("/auth/session");
+    const session=await liveSession();
     router.replace(safeAuthNext(params.get("next"),session.role));router.refresh();
    }else if(mode==="signup"){
     const result=await api<{challengeId:string}>("/auth/register",{
@@ -42,14 +43,14 @@ export function ApiAuthScreen({mode}:{mode:Mode}){
     setPassword("");router.replace("/verify?challengeId="+encodeURIComponent(result.challengeId));return;
    }else if(mode==="verify"){
     await api("/auth/verify",{method:"POST",body:{challengeId,code}});
-    router.replace("/login");router.refresh();
+    router.replace("/login?verified=1");router.refresh();
    }else if(mode==="forgot"){
     await api("/auth/forgot-password",{method:"POST",body:{email:email.trim().toLowerCase()}});
     setNotice("If the account is eligible, recovery instructions have been sent.");
    }else{
     await api("/auth/reset-password",{method:"POST",body:{resetToken,newPassword:password}});
     setPassword("");setResetToken("");history.replaceState(null,"",location.pathname);
-    router.replace("/login");router.refresh();
+    router.replace("/login?reset=1");router.refresh();
    }
   }catch(e){setError(e instanceof ApiError?e.message:"Unable to reach the live authentication service");}
   finally{setLoading(false);}
@@ -72,7 +73,7 @@ export function ApiAuthScreen({mode}:{mode:Mode}){
   <form className="space-y-4" onSubmit={async e=>{
    if(verification){
     e.preventDefault();setLoading(true);setError("");
-    try{await api("/auth/verify",{method:"POST",body:{challengeId,code}});router.replace("/login");}
+    try{await api("/auth/verify",{method:"POST",body:{challengeId,code}});router.replace("/login?verified=1");}
     catch(err){setError(err instanceof Error?err.message:"Verification failed");}finally{setLoading(false);}
    }else await submit(e);
   }}>
