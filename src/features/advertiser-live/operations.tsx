@@ -3,7 +3,7 @@ import * as React from "react";
 import Link from "next/link";
 import {api,newIdempotencyKey} from "@/services/api-client";
 import {useAuth,useCollection,Panel,Notice,CollectionNotice,Pagination,field,label,primary,secondary,message,money,formatDate,
- type Business,type Campaign,type Site,type ScreenFormat,type Quote,type Payment} from "./common";
+ type Campaign,type Site,type ScreenFormat,type Quote,type Payment} from "./common";
 type Inventory={id:string;placement:string;locationId:string;location:string;city:string;zone:string;citySlug:string};
 type UserProfile={id:string;displayName:string;email:string;city:string|null;roles:string[];status:string};
 type Ticket={id:string;subject:string;description:string;status:string;category:string;businessId:string|null;createdAt:string};

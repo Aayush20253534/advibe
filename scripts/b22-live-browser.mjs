@@ -70,7 +70,8 @@ try{
    await page.getByLabel("Authenticator code").fill("123456");
    await page.getByRole("button",{name:"Verify authenticator"}).click();
   }
-  await page.getByText("LIVE API").waitFor();
+  if(role==="advertiser")await page.getByText("Advertiser workspace").waitFor();
+   else await page.getByText("LIVE API").waitFor();
   assert.equal(await page.getByText("DEMO DRIVER PORTAL").count(),0);
   if(role==="admin"){
    await ensure(page,"/admin");
@@ -91,13 +92,13 @@ try{
    assert.ok(mutations.some(x=>x.path.endsWith("/read")));
   }else{
    await ensure(page,"/advertiser/create-campaign");
-   console.log("Advertiser creation route:",page.url(),"content:",(await page.locator("body").innerText()).slice(0,1100));
+   // Dedicated advertiser wizard uses the same real campaign creation contract.
    await page.getByRole("button",{name:"Save campaign draft"}).waitFor({timeout:15000});
    await page.locator("select").first().selectOption(ownerId);
    await page.locator("select").nth(1).selectOption(creativeId);
    await page.getByLabel("Campaign title").fill("Example verified draft");
-   await page.getByLabel("Start").fill("2027-01-12");
-   await page.getByLabel("End (within 60 days)").fill("2027-01-19");
+   await page.getByLabel("Start date").fill("2027-01-12");
+   await page.getByLabel("End date").fill("2027-01-19");
    await page.getByRole("button",{name:"Save campaign draft"}).click();
    await page.waitForURL("**/advertiser/campaigns/"+campaignId);
    assert.ok(mutations.some(x=>x.path==="/campaigns"&&x.key));

@@ -4,7 +4,7 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {api,newIdempotencyKey} from "@/services/api-client";
 import {useAuth,useCollection,Panel,Notice,CollectionNotice,Pagination,field,label,primary,secondary,message,formatDate,
- type Campaign,type Creative,type ScreenFormat} from "./common";
+ type Campaign,type Creative} from "./common";
 const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 function Badge({value}:{value:string}){return <span className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-1 text-xs font-bold capitalize text-blue-800">{value.replaceAll("_"," ")}</span>;}
 export function Dashboard(){

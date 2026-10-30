@@ -32,7 +32,7 @@ test("All portal layouts require authenticated API mode with no demo fallback",(
   read("src/app/(portals)/"+role+"/layout.tsx"));
  for(const layout of layouts){
   assert.doesNotMatch(layout,/NEXT_PUBLIC_DEMO_MODE|PortalGate|PortalShell/);
-  assert.match(layout,/<ApiPortal role=/);
+  assert.match(layout,/<ApiPortal role=|<AdvertiserPortal\s*\/>/);
  }
  assert.match(bridge,/BACKEND_NOT_CONFIGURED/);
  assert.match(bridge,/BACKEND_UNAVAILABLE/);
@@ -49,7 +49,7 @@ test("All portal layouts require authenticated API mode with no demo fallback",(
 });
 test("B22 live routes include secure login, MFA and signup without browser-persisted secrets",()=>{
  for(const role of ["admin","driver","advertiser"]){
-  assert.match(read("src/app/(portals)/"+role+"/layout.tsx"),/ApiPortal/);
+  assert.match(read("src/app/(portals)/"+role+"/layout.tsx"),/ApiPortal|AdvertiserPortal/);
  }
  const auth=read("src/components/auth/api-auth-screen.tsx");
  assert.match(auth,/\/auth\/login/);
