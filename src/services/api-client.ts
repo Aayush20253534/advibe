@@ -6,7 +6,7 @@ export class ApiError extends Error{
 type Envelope<T>={data:T;meta?:{nextCursor?:string|null;unreadCount?:number}};
 const base="/api/backend/";
 export async function api<T=unknown>(path:string,options:{
- method?:"GET"|"POST"|"PATCH"|"DELETE";body?:unknown;csrfToken?:string;
+ method?:"GET"|"POST"|"PATCH"|"PUT"|"DELETE";body?:unknown;csrfToken?:string;
  idempotencyKey?:string;signal?:AbortSignal;
 }={}):Promise<T>{
  if(!path.startsWith("/")||path.startsWith("//")||path.includes("..")||/[#\\]/.test(path))
