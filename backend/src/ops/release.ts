@@ -11,6 +11,8 @@ const disabledByDefault=[
 ];
 export function releaseGate(env:Env){
  if(env.NODE_ENV!=="production")return {mode:"development" as const};
+ if(env.ADVIBE_EXTERNAL_MODE==="mock")
+  throw new Error("B23 public releases cannot use development mock providers");
  const stage=env.B23_RELEASE_STAGE;
  if(stage!=="staging"&&stage!=="production")
   throw new Error("B23_RELEASE_STAGE must be staging or production");

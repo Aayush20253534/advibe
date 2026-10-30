@@ -84,7 +84,7 @@ export function mockPayoutGateway():PayoutGateway {
  requireMock();
  return {
   async verifyBeneficiary(token,driverUserId){
-   return {token,driverUserId,verified:false,provider:"cashfree"};
+   return {token,driverUserId,verified:false,provider:"cashfree" as const};
   },
   async createTransfer():Promise<RemoteTransfer>{
    return noProviderEvidence("Payout transfer");

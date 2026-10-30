@@ -4,6 +4,7 @@ import { mkdtemp,readFile,rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { externalMode } from "../src/integrations/mock-mode.js";
+import { releaseGate } from "../src/ops/release.js";
 import { mockCashfreeGateway,mockRefundGateway,mockPayoutGateway,
  mockCaptchaVerifier,mockEmailSender,mockCreativeStorage,mockKycStorage }
  from "../src/integrations/mock-providers.js";
@@ -13,6 +14,8 @@ test("mock external services require explicit non-production opt-in",()=>{
  assert.equal(externalMode({ADVIBE_EXTERNAL_MODE:"mock",NODE_ENV:"development"}),"mock");
  assert.throws(()=>externalMode({ADVIBE_EXTERNAL_MODE:"mock",NODE_ENV:"production"}),
   /forbidden in production/);
+ assert.throws(()=>releaseGate({ADVIBE_EXTERNAL_MODE:"mock",NODE_ENV:"production"}),
+  /cannot use development mock providers/);
  assert.throws(()=>externalMode({ADVIBE_EXTERNAL_MODE:"unknown"}),/live or mock/);
 });
 test("development mocks never settle real payments, refunds or payouts",async()=>{
