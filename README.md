@@ -2,11 +2,11 @@
 
 AdVibe is a Next.js 16 frontend and an Express/TypeScript + Prisma/PostgreSQL backend for mobile digital-screen advertising. The repository contains backend milestones B0–B23.
 
-## Integration cutover: Part 1
+## Integration cutover: Parts 1–2
 
 The application now uses **authenticated backend API routing only**. There is no runtime demo switch. Login, signup and role portals use the Express API through the same-origin Next.js server relay at `/api/backend/*`. When the backend is missing, requests fail closed. No sample user, fictional payment, or seeded campaign is substituted.
 
-The former standalone demo components and fixtures remain **unreferenced by the live entry routes** pending complete deletion during the final cleanup phase. Legacy feature pages must still be migrated to dedicated API-backed UI; today's API portal is a limited functional bridge, not the finished production experience. The public marketing site remains available.
+Part 2 adds server-confirmed role redirects, email-verification links and resend, Admin MFA session checks, reset-token handling and session-revocation UX. See [Part 2 authentication](docs/PART_2_AUTH.md).\n\nThe former standalone demo components and fixtures remain **unreferenced by the live entry routes** pending complete deletion during the final cleanup phase. Legacy feature pages must still be migrated to dedicated API-backed UI; today's API portal is a limited functional bridge, not the finished production experience. The public marketing site remains available.
 
 ## Local configuration
 
