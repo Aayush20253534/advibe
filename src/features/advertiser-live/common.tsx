@@ -14,8 +14,8 @@ export const Auth=React.createContext<AuthContext|null>(null);
 export function useAuth(){const value=React.useContext(Auth);if(!value)throw new Error("Authenticated advertiser context required");return value;}
 export function message(e:unknown){return e instanceof ApiError?e.message:e instanceof Error?e.message:"The request could not be completed";}
 export const money=(raw:unknown)=>{
- try{const amount=BigInt(String(raw??0));const abs=amount<0n?-amount:amount;
- return (amount<0n?"-":"")+"₹"+(abs/100n).toLocaleString("en-IN")+"."+(abs%100n).toString().padStart(2,"0");}
+ try{const amount=BigInt(String(raw??0));const abs=amount<BigInt(0)?-amount:amount;
+ return (amount<BigInt(0)?"-":"")+"₹"+(abs/10BigInt(0)).toLocaleString("en-IN")+"."+(abs%10BigInt(0)).toString().padStart(2,"0");}
  catch{return "Unavailable";}
 };
 export function useCollection<T>(path:string|null){
