@@ -36,6 +36,6 @@ coverage/
 playwright-report/
 test-results/
 
-# B1 backend artifacts
+# Development-only mock email outbox. Contains OTP and reset secrets; never commit.\n/backend/.mock-local/\n/.mock-local/\n\n# B1 backend artifacts
 /backend/node_modules/
 /backend/dist/

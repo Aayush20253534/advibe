@@ -5,9 +5,13 @@ import { assertDatabaseReady, createDatabase } from "./db/client.js";
 import { createLogger } from "./lib/logger.js";
 import { createResendSender } from "./modules/auth/email.js";
 import { loadAuthSettings } from "./modules/auth/settings.js";
+import { externalMode } from "./integrations/mock-mode.js";
+import { mockEmailSender,mockCaptchaVerifier,mockCashfreeGateway,mockRefundGateway,
+ mockPayoutGateway,mockCreativeStorage,mockKycStorage } from "./integrations/mock-providers.js";
 
 async function main(): Promise<void> {
   const config = loadConfig();
+  const mode = externalMode(); // Reject mock services on public production runtimes.
   const release = releaseGate(process.env);
   const logger = createLogger(config);
   const authSettings = loadAuthSettings(process.env, config);
@@ -21,11 +25,20 @@ async function main(): Promise<void> {
     throw new Error("Database is unavailable or misconfigured");
   }
 
+  const mock = mode === "mock";
   const app = createApp(config, logger, () => assertDatabaseReady(db), {
-    db, settings: authSettings, sender: createResendSender(authSettings),
-  });
+    db, settings: authSettings, sender: mock ? mockEmailSender() : createResendSender(authSettings),
+  },
+   mock ? mockCaptchaVerifier() : undefined,
+   mock ? {storage:mockKycStorage()} : undefined,
+   mock ? {storage:mockCreativeStorage()} : undefined,
+   mock ? {gateway:mockCashfreeGateway()} : undefined,
+   undefined,
+   mock ? {gateway:mockPayoutGateway()} : undefined,
+   mock ? {gateway:mockRefundGateway()} : undefined,
+  );
   const server = app.listen(config.port, config.host, () => {
-    logger.info({ host: config.host, port: config.port, environment: config.nodeEnv, releaseStage: release.mode },
+    logger.info({ host: config.host, port: config.port, environment: config.nodeEnv, releaseStage: release.mode, externalMode:mode },
       "AdVibe B2 database-backed API listening");
   });
   server.requestTimeout = 30_000;

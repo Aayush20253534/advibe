@@ -27,6 +27,7 @@ import { createEarningsRoutes,type EarningsDependencies } from "./modules/earnin
 import { createFinanceRouter,type FinanceDependencies } from "./modules/finance/routes.js";
 import { createSupportRouter } from "./modules/support/routes.js";
 import { createAdminRouter } from "./modules/admin/routes.js";
+import { externalMode } from "./integrations/mock-mode.js";
 
 /** Every live API server supplies a database probe; omitted probes fail closed. */
 export function createApp(
@@ -58,6 +59,15 @@ export function createApp(
   if(earningsRoutes)app.use("/api/v1/webhooks/cashfree/payouts",
     express.raw({type:"application/json",limit:"32kb"}),earningsRoutes.webhooks);
   app.use(express.json({ limit: "64kb", strict: true }));
+  app.get("/api/v1/integrations/status", (_req, res) => {
+    const mode = externalMode();
+    res.set("Cache-Control","no-store").json({data:{
+      mode,
+      externalProviders:mode==="mock"?"SIMULATED_OR_DISABLED":"PROVIDER_CONFIG_DEPENDENT",
+      paymentSettlement:mode==="mock"?"DISABLED":"REQUIRES_PROVIDER_VERIFICATION",
+      identityVerification:mode==="mock"?"DISABLED":"REQUIRES_SECURE_STORAGE_AND_REVIEW",
+    }});
+  });
   app.get("/api/v1/health", (_req, res) => {
     res.status(200).json({ data: { message: "ok" } });
   });

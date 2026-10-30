@@ -2,7 +2,7 @@
 const firstSegments=new Set([
  "auth","me","businesses","public","drivers","admin","locations","screens",
  "creatives","pricing","campaigns","reservations","payments","driver","reports","inventory",
- "tickets","notifications","support","maintenance",
+ "tickets","notifications","support","maintenance","integrations",
 ]);
 const forbiddenPaths=[
  /^admin\/devices(?:\/|$)/,

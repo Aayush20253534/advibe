@@ -1,4 +1,4 @@
-# AdVibe
+# AdVibe\n\nDevelopment external-provider mocks are available for Cashfree, refunds, payouts, local mail, Turnstile, and fail-closed private media/KYC upload stubs. These do not replace the real backend database. Set `ADVIBE_EXTERNAL_MODE=mock` in a development-only backend; see [mock provider documentation](docs/MOCK_EXTERNAL_PROVIDERS.md). AdVibe typography uses the same native system-font approach used by Facebook interfaces.
 
 AdVibe is a Next.js 16 frontend and an Express/TypeScript + Prisma/PostgreSQL backend for mobile digital-screen advertising. The repository contains backend milestones B0–B23.
 
