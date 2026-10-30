@@ -182,6 +182,46 @@ export function createDeviceRouter(config:AppConfig,auth:AuthDependencies,player
     });
     res.status(201).json({data:{screenId,status:"revoked"}});
   }));
+  // Advertiser-facing inventory discovery. Return public catalog fields only:
+  // never driver identity, pairing credentials, hardware secrets or private GPS.
+  // Availability must still be checked under lock when creating a reservation hold.
+  router.get("/inventory/screens",handle(async(req,res)=>{
+    const p=await resolvePrincipal(req,db,settings);requireRole(p,"ADVERTISER");
+    const allowed=new Set(["limit","cursor","citySlug","placement"]);
+    if(Object.keys(req.query).some(key=>!allowed.has(key)))
+      throw new HttpError(422,"VALIDATION_ERROR","Unsupported inventory filter");
+    const limit=getLimit(req);
+    const cursor=req.query.cursor;
+    if(cursor!==undefined&&(typeof cursor!=="string"||!z.uuid().safeParse(cursor).success))
+      throw new HttpError(422,"VALIDATION_ERROR","Invalid inventory cursor");
+    const citySlug=req.query.citySlug;
+    if(citySlug!==undefined&&(typeof citySlug!=="string"||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(citySlug)))
+      throw new HttpError(422,"VALIDATION_ERROR","Invalid city slug");
+    const placement=req.query.placement;
+    const supported=["bike_rear","auto_rear","auto_side","car_rear","car_interior","helmet"];
+    if(placement!==undefined&&(typeof placement!=="string"||!supported.includes(placement)))
+      throw new HttpError(422,"VALIDATION_ERROR","Unsupported screen placement");
+    const rows=await db.screen.findMany({
+      where:{state:"PAIRED",
+        ...(cursor?{id:{gt:cursor as string}}:{}),
+        ...(placement?{placement:(placement as string).toUpperCase() as import("@prisma/client").ScreenPlacement}:{}),
+        location:{state:"PUBLISHED",zone:{state:"PUBLISHED",city:{
+          state:"PUBLISHED",...(citySlug?{slug:citySlug as string}:{})}}},
+        vehicle:{applications:{some:{state:"APPROVED"}}}},
+      include:{location:{include:{zone:{include:{city:true}}}}},
+      orderBy:{id:"asc"},take:limit+1,
+    });
+    const page=rows.slice(0,limit);
+    res.set("Cache-Control","no-store").json({
+      data:page.map(s=>({
+        id:s.id,placement:s.placement.toLowerCase(),locationId:s.locationId,
+        location:s.location?.name??null,zone:s.location?.zone.name??null,
+        city:s.location?.zone.city.name??null,citySlug:s.location?.zone.city.slug??null,
+      })),
+      meta:{limit,nextCursor:rows.length>limit?page[page.length-1]?.id??null:null},
+      note:"Screen listing is not a reservation or availability guarantee",
+    });
+  }));
   router.get("/screens",handle(async(req,res)=>{
     const p=await viewer(req);const limit=getLimit(req);
     const rows=await db.screen.findMany({where:p.role==="ADMIN"?{}:{
