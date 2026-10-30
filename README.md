@@ -6,7 +6,9 @@ AdVibe is a Next.js 16 frontend and an Express/TypeScript + Prisma/PostgreSQL ba
 
 The application now uses **authenticated backend API routing only**. There is no runtime demo switch. Login, signup and role portals use the Express API through the same-origin Next.js server relay at `/api/backend/*`. When the backend is missing, requests fail closed. No sample user, fictional payment, or seeded campaign is substituted.
 
-Part 2 adds server-confirmed role redirects, email-verification links and resend, Admin MFA session checks, reset-token handling and session-revocation UX. See [Part 2 authentication](docs/PART_2_AUTH.md).\n\nThe former standalone demo components and fixtures remain **unreferenced by the live entry routes** pending complete deletion during the final cleanup phase. Legacy feature pages must still be migrated to dedicated API-backed UI; today's API portal is a limited functional bridge, not the finished production experience. The public marketing site remains available.
+Part 2 adds server-confirmed role redirects, email-verification links and resend, Admin MFA session checks, reset-token handling and session-revocation UX. See [Part 2 authentication](docs/PART_2_AUTH.md).
+
+Part 3 replaces the temporary advertiser tables with dedicated authenticated dashboards, campaign drafts/edits/submission, private creative upload lifecycle, eligible screen discovery, pricing quotes, account management, billing records, reports, support and notifications. Read [Part 3 advertiser integration](docs/PART_3_ADVERTISER.md). Checkout and real payment operations remain Part 6; deployment and staging E2E are separate release gates.\n\nThe former standalone demo components and fixtures remain **unreferenced by the live entry routes** pending complete deletion during the final cleanup phase. Legacy feature pages must still be migrated to dedicated API-backed UI; today's API portal is a limited functional bridge, not the finished production experience. The public marketing site remains available.
 
 ## Local configuration
 
