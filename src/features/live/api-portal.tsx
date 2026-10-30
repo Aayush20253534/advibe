@@ -4,7 +4,7 @@ import Link from "next/link";
 import {usePathname,useRouter} from "next/navigation";
 import {portalNavigation,type PortalRole} from "@/config/navigation";
 import {api,apiPage,downloadApiCsv,liveSession,newIdempotencyKey,
- type LiveSession} from "@/services/api-client";
+ type LiveSession,ApiError} from "@/services/api-client";
 type Row=Record<string,unknown>;
 type Result={rows:Row[];nextCursor:string|null;summary:Row|null};
 const input="w-full min-h-10 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900";
@@ -194,7 +194,7 @@ export function ApiPortal({role}:{role:PortalRole}){
   void liveSession(ac.signal).then(current=>{
    if(current.role!==role){setAuthError("Your authenticated account does not have access to the "+role+" portal.");return;}
    setSession(current);setAuthError("");
-  }).catch(e=>{if(!ac.signal.aborted)setAuthError(e instanceof Error?e.message:"Unable to verify live session");})
+  }).catch(e=>{if(!ac.signal.aborted){setSession(null);setData({rows:[],summary:null,nextCursor:null});setAuthError(e instanceof Error?e.message:"Unable to verify live session");}})
   .finally(()=>{if(!ac.signal.aborted)setLoading(false);});
   return ()=>ac.abort();
  },[role]);
@@ -210,10 +210,32 @@ export function ApiPortal({role}:{role:PortalRole}){
      setData({...result,nextCursor:payload.meta.nextCursor??null});
     }
    });
-  }).catch(e=>{if(!ac.signal.aborted){setError(e instanceof Error?e.message:"Live data unavailable");setData({rows:[],summary:null,nextCursor:null});}})
+  }).catch(e=>{if(!ac.signal.aborted){if(e instanceof ApiError&&e.status===401){setSession(null);setAuthError("Your session has expired or was revoked.");}else{setError(e instanceof Error?e.message:"Live data unavailable");}setData({rows:[],summary:null,nextCursor:null});}})
   .finally(()=>{if(!ac.signal.aborted)setLoading(false);});
   return ()=>ac.abort();
  },[session,endpoint,activeCursor,refresh]);
+ React.useEffect(()=>{
+  let active=true;
+  async function revalidate(){
+   if(document.visibilityState!=="visible")return;
+   try{
+    const current=await liveSession();
+    if(!active)return;
+    if(current.role!==role){
+     setSession(null);setData({rows:[],summary:null,nextCursor:null});
+     setAuthError("Your account does not have access to this portal.");
+    }else{
+     setSession(old=>old?.csrfToken===current.csrfToken?old:current);
+    }
+   }catch{
+    if(!active)return;
+    setSession(null);setData({rows:[],summary:null,nextCursor:null});
+    setAuthError("Your session is unavailable or has expired. Sign in again.");
+   }
+  }
+  document.addEventListener("visibilitychange",revalidate);
+  return ()=>{active=false;document.removeEventListener("visibilitychange",revalidate);};
+ },[role]);
  async function signOut(){
   if(!session)return;
   setBusy(true);
