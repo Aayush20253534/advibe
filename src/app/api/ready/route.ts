@@ -9,7 +9,6 @@ const response=(ready:boolean)=>NextResponse.json({
 },{status:ready?200:503,headers:{"Cache-Control":"no-store, max-age=0"}});
 /** Unlike /api/health this validates the live backend's migrated database readiness. */
 export async function GET(){
- if(process.env.NEXT_PUBLIC_DEMO_MODE!=="false")return response(false);
  const origin=backendOrigin(process.env.ADVIBE_BACKEND_ORIGIN,process.env.NODE_ENV==="production");
  if(!origin)return response(false);
  try{

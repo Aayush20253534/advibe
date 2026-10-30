@@ -1,5 +1,4 @@
 // Shared by the server proxy and Node contract tests. No Next/React runtime required.
-export const DEMO_MODE=process.env.NEXT_PUBLIC_DEMO_MODE!=="false";
 const firstSegments=new Set([
  "auth","me","businesses","public","drivers","admin","locations","screens",
  "creatives","pricing","campaigns","reservations","payments","driver","reports",

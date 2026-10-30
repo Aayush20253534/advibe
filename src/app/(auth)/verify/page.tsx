@@ -1,5 +1,7 @@
 import {ApiAuthScreen} from "@/components/auth/api-auth-screen";
 import type {Metadata} from "next";
-import {VerifyScreen} from "@/components/auth/verify-screen";
-export const metadata:Metadata={title:"Demo Verification",robots:{index:false,follow:false}};
-export default function Page(){if(process.env.NEXT_PUBLIC_DEMO_MODE==="false")return <ApiAuthScreen mode="verify"/>;return <VerifyScreen/>;}
+import {Suspense} from "react";
+export const metadata:Metadata={title:"Verify Email",robots:{index:false,follow:false}};
+export default function Page(){
+ return <Suspense fallback={<p role="status">Loading secure account form…</p>}><ApiAuthScreen mode="verify"/></Suspense>;
+}

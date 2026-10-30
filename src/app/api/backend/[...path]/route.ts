@@ -5,8 +5,6 @@ export const runtime="nodejs";
 const NO_STORE="no-store, max-age=0";
 type Params={params:Promise<{path:string[]}>};
 async function proxy(req:NextRequest,{params}:Params){
- if(process.env.NEXT_PUBLIC_DEMO_MODE!=="false")
-  return NextResponse.json({error:{code:"DEMO_MODE",message:"API bridge disabled in demo mode"}},{status:404,headers:{"Cache-Control":NO_STORE}});
  const base=backendOrigin(process.env.ADVIBE_BACKEND_ORIGIN,
   process.env.NODE_ENV==="production");
  if(!base)return NextResponse.json({error:{code:"BACKEND_NOT_CONFIGURED",

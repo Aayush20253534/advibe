@@ -26,12 +26,12 @@ test("B22 fails closed without a secure configured backend",()=>{
  assert.equal(backendOrigin("http://127.0.0.1:4000"),"http://127.0.0.1:4000");
  assert.equal(backendOrigin("https://api.example.com"),"https://api.example.com");
 });
-test("B22 never lets API mode rehydrate demo data when backend is unavailable",()=>{
+test("All portal layouts require authenticated API mode with no demo fallback",()=>{
  const bridge=read("src/app/api/backend/[...path]/route.ts");
  const layouts=["admin","advertiser","driver"].map(role=>
   read("src/app/(portals)/"+role+"/layout.tsx"));
  for(const layout of layouts){
-  assert.match(layout,/NEXT_PUBLIC_DEMO_MODE==="false"/);
+  assert.doesNotMatch(layout,/NEXT_PUBLIC_DEMO_MODE|PortalGate|PortalShell/);
   assert.match(layout,/<ApiPortal role=/);
  }
  assert.match(bridge,/BACKEND_NOT_CONFIGURED/);

@@ -8,15 +8,14 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test:demo": "node --experimental-strip-types --test tests/*.test.mjs",
-    "check": "npm run lint && npm run typecheck && npm run test:demo && npm run build",
+    "check": "npm run lint && npm run typecheck && npm run test:integration && npm run test:contracts && npm run build",
     "health:deployment": "node scripts/deployment-health.mjs",
-    "test:browser": "node scripts/release-smoke.mjs",
     "test:contracts": "node --test tests/backend-contract.test.mjs",
     "test:live-browser": "node scripts/b22-live-browser.mjs",
     "test:release-gates": "node --test tests/b23-release.test.mjs",
     "probe:staging": "node scripts/b23-staging-probe.mjs",
-    "check:release-evidence": "node scripts/b23-approve-release.mjs"
+    "check:release-evidence": "node scripts/b23-approve-release.mjs",
+    "test:integration": "node --test tests/b22-api-integration.test.mjs tests/b23-release.test.mjs tests/part23-release.test.mjs"
   },
   "dependencies": {
     "next": "16.4.2",

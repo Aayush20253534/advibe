@@ -5,7 +5,7 @@ import path from "node:path";
 const read=p=>fs.readFileSync(path.join(process.cwd(),p),"utf8");
 const exists=p=>fs.existsSync(path.join(process.cwd(),p));
 
-test("health route identifies only frontend demo availability",()=>{
+test("health route identifies only frontend liveness without declaring provider readiness",()=>{
  const source=read("src/app/api/health/route.ts");
  assert.match(source,/service:"advibe-frontend"/);
  assert.match(source,/productionIntegrationsReady:false/);
@@ -38,20 +38,20 @@ test("all key public, auth and three portal pages exist as explicit Next.js rout
   }
  }
 });
-test("release scripts, browser job and demo warnings are present",()=>{
+test("release scripts, API browser job and legal warnings are present",()=>{
  const workflow=read(".github/workflows/ci.yml");
- assert.match(workflow,/browser-smoke:/);
+ assert.match(workflow,/live-portal-smoke:/);
  assert.ok(/playwright install --with-deps chromium/.test(workflow)||
   /image:\s*mcr\.microsoft\.com\/playwright:v1\.56\.1-noble/.test(workflow),
   "Browser job must install Playwright system dependencies or use its preinstalled version-matched image");
- assert.match(workflow,/npm run test:browser/);
+ assert.match(workflow,/npm run test:live-browser/);
  assert.ok(exists("scripts/release-smoke.mjs"));
  assert.ok(exists("scripts/deployment-health.mjs"));
  for(const page of ["privacy","terms"])assert.match(read("src/app/(site)/"+page+"/page.tsx"),/Legal approval pending|legal approval pending|Legal Review Pending/);
 });
-test("no demo provider values are reclassified as real payments or secure KYC",()=>{
+test("no false provider readiness is advertised by backend-only mode",()=>{
  const env=read(".env.example"),app=read("src/app/api/health/route.ts");
- assert.match(env,/NEXT_PUBLIC_DEMO_MODE=true/);
- assert.match(app,/Payments, KYC, auth and physical devices are not connected/);
+ assert.doesNotMatch(env,/NEXT_PUBLIC_DEMO_MODE/);
+ assert.match(app,/productionIntegrationsReady:false/);
  assert.ok(!env.includes("CASHFREE_SECRET_KEY="));
 });
