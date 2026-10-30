@@ -58,6 +58,7 @@ test("B3 register, verification, session, reset, logout and security tests", asy
     const code = sent[0]!.text.match(/code is (\d{6})\. Challenge ID: ([0-9a-f-]{36})/);
     assert.ok(code);
     assert.equal(code[2], registered.data.challengeId);
+    assert.ok(sent[0]!.text.includes("http://localhost:3000/verify?challengeId="+registered.data.challengeId));
     const user = await db.user.findUniqueOrThrow({ where: { email } });
     assert.equal(user.status, "PENDING");
     assert.equal(user.role, "ADVERTISER");
