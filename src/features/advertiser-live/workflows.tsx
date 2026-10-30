@@ -114,29 +114,47 @@ export function CampaignEditor(){
  </Panel>;
 }
 export function CampaignDetail({id}:{id:string}){
- const {session}=useAuth();const [row,setRow]=React.useState<Campaign|null>(null);
- const [title,setTitle]=React.useState("");const [loading,setLoading]=React.useState(true);
- const [error,setError]=React.useState("");const [notice,setNotice]=React.useState("");
- const [busy,setBusy]=React.useState(false);const [revision,setRevision]=React.useState(0);
+ const {session}=useAuth();
+ const [row,setRow]=React.useState<Campaign|null>(null);
+ const creatives=useCollection<Creative>(row?"/creatives?limit=100&businessId="+row.ownerBusinessId:null);
+ const [title,setTitle]=React.useState(""),[creativeId,setCreativeId]=React.useState("");
+ const [startDate,setStartDate]=React.useState(""),[endDate,setEndDate]=React.useState("");
+ const [weekdays,setWeekdays]=React.useState<number[]>([]);
+ const [fromTime,setFromTime]=React.useState(""),[toTime,setToTime]=React.useState("");
+ const [loading,setLoading]=React.useState(true),[error,setError]=React.useState("");
+ const [notice,setNotice]=React.useState(""),[busy,setBusy]=React.useState(false),[revision,setRevision]=React.useState(0);
  React.useEffect(()=>{
-  let live=true;setLoading(true);setError("");setRow(null);
-  void api<Campaign>("/campaigns/"+id).then(c=>{if(live){setRow(c);setTitle(c.title);}})
-   .catch(e=>{if(live)setError(message(e));})
+  let live=true;
+  void api<Campaign>("/campaigns/"+id).then(c=>{if(live){
+    setRow(c);setTitle(c.title);setCreativeId(c.creativeId);
+    setStartDate(c.startDate);setEndDate(c.endDate);setWeekdays(c.weekdays);
+    setFromTime(c.timeWindow.start);setToTime(c.timeWindow.end);
+   }}).catch(e=>{if(live)setError(message(e));})
    .finally(()=>{if(live)setLoading(false);});
   return ()=>{live=false;};
  },[id,revision]);
+ const dirty=!!row&&(title.trim()!==row.title||creativeId!==row.creativeId||
+  startDate!==row.startDate||endDate!==row.endDate||
+  fromTime!==row.timeWindow.start||toTime!==row.timeWindow.end||
+  weekdays.join(",")!==row.weekdays.join(","));
  async function update(){
-  if(!row||busy||!title.trim()||title.trim()===row.title)return;
+  if(!row||busy||!dirty)return;
+  if(!title.trim()||!creativeId||!weekdays.length||!validDates(startDate,endDate)||toTime<=fromTime){
+   setError("Enter a valid title, creative and 1–60 day delivery schedule.");return;
+  }
   setBusy(true);setError("");setNotice("");
-  try{await api("/campaigns/"+row.id,{method:"PATCH",csrfToken:session.csrfToken,
-   body:{expectedRevision:row.revision,title:title.trim()}});
-   setNotice("Draft saved.");setRevision(v=>v+1);
+  try{
+   await api("/campaigns/"+row.id,{method:"PATCH",csrfToken:session.csrfToken,
+    body:{expectedRevision:row.revision,title:title.trim(),creativeId,startDate,endDate,
+     weekdays,timeWindow:{start:fromTime,end:toTime}}});
+   setNotice("Draft saved. Revision updated.");setRevision(v=>v+1);
   }catch(e){setError(message(e));}finally{setBusy(false);}
  }
  async function submit(){
-  if(!row||busy)return;
+  if(!row||busy||dirty)return;
   setBusy(true);setError("");setNotice("");
-  try{await api("/campaigns/"+row.id+"/submit",{method:"POST",body:{},
+  try{
+   await api("/campaigns/"+row.id+"/submit",{method:"POST",body:{},
     csrfToken:session.csrfToken,idempotencyKey:newIdempotencyKey()});
    setNotice("Campaign submitted for Admin review.");setRevision(v=>v+1);
   }catch(e){setError(message(e));}finally{setBusy(false);}
@@ -147,21 +165,30 @@ export function CampaignDetail({id}:{id:string}){
   {notice&&<Notice kind="success">{notice}</Notice>}
   {row&&<div className="space-y-5">
    <div className="flex flex-wrap items-center gap-3"><Badge value={row.status}/><span className="text-xs text-slate-500">Revision {row.revision}</span></div>
-   <div className="grid gap-3 rounded-xl bg-slate-50 p-4 text-sm sm:grid-cols-2">
-    <p><strong>Dates:</strong> {row.startDate} to {row.endDate}</p><p><strong>Time:</strong> {row.timeWindow.start}–{row.timeWindow.end}</p>
-    <p><strong>Weekdays:</strong> {row.weekdays.map(n=>days[n]).join(", ")}</p><p><strong>Creative:</strong> {row.creativeId}</p>
-   </div>
    {row.reviewReason&&<Notice kind="warning">Review feedback: {row.reviewReason}</Notice>}
-   {["draft","changes_requested"].includes(row.status)&&<div className="space-y-3">
-    <label className={label}>Campaign title<input className={field} maxLength={180} value={title} onChange={e=>setTitle(e.target.value)}/></label>
-    <div className="flex flex-wrap gap-3">
-     <button className={secondary} type="button" disabled={busy||!title.trim()||title.trim()===row.title} onClick={()=>void update()}>Save title change</button>
-     <button className={primary} type="button" disabled={busy||!row.creativeId||title!==row.title} onClick={()=>void submit()}>Submit for review</button>
+   {["draft","changes_requested"].includes(row.status)?<div className="grid gap-4 sm:grid-cols-2">
+    <label className={label+" sm:col-span-2"}>Campaign title<input className={field} maxLength={180} required value={title} onChange={e=>setTitle(e.target.value)}/></label>
+    <label className={label+" sm:col-span-2"}>Creative<select className={field} required value={creativeId} onChange={e=>setCreativeId(e.target.value)}>
+     <option value="">Choose registered creative</option>{creatives.rows.map(c=><option value={c.id} key={c.id}>{c.title} ({c.approval})</option>)}
+    </select></label>
+    {creatives.error&&<div className="sm:col-span-2"><Notice kind="error">{creatives.error}</Notice></div>}
+    <label className={label}>Start date<input type="date" className={field} value={startDate} onChange={e=>setStartDate(e.target.value)}/></label>
+    <label className={label}>End date<input type="date" className={field} value={endDate} onChange={e=>setEndDate(e.target.value)}/></label>
+    <label className={label}>Start time<input type="time" className={field} value={fromTime} onChange={e=>setFromTime(e.target.value)}/></label>
+    <label className={label}>End time<input type="time" className={field} value={toTime} onChange={e=>setToTime(e.target.value)}/></label>
+    <div className="sm:col-span-2"><Weekdays selected={weekdays} onChange={setWeekdays}/></div>
+    <div className="flex flex-wrap gap-3 sm:col-span-2">
+     <button className={secondary} type="button" disabled={busy||!dirty} onClick={()=>void update()}>Save draft changes</button>
+     <button className={primary} type="button" disabled={busy||dirty} onClick={()=>void submit()}>Submit for review</button>
     </div>
-    <p className="text-xs text-slate-500">Submission requires an approved, processed creative and valid schedule. Changes-requested campaigns must first satisfy the backend revision rules.</p>
+    <p className="text-xs text-slate-500 sm:col-span-2">Submission requires an approved processed creative and valid dates. Backend revision checks prevent stale edits.</p>
+   </div>:<div className="rounded-xl bg-slate-50 p-4 text-sm">
+    <p className="font-bold">{row.title}</p>
+    <p className="mt-2">Scheduled: {row.startDate} to {row.endDate}, {row.timeWindow.start}–{row.timeWindow.end}</p>
+    <p className="mt-1">Weekdays: {row.weekdays.map(n=>days[n]).join(", ")}</p>
    </div>}
-   <Notice>Booking and payment are separate, server-reviewed steps. This campaign record does not prove paid delivery.</Notice>
-   <Link className={secondary} href="/advertiser/billing">View quotes and payments</Link>
+   <Notice>Payment and capacity allocation remain separate reviewed workflows. This record is not proof of delivery or payment.</Notice>
+   <Link className={secondary} href="/advertiser/billing">View live quotes and payments</Link>
   </div>}
  </Panel>;
 }
