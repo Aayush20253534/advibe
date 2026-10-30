@@ -1,7 +1,7 @@
 // Shared by the server proxy and Node contract tests. No Next/React runtime required.
 const firstSegments=new Set([
  "auth","me","businesses","public","drivers","admin","locations","screens",
- "creatives","pricing","campaigns","reservations","payments","driver","reports",
+ "creatives","pricing","campaigns","reservations","payments","driver","reports","inventory",
  "tickets","notifications","support","maintenance",
 ]);
 const forbiddenPaths=[
