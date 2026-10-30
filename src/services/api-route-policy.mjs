@@ -20,6 +20,8 @@ export function allowedApiPath(parts,method){
    !/^[A-Za-z0-9_-]+$/.test(p)))return false;
  if(!firstSegments.has(parts[0]))return false;
  const joined=parts.join("/");
+ // Admin may inspect sanitized player health, never call device pairing or provisioning through this relay.
+ if(method==="GET"&&/^admin\/devices\/[0-9a-f-]{36}\/player-status$/.test(joined))return true;
  return !forbiddenPaths.some(pattern=>pattern.test(joined));
 }
 export function backendOrigin(raw,production=false){
