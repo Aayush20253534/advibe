@@ -123,6 +123,7 @@ jobs:
             exit 1
           fi
           BASE_URL=http://127.0.0.1:3101 npm run test:live-browser
+          BASE_URL=http://127.0.0.1:3101 npm run test:auth-browser
       - name: Save live browser failure screenshots
         if: failure()
         uses: actions/upload-artifact@v4

@@ -3,7 +3,7 @@
 The target is an authenticated, server-backed platform with no demo mode, fictional business records or browser-local business state. Do not certify a part merely because source files exist. Each part requires relevant automated tests and staging evidence.
 
 1. **Backend-only cutover (source committed):** secure login/signup routes, API-only Admin/Advertiser/Driver layouts, fail-closed proxy and readiness checks, and API-mode CI. The existing generic live portal is a temporary bridge. Production deployment is not ready.
-2. **Identity and account UX:** connect and validate all signup, verification, recovery, sessions, Admin MFA, account ownership and session-expiry flows with real staging backend.
+2. **Identity and account UX (source integrated, staging unverified):** advertiser/driver signup, email verification links and resend, recovery, server-confirmed role redirects, Admin MFA, and session expiration/revocation. Real Render/Neon/Resend deployment and E2E staging acceptance still required.
 3. **Advertiser workflows:** replace generic API tables with dedicated dashboard, campaign editor, creatives/media uploads, formats/locations, booking holds, quotations and analytics. Preserve existing look without local fictional data.
 4. **Admin workflows:** campaign/creative approvals, driver applications/KYC moderation, user decisions, screens, zones, pricing rules, reconciliations, audited operations.
 5. **Driver workflows:** onboarding, private KYC, vehicles/screens, assigned inventory and delivery schedule, maintenance, reviewed earnings, payout history.
