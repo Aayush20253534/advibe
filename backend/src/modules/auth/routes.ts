@@ -93,12 +93,13 @@ async function issueChallenge(
   return { id, code };
 }
 
-async function sendVerification(sender: EmailSender, to: string, challenge: { id: string; code: string }) {
+async function sendVerification(sender: EmailSender, webOrigin: string, to: string, challenge: { id: string; code: string }) {
   await sender({
     to, subject: "AdVibe email verification",
     text: "Your AdVibe verification code is " + challenge.code +
       ". Challenge ID: " + challenge.id +
-      ". The code expires in 10 minutes. If you did not request this, ignore this email.",
+      ". The code expires in 10 minutes. If you did not request this, ignore this email.\n" +
+      "Verify your account: " + webOrigin + "/verify?challengeId=" + encodeURIComponent(challenge.id),
   });
 }
 
@@ -128,7 +129,7 @@ export function createAuthRouter(
     }
     const challenge = await issueChallenge(db, settings, user, "VERIFY_EMAIL");
     try {
-      await sendVerification(sender, user.email, challenge);
+      await sendVerification(sender, settings.webOrigin, user.email, challenge);
     } catch {
       // User remains pending; resend-verification can recover delivery.
       throw new HttpError(503, "DELIVERY_UNAVAILABLE", "Verification email unavailable; retry verification request");
@@ -143,7 +144,7 @@ export function createAuthRouter(
     const user = await db.user.findUnique({ where: { email } });
     if (user && user.status === "PENDING" && !user.emailVerifiedAt) {
       const challenge = await issueChallenge(db, settings, user, "VERIFY_EMAIL");
-      try { await sendVerification(sender, user.email, challenge); } catch { /* avoid account enumeration */ }
+      try { await sendVerification(sender, settings.webOrigin, user.email, challenge); } catch { /* avoid account enumeration */ }
     }
     res.status(201).json({ data: { message: "If verification is pending, a new code has been sent" } });
   }));
