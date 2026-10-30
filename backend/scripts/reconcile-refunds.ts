@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { externalMode } from "../src/integrations/mock-mode.js";
 import { loadDatabaseConfig } from "../src/db/config.js";
 import { createRefundGateway } from "../src/modules/finance/provider.js";
 import { reconcileRefunds } from "../src/modules/finance/worker.js";
@@ -11,6 +12,8 @@ if(process.env.B19_REFUNDS_WORKER_ENABLED!=="true"||
  process.env.CASHFREE_ENV!=="sandbox"&&process.env.CASHFREE_ENV!=="production")
  throw new HttpError(503,"REFUND_WORKER_DISABLED",
   "Refund reconciliation requires approved explicit enablement");
+if(externalMode()==="mock")
+ throw new Error("External provider worker is disabled in mock mode; no real settlement, scans, or S3 access");
 loadDatabaseConfig();
 const provider=createRefundGateway();
 const db=new PrismaClient();
