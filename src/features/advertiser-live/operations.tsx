@@ -15,8 +15,9 @@ export function BusinessSettings(){
  const [display,setDisplay]=React.useState(""),[city,setCity]=React.useState("");
  const [brand,setBrand]=React.useState(""),[slug,setSlug]=React.useState(""),[brandCity,setBrandCity]=React.useState(""),[legal,setLegal]=React.useState("");
  const [busy,setBusy]=React.useState(false),[error,setError]=React.useState(""),[success,setSuccess]=React.useState("");
+ const [newBusiness,setNewBusiness]=React.useState(false);
  React.useEffect(()=>{let active=true;void api<UserProfile>("/me").then(u=>{if(active){setProfile(u);setDisplay(u.displayName);setCity(u.city??"");}}).catch(e=>{if(active)setError(message(e));});return ()=>{active=false;};},[]);
- React.useEffect(()=>{setBrand(business?.displayName??"");setBrandCity(business?.city??"");setLegal(business?.legalName??"");},[business?.id,business?.displayName,business?.city,business?.legalName]);
+ React.useEffect(()=>{setBrand(newBusiness?"":business?.displayName??"");setBrandCity(newBusiness?"":business?.city??"");setLegal(newBusiness?"":business?.legalName??"");},[business?.id,business?.displayName,business?.city,business?.legalName,newBusiness]);
  async function saveProfile(e:React.FormEvent){
   e.preventDefault();setBusy(true);setError("");setSuccess("");
   try{await api("/me",{method:"PATCH",csrfToken:session.csrfToken,
@@ -26,12 +27,12 @@ export function BusinessSettings(){
  async function saveBusiness(e:React.FormEvent){
   e.preventDefault();setBusy(true);setError("");setSuccess("");
   try{
-   if(business)await api("/businesses/"+business.id,{method:"PATCH",csrfToken:session.csrfToken,
+   if(business&&!newBusiness)await api("/businesses/"+business.id,{method:"PATCH",csrfToken:session.csrfToken,
     body:{displayName:brand.trim(),city:brandCity.trim()||null,legalName:legal.trim()||null}});
    else await api("/businesses",{method:"POST",csrfToken:session.csrfToken,
     body:{slug:slug.trim().toLowerCase(),displayName:brand.trim(),city:brandCity.trim(),
      ...(legal.trim()?{legalName:legal.trim()}:{})}});
-   await reloadBusinesses();setSuccess("Business saved to your account.");setSlug("");
+   await reloadBusinesses();setSuccess("Business saved to your account.");setSlug("");setNewBusiness(false);
   }catch(e){setError(message(e));}finally{setBusy(false);}
  }
  return <div className="space-y-5">
@@ -44,19 +45,19 @@ export function BusinessSettings(){
     <button className={primary} disabled={busy||!profile}>Save profile</button>
    </form>
   </Panel>
-  <Panel title={business?"Edit selected business":"Register your first business"}>
+  <Panel title={business&&!newBusiness?"Edit selected business":"Register business"} action={business&&<button type="button" className={secondary} onClick={()=>setNewBusiness(x=>!x)}>{newBusiness?"Cancel new business":"Add another business"}</button>}>
    <p className="mb-4 text-sm text-slate-600">{businesses.length} business account(s) associated with your login. Accounts have a backend-enforced limit.</p>
    <form className="grid max-w-xl gap-4" onSubmit={e=>void saveBusiness(e)}>
-    {!business&&<label className={label}>Unique business slug<input required minLength={2} maxLength={100}
+    {(!business||newBusiness)&&<label className={label}>Unique business slug<input required minLength={2} maxLength={100}
       pattern="[a-z0-9]+(-[a-z0-9]+)*" className={field} value={slug} onChange={e=>setSlug(e.target.value.toLowerCase())}
       placeholder="my-business"/></label>}
     <label className={label}>Business name<input required maxLength={160} className={field} value={brand} onChange={e=>setBrand(e.target.value)}/></label>
-    <label className={label}>Business city<input required={!business} maxLength={100} className={field} value={brandCity} onChange={e=>setBrandCity(e.target.value)}/></label>
+    <label className={label}>Business city<input required={!business||newBusiness} maxLength={100} className={field} value={brandCity} onChange={e=>setBrandCity(e.target.value)}/></label>
     <label className={label}>Legal name (optional)<input maxLength={220} className={field} value={legal} onChange={e=>setLegal(e.target.value)}/></label>
-    <button className={primary} disabled={busy}>{business?"Update selected business":"Register business"}</button>
+    <button className={primary} disabled={busy}>{business&&!newBusiness?"Update selected business":"Register business"}</button>
    </form>
   </Panel>
-  {business&&<Panel title="Business verification">
+  {business&&!newBusiness&&<Panel title="Business verification">
    <Tag name={business.verificationStatus}/>
    <p className="mt-3 text-sm text-slate-600">Business approval is controlled by the backend. Editing a business does not automatically verify it.</p>
   </Panel>}
