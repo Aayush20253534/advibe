@@ -19,25 +19,29 @@ export const money=(raw:unknown)=>{
  catch{return "Unavailable";}
 };
 export function useCollection<T>(path:string|null){
- const [rows,setRows]=React.useState<T[]>([]);
- const [cursor,setCursor]=React.useState<string|null>(null);
- const [next,setNext]=React.useState<string|null>(null);
- const [busy,setBusy]=React.useState(false);
- const [error,setError]=React.useState("");
+ const [page,setPage]=React.useState<{path:string|null;cursor:string|null}>({path:null,cursor:null});
  const [version,setVersion]=React.useState(0);
- React.useEffect(()=>{setRows([]);setCursor(null);setNext(null);setError("");},[path]);
+ const cursor=page.path===path?page.cursor:null;
+ const key=String(path)+"|"+String(cursor)+"|"+version;
+ const [response,setResponse]=React.useState<{key:string;rows:T[];next:string|null;error:string}>({
+  key:"",rows:[],next:null,error:""
+ });
  React.useEffect(()=>{
-  if(!path){setRows([]);setNext(null);return;}
-  let active=true;const controller=new AbortController();
-  Promise.resolve().then(()=>{if(active){setBusy(true);setError("");}
-   const url=path+(cursor?(path.includes("?")?"&":"?")+"cursor="+encodeURIComponent(cursor):"");
-   return apiPage<T>(url,controller.signal);
-  }).then(data=>{if(active){setRows(data.data);setNext(data.meta.nextCursor??null);}})
-  .catch(e=>{if(active){setRows([]);setNext(null);setError(message(e));}})
-  .finally(()=>{if(active)setBusy(false);});
+  if(!path)return;
+  let active=true;
+  const controller=new AbortController();
+  const url=path+(cursor?(path.includes("?")?"&":"?")+"cursor="+encodeURIComponent(cursor):"");
+  void apiPage<T>(url,controller.signal)
+   .then(data=>{if(active)setResponse({key,rows:data.data,next:data.meta.nextCursor??null,error:""});})
+   .catch(e=>{if(active)setResponse({key,rows:[],next:null,error:message(e)});});
   return ()=>{active=false;controller.abort();};
- },[path,cursor,version]);
- return {rows,next,busy,error,refresh:()=>setVersion(v=>v+1),first:()=>setCursor(null),more:()=>{if(next)setCursor(next);}};
+ },[path,cursor,version,key]);
+ const ready=!!path&&response.key===key;
+ return {rows:ready?response.rows:[] as T[],next:ready?response.next:null,
+  busy:!!path&&!ready,error:ready?response.error:"",
+  refresh:()=>setVersion(v=>v+1),
+  first:()=>setPage({path,cursor:null}),
+  more:()=>{if(ready&&response.next)setPage({path,cursor:response.next});}};
 }
 export function Notice({children,kind="info"}:{children:React.ReactNode;kind?:"info"|"warning"|"error"|"success"}){
  const style=kind==="error"?"border-red-200 bg-red-50 text-red-900":kind==="warning"?"border-amber-200 bg-amber-50 text-amber-950":kind==="success"?"border-emerald-200 bg-emerald-50 text-emerald-900":"border-blue-200 bg-blue-50 text-blue-950";
