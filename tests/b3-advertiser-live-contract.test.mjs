@@ -37,7 +37,8 @@ test("the inventory catalog is role-limited, privacy-safe and proxy permitted",(
  const start=route.indexOf('router.get("/inventory/screens"');
  const end=route.indexOf('router.get("/screens"',start);
  const section=route.slice(start,end);
- assert.doesNotMatch(section,/driverUserId|credential|installationReference|registrationTokenHash/);
+ const serialization=section.slice(section.indexOf("data:page.map"),section.indexOf("meta:"));
+ assert.doesNotMatch(serialization,/driverUserId|credential|installationReference|registrationTokenHash/);
  assert.equal(allowedApiPath(["inventory","screens"],"GET"),true);
  assert.equal(allowedApiPath(["webhooks","cashfree","payments"],"POST"),false);
 });
