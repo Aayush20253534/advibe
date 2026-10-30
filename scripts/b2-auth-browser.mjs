@@ -47,7 +47,7 @@ try{
  assert.equal(await page.getByLabel("Challenge ID").inputValue(),id);
  await page.getByLabel("Email code").fill("123456");
  await page.getByRole("button",{name:"Verify",exact:true}).click();
- await page.waitForURL("**/login");
+ await page.waitForURL("**/login?verified=1");
  await page.goto(BASE+"/forgot-password");
  await page.getByLabel("Email").fill("driver@example.invalid");
  await page.getByRole("button",{name:"Send recovery email"}).click();
@@ -55,7 +55,7 @@ try{
  await page.goto(BASE+"/reset-password#token="+id+"."+"b".repeat(43));
  await page.getByLabel("New password").fill("SecureSecondPassword!2026");
  await page.getByRole("button",{name:"Reset password"}).click();
- await page.waitForURL("**/login");
+ await page.waitForURL("**/login?reset=1");
  await page.getByLabel("Email").fill("driver@example.invalid");
  await page.getByLabel("Password").fill("SecureSecondPassword!2026");
  await page.getByRole("button",{name:"Sign in",exact:true}).click();
