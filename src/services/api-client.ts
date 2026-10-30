@@ -51,7 +51,8 @@ export async function apiPage<T>(path:string,signal?:AbortSignal):Promise<{
 export function newIdempotencyKey(){return crypto.randomUUID();}
 export async function liveSession(signal?:AbortSignal):Promise<LiveSession>{
  const session=await api<LiveSession>("/auth/session",{signal});
- if(!["admin","driver","advertiser"].includes(session.role)||!session.csrfToken)
+ if(!["admin","driver","advertiser"].includes(session.role)||!session.csrfToken||
+    !Number.isFinite(Date.parse(session.expiresAt))||Date.parse(session.expiresAt)<=Date.now())
   throw new ApiError(401,"SESSION_INVALID","Authentication needs renewal");
  return session;
 }
