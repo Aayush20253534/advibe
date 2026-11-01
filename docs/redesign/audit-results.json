@@ -1,0 +1,3199 @@
+{
+ "generated": "2026-11-01",
+ "results": [
+  {
+   "role": "anon",
+   "route": "/",
+   "finalUrl": "/",
+   "status": 200,
+   "title": "Outdoor & Mobile Advertising on Every Journey | AdVibe",
+   "h1": [
+    "Your Brand. Their Journey. Everywhere."
+   ],
+   "axe": [
+    {
+     "id": "nested-interactive",
+     "impact": "serious",
+     "help": "Interactive controls must not be nested",
+     "nodes": 1,
+     "sample": [
+      ".aspect-\\[1\\.42\\/1\\]"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 6907,
+     "smallText": 26,
+     "smallTargets": 35,
+     "shot": "screenshots/anon_home_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 5118,
+     "smallText": 26,
+     "smallTargets": null,
+     "shot": "screenshots/anon_home_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 3642,
+     "smallText": 26,
+     "smallTargets": null,
+     "shot": "screenshots/anon_home_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 3709,
+     "smallText": 26,
+     "smallTargets": null,
+     "shot": "screenshots/anon_home_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/about",
+   "finalUrl": "/about",
+   "status": 200,
+   "title": "About AdVibe | Vision & Mission | AdVibe",
+   "h1": [
+    "Turning Commutes into Brand Experiences"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 5050,
+     "smallText": 0,
+     "smallTargets": 16,
+     "shot": "screenshots/anon_about_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 3526,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_about_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 2568,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_about_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 2568,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_about_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/ad-formats",
+   "finalUrl": "/ad-formats",
+   "status": 200,
+   "title": "Ad Formats | Digital Vehicle Advertising | AdVibe",
+   "h1": [
+    "Your Brand on Every Vehicle"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 4,
+     "sample": [
+      ".bg-\\[\\#e7f7ef\\].py-1\\.5.text-\\[\\#11834f\\]:nth-child(1)",
+      ".bg-\\[\\#e7f7ef\\].py-1\\.5.text-\\[\\#11834f\\]:nth-child(2)"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 7272,
+     "smallText": 0,
+     "smallTargets": 16,
+     "shot": "screenshots/anon_ad-formats_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 5039,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_ad-formats_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 3751,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_ad-formats_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 3751,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_ad-formats_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/contact",
+   "finalUrl": "/contact",
+   "status": 200,
+   "title": "Contact AdVibe | Enquiries & Support | AdVibe",
+   "h1": [
+    "Let's Create Bigger Impact Together"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 1,
+     "sample": [
+      ".min-h-12"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 4884,
+     "smallText": 0,
+     "smallTargets": 23,
+     "shot": "screenshots/anon_contact_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 3642,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_contact_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 2686,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_contact_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 2686,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_contact_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/for-advertisers",
+   "finalUrl": "/for-advertisers",
+   "status": 200,
+   "title": "For Advertisers | Vehicle Screen Campaigns | AdVibe",
+   "h1": [
+    "Take Your Brand On Every Ride"
+   ],
+   "axe": [
+    {
+     "id": "nested-interactive",
+     "impact": "serious",
+     "help": "Interactive controls must not be nested",
+     "nodes": 1,
+     "sample": [
+      ".aspect-\\[1\\.42\\/1\\]"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 7891,
+     "smallText": 3,
+     "smallTargets": 35,
+     "shot": "screenshots/anon_for-advertisers_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 5487,
+     "smallText": 3,
+     "smallTargets": null,
+     "shot": "screenshots/anon_for-advertisers_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 3851,
+     "smallText": 3,
+     "smallTargets": null,
+     "shot": "screenshots/anon_for-advertisers_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 3851,
+     "smallText": 3,
+     "smallTargets": null,
+     "shot": "screenshots/anon_for-advertisers_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/for-drivers",
+   "finalUrl": "/for-drivers",
+   "status": 200,
+   "title": "Become an AdVibe Driver Partner | AdVibe",
+   "h1": [
+    "Earn More With Every Ride"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 1,
+     "sample": [
+      ".bg-brand-orange.px-5.hover\\:bg-\\[\\#e95e00\\]"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 6462,
+     "smallText": 0,
+     "smallTargets": 16,
+     "shot": "screenshots/anon_for-drivers_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 4235,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_for-drivers_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 3130,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_for-drivers_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 3130,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_for-drivers_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/help-center",
+   "finalUrl": "/help-center",
+   "status": 200,
+   "title": "Help Center | AdVibe Support & FAQs | AdVibe",
+   "h1": [
+    "How Can We Help You?"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 4,
+     "sample": [
+      ".border-\\[\\#dce8fa\\].shadow-sm.py-3:nth-child(10) > .min-h-8.text-left > .items-start.gap-3 > .bg-\\[\\#e7f0ff\\].size-6.place-items-center",
+      ".border-\\[\\#dce8fa\\].shadow-sm.py-3:nth-child(11) > .min-h-8.text-left > .items-start.gap-3 > .bg-\\[\\#e7f0ff\\].size-6.place-items-center"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 4805,
+     "smallText": 0,
+     "smallTargets": 23,
+     "shot": "screenshots/anon_help-center_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 3625,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_help-center_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 2842,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_help-center_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 2842,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_help-center_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/locations",
+   "finalUrl": "/locations",
+   "status": 200,
+   "title": "Locations & Coverage Explorer | AdVibe",
+   "h1": [
+    "Find Locations for Your Ads"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 3,
+     "sample": [
+      ".bg-\\[\\#e8f1ff\\]",
+      "button[aria-label=\"Select Civil Lines\"]"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 3845,
+     "smallText": 1,
+     "smallTargets": 28,
+     "shot": "screenshots/anon_locations_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 2995,
+     "smallText": 1,
+     "smallTargets": null,
+     "shot": "screenshots/anon_locations_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 2318,
+     "smallText": 1,
+     "smallTargets": null,
+     "shot": "screenshots/anon_locations_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 2318,
+     "smallText": 1,
+     "smallTargets": null,
+     "shot": "screenshots/anon_locations_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/pricing",
+   "finalUrl": "/pricing",
+   "status": 200,
+   "title": "Advertising Pricing & Cost Calculator | AdVibe",
+   "h1": [
+    "Transparent Pricing for Maximum Impact"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 4,
+     "sample": [
+      ".border-brand-blue > .p-4 > .border-\\[\\#f87e33\\].hover\\:bg-\\[\\#fff4e8\\]",
+      ".border-\\[\\#dce8f7\\]:nth-child(2) > .p-4 > .border-\\[\\#f87e33\\].hover\\:bg-\\[\\#fff4e8\\]"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 6100,
+     "smallText": 0,
+     "smallTargets": 20,
+     "shot": "screenshots/anon_pricing_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 4083,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_pricing_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 2842,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_pricing_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 2842,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_pricing_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/privacy",
+   "finalUrl": "/privacy",
+   "status": 200,
+   "title": "Privacy Notice | Legal Review Pending | AdVibe",
+   "h1": [
+    "Privacy Notice"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 2076,
+     "smallText": 0,
+     "smallTargets": 16,
+     "shot": "screenshots/anon_privacy_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1400,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_privacy_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1184,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_privacy_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1184,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_privacy_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/terms",
+   "finalUrl": "/terms",
+   "status": 200,
+   "title": "Terms & Conditions | Legal Review Pending | AdVibe",
+   "h1": [
+    "Terms & Conditions"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 2048,
+     "smallText": 0,
+     "smallTargets": 16,
+     "shot": "screenshots/anon_terms_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1400,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_terms_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1156,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_terms_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1156,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_terms_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/login",
+   "finalUrl": "/login",
+   "status": 200,
+   "title": "Sign In | AdVibe",
+   "h1": [
+    "One platform. Every journey.",
+    "Sign in"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 7,
+     "shot": "screenshots/anon_login_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_login_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_login_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_login_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/signup",
+   "finalUrl": "/signup",
+   "status": 200,
+   "title": "Create Account | AdVibe",
+   "h1": [
+    "One platform. Every journey.",
+    "Create account"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 7,
+     "shot": "screenshots/anon_signup_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_signup_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_signup_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_signup_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/forgot-password",
+   "finalUrl": "/forgot-password",
+   "status": 200,
+   "title": "Password Recovery | AdVibe",
+   "h1": [
+    "One platform. Every journey.",
+    "Reset request"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 7,
+     "shot": "screenshots/anon_forgot-password_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_forgot-password_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_forgot-password_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_forgot-password_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/reset-password",
+   "finalUrl": "/reset-password",
+   "status": 200,
+   "title": "Reset Password | AdVibe",
+   "h1": [
+    "One platform. Every journey.",
+    "Set new password"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 7,
+     "shot": "screenshots/anon_reset-password_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_reset-password_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_reset-password_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_reset-password_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/verify",
+   "finalUrl": "/verify",
+   "status": 200,
+   "title": "Verify Email | AdVibe",
+   "h1": [
+    "One platform. Every journey.",
+    "Verify email"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 8,
+     "shot": "screenshots/anon_verify_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_verify_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_verify_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_verify_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "anon",
+   "route": "/design-system",
+   "finalUrl": "/design-system",
+   "status": 200,
+   "title": "Design System Preview | AdVibe",
+   "h1": [
+    "One design language. Four experiences."
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 11,
+     "sample": [
+      ".items-end > .bg-\\[\\#dff8e8\\].text-\\[\\#078343\\].px-2\\.5",
+      ".border-\\[var\\(--portal-accent\\)\\]"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 3925,
+     "smallText": 0,
+     "smallTargets": 6,
+     "shot": "screenshots/anon_design-system_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 2997,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_design-system_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1955,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_design-system_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1955,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/anon_design-system_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser",
+   "finalUrl": "/advertiser",
+   "status": 200,
+   "title": "AdVibe",
+   "h1": [
+    "Overview"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1344,
+     "smallText": 0,
+     "smallTargets": 6,
+     "shot": "screenshots/advertiser_advertiser_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 980,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/ad-formats",
+   "finalUrl": "/advertiser/ad-formats",
+   "status": 200,
+   "title": "Ad Formats | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Ad Formats"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1514,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/advertiser_advertiser_ad-formats_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1068,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_ad-formats_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1024,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_ad-formats_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1024,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_ad-formats_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/billing",
+   "finalUrl": "/advertiser/billing",
+   "status": 200,
+   "title": "Billing & Payments | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Billing"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1498,
+     "smallText": 0,
+     "smallTargets": 7,
+     "shot": "screenshots/advertiser_advertiser_billing_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1314,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_billing_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1262,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_billing_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1262,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_billing_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/campaigns",
+   "finalUrl": "/advertiser/campaigns",
+   "status": 200,
+   "title": "AdVibe",
+   "h1": [
+    "Campaigns"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/advertiser_advertiser_campaigns_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_campaigns_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_campaigns_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_campaigns_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/create-campaign",
+   "finalUrl": "/advertiser/create-campaign",
+   "status": 200,
+   "title": "Create Campaign | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Create Campaign"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1262,
+     "smallText": 0,
+     "smallTargets": 12,
+     "shot": "screenshots/advertiser_advertiser_create-campaign_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_create-campaign_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_create-campaign_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_create-campaign_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/creatives",
+   "finalUrl": "/advertiser/creatives",
+   "status": 200,
+   "title": "Creative Library | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Creatives"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1082,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/advertiser_advertiser_creatives_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_creatives_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_creatives_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_creatives_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/locations",
+   "finalUrl": "/advertiser/locations",
+   "status": 200,
+   "title": "Locations & Screens | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Locations"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1018,
+     "smallText": 0,
+     "smallTargets": 6,
+     "shot": "screenshots/advertiser_advertiser_locations_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_locations_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_locations_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_locations_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/notifications",
+   "finalUrl": "/advertiser/notifications",
+   "status": 200,
+   "title": "Notifications | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Notifications"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 6,
+     "shot": "screenshots/advertiser_advertiser_notifications_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_notifications_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_notifications_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_notifications_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/reports",
+   "finalUrl": "/advertiser/reports",
+   "status": 200,
+   "title": "Reports & Analytics | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Reports"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1528,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/advertiser_advertiser_reports_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_reports_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_reports_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 937,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_reports_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/settings",
+   "finalUrl": "/advertiser/settings",
+   "status": 200,
+   "title": "Profile & Settings | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Settings"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1392,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/advertiser_advertiser_settings_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1228,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_settings_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1224,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_settings_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1224,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_settings_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "advertiser",
+   "route": "/advertiser/support",
+   "finalUrl": "/advertiser/support",
+   "status": 200,
+   "title": "Help & Support | AdVibe Advertiser | AdVibe",
+   "h1": [
+    "Support"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1000,
+     "smallText": 0,
+     "smallTargets": 6,
+     "shot": "screenshots/advertiser_advertiser_support_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_support_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 944,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_support_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 944,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/advertiser_advertiser_support_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver",
+   "finalUrl": "/driver",
+   "status": 200,
+   "title": "Driver Dashboard | AdVibe Partner | AdVibe",
+   "h1": [
+    "Overview"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1047,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/assigned-ads",
+   "finalUrl": "/driver/assigned-ads",
+   "status": 200,
+   "title": "Assigned Ads & Daily Schedule | AdVibe Partner | AdVibe",
+   "h1": [
+    "Assigned Ads"
+   ],
+   "axe": [],
+   "failedRequests": [
+    "404 GET /api/backend/driver/assignments"
+   ],
+   "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_assigned-ads_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_assigned-ads_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_assigned-ads_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_assigned-ads_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/campaigns",
+   "finalUrl": "/driver/campaigns",
+   "status": 200,
+   "title": "Assigned Campaigns | AdVibe Partner | AdVibe",
+   "h1": [
+    "Campaigns"
+   ],
+   "axe": [],
+   "failedRequests": [
+    "404 GET /api/backend/driver/assignments"
+   ],
+   "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_campaigns_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_campaigns_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_campaigns_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_campaigns_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/delivery",
+   "finalUrl": "/driver/delivery",
+   "status": 200,
+   "title": "Screen Activity | AdVibe Driver | AdVibe",
+   "h1": [
+    "Delivery"
+   ],
+   "axe": [],
+   "failedRequests": [
+    "404 GET /api/backend/driver/assignments"
+   ],
+   "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+   ],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_delivery_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_delivery_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_delivery_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_delivery_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/earnings",
+   "finalUrl": "/driver/earnings",
+   "status": 200,
+   "title": "Earnings | AdVibe Driver | AdVibe",
+   "h1": [
+    "Earnings"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_earnings_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_earnings_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_earnings_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_earnings_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/maintenance",
+   "finalUrl": "/driver/maintenance",
+   "status": 200,
+   "title": "Maintenance & Issues | AdVibe Driver | AdVibe",
+   "h1": [
+    "Maintenance"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_maintenance_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_maintenance_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_maintenance_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_maintenance_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/notifications",
+   "finalUrl": "/driver/notifications",
+   "status": 200,
+   "title": "Driver Notifications | AdVibe Driver | AdVibe",
+   "h1": [
+    "Notifications"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_notifications_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_notifications_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_notifications_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_notifications_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/onboarding",
+   "finalUrl": "/driver/onboarding",
+   "status": 200,
+   "title": "Driver Onboarding | AdVibe Partner | AdVibe",
+   "h1": [
+    "Onboarding"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_onboarding_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_onboarding_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_onboarding_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_onboarding_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/payouts",
+   "finalUrl": "/driver/payouts",
+   "status": 200,
+   "title": "Payout History | AdVibe Driver | AdVibe",
+   "h1": [
+    "Payouts"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_payouts_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_payouts_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_payouts_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_payouts_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/profile",
+   "finalUrl": "/driver/profile",
+   "status": 200,
+   "title": "Driver Profile | AdVibe Driver | AdVibe",
+   "h1": [
+    "Profile"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1047,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_profile_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_profile_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_profile_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_profile_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/support",
+   "finalUrl": "/driver/support",
+   "status": 200,
+   "title": "Driver Support | AdVibe Driver | AdVibe",
+   "h1": [
+    "Support"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 934,
+     "smallText": 0,
+     "smallTargets": 20,
+     "shot": "screenshots/driver_driver_support_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_support_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_support_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_support_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/trips",
+   "finalUrl": "/driver/trips",
+   "status": 200,
+   "title": "Trips & Exposure | AdVibe Driver | AdVibe",
+   "h1": [
+    "Trips"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_trips_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_trips_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_trips_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_trips_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/vehicle",
+   "finalUrl": "/driver/vehicle",
+   "status": 200,
+   "title": "My Vehicle & Screens | AdVibe Partner | AdVibe",
+   "h1": [
+    "Vehicle"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_vehicle_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_vehicle_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_vehicle_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_vehicle_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "driver",
+   "route": "/driver/verification",
+   "finalUrl": "/driver/verification",
+   "status": 200,
+   "title": "Verification Status | AdVibe Driver | AdVibe",
+   "h1": [
+    "Verification"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 17,
+     "shot": "screenshots/driver_driver_verification_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_verification_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_verification_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 940,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/driver_driver_verification_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin",
+   "finalUrl": "/admin",
+   "status": 200,
+   "title": "Admin Dashboard | AdVibe | AdVibe",
+   "h1": [
+    "Dashboard"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 2346,
+     "smallText": 0,
+     "smallTargets": 4,
+     "shot": "screenshots/admin_admin_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1470,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1078,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1062,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/ad-formats",
+   "finalUrl": "/admin/ad-formats",
+   "status": 200,
+   "title": "Ad Formats | AdVibe Admin | AdVibe",
+   "h1": [
+    "Ad Formats"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 6,
+     "sample": [
+      ".border-indigo-100.p-4.border:nth-child(1) > .text-slate-400.text-xs.mt-2",
+      ".border-indigo-100.p-4.border:nth-child(2) > .text-slate-400.text-xs.mt-2"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1174,
+     "smallText": 0,
+     "smallTargets": 3,
+     "shot": "screenshots/admin_admin_ad-formats_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_ad-formats_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_ad-formats_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_ad-formats_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/advertisers",
+   "finalUrl": "/admin/advertisers",
+   "status": 200,
+   "title": "advertisers | AdVibe Admin | AdVibe",
+   "h1": [
+    "Advertisers"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 1,
+     "sample": [
+      ".text-slate-400"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 9,
+     "shot": "screenshots/admin_admin_advertisers_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_advertisers_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_advertisers_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_advertisers_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/analytics",
+   "finalUrl": "/admin/analytics",
+   "status": 200,
+   "title": "analytics | AdVibe Admin | AdVibe",
+   "h1": [
+    "Reports & Analytics"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 2670,
+     "smallText": 0,
+     "smallTargets": 6,
+     "shot": "screenshots/admin_admin_analytics_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1716,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_analytics_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1300,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_analytics_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1284,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_analytics_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/approvals",
+   "finalUrl": "/admin/approvals",
+   "status": 200,
+   "title": "Campaign and Creative Approvals | AdVibe | AdVibe",
+   "h1": [
+    "Approvals"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 9,
+     "shot": "screenshots/admin_admin_approvals_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_approvals_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_approvals_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_approvals_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/audit",
+   "finalUrl": "/admin/audit",
+   "status": 200,
+   "title": "audit | AdVibe Admin | AdVibe",
+   "h1": [
+    "Audit History"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1377,
+     "smallText": 0,
+     "smallTargets": 6,
+     "shot": "screenshots/admin_admin_audit_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1153,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_audit_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1125,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_audit_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1125,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_audit_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/bookings",
+   "finalUrl": "/admin/bookings",
+   "status": 200,
+   "title": "Bookings | AdVibe Admin | AdVibe",
+   "h1": [
+    "Bookings"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/admin_admin_bookings_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_bookings_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_bookings_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_bookings_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/campaigns",
+   "finalUrl": "/admin/campaigns",
+   "status": 200,
+   "title": "Campaign Operations | AdVibe Admin | AdVibe",
+   "h1": [
+    "Campaigns"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 6,
+     "shot": "screenshots/admin_admin_campaigns_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_campaigns_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_campaigns_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_campaigns_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/drivers",
+   "finalUrl": "/admin/drivers",
+   "status": 200,
+   "title": "Driver Verification | AdVibe Admin | AdVibe",
+   "h1": [
+    "Driver Partners"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/admin_admin_drivers_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_drivers_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_drivers_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_drivers_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/locations",
+   "finalUrl": "/admin/locations",
+   "status": 200,
+   "title": "Locations and Zones | AdVibe Admin | AdVibe",
+   "h1": [
+    "Locations & Zones"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1466,
+     "smallText": 0,
+     "smallTargets": 13,
+     "shot": "screenshots/admin_admin_locations_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1258,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_locations_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1254,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_locations_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1254,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_locations_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/notifications",
+   "finalUrl": "/admin/notifications",
+   "status": 200,
+   "title": "notifications | AdVibe Admin | AdVibe",
+   "h1": [
+    "Notifications"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/admin_admin_notifications_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_notifications_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_notifications_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_notifications_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/payments",
+   "finalUrl": "/admin/payments",
+   "status": 200,
+   "title": "Payments | AdVibe Admin | AdVibe",
+   "h1": [
+    "Payments & Refunds"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 4,
+     "shot": "screenshots/admin_admin_payments_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_payments_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_payments_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_payments_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/pricing",
+   "finalUrl": "/admin/pricing",
+   "status": 200,
+   "title": "Pricing | AdVibe Admin | AdVibe",
+   "h1": [
+    "Pricing & Commercial"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1456,
+     "smallText": 0,
+     "smallTargets": 11,
+     "shot": "screenshots/admin_admin_pricing_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 1164,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_pricing_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 1136,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_pricing_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 1112,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_pricing_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/screens",
+   "finalUrl": "/admin/screens",
+   "status": 200,
+   "title": "Screens and Devices | AdVibe Admin | AdVibe",
+   "h1": [
+    "Screens & Devices"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 4,
+     "shot": "screenshots/admin_admin_screens_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_screens_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_screens_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_screens_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/settings",
+   "finalUrl": "/admin/settings",
+   "status": 200,
+   "title": "settings | AdVibe Admin | AdVibe",
+   "h1": [
+    "Security & Settings"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 3,
+     "shot": "screenshots/admin_admin_settings_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_settings_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_settings_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_settings_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/settlements",
+   "finalUrl": "/admin/settlements",
+   "status": 200,
+   "title": "Settlements | AdVibe Admin | AdVibe",
+   "h1": [
+    "Driver Settlements"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 3,
+     "shot": "screenshots/admin_admin_settlements_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_settlements_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_settlements_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_settlements_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/support",
+   "finalUrl": "/admin/support",
+   "status": 200,
+   "title": "support | AdVibe Admin | AdVibe",
+   "h1": [
+    "Support & Disputes"
+   ],
+   "axe": [],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 921,
+     "smallText": 0,
+     "smallTargets": 5,
+     "shot": "screenshots/admin_admin_support_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 957,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_support_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_support_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 939,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_support_1440.jpg"
+    }
+   }
+  },
+  {
+   "role": "admin",
+   "route": "/admin/users",
+   "finalUrl": "/admin/users",
+   "status": 200,
+   "title": "users | AdVibe Admin | AdVibe",
+   "h1": [
+    "Users & Roles"
+   ],
+   "axe": [
+    {
+     "id": "color-contrast",
+     "impact": "serious",
+     "help": "Elements must meet minimum color contrast ratio thresholds",
+     "nodes": 3,
+     "sample": [
+      ".flex-wrap.py-3.justify-between:nth-child(1) > div:nth-child(1) > .text-slate-400.mt-1",
+      ".flex-wrap.py-3.justify-between:nth-child(2) > div:nth-child(1) > .text-slate-400.mt-1"
+     ]
+    }
+   ],
+   "failedRequests": [],
+   "consoleErrors": [],
+   "pageErrors": [],
+   "widths": {
+    "390": {
+     "overflowX": false,
+     "scrollWidth": 390,
+     "height": 1230,
+     "smallText": 0,
+     "smallTargets": 11,
+     "shot": "screenshots/admin_admin_users_390.jpg"
+    },
+    "768": {
+     "overflowX": false,
+     "scrollWidth": 768,
+     "height": 964,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_users_768.jpg"
+    },
+    "1280": {
+     "overflowX": false,
+     "scrollWidth": 1280,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_users_1280.jpg"
+    },
+    "1440": {
+     "overflowX": false,
+     "scrollWidth": 1440,
+     "height": 960,
+     "smallText": 0,
+     "smallTargets": null,
+     "shot": "screenshots/admin_admin_users_1440.jpg"
+    }
+   }
+  }
+ ],
+ "accessControl": [
+  {
+   "route": "/advertiser",
+   "role": "anon",
+   "finalUrl": "/advertiser",
+   "h1": "Secure advertiser access",
+   "text": "Secure advertiser access Authentication required Sign inRetry connection"
+  },
+  {
+   "route": "/advertiser",
+   "role": "advertiser",
+   "finalUrl": "/advertiser",
+   "h1": "Overview",
+   "text": "ADVERTISER WORKSPACE Overview Current business Audit fixture business Dashboard metrics are counts of records fetched from your account, not verified impressio"
+  },
+  {
+   "route": "/advertiser",
+   "role": "driver",
+   "finalUrl": "/advertiser",
+   "h1": "Secure advertiser access",
+   "text": "Secure advertiser access Insufficient permissions Sign inRetry connection"
+  },
+  {
+   "route": "/advertiser",
+   "role": "admin",
+   "finalUrl": "/advertiser",
+   "h1": "Secure advertiser access",
+   "text": "Secure advertiser access This account cannot access the advertiser portal. Sign inRetry connection"
+  },
+  {
+   "route": "/advertiser/campaigns",
+   "role": "anon",
+   "finalUrl": "/advertiser/campaigns",
+   "h1": "Secure advertiser access",
+   "text": "Secure advertiser access Authentication required Sign inRetry connection"
+  },
+  {
+   "route": "/advertiser/campaigns",
+   "role": "advertiser",
+   "finalUrl": "/advertiser/campaigns",
+   "h1": "Campaigns",
+   "text": "ADVERTISER WORKSPACE Campaigns Current business Audit fixture business My campaigns Create draft Filter by status All statuses draft submitted changes requeste"
+  },
+  {
+   "route": "/advertiser/campaigns",
+   "role": "driver",
+   "finalUrl": "/advertiser/campaigns",
+   "h1": "Secure advertiser access",
+   "text": "Secure advertiser access Insufficient permissions Sign inRetry connection"
+  },
+  {
+   "route": "/advertiser/campaigns",
+   "role": "admin",
+   "finalUrl": "/advertiser/campaigns",
+   "h1": "Secure advertiser access",
+   "text": "Secure advertiser access This account cannot access the advertiser portal. Sign inRetry connection"
+  },
+  {
+   "route": "/driver",
+   "role": "anon",
+   "finalUrl": "/driver",
+   "h1": "Live session required",
+   "text": "Live session required Authentication required Secure sign in"
+  },
+  {
+   "route": "/driver",
+   "role": "advertiser",
+   "finalUrl": "/driver",
+   "h1": "Live session required",
+   "text": "Live session required Your authenticated account does not have access to the driver portal. Secure sign in"
+  },
+  {
+   "route": "/driver",
+   "role": "driver",
+   "finalUrl": "/driver",
+   "h1": "Overview",
+   "text": "DRIVER / BACKEND Overview Only records returned by the authenticated AdVibe API are shown. No simulated financial or campaign activity. Refresh Id c9069bac-"
+  },
+  {
+   "route": "/driver",
+   "role": "admin",
+   "finalUrl": "/driver",
+   "h1": "Live session required",
+   "text": "Live session required Your authenticated account does not have access to the driver portal. Secure sign in"
+  },
+  {
+   "route": "/driver/earnings",
+   "role": "anon",
+   "finalUrl": "/driver/earnings",
+   "h1": "Live session required",
+   "text": "Live session required Authentication required Secure sign in"
+  },
+  {
+   "route": "/driver/earnings",
+   "role": "advertiser",
+   "finalUrl": "/driver/earnings",
+   "h1": "Live session required",
+   "text": "Live session required Your authenticated account does not have access to the driver portal. Secure sign in"
+  },
+  {
+   "route": "/driver/earnings",
+   "role": "driver",
+   "finalUrl": "/driver/earnings",
+   "h1": "Earnings",
+   "text": "DRIVER / BACKEND Earnings Only records returned by the authenticated AdVibe API are shown. No simulated financial or campaign activity. Refresh Currency INR"
+  },
+  {
+   "route": "/driver/earnings",
+   "role": "admin",
+   "finalUrl": "/driver/earnings",
+   "h1": "Live session required",
+   "text": "Live session required Your authenticated account does not have access to the driver portal. Secure sign in"
+  },
+  {
+   "route": "/admin",
+   "role": "anon",
+   "finalUrl": "/admin",
+   "h1": "Secure Admin access",
+   "text": "Secure Admin access Authentication required Sign in with Admin MFARetry secure session"
+  },
+  {
+   "route": "/admin",
+   "role": "advertiser",
+   "finalUrl": "/admin",
+   "h1": "Secure Admin access",
+   "text": "Secure Admin access This account has no Admin permission. Sign in with Admin MFARetry secure session"
+  },
+  {
+   "route": "/admin",
+   "role": "driver",
+   "finalUrl": "/admin",
+   "h1": "Secure Admin access",
+   "text": "Secure Admin access This account has no Admin permission. Sign in with Admin MFARetry secure session"
+  },
+  {
+   "route": "/admin",
+   "role": "admin",
+   "finalUrl": "/admin",
+   "h1": "Dashboard",
+   "text": "SERVER-BACKED ADMIN OPERATIONS Dashboard These are server-computed PostgreSQL metrics for the selected UTC reporting period. Payment figures are provider-confi"
+  },
+  {
+   "route": "/admin/users",
+   "role": "anon",
+   "finalUrl": "/admin/users",
+   "h1": "Secure Admin access",
+   "text": "Secure Admin access Authentication required Sign in with Admin MFARetry secure session"
+  },
+  {
+   "route": "/admin/users",
+   "role": "advertiser",
+   "finalUrl": "/admin/users",
+   "h1": "Secure Admin access",
+   "text": "Secure Admin access This account has no Admin permission. Sign in with Admin MFARetry secure session"
+  },
+  {
+   "route": "/admin/users",
+   "role": "driver",
+   "finalUrl": "/admin/users",
+   "h1": "Secure Admin access",
+   "text": "Secure Admin access This account has no Admin permission. Sign in with Admin MFARetry secure session"
+  },
+  {
+   "route": "/admin/users",
+   "role": "admin",
+   "finalUrl": "/admin/users",
+   "h1": "Users & Roles",
+   "text": "SERVER-BACKED ADMIN OPERATIONS Users & Roles Users and access Refresh Only verified server roles are trusted. Account status changes require an explicit reason"
+  }
+ ]
+}
