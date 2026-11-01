@@ -162,6 +162,69 @@ button:not(:disabled) { cursor: pointer; }
 @keyframes advibe-rise-in { from { opacity: 0; scale: 0.98; } to { opacity: 1; scale: 1; } }
 @keyframes advibe-slide-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
+/* M4: the route line (homepage hero). Draws once on load; static under reduced motion. */
+.route-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  border: 2px solid #9fb0cc;
+  background: var(--night);
+  animation: route-dot-on 300ms ease-out forwards;
+  animation-delay: calc(var(--i) * 550ms + 200ms);
+}
+.route-seg {
+  position: absolute;
+  left: 11px;
+  top: 24px;
+  bottom: 0;
+  width: 2px;
+  background: #2a4166;
+  overflow: hidden;
+}
+.route-seg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--signal);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: route-grow-y 450ms ease-in-out forwards;
+  animation-delay: calc(var(--i) * 550ms + 400ms);
+}
+.route-live {
+  opacity: 0;
+  animation: advibe-fade-in 300ms ease-out forwards;
+  animation-delay: 1500ms;
+}
+@media (min-width: 768px) {
+  .route-seg {
+    left: 24px;
+    right: 0;
+    top: 11px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+  }
+  .route-seg::after {
+    transform: scaleX(0);
+    transform-origin: left;
+    animation-name: route-grow-x;
+  }
+}
+@keyframes route-dot-on {
+  to { border-color: var(--signal); background: var(--signal); box-shadow: 0 0 0 4px rgba(8, 102, 255, 0.25); }
+}
+@keyframes route-grow-y { to { transform: scaleY(1); } }
+@keyframes route-grow-x { to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .route-dot { animation: none; border-color: var(--signal); background: var(--signal); }
+  .route-seg::after { animation: none; transform: none; }
+  .route-live { animation: none; opacity: 1; }
+}
+
 /* Part 4: cinematic homepage composition. CSS-only motion keeps hydration minimal. */
 .advibe-hero-sky {
   top: auto;

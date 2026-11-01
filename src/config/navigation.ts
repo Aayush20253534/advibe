@@ -66,22 +66,22 @@ export const portalNavigation: Record<PortalRole,NavItem[]> = {
 };
 export const publicNavigation = [
   {label:"Home",href:"/"},
-  {label:"For Advertisers",href:"/for-advertisers",children:[
-    {label:"Why AdVibe?",href:"/for-advertisers"},
-    {label:"Ad Formats",href:"/ad-formats"},
+  {label:"For advertisers",href:"/for-advertisers",children:[
+    {label:"How advertising works",href:"/for-advertisers"},
+    {label:"Ad formats",href:"/ad-formats"},
     {label:"Pricing",href:"/pricing"},
   ]},
-  {label:"For Drivers",href:"/for-drivers",children:[
-    {label:"Drive with AdVibe",href:"/for-drivers"},
-    {label:"Driver Sign Up",href:"/signup?role=driver"},
-    {label:"Help Center",href:"/help-center"},
+  {label:"For drivers",href:"/for-drivers",children:[
+    {label:"How partnering works",href:"/for-drivers"},
+    {label:"Apply as a driver",href:"/signup?role=driver"},
+    {label:"Help centre",href:"/help-center"},
   ]},
-  {label:"Ad Formats",href:"/ad-formats"},
+  {label:"Ad formats",href:"/ad-formats"},
   {label:"Locations",href:"/locations"},
   {label:"Pricing",href:"/pricing"},
-  {label:"About Us",href:"/about"},
-  {label:"Contact Us",href:"/contact"},
-  {label:"Help Center",href:"/help-center"},
+  {label:"About",href:"/about"},
+  {label:"Contact",href:"/contact"},
+  {label:"Help centre",href:"/help-center"},
 ] as const;
 
 export function activePortalItem(role:PortalRole,pathname:string) {

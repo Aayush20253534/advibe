@@ -1,23 +1,99 @@
 "use client";
+
 import * as React from "react";
 import Link from "next/link";
-import {ArrowRight, CheckCircle2, IndianRupee, ShieldCheck} from "lucide-react";
-import {FormatPreviewArt} from "@/components/landing/format-preview-art";
-import type {Placement} from "@/types/domain";
-const options:{key:string;name:string;type:Placement;description:string;points:string[]}[]=[
- {key:"bike",name:"Bike",type:"bike_rear",description:"Rear-mounted display concept for everyday two-wheeler routes.",points:["Compact vehicle display","Designed for busy routes","Campaign-dependent earnings"]},
- {key:"auto",name:"Auto Rickshaw",type:"auto_rear",description:"Rear screen concepts for local passenger and city traffic.",points:["Rear or side placement options","Local campaign exposure","Verification before assignment"]},
- {key:"car",name:"Car",type:"car_interior",description:"Interior advertising concept for approved cars and ride-hailing.",points:["Passenger-facing placements","Longer journey engagement","Installation after approval"]}
+import { Check } from "lucide-react";
+import { FormatPreviewArt } from "@/components/landing/format-preview-art";
+import { Tabs } from "@/components/ui";
+import type { Placement } from "@/types/domain";
+import { primaryButton } from "./marketing-blocks";
+
+const options: {
+  key: string;
+  name: string;
+  type: Placement;
+  description: string;
+  points: string[];
+}[] = [
+  {
+    key: "bike",
+    name: "Bike",
+    type: "bike_rear",
+    description: "A compact screen mounted behind the rider.",
+    points: [
+      "Two-wheeler in good condition",
+      "Screen mounted behind the seat",
+      "Earnings depend on assigned campaigns",
+    ],
+  },
+  {
+    key: "auto",
+    name: "Auto rickshaw",
+    type: "auto_rear",
+    description: "A screen on the back or side of the auto.",
+    points: [
+      "Rear or side placement",
+      "Local routes suit neighbourhood campaigns",
+      "Verified before any ad is assigned",
+    ],
+  },
+  {
+    key: "car",
+    name: "Car",
+    type: "car_interior",
+    description: "A seat-back screen that passengers see.",
+    points: [
+      "Passenger-facing screen",
+      "Suits ride-hailing and taxi cars",
+      "Installed after your application is approved",
+    ],
+  },
 ];
-export function DriverVehicleTabs(){
- const [current,setCurrent]=React.useState("bike");
- const selected=options.find(x=>x.key===current)??options[0];
- return <div className="grid gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(260px,.8fr)]">
-  <div><div className="grid gap-3 sm:grid-cols-3">{options.map(o=><button key={o.key} onClick={()=>setCurrent(o.key)} aria-pressed={current===o.key} className={"overflow-hidden rounded-xl border bg-white text-left shadow-sm "+(current===o.key?"border-brand-blue ring-1 ring-brand-blue":"border-[#dce8f8]")}><div className="aspect-[1.7]"><FormatPreviewArt type={o.type}/></div><div className="p-4"><h3 className="text-sm font-bold text-brand-navy">{o.name}</h3><p className="mt-1 text-xs leading-5 text-muted-foreground">{o.description}</p></div></button>)}</div>
-   <div className="mt-4 rounded-xl border border-[#dce8f8] bg-white p-5"><h3 className="text-lg font-extrabold text-brand-navy">{selected.name} Partner Requirements</h3><ul className="mt-3 grid gap-3 sm:grid-cols-3">{selected.points.map(point=><li key={point} className="flex items-start gap-2 text-sm leading-5 text-[#40587d]"><CheckCircle2 className="mt-0.5 size-4 shrink-0 text-[#06b26b]"/>{point}</li>)}</ul></div>
-  </div>
-  <aside className="rounded-2xl bg-[linear-gradient(145deg,#031631,#0754a5)] p-6 text-white"><IndianRupee className="size-10 text-[#f8a52e]"/><h3 className="mt-3 text-xl font-extrabold">Earning Opportunities</h3><p className="mt-3 text-sm leading-6 text-[#e2ebff]">Your earnings depend on your city, verified vehicle, campaign assignments, screen uptime and the driver agreement.</p><div className="mt-5 rounded-xl border border-white/25 bg-white/10 p-4"><p className="text-xs text-[#bfd5fa]">Selected vehicle</p><p className="mt-1 text-lg font-bold">{selected.name}</p><p className="mt-3 text-xs text-[#cfe0ff]">No guaranteed monthly earning or payout estimate is available without a signed commercial rate card.</p></div>
-   <p className="mt-5 flex items-center gap-2 text-xs text-[#c7e1fc]"><ShieldCheck className="size-4"/>Approval is required before ad delivery.</p>
-   <Link href="/signup?role=driver" className="mt-5 flex min-h-11 items-center justify-center gap-2 rounded-full bg-brand-orange px-5 text-sm font-bold text-white hover:bg-[#e95e00]">Join as a Driver Partner <ArrowRight className="size-4"/></Link></aside>
- </div>;
+
+export function DriverVehicleTabs() {
+  const [current, setCurrent] = React.useState("bike");
+  const selected = options.find((x) => x.key === current) ?? options[0]!;
+  return (
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(280px,0.8fr)]">
+      <div>
+        <Tabs
+          label="Vehicle type"
+          tabs={options.map((o) => ({ value: o.key, label: o.name }))}
+          value={current}
+          onValueChange={setCurrent}
+        />
+        <div className="mt-6 grid gap-6 sm:grid-cols-[1.2fr_1fr]">
+          <div className="aspect-[1.75] overflow-hidden rounded-lg border border-line">
+            <FormatPreviewArt type={selected.type} />
+          </div>
+          <div>
+            <h3 className="font-heading text-xl font-semibold text-ink">{selected.name}</h3>
+            <p className="mt-1 text-base text-ink-muted">{selected.description}</p>
+            <ul className="mt-4 space-y-2">
+              {selected.points.map((point) => (
+                <li key={point} className="flex items-start gap-2 text-base text-ink">
+                  <Check className="mt-1 size-4 shrink-0 text-success-fg" aria-hidden />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <aside className="rounded-lg bg-night p-6 text-white">
+        <h3 className="font-heading text-xl font-semibold">What you can earn</h3>
+        <p className="mt-3 text-base text-[#c3d0e4]">
+          Earnings depend on your city, your vehicle, the campaigns assigned to your screen, how
+          long the screen is online and your partner agreement.
+        </p>
+        <p className="mt-4 rounded-lg border border-white/25 p-4 text-sm">
+          AdVibe does not publish a guaranteed monthly amount. You see the confirmed rate in your
+          agreement before you sign.
+        </p>
+        <Link href="/signup?role=driver" className={primaryButton + " mt-6 w-full"}>
+          Apply as a driver partner
+        </Link>
+      </aside>
+    </div>
+  );
 }

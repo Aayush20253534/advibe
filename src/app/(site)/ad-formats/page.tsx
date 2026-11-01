@@ -1,21 +1,74 @@
-import type {Metadata} from "next";
-import {BadgeCheck, MonitorPlay, Target} from "lucide-react";
-import {PageHero,Section,Heading,CTA,Benefits} from "@/components/public/marketing-blocks";
-import {FormatCatalogue} from "@/components/public/format-catalogue";
-import {FAQList} from "@/components/public/faq-list";
-import {publicFAQs} from "@/components/public/faq-data";
-export const metadata:Metadata={title:"Ad Formats | Digital Vehicle Advertising",description:"Compare bike, auto-rickshaw and car advertising placements, screen formats, creative concepts and example specifications."};
-export default function Page(){return <>
- <PageHero eyebrow="Advertising Formats" title="Your Brand on" accent="Every Vehicle" description="Choose a vehicle advertising placement that suits your campaign goals. Compare digital formats and discover the next steps for creative preparation."
-  actions={[{label:"Estimate Your Campaign",href:"/pricing"},{label:"How It Works",href:"/for-advertisers",secondary:true}]}
-  points={[{text:"Multiple vehicles",icon:MonitorPlay},{text:"Location targeting",icon:Target},{text:"Creative review",icon:BadgeCheck}]}/>
- <Section><Heading title="Explore Advertising Formats" description="Select a card to inspect the proposed creative placement. Actual hardware is subject to verification."/><FormatCatalogue/></Section>
- <Section muted><Heading title="Choosing the Right Format" description="Match visibility, placement and creative requirements to your objective."/><Benefits items={[
-  {title:"Placement & Sightlines",text:"Consider whether drivers, passengers or following traffic will view the ad.",icon:Target},
-  {title:"File Compatibility",text:"Prepare media in the format and aspect ratio specified by the selected device.",icon:MonitorPlay},
-  {title:"Review & Compliance",text:"Ads must pass content policy checks before being scheduled for delivery.",icon:BadgeCheck},
-  {title:"Measure Results",text:"Compare campaign reports once reliable delivery records are available.",icon:MonitorPlay}
- ]}/></Section>
- <Section><Heading title="Ad Format Questions" action={{label:"Help Center",href:"/help-center"}}/><FAQList items={publicFAQs.filter(x=>x.category==="Technical"||x.question.includes("types of vehicle"))}/></Section>
- <CTA title="Create a Campaign in the Right Format" text="Choose your placement, then plan creative content and screen targeting." label="Start Advertising" href="/signup?role=advertiser"/>
- </>;}
+import type { Metadata } from "next";
+import { Benefits, CTA, Heading, PageHero, Section } from "@/components/public/marketing-blocks";
+import { FormatCatalogue } from "@/components/public/format-catalogue";
+import { FAQList } from "@/components/public/faq-list";
+import { publicFAQs } from "@/components/public/faq-data";
+import { Eye, FileImage, ShieldCheck, Target } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Ad Formats | Digital Vehicle Advertising",
+  description:
+    "Compare bike, auto-rickshaw and car advertising placements, screen formats, creative concepts and example specifications.",
+};
+
+// Purpose: help an advertiser pick a placement and prepare the right creative for it.
+export default function Page() {
+  return (
+    <>
+      <PageHero
+        title="Ad formats"
+        description="Compare where each placement sits, who sees it and what it suits, then estimate the cost of the one you choose."
+      />
+      <Section>
+        <FormatCatalogue />
+      </Section>
+      <Section muted labelledBy="choosing">
+        <Heading id="choosing" title="How to choose a format" />
+        <Benefits
+          items={[
+            {
+              title: "Who will see it",
+              text: "Rear screens reach following traffic and pedestrians; seat-back screens reach passengers for the whole ride.",
+              icon: Eye,
+            },
+            {
+              title: "Where it travels",
+              text: "Autos and bikes stay on local routes; cars cover more of the city.",
+              icon: Target,
+            },
+            {
+              title: "The file you need",
+              text: "Prepare your image or video in the format's aspect ratio. An admin checks it before it can run.",
+              icon: FileImage,
+            },
+            {
+              title: "What is allowed",
+              text: "Ads must follow AdVibe's content rules and the law. Misleading or prohibited content is rejected.",
+              icon: ShieldCheck,
+            },
+          ]}
+        />
+      </Section>
+      <Section labelledBy="faq">
+        <Heading
+          id="faq"
+          title="Questions about formats"
+          action={{ label: "See all questions", href: "/help-center" }}
+        />
+        <div className="max-w-3xl">
+          <FAQList
+            items={publicFAQs.filter(
+              (x) => x.category === "Technical" || x.question.includes("types of vehicle"),
+            )}
+          />
+        </div>
+      </Section>
+      <CTA
+        title="Picked a format?"
+        text="Create an account to upload your creative and build a campaign draft."
+        label="Create an advertiser account"
+        href="/signup?role=advertiser"
+      />
+    </>
+  );
+}
