@@ -2,7 +2,7 @@
 import * as React from "react";
 import Link from "next/link";
 import {ArrowRight,BarChart3,Download,ReceiptText,ShieldAlert,Wallet} from "lucide-react";
-import {Badge,Button,Card,CardContent,CardHeader,CardTitle} from "@/components/ui";
+import {Button,Card,CardContent,CardHeader,CardTitle} from "@/components/ui";
 import {moneyINR} from "@/lib/demo-rules";
 import {DriverAccess,DriverDemoWarning,useDriverOperationsData} from "./operations-shared";
 import {driverSettlements,filteredDriverSettlements,monthlySettlementSeries,settlementCSV,settlementSummary,settlementStatuses,type SettlementStatus} from "./finance-model";

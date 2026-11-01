@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import Link from "next/link";
 import {api,newIdempotencyKey} from "@/services/api-client";
 import {useAuth,useCollection,Panel,Notice,CollectionNotice,Pagination,field,label,primary,secondary,message,money,formatDate,
  type Campaign,type Site,type ScreenFormat,type Quote,type Payment} from "./common";

@@ -6,10 +6,6 @@ import {useDemoStore} from "@/services/demo-store";
 import type {Notice,Ticket} from "@/types/domain";
 import {AdminAccess,AdminAction,AdminHeading,AdminNavLink,AdminNotice,AdminWarning,control,demoAdmin,MiniStat,StatusPill,useAdminData} from "./admin-shared";
 import {adminAuditCSV} from "./admin-governance-rules";
-function download(content:string){
- const url=URL.createObjectURL(new Blob([content],{type:"text/csv;charset=utf-8"}));
- const a=document.createElement("a");a.href=url;a.download="advibe-admin-DEMO-audit.csv";document.body.appendChild(a);a.click();a.remove();window.setTimeout(()=>URL.revokeObjectURL(url),1200);
-}
 export function AdminSupport(){
  const {db,ready,admin}=useAdminData();
  const [query,setQuery]=React.useState(""),[status,setStatus]=React.useState<Ticket["status"]|"all">("all"),[message,setMessage]=React.useState(""),[error,setError]=React.useState("");

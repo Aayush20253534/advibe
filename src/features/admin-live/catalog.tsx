@@ -117,7 +117,7 @@ export function Screens(){
    const {api}=await import("@/services/api-client");
    const result=await api<{screenId:string;lastHeartbeatAt:string|null;status:string}>("/admin/devices/"+id+"/player-status");
    setView(result);
-  }catch(e){setError(e instanceof Error?e.message:"Player status unavailable";}
+  }catch(e){setError(e instanceof Error?e.message:"Player status unavailable");}
  }
  return <div className="space-y-5">
   <Alert type="warning">Screen pairing, keys, firmware trust and live delivery are hardware-specific operations. Part 7 controls activation. This page does not issue pairing credentials.</Alert>

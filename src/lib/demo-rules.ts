@@ -1,4 +1,4 @@
-import type {Actor,Booking,Campaign,CampaignStatus,Creative,DemoDatabase,DriverApplication,Location,Placement,PricingRule,Screen} from "../types/domain";
+import type {Actor,Campaign,CampaignStatus,DemoDatabase,DriverApplication,Location,Placement,PricingRule,Screen} from "../types/domain";
 
 const DAY_MS=86_400_000;
 export function utcDay(value:string):number{

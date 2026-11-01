@@ -2,8 +2,7 @@
 import * as React from "react";
 import Image from "next/image";
 import {Check,ImageIcon,MapPin,MonitorPlay,UploadCloud,Video} from "lucide-react";
-import {Card,CardContent,CardHeader,CardTitle} from "@/components/ui";
-import type {DemoDatabase,Placement} from "@/types/domain";
+import type {DemoDatabase} from "@/types/domain";
 import {countScheduledDays,inclusiveDays,moneyINR} from "@/lib/demo-rules";
 import {inspectLocalPreview} from "./preview-inspection";
 import {fileSizeLabel} from "./creative-guards";

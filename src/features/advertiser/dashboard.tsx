@@ -2,7 +2,7 @@
 import * as React from "react";
 import Link from "next/link";
 import {ArrowRight,Bell,CheckCircle2,Clock3,Eye,IndianRupee,Layers3,Megaphone,MonitorPlay,TrendingUp} from "lucide-react";
-import {Bar,BarChart,CartesianGrid,Cell,Legend,Pie,PieChart,ResponsiveContainer,Tooltip,XAxis,YAxis} from "recharts";
+import {Bar,BarChart,CartesianGrid,Cell,Pie,PieChart,ResponsiveContainer,Tooltip,XAxis,YAxis} from "recharts";
 import {Card,CardContent,CardHeader,CardTitle} from "@/components/ui";
 import {moneyINR} from "@/lib/demo-rules";
 import {useAdvertiserPrefs} from "@/services/advertiser-preferences";

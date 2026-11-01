@@ -4,7 +4,7 @@ import {create} from "zustand";
 import {createJSONStorage,persist} from "zustand/middleware";
 import {createDemoSeed,DEMO_ACTORS} from "../data/demo-seed";
 import {assertCampaignTransition,assertDriverApproval,canGoLive,canPerform,validateBooking,inclusiveDays} from "../lib/demo-rules";
-import type {Actor,Campaign,CampaignStatus,DemoDatabase,Screen,Creative} from "../types/domain";
+import type {Actor,Campaign,DemoDatabase,Screen,Creative} from "../types/domain";
 import {validateWizardAll,wizardQuote,localToday,type WizardDraft} from "../features/advertiser/wizard-model";
 import {assertAdvertiserManagement,type CampaignManagementAction} from "../features/advertiser/campaign-detail-model";
 import {assertCreativeEdit,validateCreativeDraft,type CreativeDraft} from "../features/advertiser/library-model";
