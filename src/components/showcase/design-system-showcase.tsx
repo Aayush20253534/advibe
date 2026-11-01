@@ -1,245 +1,570 @@
 "use client";
 
 import * as React from "react";
-import {
-  ArrowRight, Bell, CheckCircle2, ChevronRight, CircleAlert, CreditCard,
-  LayoutDashboard, MapPin, Megaphone, MonitorPlay, Settings2,
-  ShieldCheck, Sparkles, Users, Wallet, XCircle,
-} from "lucide-react";
-import { z } from "zod";
+import { Info, Plus, Trash2 } from "lucide-react";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { Button, Badge, Card, CardContent, CardDescription, CardHeader, CardTitle, Dialog, Field, Input, Select, Skeleton, Switch, Tabs, Textarea } from "@/components/ui";
-import { palette, PORTALS, portalDisplayName, type Portal } from "@/lib/theme";
+import {
+  Alert,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Checkbox,
+  DataTable,
+  DateInput,
+  Dialog,
+  Drawer,
+  EmptyState,
+  ErrorState,
+  Field,
+  Input,
+  Metric,
+  PageHeader,
+  PermissionDeniedState,
+  Popover,
+  Select,
+  SkeletonList,
+  StatusBadge,
+  SuccessState,
+  Switch,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsRoot,
+  TabsTrigger,
+  Textarea,
+  Tooltip,
+  type Column,
+  type StatusTone,
+} from "@/components/ui";
 
-const demoSchema = z.object({
-  name: z.string().trim().min(2, "Enter at least 2 characters."),
-  email: z.email("Enter a valid email address."),
-});
-
-const chips = [
-  ["Navy", palette.navy], ["Blue", palette.blue], ["Orange", palette.orange],
-  ["Purple", palette.purple], ["Green", palette.green], ["Amber", palette.amber],
-  ["Red", palette.red],
+const colours = [
+  { token: "ink", hex: "#041B3D", role: "Text, sidebar, dark surfaces", dark: true },
+  { token: "night", hex: "#03152C", role: "Hero and footer only", dark: true },
+  { token: "signal", hex: "#0866FF", role: "The only action and selection colour", dark: true },
+  { token: "beacon", hex: "#FF6A00", role: "Main marketing CTA and live state, ink text" },
+  { token: "paper", hex: "#F7F9FC", role: "App background" },
+  { token: "line", hex: "#DCE4F0", role: "Borders and dividers" },
+  { token: "line-strong", hex: "#7A8AA5", role: "Form control borders (3.5:1)" },
+  { token: "ink-muted", hex: "#4A5B78", role: "Secondary text (6.9:1 on white)", dark: true },
 ] as const;
 
-const roleIcons = {
-  public: Megaphone,
-  admin: ShieldCheck,
-  advertiser: LayoutDashboard,
-  driver: MonitorPlay,
+const statusColours = [
+  { name: "Success", bg: "bg-success-bg", fg: "text-success-fg", border: "border-success-border" },
+  { name: "Warning", bg: "bg-warning-bg", fg: "text-warning-fg", border: "border-warning-border" },
+  { name: "Danger", bg: "bg-danger-bg", fg: "text-danger-fg", border: "border-danger-border" },
+  { name: "Info", bg: "bg-info-bg", fg: "text-info-fg", border: "border-info-border" },
+] as const;
+
+type SampleRow = {
+  id: string;
+  name: string;
+  status: { label: string; tone: StatusTone };
+  start: string;
+  amountPaise: number;
 };
 
-export function DesignSystemShowcase() {
-  const [portal, setPortal] = React.useState<Portal>("public");
-  const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [updates, setUpdates] = React.useState(true);
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [goal, setGoal] = React.useState("awareness");
-  const [notes, setNotes] = React.useState("");
-  const [errors, setErrors] = React.useState<{ name?: string; email?: string }>({});
-  const [feedback, setFeedback] = React.useState("");
-  const RoleIcon = roleIcons[portal];
+const statuses: SampleRow["status"][] = [
+  { label: "Draft", tone: "neutral" },
+  { label: "In review", tone: "info" },
+  { label: "Approved", tone: "success" },
+  { label: "Changes requested", tone: "warning" },
+  { label: "Live", tone: "live" },
+];
 
-  function validate(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const parsed = demoSchema.safeParse({ name, email });
-    if (!parsed.success) {
-      const issues = parsed.error.flatten().fieldErrors;
-      setErrors({ name: issues.name?.[0], email: issues.email?.[0] });
-      setFeedback("");
-      return;
-    }
-    setErrors({});
-    setFeedback("Form validated locally. No campaign has been created.");
-  }
+// Clearly labelled sample rows for demonstrating table behaviour. Not real data.
+const sampleRows: SampleRow[] = Array.from({ length: 23 }, (_, i) => ({
+  id: "sample-" + (i + 1),
+  name: "Sample campaign " + String(i + 1).padStart(2, "0"),
+  status: statuses[i % statuses.length]!,
+  start: new Date(Date.UTC(2026, 10, 1 + i * 2)).toISOString().slice(0, 10),
+  amountPaise: ((i * 7919) % 50000) * 100 + 150000,
+}));
+
+const rupees = (paise: number) =>
+  new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(paise / 100);
+
+const columns: Column<SampleRow>[] = [
+  { key: "name", header: "Campaign", cell: (r) => r.name, sortValue: (r) => r.name },
+  {
+    key: "status",
+    header: "Status",
+    cell: (r) => <StatusBadge tone={r.status.tone}>{r.status.label}</StatusBadge>,
+    sortValue: (r) => r.status.label,
+  },
+  { key: "start", header: "Start date", cell: (r) => r.start, sortValue: (r) => r.start },
+  {
+    key: "amount",
+    header: "Quoted amount",
+    numeric: true,
+    cell: (r) => rupees(r.amountPaise),
+    sortValue: (r) => r.amountPaise,
+  },
+];
+
+function Section({
+  id,
+  title,
+  description,
+  children,
+}: {
+  id: string;
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section aria-labelledby={id} className="border-t border-line py-10">
+      <h2 id={id} className="font-heading text-xl font-semibold text-ink">
+        {title}
+      </h2>
+      {description ? <p className="mt-1 max-w-2xl text-sm text-ink-muted">{description}</p> : null}
+      <div className="mt-6">{children}</div>
+    </section>
+  );
+}
+
+function ValidationDemo() {
+  const [title, setTitle] = React.useState("");
+  const [start, setStart] = React.useState("");
+  const [submitted, setSubmitted] = React.useState(false);
+  const [saved, setSaved] = React.useState(false);
+  const titleError =
+    submitted && title.trim().length < 3
+      ? "Enter a campaign title of at least 3 characters."
+      : undefined;
+  const startError = submitted && !start ? "Choose the date the campaign should start." : undefined;
+  return (
+    <form
+      noValidate
+      className="grid max-w-xl gap-5"
+      onSubmit={(e) => {
+        e.preventDefault();
+        setSubmitted(true);
+        setSaved(title.trim().length >= 3 && Boolean(start));
+      }}
+    >
+      <Field
+        label="Campaign title"
+        htmlFor="ds-title"
+        description="Shown to reviewers and on invoices."
+        error={titleError}
+        required
+      >
+        <Input value={title} onChange={(e) => setTitle(e.target.value)} maxLength={180} />
+      </Field>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field label="Start date" htmlFor="ds-start" error={startError} required>
+          <DateInput value={start} onChange={(e) => setStart(e.target.value)} />
+        </Field>
+        <Field label="Placement" htmlFor="ds-placement">
+          <Select defaultValue="car">
+            <option value="car">Car interior screen</option>
+            <option value="auto">Auto rickshaw rear screen</option>
+            <option value="bike">Bike-mounted screen</option>
+          </Select>
+        </Field>
+      </div>
+      <Field
+        label="Notes for the reviewer"
+        htmlFor="ds-notes"
+        description="Optional. Up to 500 characters."
+      >
+        <Textarea maxLength={500} />
+      </Field>
+      <Checkbox
+        label="Weekdays only"
+        description="Skip Saturday and Sunday deliveries."
+        defaultChecked
+      />
+      {saved ? (
+        <Alert tone="success" title="Draft saved">
+          Nothing is submitted or charged until you choose “Submit for review”.
+        </Alert>
+      ) : null}
+      <div className="flex flex-wrap gap-2">
+        <Button type="submit">Save draft</Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setTitle("");
+            setStart("");
+            setSubmitted(false);
+            setSaved(false);
+          }}
+        >
+          Clear form
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+export function DesignSystemShowcase() {
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [segment, setSegment] = React.useState("all");
+  const [alerts, setAlerts] = React.useState(true);
 
   return (
-    <div data-portal={portal} className="min-h-screen bg-background">
-      <header className="border-b border-white/10 bg-brand-navy text-white">
-        <div className="mx-auto flex min-h-19 max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <BrandLogo priority width={185} className="w-[150px] sm:w-[185px]" />
-          <div className="hidden items-center gap-3 md:flex">
-            <Badge tone="info" shape="pill">Part 1 · Design foundation</Badge>
-            <span className="text-xs text-white/70">59 approved references · 4 portals</span>
-          </div>
-          <Button variant="brand" size="sm" onClick={() => setDialogOpen(true)}>
-            Component demo <ArrowRight className="size-4" aria-hidden />
-          </Button>
-        </div>
-      </header>
+    <main id="main" className="min-h-screen bg-paper">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <PageHeader
+          breadcrumbs={[{ label: "Internal" }, { label: "Design system" }]}
+          title="AdVibe design system"
+          description="Tokens and components shared by the public site and the advertiser, driver and admin portals. Internal reference: not linked from the site and not indexed by search engines."
+          actions={
+            // The approved wordmark is white and orange, so it sits on night (see docs/BRAND.md).
+            <div className="rounded-lg bg-night px-4 py-3">
+              <BrandLogo width={140} />
+            </div>
+          }
+        />
 
-      <main className="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6 sm:py-12">
-        <section className="grid items-center gap-7 rounded-3xl bg-[linear-gradient(125deg,#041b3d,#0a3577)] px-5 py-8 text-white shadow-xl sm:px-9 sm:py-12 lg:grid-cols-[1.2fr_.8fr]">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[.2em] text-[#9ec7ff]">AdVibe · UI Foundation</p>
-            <h1 className="mt-4 max-w-2xl text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl">
-              One design language. <span className="text-[#ff821e]">Four experiences.</span>
-            </h1>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-white/75 sm:text-base">
-              A mobile-first component specimen for the approved AdVibe designs. Portal pages and functional business flows follow in subsequent parts.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button variant="brand" onClick={() => setDialogOpen(true)}>Preview a dialog <ArrowRight className="size-4" aria-hidden /></Button>
-              <Button variant="outline" className="border-white/50 bg-transparent text-white hover:bg-white/10 hover:text-white" onClick={() => document.getElementById("components")?.scrollIntoView({ behavior: "smooth" })}>
-                Explore components
-              </Button>
-            </div>
-          </div>
-          <div className="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm sm:p-7">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="flex size-11 items-center justify-center rounded-xl bg-white/15"><RoleIcon className="size-6 text-white" aria-hidden /></div>
-                <div><p className="text-xs text-white/65">Selected environment</p><p className="font-semibold">{portalDisplayName[portal]}</p></div>
-              </div>
-              <span className="size-3 rounded-full bg-[#18cc78]" aria-hidden />
-            </div>
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              {[["Navigation", "Responsive"], ["Buttons", "Accessible"], ["Theme", "Role-aware"], ["Forms", "Validated"]].map(([title, value]) => (
-                <div key={title} className="min-w-0 rounded-xl border border-white/10 bg-white/10 p-3">
-                  <p className="text-xs text-white/60">{title}</p>
-                  <p className="mt-1 text-sm font-semibold">{value}</p>
+        <Section
+          id="colour"
+          title="Colour"
+          description="Semantic tokens defined once in globals.css. Signal is the only action colour; beacon is reserved for the main marketing call to action and live state, always with ink text."
+        >
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {colours.map((c) => (
+              <li
+                key={c.token}
+                className="overflow-hidden rounded-lg border border-line bg-surface"
+              >
+                <div
+                  className="flex h-16 items-end p-3 text-sm font-semibold"
+                  style={{ background: c.hex, color: "dark" in c ? "#fff" : "#041b3d" }}
+                >
+                  {c.token}
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section aria-label="Portal theme selector" className="space-y-4">
-          <div className="flex flex-wrap items-end justify-between gap-2">
-            <div><h2 className="text-xl font-bold tracking-tight sm:text-2xl">Portal color system</h2><p className="mt-1 text-sm text-muted-foreground">Change portal context to test the primary action color.</p></div>
-            <Badge tone="success"><CheckCircle2 className="size-3.5" aria-hidden /> Interactive</Badge>
-          </div>
-          <Tabs label="Choose portal theme" tabs={PORTALS.map((value) => ({ value, label: portalDisplayName[value] }))} value={portal} onValueChange={(value) => setPortal(value as Portal)} />
-          <div className="flex flex-wrap gap-2">
-            {chips.map(([label, hex]) => (
-              <div key={label} className="flex items-center gap-2 rounded-xl border border-line bg-white px-3 py-2 text-xs font-medium">
-                <span className="size-6 rounded-md border border-black/5" style={{ background: hex }} aria-hidden />
-                <span>{label}</span><span className="text-muted-foreground">{hex}</span>
-              </div>
+                <div className="p-3 text-sm">
+                  <p className="font-mono text-ink">{c.hex}</p>
+                  <p className="text-ink-muted">{c.role}</p>
+                </div>
+              </li>
             ))}
+          </ul>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {statusColours.map((s) => (
+              <li
+                key={s.name}
+                className={`rounded-lg border p-3 text-sm font-semibold ${s.bg} ${s.fg} ${s.border}`}
+              >
+                {s.name}: text on background meets 4.5:1
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        <Section
+          id="type"
+          title="Typography"
+          description="Overpass for headings and display text only; the platform UI font for everything else. 12px minimum, sentence case, tabular numerals for money and metrics."
+        >
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="space-y-3">
+              <p className="font-heading text-4xl font-bold text-ink">Display 48</p>
+              <p className="font-heading text-3xl font-bold text-ink">Heading 36</p>
+              <p className="font-heading text-2xl font-semibold text-ink">Heading 24</p>
+              <p className="font-heading text-xl font-semibold text-ink">Heading 20</p>
+              <p className="font-heading text-lg font-semibold text-ink">Heading 18</p>
+            </div>
+            <div className="space-y-3 text-ink">
+              <p className="text-base">Body 16: plain, active and specific sentences.</p>
+              <p className="text-sm">Small 14: table cells, form hints and secondary text.</p>
+              <p className="text-xs">Caption 12: the smallest size used anywhere.</p>
+              <table className="mt-2 text-sm">
+                <caption className="sr-only">Tabular numerals example</caption>
+                <tbody>
+                  {[1250000, 98000, 4500000].map((v) => (
+                    <tr key={v}>
+                      <th scope="row" className="pr-6 text-left font-normal text-ink-muted">
+                        Sample amount
+                      </th>
+                      <td data-numeric="" className="text-right">
+                        {rupees(v)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        </Section>
 
-        <div id="components" className="grid gap-6 lg:grid-cols-2">
-          <Card>
-            <CardHeader><CardTitle>Buttons and status</CardTitle><CardDescription>Semantic variants, keyboard focus, loading and disabled states.</CardDescription></CardHeader>
-            <CardContent className="space-y-5">
-              <div className="flex flex-wrap gap-2">
-                <Button variant="primary" onClick={() => setFeedback("Primary action activated.")}>Primary <ArrowRight className="size-4" aria-hidden /></Button>
-                <Button variant="brand" onClick={() => setFeedback("Orange brand action activated.")}>Brand CTA</Button>
-                <Button variant="outline" onClick={() => setDialogOpen(true)}>Outline</Button>
-                <Button variant="secondary" onClick={() => setFeedback("Secondary action activated.")}>Secondary</Button>
-                <Button variant="ghost" onClick={() => setFeedback("Ghost action activated.")}>Ghost</Button>
-              </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <Button size="sm" variant="primary">Compact</Button>
-                <Button variant="destructive" size="sm" onClick={() => setFeedback("This is a demo action, no record was deleted.")}>Destructive</Button>
-                <Button variant="primary" size="sm" loading>Loading</Button>
-                <Button variant="primary" size="sm" disabled>Disabled</Button>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Badge tone="success" shape="pill">Active</Badge>
-                <Badge tone="warning" shape="pill">Pending</Badge>
-                <Badge tone="danger" shape="pill">Rejected</Badge>
-                <Badge tone="info" shape="pill">Under review</Badge>
-                <Badge tone="purple" shape="pill">Admin</Badge>
-                <Badge tone="orange" shape="pill">Campaign</Badge>
-              </div>
-              {feedback ? <p role="status" className="rounded-lg bg-[#edf7ff] px-3 py-2 text-sm text-[#124b90]">{feedback}</p> : null}
+        <Section
+          id="buttons"
+          title="Buttons"
+          description="Labels say exactly what happens. One primary action per area."
+        >
+          <div className="flex flex-wrap items-center gap-3">
+            <Button>Submit for review</Button>
+            <Button variant="brand">Start advertising</Button>
+            <Button variant="secondary">Save draft</Button>
+            <Button variant="outline">Download invoice</Button>
+            <Button variant="ghost">Cancel</Button>
+            <Button variant="destructive">Delete draft</Button>
+            <Button variant="link">View pricing details</Button>
+          </div>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <Button size="sm">Small</Button>
+            <Button size="lg">Large</Button>
+            <Button loading>Saving draft</Button>
+            <Button disabled>Unavailable</Button>
+            <Tooltip content="Add a campaign">
+              <Button size="icon" aria-label="Add a campaign">
+                <Plus className="size-5" aria-hidden />
+              </Button>
+            </Tooltip>
+            <Tooltip content="Delete draft">
+              <Button size="icon" variant="outline" aria-label="Delete draft">
+                <Trash2 className="size-5" aria-hidden />
+              </Button>
+            </Tooltip>
+          </div>
+        </Section>
+
+        <Section
+          id="forms"
+          title="Forms and validation"
+          description="Labels above controls, hints before the field, errors after it with an icon. Submit the empty form to see validation."
+        >
+          <ValidationDemo />
+          <div className="mt-6 flex items-center gap-3">
+            <Switch checked={alerts} onCheckedChange={setAlerts} aria-label="Email alerts" />
+            <span className="text-sm text-ink">Email alerts are {alerts ? "on" : "off"}</span>
+          </div>
+        </Section>
+
+        <Section
+          id="status"
+          title="Badges and status"
+          description="Status always has a text label; colour is never the only signal."
+        >
+          <div className="flex flex-wrap gap-2">
+            <StatusBadge tone="neutral">Draft</StatusBadge>
+            <StatusBadge tone="info">In review</StatusBadge>
+            <StatusBadge tone="success">Approved</StatusBadge>
+            <StatusBadge tone="warning">Changes requested</StatusBadge>
+            <StatusBadge tone="danger">Rejected</StatusBadge>
+            <StatusBadge tone="live">Live</StatusBadge>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Badge>Car interior</Badge>
+            <Badge tone="info">New</Badge>
+            <Badge tone="warning">Payments disabled</Badge>
+          </div>
+        </Section>
+
+        <Section id="alerts" title="Alerts">
+          <div className="grid gap-3 lg:grid-cols-2">
+            <Alert tone="info" title="Drafts are free">
+              Drafts are not booked or charged until an admin approves them.
+            </Alert>
+            <Alert tone="success" title="Creative approved">
+              You can now submit campaigns that use “Diwali offer 15s”.
+            </Alert>
+            <Alert tone="warning" title="Upload a creative first">
+              Campaigns need an approved creative. Upload one in the creative library.
+            </Alert>
+            <Alert
+              tone="danger"
+              title="Couldn’t save the draft"
+              action={<Button size="sm">Try again</Button>}
+            >
+              The connection dropped before the server confirmed. Nothing was charged.
+            </Alert>
+          </div>
+        </Section>
+
+        <Section id="cards" title="Cards and metrics" description="Sample values for layout only.">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Metric label="Campaigns in review" value="3" />
+            <Metric label="Approved creatives" value="12" />
+            <Metric label="Quoted this month" value={rupees(4512000)} hint="Before tax" />
+            <Metric label="Open support tickets" value="0" />
+          </div>
+          <Card className="mt-4 max-w-xl">
+            <CardHeader>
+              <CardTitle>Billing details</CardTitle>
+              <CardDescription>
+                Used on invoices for every campaign in this business.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-sm text-ink">
+              Cards group related content. They have a border and no shadow by default.
             </CardContent>
+            <CardFooter>
+              <Button variant="outline" size="sm">
+                Edit billing details
+              </Button>
+            </CardFooter>
           </Card>
+        </Section>
 
-          <Card>
-            <CardHeader><CardTitle>Form primitives</CardTitle><CardDescription>Real client-side validation for this demo form; no data is sent.</CardDescription></CardHeader>
-            <CardContent>
-              <form onSubmit={validate} noValidate className="space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <Field htmlFor="demo-name" label="Business name" required error={errors.name}>
-                    <Input id="demo-name" value={name} onChange={(event) => setName(event.target.value)} placeholder="Your business" invalid={!!errors.name} aria-describedby={errors.name ? "demo-name-error" : undefined} />
-                  </Field>
-                  <Field htmlFor="demo-email" label="Email address" required error={errors.email}>
-                    <Input id="demo-email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" invalid={!!errors.email} aria-describedby={errors.email ? "demo-email-error" : undefined} />
-                  </Field>
-                </div>
-                <Field htmlFor="demo-goal" label="Campaign objective">
-                  <Select id="demo-goal" value={goal} onChange={(event) => setGoal(event.target.value)}>
-                    <option value="awareness">Brand awareness</option><option value="traffic">Store visits</option><option value="offers">Promote an offer</option>
-                  </Select>
-                </Field>
-                <Field htmlFor="demo-notes" label="Notes" description="Optional. Stored only in this preview's temporary state.">
-                  <Textarea id="demo-notes" value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Campaign notes..." />
-                </Field>
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <Switch aria-label="Demo notifications" checked={updates} onCheckedChange={setUpdates} />
-                    <span className="text-sm">Email updates {updates ? "on" : "off"}</span>
-                  </div>
-                  <Button type="submit">Validate form <ChevronRight className="size-4" aria-hidden /></Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+        <Section
+          id="table"
+          title="Data table"
+          description="Sortable headers, a filter box and pagination. Money is right-aligned with tabular numerals. Sample rows, not real campaigns."
+        >
+          <DataTable
+            caption="Sample campaigns"
+            columns={columns}
+            rows={sampleRows}
+            getRowId={(r) => r.id}
+            filterLabel="Filter campaigns"
+            pageSize={8}
+          />
+        </Section>
 
-        <section className="grid gap-6 lg:grid-cols-[1.4fr_.6fr]">
-          <Card>
-            <CardHeader><CardTitle>Dashboard primitives</CardTitle><CardDescription>Data-card visual patterns for the upcoming portal shells.</CardDescription></CardHeader>
-            <CardContent>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {[
-                  {icon: Megaphone,title:"Campaigns",value:"24",change:"+12%",color:"bg-[#eaf1ff] text-brand-blue"},
-                  {icon: Users,title:"Estimated reach",value:"50K+",change:"+18%",color:"bg-[#e9f9f0] text-[#079c52]"},
-                  {icon: Wallet,title:"Demo revenue",value:"₹48,750",change:"+8%",color:"bg-[#fff0e2] text-brand-orange"},
-                ].map((metric) => (
-                  <div key={metric.title} className="min-w-0 rounded-xl border border-line p-4">
-                    <div className={"inline-flex size-10 items-center justify-center rounded-xl " + metric.color}><metric.icon className="size-5" aria-hidden /></div>
-                    <p className="mt-3 text-xs text-muted-foreground">{metric.title}</p>
-                    <p className="mt-1 text-xl font-bold">{metric.value}</p>
-                    <Badge tone="success" className="mt-2">{metric.change} sample</Badge>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {[{icon: MapPin,name:"Locations"},{icon: Settings2,name:"Settings"},{icon: CreditCard,name:"Billing"},{icon: Bell,name:"Alerts"}].map((tile) => (
-                  <div key={tile.name} className="flex min-h-21 flex-col items-center justify-center gap-2 rounded-xl border border-line bg-[#fbfdff] text-sm font-medium">
-                    <tile.icon className="size-5 text-brand-blue" aria-hidden />{tile.name}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader><CardTitle>Loading and feedback</CardTitle><CardDescription>Consistent skeleton and message styles.</CardDescription></CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center gap-3"><Skeleton className="size-11 rounded-full"/><div className="flex-1 space-y-2"><Skeleton className="h-3 w-2/3"/><Skeleton className="h-3 w-1/2"/></div></div>
-              <Skeleton className="h-15 w-full"/>
-              <div className="flex gap-2 rounded-xl border border-[#bee7d2] bg-[#f0fbf5] p-3 text-sm text-[#087342]">
-                <CheckCircle2 className="mt-0.5 size-4 shrink-0" aria-hidden /> Shared components are ready for portal integration.
-              </div>
-              <div className="flex gap-2 rounded-xl border border-[#f4d4b1] bg-[#fff8ee] p-3 text-sm text-[#965300]">
-                <CircleAlert className="mt-0.5 size-4 shrink-0" aria-hidden /> Charts and totals in this specimen are illustrative.
-              </div>
-              <div className="flex gap-2 rounded-xl border border-[#f5bdc8] bg-[#fff2f4] p-3 text-sm text-[#b52238]">
-                <XCircle className="mt-0.5 size-4 shrink-0" aria-hidden /> Production services are not connected.
-              </div>
-            </CardContent>
-          </Card>
-        </section>
+        <Section
+          id="overlays"
+          title="Dialog, drawer, popover and tooltip"
+          description="Dialogs and drawers trap focus, close on Escape and return focus to the button that opened them."
+        >
+          <div className="flex flex-wrap gap-3">
+            <Button variant="destructive" onClick={() => setDialogOpen(true)}>
+              Reject creative
+            </Button>
+            <Button variant="outline" onClick={() => setDrawerOpen(true)}>
+              View campaign details
+            </Button>
+            <Popover
+              label="What counts as a screen-day"
+              trigger={
+                <Button variant="ghost">
+                  <Info className="size-4" aria-hidden />
+                  What is a screen-day?
+                </Button>
+              }
+            >
+              <p className="font-semibold">Screen-day</p>
+              <p className="mt-1 text-ink-muted">
+                One screen showing your creative during its scheduled hours on one day.
+              </p>
+            </Popover>
+          </div>
+          <Dialog
+            open={dialogOpen}
+            onOpenChange={setDialogOpen}
+            title="Reject this creative?"
+            description="The advertiser sees your reason and can upload a new version."
+            footer={
+              <>
+                <Button variant="ghost" onClick={() => setDialogOpen(false)}>
+                  Keep in review
+                </Button>
+                <Button variant="destructive" onClick={() => setDialogOpen(false)}>
+                  Reject creative
+                </Button>
+              </>
+            }
+          >
+            <Field label="Reason for rejection" htmlFor="ds-reason" required>
+              <Textarea placeholder="For example: text is unreadable at screen size." />
+            </Field>
+          </Dialog>
+          <Drawer
+            open={drawerOpen}
+            onOpenChange={setDrawerOpen}
+            title="Sample campaign 01"
+            description="Draft · created for demonstration"
+            footer={<Button onClick={() => setDrawerOpen(false)}>Close details</Button>}
+          >
+            <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
+              <dt className="text-ink-muted">Status</dt>
+              <dd>
+                <StatusBadge>Draft</StatusBadge>
+              </dd>
+              <dt className="text-ink-muted">Start date</dt>
+              <dd>2026-11-01</dd>
+              <dt className="text-ink-muted">Placement</dt>
+              <dd>Car interior screen</dd>
+            </dl>
+          </Drawer>
+        </Section>
 
-        <footer className="flex flex-col justify-between gap-2 border-t border-line pt-6 text-xs text-muted-foreground sm:flex-row">
-          <p>AdVibe · Part 1 design system preview</p>
-          <p>Mobile-first · Accessible controls · Cashfree planned for a later part</p>
-        </footer>
-      </main>
+        <Section
+          id="tabs"
+          title="Tabs and segmented choice"
+          description="Tabs switch content panels. A segmented choice filters what is shown."
+        >
+          <Tabs
+            label="Campaign status"
+            value={segment}
+            onValueChange={setSegment}
+            tabs={[
+              { value: "all", label: "All" },
+              { value: "review", label: "In review" },
+              { value: "live", label: "Live" },
+            ]}
+          />
+          <TabsRoot defaultValue="overview" className="mt-6">
+            <TabsList aria-label="Campaign sections">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="creatives">Creatives</TabsTrigger>
+              <TabsTrigger value="schedule">Schedule</TabsTrigger>
+            </TabsList>
+            <TabsContent value="overview" className="text-sm text-ink">
+              The overview panel. Arrow keys move between tabs; Tab moves into this panel.
+            </TabsContent>
+            <TabsContent value="creatives" className="text-sm text-ink">
+              The creatives panel.
+            </TabsContent>
+            <TabsContent value="schedule" className="text-sm text-ink">
+              The schedule panel.
+            </TabsContent>
+          </TabsRoot>
+        </Section>
 
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen} title="Reusable modal component" description="This native dialog demonstrates mobile width, focus management and Escape-to-close behavior."
-        footer={<><Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button><Button onClick={() => { setDialogOpen(false); setFeedback("Dialog confirmed successfully."); }}>Confirm <Sparkles className="size-4" aria-hidden /></Button></>}>
-        <div className="flex items-center gap-3 rounded-xl bg-surface-alt p-4">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#e1edff]"><ShieldCheck className="size-6 text-brand-blue" aria-hidden /></span>
-          <p className="text-sm leading-6 text-muted-foreground">The same dialog API can power campaign confirmations, driver verification reviews and admin decisions in later phases.</p>
-        </div>
-      </Dialog>
-    </div>
+        <Section
+          id="loading"
+          title="Loading"
+          description="Placeholders keep the layout steady and announce loading to screen readers."
+        >
+          <div className="max-w-xl">
+            <SkeletonList rows={3} label="Loading campaigns" />
+          </div>
+        </Section>
+
+        <Section
+          id="states"
+          title="Empty, error, success and permission states"
+          description="Each says what happened and offers the next step."
+        >
+          <div className="grid gap-4 lg:grid-cols-2">
+            <EmptyState
+              headingLevel={3}
+              title="No campaigns yet"
+              description="Create a draft to choose screens, dates and a creative. Drafts are free."
+              action={<Button>Create campaign draft</Button>}
+            />
+            <ErrorState
+              headingLevel={3}
+              title="Campaigns couldn’t load"
+              description="The server didn’t respond. Check your connection, then try again."
+              action={<Button variant="outline">Try again</Button>}
+            />
+            <SuccessState
+              headingLevel={3}
+              title="Submitted for review"
+              description="An admin usually reviews within one working day. We’ll notify you here."
+              action={<Button variant="outline">View campaign</Button>}
+            />
+            <PermissionDeniedState
+              headingLevel={3}
+              title="This page is for admins"
+              description="You’re signed in as an advertiser. Sign in with an admin account to continue."
+              action={<Button variant="outline">Switch account</Button>}
+            />
+          </div>
+        </Section>
+      </div>
+    </main>
   );
 }

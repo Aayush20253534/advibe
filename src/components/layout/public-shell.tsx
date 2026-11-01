@@ -88,7 +88,7 @@ export function PublicShell({children}:{children:React.ReactNode}) {
           <div><h2 className="mb-3 text-sm font-bold">Explore</h2><FooterLinks links={publicNavigation.filter(i=>!["Home","Help Center"].includes(i.label))}/></div>
           <div><h2 className="mb-3 text-sm font-bold">Platforms</h2><FooterLinks links={[
             {label:"Advertiser Portal",href:"/advertiser"},{label:"Driver Partner Portal",href:"/driver"},
-            {label:"Admin Portal (Demo)",href:"/admin"},{label:"UI Components",href:"/design-system"},
+            {label:"Admin Portal (Demo)",href:"/admin"},
           ]}/></div>
           <div><h2 className="mb-3 text-sm font-bold">Support & Legal</h2><FooterLinks links={[
             {label:"Help Center",href:"/help-center"},{label:"Contact Us",href:"/contact"},

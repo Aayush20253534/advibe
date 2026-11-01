@@ -1,62 +1,119 @@
 @import "tailwindcss";
 
-/* Approved screenshot palette, intentionally centralized for all four portals.
-   Part 2 adds the actual layouts; each layout sets data-portal on its root. */
+/*
+ * AdVibe design tokens (M2). Defined once here and consumed through Tailwind
+ * utilities such as bg-signal, text-ink-muted, border-line and bg-success-bg.
+ * Every text pair below meets WCAG 2.2 AA (4.5:1); control borders meet 3:1.
+ *
+ * ink     #041B3D  text, sidebar, dark surfaces
+ * night   #03152C  hero and footer only
+ * signal  #0866FF  the only action and selection colour in every portal
+ * beacon  #FF6A00  primary marketing CTA and live state; always with ink text
+ * paper   #F7F9FC  app background
+ * line    #DCE4F0  borders and dividers
+ */
 :root {
   color-scheme: light;
-  --brand-navy: #041b3d;
-  --brand-navy-deep: #031221;
-  --brand-blue: #0866ff;
-  --brand-orange: #ff6a00;
-  --brand-purple: #5415ff;
-  --background: #f8fbff;
+  --ink: #041b3d;
+  --ink-muted: #4a5b78;
+  --ink-subtle: #5d6d88;
+  --night: #03152c;
+  --signal: #0866ff;
+  --signal-hover: #0052d6;
+  --signal-soft: #e8f0fe;
+  --beacon: #ff6a00;
+  --beacon-hover: #ff8527;
+  --paper: #f7f9fc;
   --surface: #ffffff;
-  --surface-alt: #eff6ff;
-  --foreground: #0b1b40;
-  --muted-foreground: #5c7095;
-  --border: #dce6f4;
-  --ring: #0866ff;
+  --surface-sunken: #eef2f8;
+  --line: #dce4f0;
+  --line-strong: #7a8aa5;
+
+  --success-bg: #e8f6ee;
+  --success-fg: #0b6b3a;
+  --success-border: #9fd6b5;
+  --warning-bg: #fdf3e1;
+  --warning-fg: #8a4b00;
+  --warning-border: #f0c98a;
+  --danger-bg: #fdecea;
+  --danger-fg: #b42318;
+  --danger-border: #f3aaa3;
+  --danger-solid: #c8281c;
+  --info-bg: #e8f0fe;
+  --info-fg: #0750c4;
+  --info-border: #a9c4f5;
+
+  /* Legacy aliases kept so existing screens keep rendering during migration. */
+  --brand-navy: var(--ink);
+  --brand-navy-deep: #031221;
+  --brand-blue: var(--signal);
+  --brand-orange: var(--beacon);
+  --brand-purple: #5415ff;
+  --background: var(--paper);
+  --surface-alt: var(--signal-soft);
+  --foreground: var(--ink);
+  --muted-foreground: var(--ink-muted);
+  --border: var(--line);
+  --ring: var(--signal);
+  /* Body and app text use the platform UI font. Headings use Overpass (see layout.tsx). */
   --font-facebook-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --portal-accent: #0866ff;
-  --portal-accent-hover: #0051dc;
+  --font-heading-stack: var(--font-overpass), var(--font-facebook-ui);
+  /* One accent for every portal. Admin is distinguished by density and a role label. */
+  --portal-accent: var(--signal);
+  --portal-accent-hover: var(--signal-hover);
   --radius-card: 1rem;
-  --shadow-card: 0 7px 24px rgba(13, 50, 97, .045);
-}
-
-[data-portal="public"] {
-  --portal-accent: #ff6a00;
-  --portal-accent-hover: #e95d00;
-  --ring: #0866ff;
-}
-
-[data-portal="admin"] {
-  --portal-accent: #5415ff;
-  --portal-accent-hover: #440bdb;
-  --ring: #5415ff;
-}
-
-[data-portal="advertiser"],
-[data-portal="driver"] {
-  --portal-accent: #0866ff;
-  --portal-accent-hover: #0051dc;
-  --ring: #0866ff;
+  --shadow-card: 0 1px 2px rgba(4, 27, 61, 0.06);
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-night: var(--night);
+  --color-signal: var(--signal);
+  --color-signal-hover: var(--signal-hover);
+  --color-signal-soft: var(--signal-soft);
+  --color-beacon: var(--beacon);
+  --color-beacon-hover: var(--beacon-hover);
+  --color-paper: var(--paper);
   --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-success-bg: var(--success-bg);
+  --color-success-fg: var(--success-fg);
+  --color-success-border: var(--success-border);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-fg: var(--warning-fg);
+  --color-warning-border: var(--warning-border);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-fg: var(--danger-fg);
+  --color-danger-border: var(--danger-border);
+  --color-danger-solid: var(--danger-solid);
+  --color-info-bg: var(--info-bg);
+  --color-info-fg: var(--info-fg);
+  --color-info-border: var(--info-border);
+
+  /* Legacy utility names (bg-brand-orange, text-muted-foreground, ...). */
+  --color-background: var(--background);
   --color-surface-alt: var(--surface-alt);
   --color-foreground: var(--foreground);
   --color-muted-foreground: var(--muted-foreground);
-  --color-line: var(--border);
   --color-brand-navy: var(--brand-navy);
   --color-brand-navy-deep: var(--brand-navy-deep);
   --color-brand-blue: var(--brand-blue);
   --color-brand-orange: var(--brand-orange);
   --color-brand-purple: var(--brand-purple);
   --color-portal: var(--portal-accent);
+
   --font-sans: var(--font-facebook-ui);
+  --font-heading: var(--font-heading-stack);
+
+  /* Type scale: Tailwind's default steps (12, 14, 16, 18, 20, 24, 30, 36, 48px). Never below text-xs (12px). */
   --radius-xl: var(--radius-card);
+
+  --shadow-raised: 0 1px 2px rgba(4, 27, 61, 0.06), 0 2px 8px rgba(4, 27, 61, 0.05);
+  --shadow-overlay: 0 12px 32px rgba(4, 27, 61, 0.18), 0 2px 6px rgba(4, 27, 61, 0.08);
 }
 
 * { box-sizing: border-box; }
@@ -76,7 +133,16 @@ button, input, select, textarea { font: inherit; }
   font-family: var(--font-facebook-ui);
 }
 button:not(:disabled) { cursor: pointer; }
-::selection { background: #d8e9ff; color: #041b3d; }
+/* Headings and display text use Overpass; body text stays on the platform UI font. */
+:where(h1, h2, h3) {
+  font-family: var(--font-heading-stack);
+  letter-spacing: -0.01em;
+}
+.tabular-nums,
+:where(td[data-numeric], [data-numeric]) {
+  font-variant-numeric: tabular-nums;
+}
+::selection { background: var(--signal-soft); color: var(--ink); }
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 3px;
@@ -90,6 +156,11 @@ button:not(:disabled) { cursor: pointer; }
   }
 }
 
+
+/* M2: overlay entrances. Applied only under motion-safe: in components. */
+@keyframes advibe-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes advibe-rise-in { from { opacity: 0; scale: 0.98; } to { opacity: 1; scale: 1; } }
+@keyframes advibe-slide-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
 /* Part 4: cinematic homepage composition. CSS-only motion keeps hydration minimal. */
 .advibe-hero-sky {

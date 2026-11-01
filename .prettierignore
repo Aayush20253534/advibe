@@ -1,0 +1,8 @@
+# Format only files touched by the redesign. Do not run Prettier over the whole repository.
+.next
+node_modules
+backend
+contracts
+ops
+docs/redesign/screenshots
+package-lock.json

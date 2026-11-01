@@ -20,17 +20,22 @@
     "test:auth-browser": "node scripts/b2-auth-browser.mjs",
     "test:advertiser-live": "node --test tests/b3-advertiser-live-contract.test.mjs",
     "test:mock-contract": "node --test tests/external-mock-font-contract.test.mjs",
-    "test:admin-live": "node --test tests/b4-admin-live-contract.test.mjs"
+    "test:admin-live": "node --test tests/b4-admin-live-contract.test.mjs",
+    "test:visual": "node scripts/visual-design-system.mjs"
   },
   "dependencies": {
-    "next": "16.4.2",
-    "react": "19.3.1",
-    "react-dom": "19.3.1",
     "@hookform/resolvers": "^5.0.0",
+    "@radix-ui/react-dialog": "^1.3.1",
+    "@radix-ui/react-popover": "^1.3.1",
+    "@radix-ui/react-tabs": "^1.2.1",
+    "@radix-ui/react-tooltip": "^1.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
     "motion": "^12.0.0",
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "react-hook-form": "^7.0.0",
     "recharts": "^3.0.0",
     "tailwind-merge": "^3.0.0",
@@ -38,16 +43,18 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.4.2",
+    "playwright": "1.56.1",
     "postcss": "^8.5.0",
+    "prettier": "^3.9.10",
     "tailwindcss": "^4.0.0",
-    "typescript": "^5.9.3",
-    "playwright": "1.56.1"
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "@typescript-eslint/eslint-plugin": "8.72.0",
