@@ -21,7 +21,8 @@
     "test:advertiser-live": "node --test tests/b3-advertiser-live-contract.test.mjs",
     "test:mock-contract": "node --test tests/external-mock-font-contract.test.mjs",
     "test:admin-live": "node --test tests/b4-admin-live-contract.test.mjs",
-    "test:visual": "node scripts/visual-design-system.mjs"
+    "test:visual": "node scripts/visual-design-system.mjs",
+    "test:portal-shell": "node scripts/portal-shell-browser.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.0",

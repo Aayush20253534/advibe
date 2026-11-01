@@ -73,9 +73,10 @@ try{
    await page.getByLabel("Authenticator code").fill("123456");
    await page.getByRole("button",{name:"Verify authenticator"}).click();
   }
-  if(role==="advertiser")await page.getByText("Advertiser workspace").waitFor();
-   else if(role==="admin")await page.getByText("Server-backed Admin operations").waitFor();
-   else await page.getByText("LIVE API").waitFor();
+  // M3 shared portal shell: the signed-in portal shows its role navigation and a sign-out control.
+  const portalName={advertiser:"Advertiser portal",admin:"Admin portal",driver:"Driver partner portal"}[role];
+  await page.getByRole("navigation",{name:portalName}).waitFor();
+  await page.getByRole("button",{name:"Sign out"}).waitFor();
   assert.equal(await page.getByText("DEMO DRIVER PORTAL").count(),0);
   if(role==="admin"){
    await ensure(page,"/admin");
@@ -98,7 +99,8 @@ try{
    await ensure(page,"/advertiser/create-campaign");
    // Dedicated advertiser wizard uses the same real campaign creation contract.
    await page.getByRole("button",{name:"Save campaign draft"}).waitFor({timeout:15000});
-   await page.getByLabel("Creative",{exact:true}).selectOption(creativeId);
+   // The label wraps the select, so its accessible name also contains the selected option text.
+   await page.getByRole("combobox",{name:/^Creative\b/}).selectOption(creativeId);
    await page.getByLabel("Title",{exact:true}).fill("Example verified draft");
    await page.getByLabel("Start date").fill("2027-01-12");
    await page.getByLabel("End date").fill("2027-01-19");

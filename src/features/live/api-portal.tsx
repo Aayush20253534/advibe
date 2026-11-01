@@ -1,8 +1,9 @@
 "use client";
 import * as React from "react";
-import Link from "next/link";
 import {usePathname,useRouter} from "next/navigation";
-import {portalNavigation,type PortalRole} from "@/config/navigation";
+import {type PortalRole} from "@/config/navigation";
+import {PortalShell} from "@/components/portal/portal-shell";
+import {PortalAccessRequired,PortalLoading} from "@/components/portal/portal-access";
 import {api,apiPage,downloadApiCsv,liveSession,newIdempotencyKey,
  type LiveSession,ApiError} from "@/services/api-client";
 type Row=Record<string,unknown>;
@@ -267,34 +268,17 @@ export function ApiPortal({role}:{role:PortalRole}){
  }
  const management=(section==="users"&&role==="admin"||section==="notifications"||
   section==="campaigns"||section==="support")?rowAction:undefined;
- if(authError||(!loading&&!session))return <main className="grid min-h-dvh place-items-center bg-[#f2f7ff] p-5"><section className="max-w-md rounded-xl bg-white p-8 shadow">
-  <h1 className="text-xl font-bold text-[#153658]">Live session required</h1><p role="alert" className="my-4 text-sm text-slate-700">{authError||"Sign in with a verified account."}</p>
-  <Link className={button} href={"/login?next="+encodeURIComponent(pathname)}>Secure sign in</Link>
- </section></main>;
- if(!session)return <p role="status" className="p-8 text-sm text-slate-600">Verifying authenticated session…</p>;
- const nav=portalNavigation[role];
- return <div className="min-h-dvh bg-[#f1f6fc] text-[#153658]">
-  <header className="sticky top-0 z-20 border-b border-[#cce0f5] bg-white px-4 py-3">
-   <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-3">
-    <Link href={"/"+role} className="text-xl font-extrabold">AdVibe <span className="ml-2 text-xs font-medium text-blue-700">LIVE API · {role.toUpperCase()}</span></Link>
-    <div className="flex items-center gap-3"><span className="hidden text-xs text-slate-600 sm:block">Authenticated session</span>
-     <button type="button" className={outline} disabled={busy} onClick={()=>void signOut()}>Sign out</button></div>
-   </div>
-  </header>
-  <div className="mx-auto flex max-w-[1500px] flex-col md:flex-row">
-   <nav aria-label={role+" portal navigation"} className="flex max-h-[220px] gap-1 overflow-auto border-b border-blue-100 bg-[#092b53] p-3 text-white md:sticky md:top-[64px] md:h-[calc(100dvh-64px)] md:max-h-none md:w-60 md:min-w-60 md:flex-col md:border-r md:border-b-0">
-    {nav.map(item=><Link key={item.href} href={item.href} onClick={()=>{setSelected(null);setCursor("");setCursorPath(item.href);}}
-     className={"shrink-0 rounded-lg px-3 py-2.5 text-xs font-semibold hover:bg-[#285784] "+(pathname===item.href?"bg-[#1768d3]":"")}
-     aria-current={pathname===item.href?"page":undefined}>{item.label}</Link>)}
-   </nav>
-   <main className="min-w-0 flex-1 space-y-5 px-4 py-6 sm:px-7">
-    <div className="flex flex-wrap items-center justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-widest text-blue-700">{role} / backend</p>
-     <h1 className="mt-1 text-2xl font-extrabold sm:text-3xl">{heading(section)}</h1>
-     <p className="mt-1 text-sm text-slate-600">Only records returned by the authenticated AdVibe API are shown. No simulated financial or campaign activity.</p></div>
-     <div className="flex gap-2"><button className={outline} onClick={()=>setRefresh(x=>x+1)}>Refresh</button>
-      {role==="admin"&&(section==="analytics"||section==="audit"||section==="home")&&<button className={button}
-       onClick={()=>void downloadApiCsv(section==="audit"?"/admin/audit-events/export":"/admin/reports/export","advibe-"+section+"-live.csv").catch(e=>setError(e instanceof Error?e.message:"Export unavailable"))}>Download verified CSV</button>}</div>
-    </div>
+ if(authError||(!loading&&!session))return <PortalAccessRequired title="Live session required"
+  message={authError||"Sign in with a verified account."}
+  signInHref={"/login?next="+encodeURIComponent(pathname)} signInLabel="Secure sign in"/>;
+ if(!session)return <PortalLoading message="Verifying authenticated session…"/>;
+ const pageActions=<><button className={outline} onClick={()=>setRefresh(x=>x+1)}>Refresh</button>
+  {role==="admin"&&(section==="analytics"||section==="audit"||section==="home")&&<button className={button}
+   onClick={()=>void downloadApiCsv(section==="audit"?"/admin/audit-events/export":"/admin/reports/export","advibe-"+section+"-live.csv").catch(e=>setError(e instanceof Error?e.message:"Export unavailable"))}>Download verified CSV</button>}</>;
+ return <PortalShell role={role} pathname={pathname} title={heading(section)} actions={pageActions}
+  description="Only records returned by the authenticated AdVibe API are shown. No simulated financial or campaign activity."
+  signingOut={busy} onSignOut={()=>void signOut()}
+  onNavigate={href=>{setSelected(null);setCursor("");setCursorPath(href);}}>
     {error&&<div role="alert" className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800">{error}</div>}
     {section==="create-campaign"&&role==="advertiser"&&<CampaignForm session={session} onDone={()=>setRefresh(x=>x+1)}/>}
     {section==="support"&&<SupportForm role={role} session={session} onDone={()=>setRefresh(x=>x+1)}/>}
@@ -320,7 +304,5 @@ export function ApiPortal({role}:{role:PortalRole}){
       }catch(err){setError(err instanceof Error?err.message:"Message failed");}finally{setBusy(false);}
      }}><label className="text-sm font-semibold">Send ticket response<textarea name="body" className={input} maxLength={2000} required rows={3}/></label><button className={button} disabled={busy}>Send response</button></form>}
      </section>}
-   </main>
-  </div>
- </div>;
+ </PortalShell>;
 }
