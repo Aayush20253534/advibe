@@ -22,7 +22,7 @@ const guides = [
   { label: "Choosing an ad format", href: "/ad-formats" },
   { label: "Estimating the cost", href: "/pricing" },
   { label: "Becoming a driver partner", href: "/for-drivers" },
-  { label: "Sample locations", href: "/locations" },
+  { label: "Prayagraj locations", href: "/locations" },
   { label: "Contacting AdVibe", href: "/contact" },
 ];
 

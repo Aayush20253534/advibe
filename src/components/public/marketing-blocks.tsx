@@ -258,7 +258,7 @@ export const advertiserBenefits = [
   },
   {
     title: "You choose where and when",
-    text: "Pick the city, the screen format, the dates, the daily hours and the days of the week.",
+    text: "Plan for Prayagraj: choose a screen format, dates, daily hours and days of the week.",
     icon: Target,
   },
   {

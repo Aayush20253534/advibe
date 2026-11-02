@@ -83,7 +83,7 @@ export function DriverVehicleTabs() {
       <aside className="rounded-lg bg-night p-6 text-white">
         <h3 className="font-heading text-xl font-semibold">What you can earn</h3>
         <p className="mt-3 text-base text-[#c3d0e4]">
-          Earnings depend on your city, your vehicle, the campaigns assigned to your screen, how
+          Earnings depend on your vehicle, your routes in Prayagraj, the campaigns assigned to your screen, how
           long the screen is online and your partner agreement.
         </p>
         <p className="mt-4 rounded-lg border border-white/25 p-4 text-sm">
