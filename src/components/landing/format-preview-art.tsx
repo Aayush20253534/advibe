@@ -16,6 +16,14 @@ const photos: Partial<Record<Placement, { src: string; alt: string }>> = {
     src: "/images/formats/helmet.webp",
     alt: "Illustration of an advertising display on the back of a rider's helmet",
   },
+  auto_side: {
+    src: "/images/formats/auto-side.webp",
+    alt: "Illustration of a digital ad screen on the side of an auto rickshaw",
+  },
+  car_rear: {
+    src: "/images/formats/car-rear.webp",
+    alt: "Illustration of a digital ad screen in the rear window of a car",
+  },
   car_interior: {
     src: "/images/formats/car-interior.webp",
     alt: "Illustration of a seat-back ad screen seen by a passenger inside a car",
@@ -59,7 +67,7 @@ export function FormatPreviewArt({ type }: { type: Placement }) {
   return <FormatDrawing type={type} />;
 }
 
-/** Line drawing used for placements without an illustration image. */
+/** Line drawing, kept as a fallback for any placement without an illustration image. */
 function FormatDrawing({ type }: { type: Placement }) {
   return (
     <svg

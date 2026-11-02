@@ -194,10 +194,15 @@ button:not(:disabled) { cursor: pointer; }
   animation: route-grow-y 450ms ease-in-out forwards;
   animation-delay: calc(var(--i) * 550ms + 400ms);
 }
+/* Hidden until its moment, then shown at full opacity with a small scale-up:
+   never semi-transparent, so the text always meets contrast. */
 .route-live {
-  opacity: 0;
-  animation: advibe-fade-in 300ms ease-out forwards;
-  animation-delay: 1500ms;
+  visibility: hidden;
+  animation: route-live-on 240ms ease-out 1500ms forwards;
+}
+@keyframes route-live-on {
+  from { visibility: visible; transform: scale(0.85); }
+  to { visibility: visible; transform: scale(1); }
 }
 @media (min-width: 768px) {
   .route-seg {
@@ -222,7 +227,7 @@ button:not(:disabled) { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   .route-dot { animation: none; border-color: var(--signal); background: var(--signal); }
   .route-seg::after { animation: none; transform: none; }
-  .route-live { animation: none; opacity: 1; }
+  .route-live { animation: none; visibility: visible; }
 }
 
 /* Part 4: cinematic homepage composition. CSS-only motion keeps hydration minimal. */
