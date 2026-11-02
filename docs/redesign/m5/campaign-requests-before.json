@@ -1,0 +1,59 @@
+[
+ {
+  "method": "POST",
+  "path": "/campaigns",
+  "body": {
+   "businessId": "33333333-3333-4333-8333-333333333333",
+   "creativeId": "44444444-4444-4444-8444-444444444444",
+   "title": "Diwali offer",
+   "startDate": "2027-01-12",
+   "endDate": "2027-01-19",
+   "weekdays": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "timeWindow": {
+    "start": "09:00",
+    "end": "21:00"
+   }
+  },
+  "csrf": true,
+  "idem": true
+ },
+ {
+  "method": "PATCH",
+  "path": "/campaigns/22222222-2222-4222-8222-222222222222",
+  "body": {
+   "expectedRevision": 1,
+   "title": "Diwali offer, week one",
+   "creativeId": "44444444-4444-4444-8444-444444444444",
+   "startDate": "2027-01-12",
+   "endDate": "2027-01-19",
+   "weekdays": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "timeWindow": {
+    "start": "09:00",
+    "end": "20:00"
+   }
+  },
+  "csrf": true,
+  "idem": false
+ },
+ {
+  "method": "POST",
+  "path": "/campaigns/22222222-2222-4222-8222-222222222222/submit",
+  "body": {},
+  "csrf": true,
+  "idem": true
+ }
+]

@@ -2,6 +2,9 @@
 import * as React from "react";
 import {apiPage,ApiError} from "@/services/api-client";
 import type {LiveSession} from "@/services/api-client";
+import {Alert,buttonVariants,SkeletonList,StatusBadge,type StatusTone} from "@/components/ui";
+import {controlClass} from "@/components/ui/input";
+import {cn} from "@/lib/utils";
 export type Business={id:string;slug:string;displayName:string;city:string|null;legalName:string|null;verificationStatus:string};
 export type Creative={id:string;ownerBusinessId:string;title:string;placement:string;mediaAssetId:string;approval:string;reviewReason:string|null;createdAt:string};
 export type Campaign={id:string;ownerBusinessId:string;title:string;creativeId:string;startDate:string;endDate:string;weekdays:number[];timeWindow:{start:string;end:string};status:string;revision:number;reviewReason:string|null;createdAt:string;updatedAt:string};
@@ -43,27 +46,54 @@ export function useCollection<T>(path:string|null){
   first:()=>setPage({path,cursor:null}),
   more:()=>{if(ready&&response.next)setPage({path,cursor:response.next});}};
 }
+const noticeTone={info:"info",warning:"warning",error:"danger",success:"success"} as const;
+/** Inline message on the design-system Alert. Errors are announced immediately. */
 export function Notice({children,kind="info"}:{children:React.ReactNode;kind?:"info"|"warning"|"error"|"success"}){
- const style=kind==="error"?"border-red-200 bg-red-50 text-red-900":kind==="warning"?"border-amber-200 bg-amber-50 text-amber-950":kind==="success"?"border-emerald-200 bg-emerald-50 text-emerald-900":"border-blue-200 bg-blue-50 text-blue-950";
- return <div role={kind==="error"?"alert":"status"} className={"rounded-xl border p-4 text-sm leading-6 "+style}>{children}</div>;
+ return <Alert tone={noticeTone[kind]}>{children}</Alert>;
 }
-export function Panel({title,children,action}:{title:string;children:React.ReactNode;action?:React.ReactNode}){
- return <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-  <div className="mb-4 flex flex-wrap items-center justify-between gap-3"><h2 className="text-lg font-bold text-[#103459]">{title}</h2>{action}</div>{children}
+/** A titled section of a page. */
+export function Panel({title,children,action,description}:{title:string;children:React.ReactNode;action?:React.ReactNode;description?:React.ReactNode}){
+ return <section className="rounded-lg border border-line bg-surface p-5 sm:p-6">
+  <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+   <div className="min-w-0"><h2 className="font-heading text-lg font-semibold text-ink">{title}</h2>
+    {description?<p className="mt-1 text-sm text-ink-muted">{description}</p>:null}</div>
+   {action}
+  </div>
+  <div className="space-y-4">{children}</div>
  </section>;
 }
-export const field="mt-1 block min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100";
-export const primary="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#1768d3] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#0e4f9f] disabled:cursor-not-allowed disabled:opacity-50";
-export const secondary="inline-flex min-h-10 items-center justify-center rounded-xl border border-blue-200 bg-white px-4 py-2 text-sm font-semibold text-[#10539a] hover:bg-blue-50 disabled:opacity-50";
-export const label="block text-sm font-semibold text-slate-700";
+export const field=cn(controlClass,"mt-1.5 block min-h-11 py-2");
+export const primary=buttonVariants({variant:"primary"});
+export const secondary=buttonVariants({variant:"outline"});
+export const label="block text-sm font-semibold text-ink";
 export function Pagination({busy,next,more,first}:{busy:boolean;next:string|null;more:()=>void;first:()=>void}){
- return <div className="mt-4 flex gap-3">
-  <button type="button" className={secondary} onClick={first} disabled={busy}>First page</button>
-  {next&&<button type="button" className={secondary} onClick={more} disabled={busy}>Next page</button>}
+ if(!next&&!busy)return null;
+ return <div className="flex flex-wrap gap-2 pt-2">
+  <button type="button" className={buttonVariants({variant:"outline",size:"sm"})} onClick={first} disabled={busy}>First page</button>
+  {next&&<button type="button" className={buttonVariants({variant:"outline",size:"sm"})} onClick={more} disabled={busy}>Next page</button>}
  </div>;
 }
-export function CollectionNotice({busy,error,length}:{busy:boolean;error:string;length:number}){
- return <>{error&&<Notice kind="error">{error}</Notice>}{busy&&<p role="status" className="text-sm text-slate-500">Loading records from AdVibe API…</p>}
- {!busy&&!error&&length===0&&<Notice>No records found for this account.</Notice>}</>;
+/** Loading, error and empty states for a fetched list. */
+export function CollectionNotice({busy,error,length,empty="Nothing here yet."}:{busy:boolean;error:string;length:number;empty?:React.ReactNode}){
+ return <>{error&&<Notice kind="error">{error}</Notice>}
+  {busy&&<SkeletonList rows={2} label="Loading"/>}
+  {!busy&&!error&&length===0&&<p className="rounded-lg border border-dashed border-line bg-paper p-5 text-sm text-ink-muted">{empty}</p>}</>;
+}
+const statusLabels:Record<string,{label:string;tone:StatusTone}>={
+ draft:{label:"Draft",tone:"neutral"},submitted:{label:"In review",tone:"info"},
+ changes_requested:{label:"Changes requested",tone:"warning"},approved:{label:"Approved",tone:"success"},
+ rejected:{label:"Rejected",tone:"danger"},cancelled:{label:"Cancelled",tone:"neutral"},
+ pending:{label:"In review",tone:"info"},pending_review:{label:"In review",tone:"info"},
+ ready:{label:"Ready",tone:"success"},processing:{label:"Processing",tone:"info"},uploaded:{label:"Uploaded",tone:"info"},
+ failed:{label:"Failed",tone:"danger"},verified:{label:"Verified",tone:"success"},unverified:{label:"Not verified",tone:"neutral"},
+ read:{label:"Read",tone:"neutral"},open:{label:"Open",tone:"info"},closed:{label:"Closed",tone:"neutral"},resolved:{label:"Resolved",tone:"success"},
+ paid:{label:"Paid",tone:"success"},
+};
+/** A backend status as a plain-language badge (falls back to a readable version of the raw value). */
+export function StatusTag({value:raw}:{value:string|null|undefined}){
+ const value=raw?String(raw):"unknown";
+ const known=statusLabels[value.toLowerCase()];
+ const text=known?.label??(value.charAt(0).toUpperCase()+value.slice(1).toLowerCase()).replaceAll("_"," ");
+ return <StatusBadge tone={known?.tone??"neutral"}>{text}</StatusBadge>;
 }
 export const formatDate=(s:string|undefined)=>s?new Date(s).toLocaleDateString("en-IN",{year:"numeric",month:"short",day:"numeric"}):"—";

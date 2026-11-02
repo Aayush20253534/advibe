@@ -65,7 +65,7 @@ export function Tabs({ tabs, value, onValueChange, label, className }: TabsProps
             }
           }}
           className={cn(
-            "min-h-9 shrink-0 rounded-md px-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-signal",
+            "min-h-11 shrink-0 rounded-md px-3 text-sm font-semibold sm:min-h-9 transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-signal",
             value === tab.value
               ? "bg-surface text-ink shadow-raised"
               : "text-ink-muted hover:text-ink",

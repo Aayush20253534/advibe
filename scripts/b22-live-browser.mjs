@@ -97,13 +97,14 @@ try{
    assert.ok(mutations.some(x=>x.path.endsWith("/read")));
   }else{
    await ensure(page,"/advertiser/create-campaign");
-   // Dedicated advertiser wizard uses the same real campaign creation contract.
-   await page.getByRole("button",{name:"Save campaign draft"}).waitFor({timeout:15000});
-   // The label wraps the select, so its accessible name also contains the selected option text.
-   await page.getByRole("combobox",{name:/^Creative\b/}).selectOption(creativeId);
-   await page.getByLabel("Title",{exact:true}).fill("Example verified draft");
-   await page.getByLabel("Start date").fill("2027-01-12");
-   await page.getByLabel("End date").fill("2027-01-19");
+   // M5 stepped campaign flow on the same real campaign creation contract:
+   // name and creative -> schedule -> review -> save draft.
+   await page.getByLabel("Campaign name").fill("Example verified draft",{timeout:15000});
+   await page.getByRole("radio",{name:/Creative One/}).check();
+   await page.getByRole("button",{name:"Continue to schedule"}).click();
+   await page.getByLabel("First day").fill("2027-01-12");
+   await page.getByLabel("Last day").fill("2027-01-19");
+   await page.getByRole("button",{name:"Continue to review"}).click();
    await page.getByRole("button",{name:"Save campaign draft"}).click();
    await page.waitForURL("**/advertiser/campaigns/"+campaignId);
    assert.ok(mutations.some(x=>x.path==="/campaigns"&&x.key));
