@@ -171,6 +171,8 @@ export function createDriverRouter(config: AppConfig, { db, settings }: AuthDepe
     requiredCsrf(req, config, principal, settings.secret);
     const id = pathId(req);
     const input = driverStepInput.parse(req.body);
+    if(config.nodeEnv==="production"&&input.step===1&&input.city.trim().toLowerCase()!=="prayagraj")
+      throw new HttpError(422,"CITY_NOT_LAUNCHED","Driver onboarding is available in Prayagraj only");
     const updated = await serializableTransaction(db, async tx => {
       const current = await tx.driverApplication.findFirst({
         where: { id, driverUserId: principal.userId },
@@ -218,6 +220,8 @@ export function createDriverRouter(config: AppConfig, { db, settings }: AuthDepe
         });
         if (!current) throw new HttpError(404, "NOT_FOUND", "Application not found");
         if (current.state !== "DRAFT") throw new HttpError(409, "APPLICATION_LOCKED", "Application already submitted");
+        if(config.nodeEnv==="production"&&current.city?.trim().toLowerCase()!=="prayagraj")
+          throw new HttpError(422,"CITY_NOT_LAUNCHED","Driver onboarding is available in Prayagraj only");
         if (current.completedStep !== 5 ||
             !current.city || !current.experience || !current.vehicleId ||
             !current.vehicleCategory || !current.vehicle ||

@@ -63,19 +63,19 @@ export function BusinessSettings(){
  </div>;
 }
 export function Directory({kind}:{kind:"locations"|"ad-formats"}){
- const sites=useCollection<Site>(kind==="locations"?"/public/locations?limit=100":null);
+ const sites=useCollection<Site>(kind==="locations"?"/public/locations?citySlug=prayagraj&limit=100":null);
  const formats=useCollection<ScreenFormat>(kind==="ad-formats"?"/public/formats?limit=100":null);
- const inventory=useCollection<Inventory>("/inventory/screens?limit=100");
+ const inventory=useCollection<Inventory>("/inventory/screens?citySlug=prayagraj&limit=100");
  const [search,setSearch]=React.useState("");
  return <div className="space-y-5">
   <Notice>A listed location or screen isn&apos;t a guarantee that it can be booked. Availability is confirmed when you request a quote in Billing and payments.</Notice>
   {kind==="locations"&&<Panel title="Locations">
-   <label className={label}>Search city, zone or location<input className={field+" max-w-lg"} value={search} onChange={e=>setSearch(e.target.value)}/></label>
+   <label className={label}>Search Prayagraj area or location<input className={field+" max-w-lg"} value={search} onChange={e=>setSearch(e.target.value)}/></label>
    <CollectionNotice busy={sites.busy} error={sites.error} length={sites.rows.length}/>
    <div className="mt-4 grid gap-3 sm:grid-cols-2">
     {sites.rows.filter(s=>[s.name,s.city,s.zone].join(" ").toLowerCase().includes(search.toLowerCase())).map(s=><div key={s.id} className="rounded-lg border border-line p-4">
      <p className="font-bold text-ink">{s.name}</p><p className="mt-1 text-sm text-ink-muted">{s.zone}, {s.city}</p>
-     <p className="mt-2 text-xs text-ink-muted">Coordinates: {s.lat}, {s.lng}</p>
+     <p className="mt-2 text-xs text-ink-muted">Published area. Screen and booking availability are confirmed separately.</p>
     </div>)}
    </div><Pagination busy={sites.busy} next={sites.next} more={sites.more} first={sites.first}/>
   </Panel>}
@@ -85,7 +85,7 @@ export function Directory({kind}:{kind:"locations"|"ad-formats"}){
     <p className="font-bold">{f.label}</p><p className="mt-2 text-sm text-ink-muted">{f.description}</p>
    </div>)}</div>
   </Panel>}
-  <Panel title="Available screens">
+  <Panel title="Screens listed for Prayagraj">
    <CollectionNotice busy={inventory.busy} error={inventory.error} length={inventory.rows.length}/>
    <p className="text-sm text-ink-muted">Only the placement and location of each screen are shown. Driver details, device credentials and GPS positions are never shared.</p>
    <div className="grid gap-3 sm:grid-cols-2">{inventory.rows.filter(s=>[s.location,s.zone,s.city,s.placement].join(" ").toLowerCase().includes(search.toLowerCase())).map(s=>
@@ -101,7 +101,7 @@ export function Directory({kind}:{kind:"locations"|"ad-formats"}){
 export function MoneyAndQuotes(){
  const {business,session}=useAuth();
  const campaigns=useCollection<Campaign>(business?"/campaigns?limit=100&businessId="+business.id:null);
- const screens=useCollection<Inventory>(business?"/inventory/screens?limit=100":null);
+ const screens=useCollection<Inventory>(business?"/inventory/screens?citySlug=prayagraj&limit=100":null);
  const quotes=useCollection<Quote>(business?"/pricing/quotes?businessId="+business.id:null);
  const payments=useCollection<Payment>("/payments?limit=50");
  const [campaignId,setCampaignId]=React.useState("");

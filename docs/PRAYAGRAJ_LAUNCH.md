@@ -7,6 +7,7 @@
 - The marketing homepage, locations page, pricing planner, contact page, advertiser and driver pages now state Prayagraj as the first launch city.
 - The public locations explorer reads published records from GET /api/v1/public/locations?citySlug=prayagraj through the same-origin frontend relay. It no longer publishes fictional screen counts or nationwide demo cities. Backend or inventory outages produce explicit error/empty states.
 - The pricing planner is **illustrative only** and cannot change cities. It does not issue orders or present imaginary screen availability.
+- The contact page uses the existing authenticated-proxy path for the public enquiry API when Cloudflare Turnstile is configured. Set frontend `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and backend `ENQUIRY_TURNSTILE_SECRET` / `ENQUIRY_TURNSTILE_HOSTNAME`. Without a verified widget it explicitly opens an email draft instead of pretending that it sent the form.
 - The driver onboarding UI fixes the working city to Prayagraj. Actual driver eligibility is determined by the backend and legal checks.
 - In the production backend, the public city/zone/location catalogs are filtered to Prayagraj. Admin catalog data is retained for internal management and test fixtures still exercise other locations in non-production environments.
 - Do not describe the three neighbourhood examples in the homepage diagram as operational coverage. Only approved and published backend inventory is available for planning.

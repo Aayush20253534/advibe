@@ -2,10 +2,19 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Script from "next/script";
+import { api } from "@/services/api-client";
 import { Alert, Button, Field, Input, Select, Textarea } from "@/components/ui";
 import { FAQList } from "./faq-list";
 import { publicFAQs } from "./faq-data";
 import { textLink } from "./marketing-blocks";
+
+type TurnstileApi = {
+  render: (element: HTMLElement, options: { sitekey: string; callback: (token: string) => void; "expired-callback": () => void; "error-callback": () => void }) => string;
+  reset: (widgetId: string) => void;
+  remove?: (widgetId: string) => void;
+};
+declare global { interface Window { turnstile?: TurnstileApi } }
 
 const subjects = [
   "Campaign enquiry",
@@ -17,39 +26,91 @@ const subjects = [
 ];
 
 export function ContactEnquiry() {
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
+  const widgetHost = React.useRef<HTMLDivElement>(null);
+  const widgetId = React.useRef<string | null>(null);
+  const [captchaToken, setCaptchaToken] = React.useState("");
+  const [sending, setSending] = React.useState(false);
   const [feedback, setFeedback] = React.useState("");
   const [error, setError] = React.useState("");
   const [message, setMessage] = React.useState("");
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+
+  function renderWidget() {
+    if (!siteKey || !widgetHost.current || widgetId.current || !window.turnstile) return;
+    widgetId.current = window.turnstile.render(widgetHost.current, {
+      sitekey: siteKey,
+      callback: setCaptchaToken,
+      "expired-callback": () => setCaptchaToken(""),
+      "error-callback": () => setCaptchaToken(""),
+    });
+  }
+
+  React.useEffect(() => {
+    return () => {
+      if (widgetId.current && window.turnstile?.remove) window.turnstile.remove(widgetId.current);
+      widgetId.current = null;
+    };
+  }, []);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") ?? "").trim(),
-      email = String(data.get("email") ?? "").trim(),
-      phone = String(data.get("phone") ?? "").trim(),
-      role = String(data.get("role") ?? ""),
-      subject = String(data.get("subject") ?? "");
-    if (!name || !email || !/^\d{10}$/.test(phone) || !subject || !message.trim()) {
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const role = String(data.get("role") ?? "");
+    const subject = String(data.get("subject") ?? "");
+    const consent = data.get("consent") === "on";
+
+    if (name.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !/^\d{10}$/.test(phone) ||
+        !subject || message.trim().length < 15 || !consent) {
       setFeedback("");
-      setError("Fill in every required field. The phone number needs 10 digits.");
+      setError("Complete every field, agree to the privacy notice, and enter a valid email, 10-digit phone number and message (15+ characters).");
       return;
     }
+
     const body = [
-      "Name: " + name,
-      "Email: " + email,
+      "Launch city: Prayagraj",
       "Phone: +91 " + phone,
-      "Type: " + role,
+      "Enquiry type: " + role,
       "",
-      message,
+      message.trim(),
     ].join("\n");
+
     setError("");
-    setFeedback(
-      "Your email app is opening with this message. Send it from there: nothing has been sent from this website.",
-    );
+    setFeedback("");
+
+    if (siteKey) {
+      if (!captchaToken) {
+        setError("Complete the verification check before sending your enquiry.");
+        return;
+      }
+      setSending(true);
+      try {
+        await api("/enquiries", { method: "POST", body: {
+          name, email, subject: "[Prayagraj] " + subject,
+          message: body, consent: true, captchaToken,
+        } });
+        setFeedback("Your enquiry has been received by AdVibe.");
+        form.reset();
+        setMessage("");
+      } catch (reason) {
+        setError(reason instanceof Error ? reason.message : "Could not send your enquiry.");
+      } finally {
+        setSending(false);
+        setCaptchaToken("");
+        if (widgetId.current) window.turnstile?.reset(widgetId.current);
+      }
+      return;
+    }
+
+    setFeedback("Your email app is opening. Send the message from there; this website has not sent it.");
     window.location.href =
       "mailto:support@advibe.in?subject=" +
-      encodeURIComponent("[AdVibe] " + subject) +
+      encodeURIComponent("[AdVibe Prayagraj] " + subject) +
       "&body=" +
-      encodeURIComponent(body);
+      encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n" + body);
   }
   return (
     <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
@@ -64,7 +125,7 @@ export function ContactEnquiry() {
           Write to us
         </h2>
         <p className="mt-1 text-base text-ink-muted">
-          This form prepares an email in your own email app. You send it from there.
+          {siteKey ? "Send an enquiry directly to our team after the verification check." : "This form prepares an email in your email app; you send it from there."}
         </p>
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           <Field label="Full name" htmlFor="contact-name" required>
@@ -107,19 +168,29 @@ export function ContactEnquiry() {
           <Field
             label="Message"
             htmlFor="contact-message"
-            description={`${message.length} of 500 characters`}
+            description={`${message.length} of 500 characters (minimum 15)`}
             required
             className="sm:col-span-2"
           >
             <Textarea
               rows={5}
-              minLength={10}
+              minLength={15}
               maxLength={500}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
           </Field>
         </div>
+        <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-ink-muted">
+          <input type="checkbox" name="consent" className="mt-1 size-4 accent-signal" required />
+          <span>I agree that AdVibe may use these details to respond to my enquiry. <Link href="/privacy" className="font-semibold text-signal underline">Privacy notice</Link></span>
+        </label>
+        {siteKey ? (
+          <div className="mt-5">
+            <div ref={widgetHost} aria-label="Human verification" />
+            <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" strategy="afterInteractive" onReady={renderWidget} />
+          </div>
+        ) : null}
         {error ? (
           <Alert tone="danger" className="mt-5">
             {error}
@@ -130,8 +201,8 @@ export function ContactEnquiry() {
             {feedback}
           </Alert>
         ) : null}
-        <Button type="submit" size="lg" className="mt-6 w-full sm:w-auto">
-          Open in my email app
+        <Button type="submit" size="lg" loading={sending} className="mt-6 w-full sm:w-auto">
+          {siteKey ? "Send enquiry" : "Open in my email app"}
         </Button>
       </form>
 
