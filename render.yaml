@@ -35,7 +35,13 @@ services:
         sync: false
       - key: RESEND_API_KEY
         sync: false
+      # Bare address only (auth@your-domain), no display name or quotes.
       - key: AUTH_EMAIL_FROM
+        sync: false
+      # Required in production: the server refuses to start without both.
+      - key: ENQUIRY_TURNSTILE_SECRET
+        sync: false
+      - key: ENQUIRY_TURNSTILE_HOSTNAME
         sync: false
       - key: PRICING_TAX_POLICY_APPROVED
         value: "false"

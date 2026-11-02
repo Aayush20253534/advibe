@@ -20,9 +20,14 @@ async function main(): Promise<void> {
     // Fail closed before opening an HTTP port if the database is unreachable.
     await db.$connect();
     await assertDatabaseReady(db);
-  } catch {
+  } catch (error) {
     await db.$disconnect();
-    throw new Error("Database is unavailable or misconfigured");
+    // Only Prisma's error code (for example P1001 unreachable, P1000 bad credentials) is
+    // reported; the driver message can contain connection details.
+    const failure = error as { errorCode?: unknown; code?: unknown } | null;
+    const id = typeof failure?.errorCode === "string" ? failure.errorCode
+      : typeof failure?.code === "string" ? failure.code : "";
+    throw new Error("Database is unavailable or misconfigured" + (/^P\d{4}$/.test(id) ? " (" + id + ")" : ""));
   }
 
   const mock = mode === "mock";
@@ -71,13 +76,16 @@ async function main(): Promise<void> {
   process.once("SIGTERM", () => shutdown("SIGTERM"));
 }
 
+/** Removes credentials from any URL before a startup error is printed. */
+function redact(text: string): string {
+  return text.replace(/([a-z][a-z0-9+.-]*:\/\/)[^\s/@]+@/gi, "$1[redacted]@").slice(0, 300);
+}
+
 main().catch(error => {
-  const message = error instanceof Error && (
-    error.message.startsWith("Invalid backend environment configuration") ||
-    error.message.startsWith("Production requires explicit CORS_ORIGINS") ||
-    error.message.startsWith("DATABASE_URL") ||
-    error.message.startsWith("DIRECT_URL")
-  ) ? error.message : "AdVibe backend startup failed: verify database configuration and connectivity";
-  process.stderr.write(message + "\n");
+  // Startup errors come from the backend's own configuration checks (they name the
+  // variable, never its value) or the sanitized database message above. Print the
+  // reason so operators can fix the deployment.
+  const reason = error instanceof Error ? redact(error.message) : "unknown error";
+  process.stderr.write("AdVibe backend startup failed: " + reason + "\n");
   process.exitCode = 1;
 });
