@@ -57,7 +57,7 @@ export function CoverageExplorer() {
         <div className="rounded-lg border border-line bg-paper p-4 sm:p-6">
           <div
             className="relative mx-auto aspect-[1.35/1] w-full max-w-[520px]"
-            role="group"
+            role="img"
             aria-label={"Schematic map of India with " + chosen + " selected"}
           >
             <svg
@@ -83,29 +83,22 @@ export function CoverageExplorer() {
                 strokeDasharray="4 6"
               />
             </svg>
+            {/* Pins show the selection; cities are chosen with the list beside the map.
+                (Pins as buttons overlapped on phones and duplicated the list.) */}
             {cities.map((city) => {
               const isChosen = city.name === chosen;
               return (
-                <button
+                <span
                   key={city.name}
-                  type="button"
-                  aria-label={"Choose " + city.name}
-                  aria-pressed={isChosen}
-                  onClick={() => setChosen(city.name)}
+                  aria-hidden
                   className={cn(
-                    "absolute grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal",
+                    "absolute grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-white shadow-raised transition-transform",
+                    isChosen ? "z-10 size-9 bg-ink text-white" : "size-7 bg-signal text-white",
                   )}
                   style={{ left: city.x + "%", top: city.y + "%" }}
                 >
-                  <span
-                    className={cn(
-                      "grid place-items-center rounded-full border-2 border-white shadow-raised transition-transform",
-                      isChosen ? "size-9 bg-ink text-white" : "size-7 bg-signal text-white",
-                    )}
-                  >
-                    <MapPin className="size-4" aria-hidden />
-                  </span>
-                </button>
+                  <MapPin className="size-4" aria-hidden />
+                </span>
               );
             })}
           </div>

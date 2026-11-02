@@ -109,7 +109,7 @@ export function FormatCatalogue() {
           <h2 id="format-details" className="font-heading text-lg font-semibold text-ink">
             {selected.title}
           </h2>
-          <div className="mt-4 overflow-hidden rounded-md">
+          <div className="mt-4 aspect-[1.75] overflow-hidden rounded-md">
             <FormatPreviewArt type={selected.type} />
           </div>
           <p className="mt-4 text-base text-ink-muted">{selected.description}</p>
@@ -140,8 +140,9 @@ export function FormatCatalogue() {
         </aside>
       </div>
       <InfoNote>
-        The drawings show where each placement sits. Exact screen sizes, hardware and availability
-        are confirmed for each campaign before it is booked.
+        The images are illustrations of how each placement could look, not photos of installed
+        AdVibe screens. Exact screen sizes, hardware and availability are confirmed for each
+        campaign before it is booked.
       </InfoNote>
     </div>
   );

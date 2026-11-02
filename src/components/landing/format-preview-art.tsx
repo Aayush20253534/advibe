@@ -1,4 +1,26 @@
+import Image from "next/image";
 import type { Placement } from "@/types/domain";
+
+// AI-generated illustrations supplied by the owner (public/images/formats). They show how a
+// placement could look; they are not photographs of real AdVibe installations, and are labelled.
+const photos: Partial<Record<Placement, { src: string; alt: string }>> = {
+  auto_rear: {
+    src: "/images/formats/auto-rear.webp",
+    alt: "Illustration of a digital ad screen on the back of an auto rickshaw in city traffic",
+  },
+  bike_rear: {
+    src: "/images/formats/bike-rear.webp",
+    alt: "Illustration of a digital ad screen on a delivery box behind a scooter rider",
+  },
+  helmet: {
+    src: "/images/formats/helmet.webp",
+    alt: "Illustration of an advertising display on the back of a rider's helmet",
+  },
+  car_interior: {
+    src: "/images/formats/car-interior.webp",
+    alt: "Illustration of a seat-back ad screen seen by a passenger inside a car",
+  },
+};
 
 const labels: Record<Placement, string> = {
   bike_rear: "Illustration of a screen mounted behind a motorbike rider",
@@ -17,6 +39,28 @@ const LINE = "#9fb0cc";
  * photograph of real hardware or live inventory, and says so on the artwork.
  */
 export function FormatPreviewArt({ type }: { type: Placement }) {
+  const photo = photos[type];
+  if (photo) {
+    return (
+      <div className="relative h-full w-full overflow-hidden bg-surface-sunken">
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover"
+        />
+        <span className="absolute right-2 bottom-2 rounded bg-ink/80 px-2 py-0.5 text-xs text-white">
+          Illustration
+        </span>
+      </div>
+    );
+  }
+  return <FormatDrawing type={type} />;
+}
+
+/** Line drawing used for placements without an illustration image. */
+function FormatDrawing({ type }: { type: Placement }) {
   return (
     <svg
       viewBox="0 0 420 240"
