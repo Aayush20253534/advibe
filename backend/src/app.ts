@@ -68,6 +68,16 @@ export function createApp(
       identityVerification:mode==="mock"?"DISABLED":"REQUIRES_SECURE_STORAGE_AND_REVIEW",
     }});
   });
+  // Root: confirms the API is running and points to the health checks. No version,
+  // environment or configuration details are exposed.
+  app.get("/", (_req, res) => {
+    res.status(200).json({ data: {
+      service: "AdVibe API",
+      status: "ok",
+      health: "/api/v1/health",
+      ready: "/api/v1/ready",
+    } });
+  });
   app.get("/api/v1/health", (_req, res) => {
     res.status(200).json({ data: { message: "ok" } });
   });

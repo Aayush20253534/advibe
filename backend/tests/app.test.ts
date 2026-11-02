@@ -40,6 +40,18 @@ test("health and readiness are HTTP 200 with server request IDs and security hea
   });
 });
 
+test("root responds with service status and health links only", async () => {
+  await withServer(createApp(config, logger, async () => {}), async baseUrl => {
+    const response = await fetch(baseUrl + "/");
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), { data: {
+      service: "AdVibe API", status: "ok", health: "/api/v1/health", ready: "/api/v1/ready",
+    } });
+    assert.equal(response.headers.get("cache-control"), "no-store");
+    assert.equal(response.headers.get("x-powered-by"), null);
+  });
+});
+
 test("readiness responds with sanitized 503 while draining", async () => {
   const app = createApp(config, logger, async () => {});
   app.locals.ready = false;
