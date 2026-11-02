@@ -1,7 +1,6 @@
-import {ApiPortal} from "@/features/live/api-portal";
-// Each authenticated portal is server-backed. The legacy page children are
-// intentionally not rendered until their API-backed replacements are shipped.
-export default function DriverLayout({children}:{children:React.ReactNode}){
- void children;
- return <ApiPortal role="driver"/>;
+import { ApiPortal } from "@/features/live/api-portal";
+
+// The layout checks the driver session once; each page renders its API-backed section.
+export default function DriverLayout({ children }: { children: React.ReactNode }) {
+  return <ApiPortal role="driver">{children}</ApiPortal>;
 }

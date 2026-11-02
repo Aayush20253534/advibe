@@ -1,6 +1,6 @@
 # Proposal: render real portal pages instead of `void children`
 
-Status: **proposed, not implemented. Needs owner approval** (it changes routing architecture).
+Status: **approved by the owner and implemented** (commit after M4).
 
 ## What happens today
 
@@ -66,7 +66,8 @@ export default function AdvertiserLayout({ children }) {
 | Test | Change needed |
 |---|---|
 | `tests/b4-admin-live-contract.test.mjs` asserts the layout contains `<AdminPortal />` (self-closing) | Assert `<AdminPortal>{children}</AdminPortal>` instead. The other assertions (no `PortalGate`, demo auth or `ApiPortal` in the layout) stay. |
-| `tests/b22-api-integration.test.mjs`, `tests/b3-advertiser-live-contract.test.mjs` | No change: they check that the layouts use `AdvertiserPortal`, `AdminPortal` or `ApiPortal` and no demo code. |
+| `tests/b22-api-integration.test.mjs` asserts the advertiser and admin layouts use the self-closing form | Correction to this proposal, which said no change was needed: the pattern now matches each portal wrapping `{children}`. The "no demo mode, no `PortalGate`, no `PortalShell` in layouts" assertion is unchanged. |
+| `tests/b3-advertiser-live-contract.test.mjs` | No change: it checks the layout uses `AdvertiserPortal` and no demo code. |
 | `tests/part22-*.test.mjs` "sidebar destinations are dedicated pages" | No change: still true, and now literally rendered. |
 | `scripts/portal-shell-browser.mjs`, `b22-live-browser.mjs`, `b2-auth-browser.mjs` | No change expected; all must still pass. |
 
@@ -87,3 +88,13 @@ About 55 files: 3 layouts, 3 portal components, 47 pages, plus `loading.tsx` and
 ## Decision needed
 
 Approve this before M5 (advertiser) so the advertiser redesign is built on real pages. If you'd rather keep the current pattern, M5–M7 still work; the portals just keep one bundle each and shared tab titles.
+
+## Implementation results
+
+- Layouts render `<AdvertiserPortal>`, `<AdminPortal>` and `<ApiPortal role="driver">` around `{children}`. Every portal `page.tsx` renders its live screen; the demo-era screens are no longer imported by any page. `BusinessScoped` keeps the "switching business reloads business screens" behaviour. Each portal has `loading.tsx` and `error.tsx`.
+- Unknown sections show the not-found page. Because `loading.tsx` streams the page first, the HTTP status is 200 rather than 404; portal pages are `noindex`, so this has no search impact.
+- **Network equivalence:** API requests (method, path and query) and page headings captured on all 43 portal pages as each role, against the real backend, before and after: **43 of 43 identical**.
+- Access matrix, overflow, axe and page errors on the 60-route crawl: unchanged from M4.
+- `test:portal-shell` 18/18, `b22-live-browser` 3/3, `b2-auth-browser` pass; all 127 tests in `tests/` pass.
+- Browser tab titles now differ per page (for example "My campaigns | AdVibe").
+- Bundle sizes per route were not measured: this Next.js build does not print them.

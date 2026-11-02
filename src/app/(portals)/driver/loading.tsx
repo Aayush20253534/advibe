@@ -1,0 +1,5 @@
+import { SkeletonList } from "@/components/ui";
+
+export default function Loading() {
+  return <SkeletonList rows={4} label="Loading page" />;
+}

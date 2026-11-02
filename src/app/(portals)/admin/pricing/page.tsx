@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {AdminPricing} from "@/features/admin/part20-pages";
-export const metadata:Metadata={title:"Pricing | AdVibe Admin",robots:{index:false,follow:false}};
-export default function Page(){return <AdminPricing/>;}
+import type { Metadata } from "next";
+import { Pricing } from "@/features/admin-live/catalog";
+
+export const metadata: Metadata = { title: "Pricing", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <Pricing />;
+}

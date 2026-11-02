@@ -1,6 +1,6 @@
-import {AdminPortal} from "@/features/admin-live/portal";
-/** The Admin portal now renders authenticated backend workflows only. */
-export default function AdminLayout({children}:{children:React.ReactNode}){
- void children;
- return <AdminPortal/>;
+import { AdminPortal } from "@/features/admin-live/portal";
+
+// The layout checks the MFA-verified Admin session once; each page renders its own live screen.
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return <AdminPortal>{children}</AdminPortal>;
 }

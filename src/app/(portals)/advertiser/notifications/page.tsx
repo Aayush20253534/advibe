@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {AdvertiserNotifications} from "@/features/advertiser/notifications-page";
-export const metadata:Metadata={title:"Notifications | AdVibe Advertiser",robots:{index:false,follow:false}};
-export default function Page(){return <AdvertiserNotifications/>;}
+import type { Metadata } from "next";
+import { AccountNotifications } from "@/features/advertiser-live/operations";
+
+export const metadata: Metadata = { title: "Notifications", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <AccountNotifications />;
+}

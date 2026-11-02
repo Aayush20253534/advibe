@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {AdminScreens} from "@/features/admin/part19-pages";
-export const metadata:Metadata={title:"Screens and Devices | AdVibe Admin",robots:{index:false,follow:false}};
-export default function Page(){return <AdminScreens/>;}
+import type { Metadata } from "next";
+import { Screens } from "@/features/admin-live/catalog";
+
+export const metadata: Metadata = { title: "Screens and devices", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <Screens />;
+}

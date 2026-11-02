@@ -32,7 +32,8 @@ test("All portal layouts require authenticated API mode with no demo fallback",(
   read("src/app/(portals)/"+role+"/layout.tsx"));
  for(const layout of layouts){
   assert.doesNotMatch(layout,/NEXT_PUBLIC_DEMO_MODE|PortalGate|PortalShell/);
-  assert.match(layout,/<ApiPortal role=|<AdvertiserPortal\s*\/>|<AdminPortal\s*\/>/);
+  // Each layout wraps its live pages in the authenticated portal (docs/redesign/ROUTING_PROPOSAL.md).
+  assert.match(layout,/<ApiPortal role="driver">\{children\}<\/ApiPortal>|<AdvertiserPortal>\{children\}<\/AdvertiserPortal>|<AdminPortal>\{children\}<\/AdminPortal>/);
  }
  assert.match(bridge,/BACKEND_NOT_CONFIGURED/);
  assert.match(bridge,/BACKEND_UNAVAILABLE/);

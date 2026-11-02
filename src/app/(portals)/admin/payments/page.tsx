@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {AdminPayments} from "@/features/admin/part20-pages";
-export const metadata:Metadata={title:"Payments | AdVibe Admin",robots:{index:false,follow:false}};
-export default function Page(){return <AdminPayments/>;}
+import type { Metadata } from "next";
+import { Payments } from "@/features/admin-live/operations";
+
+export const metadata: Metadata = { title: "Payments and refunds", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <Payments />;
+}

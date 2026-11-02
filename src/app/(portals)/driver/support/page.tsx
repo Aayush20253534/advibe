@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {DriverSupport} from "@/features/driver/support-page";
-export const metadata:Metadata={title:"Driver Support | AdVibe Driver",robots:{index:false,follow:false}};
-export default function Page(){return <DriverSupport/>;}
+import type { Metadata } from "next";
+import { ApiSection } from "@/features/live/api-portal";
+
+export const metadata: Metadata = { title: "Support", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <ApiSection />;
+}

@@ -8,9 +8,16 @@ import {Select} from "@/components/ui";
 import {api,apiPage,liveSession} from "@/services/api-client";
 import type {LiveSession} from "@/services/api-client";
 import {Auth,type Business,Notice,message} from "./common";
-import {CampaignIndex,CampaignEditor,CampaignDetail,CreativeLibrary,Dashboard} from "./workflows";
-import {BusinessSettings,Directory,MoneyAndQuotes,Reports,AccountSupport,AccountNotifications} from "./operations";
-export function AdvertiserPortal(){
+/**
+ * Remounts business-specific screens when the advertiser switches business,
+ * as the former screen switch did with key={...+activeId}.
+ */
+export function BusinessScoped({children}:{children:React.ReactNode}){
+ const auth=React.useContext(Auth);
+ return <React.Fragment key={auth?.business?.id??"none"}>{children}</React.Fragment>;
+}
+/** Session, role and business context for every advertiser page (rendered by the layout). */
+export function AdvertiserPortal({children}:{children:React.ReactNode}){
  const pathname=usePathname(),router=useRouter();
  const [session,setSession]=React.useState<LiveSession|null>(null);
  const [businesses,setBusinesses]=React.useState<Business[]>([]);
@@ -58,19 +65,6 @@ export function AdvertiserPortal(){
  };
  const business=businesses.find(x=>x.id===activeId)??null;
  const segment=pathname.split("/")[2]??"home";
- let screen:React.ReactNode;
- if(segment==="home")screen=<Dashboard key={"dashboard-"+activeId}/>;
- else if(segment==="campaigns"&&pathname.split("/")[3])screen=<CampaignDetail id={pathname.split("/")[3]!}/>;
- else if(segment==="campaigns")screen=<CampaignIndex key={"campaigns-"+activeId}/>;
- else if(segment==="create-campaign")screen=<CampaignEditor key={"editor-"+activeId}/>;
- else if(segment==="creatives")screen=<CreativeLibrary key={"creatives-"+activeId}/>;
- else if(segment==="locations"||segment==="ad-formats")screen=<Directory kind={segment}/>;
- else if(segment==="billing")screen=<MoneyAndQuotes key={"billing-"+activeId}/>;
- else if(segment==="reports")screen=<Reports key={"reports-"+activeId}/>;
- else if(segment==="settings")screen=<BusinessSettings key={"settings-"+activeId}/>;
- else if(segment==="support")screen=<AccountSupport/>;
- else if(segment==="notifications")screen=<AccountNotifications/>;
- else screen=<Notice kind="warning">This section does not have an approved API workflow.</Notice>;
  if(loading)return <PortalLoading message="Verifying your account against the backend…"/>;
  if(!session)return <PortalAccessRequired title="Secure advertiser access"
   message={authError||"An authenticated advertiser session is required."}
@@ -87,7 +81,7 @@ export function AdvertiserPortal(){
   <PortalShell role="advertiser" pathname={pathname} title={detailTitle} context={businessSwitcher}
    onSignOut={()=>void signOut()}>
    {!business&&segment!=="settings"&&<Notice kind="warning">No business is registered for this account. Create one in <Link className="font-bold underline" href="/advertiser/settings">Profile and settings</Link> before managing campaigns or creatives.</Notice>}
-   {screen}
+   {children}
   </PortalShell>
  </Auth.Provider>;
 }

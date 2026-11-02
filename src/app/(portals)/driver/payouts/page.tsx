@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {DriverPayouts} from "@/features/driver/payouts-page";
-export const metadata:Metadata={title:"Payout History | AdVibe Driver",robots:{index:false,follow:false}};
-export default function Page(){return <DriverPayouts/>;}
+import type { Metadata } from "next";
+import { ApiSection } from "@/features/live/api-portal";
+
+export const metadata: Metadata = { title: "Payout history", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <ApiSection />;
+}

@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {AdminDrivers} from "@/features/admin/part19-pages";
-export const metadata:Metadata={title:"Driver Verification | AdVibe Admin",robots:{index:false,follow:false}};
-export default function Page(){return <AdminDrivers/>;}
+import type { Metadata } from "next";
+import { DriverReviews } from "@/features/admin-live/reviews";
+
+export const metadata: Metadata = { title: "Driver partners", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <DriverReviews />;
+}

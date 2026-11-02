@@ -1,9 +1,6 @@
 import { notFound } from "next/navigation";
-import { SectionPlaceholder } from "@/components/shared/section-placeholder";
-import { findPortalSection } from "@/config/navigation";
-export default async function SectionPage({params}:{params:Promise<{section:string}>}){
- const {section}=await params;
- const item=findPortalSection("driver",section);
- if(!item)notFound();
- return <SectionPlaceholder role="driver" item={item}/>;
+
+// Every portal section has its own route; unknown sections are a 404.
+export default function SectionPage() {
+  notFound();
 }

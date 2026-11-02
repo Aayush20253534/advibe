@@ -178,27 +178,84 @@ function SupportForm({session,role,onDone}:{session:LiveSession;role:PortalRole;
   {error&&<p role="alert" className="text-sm text-red-700">{error}</p>}
  </form>;
 }
-export function ApiPortal({role}:{role:PortalRole}){
+type ApiPortalContextValue={role:PortalRole;session:LiveSession;expire:(message:string)=>void};
+const ApiPortalContext=React.createContext<ApiPortalContextValue|null>(null);
+/** Session check, revalidation and sign-out for a generic API portal (rendered by the layout). */
+export function ApiPortal({role,children}:{role:PortalRole;children:React.ReactNode}){
  const router=useRouter(),pathname=usePathname();
  const [session,setSession]=React.useState<LiveSession|null>(null);
  const [authError,setAuthError]=React.useState("");
  const [loading,setLoading]=React.useState(true),[error,setError]=React.useState("");
- const [data,setData]=React.useState<Result>({rows:[],summary:null,nextCursor:null});
- const [cursor,setCursor]=React.useState(""),[cursorPath,setCursorPath]=React.useState(""),[refresh,setRefresh]=React.useState(0);
- const activeCursor=cursorPath===pathname?cursor:"";
- const [selected,setSelected]=React.useState<Row|null>(null);
  const [busy,setBusy]=React.useState(false);
  const section=pathname.split("/")[2]??"home";
- const endpoint=routeFor(role,section,pathname);
  React.useEffect(()=>{
   const ac=new AbortController();
   void liveSession(ac.signal).then(current=>{
    if(current.role!==role){setAuthError("Your authenticated account does not have access to the "+role+" portal.");return;}
    setSession(current);setAuthError("");
-  }).catch(e=>{if(!ac.signal.aborted){setSession(null);setData({rows:[],summary:null,nextCursor:null});setAuthError(e instanceof Error?e.message:"Unable to verify live session");}})
+  }).catch(e=>{if(!ac.signal.aborted){setSession(null);setAuthError(e instanceof Error?e.message:"Unable to verify live session");}})
   .finally(()=>{if(!ac.signal.aborted)setLoading(false);});
   return ()=>ac.abort();
  },[role]);
+ React.useEffect(()=>{
+  let active=true;
+  async function revalidate(){
+   if(document.visibilityState!=="visible")return;
+   try{
+    const current=await liveSession();
+    if(!active)return;
+    if(current.role!==role){
+     setSession(null);
+     setAuthError("Your account does not have access to this portal.");
+    }else{
+     setSession(old=>old?.csrfToken===current.csrfToken?old:current);
+    }
+   }catch{
+    if(!active)return;
+    setSession(null);
+    setAuthError("Your session is unavailable or has expired. Sign in again.");
+   }
+  }
+  document.addEventListener("visibilitychange",revalidate);
+  return ()=>{active=false;document.removeEventListener("visibilitychange",revalidate);};
+ },[role]);
+ const expire=React.useCallback((message:string)=>{setSession(null);setAuthError(message);},[]);
+ const context=React.useMemo(()=>session?{role,session,expire}:null,[role,session,expire]);
+ async function signOut(){
+  if(!session)return;
+  setBusy(true);
+  try{await api("/auth/logout",{method:"POST",csrfToken:session.csrfToken});router.replace("/login");router.refresh();}
+  catch(err){setError(err instanceof Error?err.message:"Could not sign out");}
+  finally{setBusy(false);}
+ }
+ if(authError||(!loading&&!session))return <PortalAccessRequired title="Live session required"
+  message={authError||"Sign in with a verified account."}
+  signInHref={"/login?next="+encodeURIComponent(pathname)} signInLabel="Secure sign in"/>;
+ if(!session||!context)return <PortalLoading message="Verifying authenticated session…"/>;
+ return <ApiPortalContext.Provider value={context}>
+  <PortalShell role={role} pathname={pathname} title={heading(section)}
+   description="Only records returned by the authenticated AdVibe API are shown. No simulated financial or campaign activity."
+   signingOut={busy} onSignOut={()=>void signOut()}>
+   {error&&<div role="alert" className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800">{error}</div>}
+   {children}
+  </PortalShell>
+ </ApiPortalContext.Provider>;
+}
+/** One API-backed section page. Each page mounts its own copy, so paging and selection reset per page. */
+export function ApiSection(){
+ const portal=React.useContext(ApiPortalContext);
+ const pathname=usePathname();
+ const [loading,setLoading]=React.useState(true),[error,setError]=React.useState("");
+ const [data,setData]=React.useState<Result>({rows:[],summary:null,nextCursor:null});
+ const [cursor,setCursor]=React.useState(""),[refresh,setRefresh]=React.useState(0);
+ const activeCursor=cursor;
+ const [selected,setSelected]=React.useState<Row|null>(null);
+ const [busy,setBusy]=React.useState(false);
+ const role=portal?.role??"driver";
+ const session=portal?.session??null;
+ const expire=portal?.expire;
+ const section=pathname.split("/")[2]??"home";
+ const endpoint=routeFor(role,section,pathname);
  React.useEffect(()=>{
   if(!session||!endpoint)return;
   const ac=new AbortController();
@@ -211,39 +268,11 @@ export function ApiPortal({role}:{role:PortalRole}){
      setData({...result,nextCursor:payload.meta.nextCursor??null});
     }
    });
-  }).catch(e=>{if(!ac.signal.aborted){if(e instanceof ApiError&&e.status===401){setSession(null);setAuthError("Your session has expired or was revoked.");}else{setError(e instanceof Error?e.message:"Live data unavailable");}setData({rows:[],summary:null,nextCursor:null});}})
+  }).catch(e=>{if(!ac.signal.aborted){if(e instanceof ApiError&&e.status===401){expire?.("Your session has expired or was revoked.");}else{setError(e instanceof Error?e.message:"Live data unavailable");}setData({rows:[],summary:null,nextCursor:null});}})
   .finally(()=>{if(!ac.signal.aborted)setLoading(false);});
   return ()=>ac.abort();
- },[session,endpoint,activeCursor,refresh]);
- React.useEffect(()=>{
-  let active=true;
-  async function revalidate(){
-   if(document.visibilityState!=="visible")return;
-   try{
-    const current=await liveSession();
-    if(!active)return;
-    if(current.role!==role){
-     setSession(null);setData({rows:[],summary:null,nextCursor:null});
-     setAuthError("Your account does not have access to this portal.");
-    }else{
-     setSession(old=>old?.csrfToken===current.csrfToken?old:current);
-    }
-   }catch{
-    if(!active)return;
-    setSession(null);setData({rows:[],summary:null,nextCursor:null});
-    setAuthError("Your session is unavailable or has expired. Sign in again.");
-   }
-  }
-  document.addEventListener("visibilitychange",revalidate);
-  return ()=>{active=false;document.removeEventListener("visibilitychange",revalidate);};
- },[role]);
- async function signOut(){
-  if(!session)return;
-  setBusy(true);
-  try{await api("/auth/logout",{method:"POST",csrfToken:session.csrfToken});router.replace("/login");router.refresh();}
-  catch(err){setError(err instanceof Error?err.message:"Could not sign out");}
-  finally{setBusy(false);}
- }
+ },[session,endpoint,activeCursor,refresh,expire]);
+ if(!session)return null;
  async function rowAction(row:Row){
   if(!session)return;
   if(section==="users"&&role==="admin"){
@@ -268,17 +297,10 @@ export function ApiPortal({role}:{role:PortalRole}){
  }
  const management=(section==="users"&&role==="admin"||section==="notifications"||
   section==="campaigns"||section==="support")?rowAction:undefined;
- if(authError||(!loading&&!session))return <PortalAccessRequired title="Live session required"
-  message={authError||"Sign in with a verified account."}
-  signInHref={"/login?next="+encodeURIComponent(pathname)} signInLabel="Secure sign in"/>;
- if(!session)return <PortalLoading message="Verifying authenticated session…"/>;
- const pageActions=<><button className={outline} onClick={()=>setRefresh(x=>x+1)}>Refresh</button>
-  {role==="admin"&&(section==="analytics"||section==="audit"||section==="home")&&<button className={button}
-   onClick={()=>void downloadApiCsv(section==="audit"?"/admin/audit-events/export":"/admin/reports/export","advibe-"+section+"-live.csv").catch(e=>setError(e instanceof Error?e.message:"Export unavailable"))}>Download verified CSV</button>}</>;
- return <PortalShell role={role} pathname={pathname} title={heading(section)} actions={pageActions}
-  description="Only records returned by the authenticated AdVibe API are shown. No simulated financial or campaign activity."
-  signingOut={busy} onSignOut={()=>void signOut()}
-  onNavigate={href=>{setSelected(null);setCursor("");setCursorPath(href);}}>
+ return <>
+    <div className="flex flex-wrap gap-2"><button className={outline} onClick={()=>setRefresh(x=>x+1)}>Refresh</button>
+     {role==="admin"&&(section==="analytics"||section==="audit"||section==="home")&&<button className={button}
+      onClick={()=>void downloadApiCsv(section==="audit"?"/admin/audit-events/export":"/admin/reports/export","advibe-"+section+"-live.csv").catch(e=>setError(e instanceof Error?e.message:"Export unavailable"))}>Download verified CSV</button>}</div>
     {error&&<div role="alert" className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800">{error}</div>}
     {section==="create-campaign"&&role==="advertiser"&&<CampaignForm session={session} onDone={()=>setRefresh(x=>x+1)}/>}
     {section==="support"&&<SupportForm role={role} session={session} onDone={()=>setRefresh(x=>x+1)}/>}
@@ -288,7 +310,7 @@ export function ApiPortal({role}:{role:PortalRole}){
      <>{data.summary&&<SafeSummary data={data.summary}/>}
       {data.rows.length>0&&<SafeTable rows={data.rows} onSelect={management}/>}
       {!data.summary&&!data.rows.length&&<p className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-sm">No records returned by this account&apos;s backend endpoint.</p>}
-      {data.nextCursor&&<button className={outline} onClick={()=>{setCursorPath(pathname);setCursor(data.nextCursor!);}}>Next page</button>}
+      {data.nextCursor&&<button className={outline} onClick={()=>setCursor(data.nextCursor!)}>Next page</button>}
       {activeCursor&&<button className={outline} onClick={()=>setCursor("")}>First page</button>}
      </>}
     {selected&&<section className="rounded-xl border border-blue-200 bg-white p-5">
@@ -304,5 +326,5 @@ export function ApiPortal({role}:{role:PortalRole}){
       }catch(err){setError(err instanceof Error?err.message:"Message failed");}finally{setBusy(false);}
      }}><label className="text-sm font-semibold">Send ticket response<textarea name="body" className={input} maxLength={2000} required rows={3}/></label><button className={button} disabled={busy}>Send response</button></form>}
      </section>}
- </PortalShell>;
+ </>;
 }

@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {AdminAdvertisers} from "@/features/admin/part21-reports";
-export const metadata:Metadata={title:"advertisers | AdVibe Admin",robots:{index:false,follow:false}};
-export default function Page(){return <AdminAdvertisers/>;}
+import type { Metadata } from "next";
+import { Users } from "@/features/admin-live/operations";
+
+export const metadata: Metadata = { title: "Advertisers", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <Users onlyRole="ADVERTISER" />;
+}

@@ -1,4 +1,13 @@
-import type {Metadata} from "next";
-import {AdvertiserReports} from "@/features/advertiser/reports-page";
-export const metadata:Metadata={title:"Reports & Analytics | AdVibe Advertiser",robots:{index:false,follow:false}};
-export default function Page(){return <AdvertiserReports/>;}
+import type { Metadata } from "next";
+import { Reports } from "@/features/advertiser-live/operations";
+import { BusinessScoped } from "@/features/advertiser-live/portal";
+
+export const metadata: Metadata = { title: "Reports", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return (
+    <BusinessScoped>
+      <Reports />
+    </BusinessScoped>
+  );
+}

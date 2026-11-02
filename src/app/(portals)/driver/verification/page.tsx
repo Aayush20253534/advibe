@@ -1,4 +1,8 @@
-import type {Metadata} from "next";
-import {DriverVerification} from "@/features/driver/verification-page";
-export const metadata:Metadata={title:"Verification Status | AdVibe Driver",robots:{index:false,follow:false}};
-export default function Page(){return <DriverVerification/>;}
+import type { Metadata } from "next";
+import { ApiSection } from "@/features/live/api-portal";
+
+export const metadata: Metadata = { title: "Verification status", robots: { index: false, follow: false } };
+
+export default function Page() {
+  return <ApiSection />;
+}
