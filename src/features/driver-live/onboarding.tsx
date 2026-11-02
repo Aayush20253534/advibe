@@ -96,7 +96,7 @@ export function DriverOnboarding() {
         : fromServer;
 
   // Step form state, seeded from the application.
-  const [city, setCity] = React.useState("");
+  const [city, setCity] = React.useState("Prayagraj");
   const [experience, setExperience] = React.useState<Application["experience"]>(null);
   const [vehicleId, setVehicleId] = React.useState("");
   const [screenChoice, setScreenChoice] = React.useState("");
@@ -106,7 +106,7 @@ export function DriverOnboarding() {
     if (!app || seededFor.current === app.id + ":" + app.version) return;
     seededFor.current = app.id + ":" + app.version;
     const frame = window.requestAnimationFrame(() => {
-      setCity(app.city ?? "");
+      setCity("Prayagraj");
       setExperience(app.experience);
       setVehicleId(app.vehicleId ?? "");
       setScreenChoice(app.screenChoice ?? "");
@@ -141,7 +141,7 @@ export function DriverOnboarding() {
     let body: Record<string, unknown>;
     if (step === 1) {
       if (city.trim().length < 2 || !experience) return;
-      body = { step: 1, expectedVersion: app.version, city: city.trim(), experience };
+      body = { step: 1, expectedVersion: app.version, city: "Prayagraj", experience };
     } else if (step === 2) {
       if (!vehicle) return;
       body = {
@@ -319,7 +319,7 @@ export function DriverOnboarding() {
               {isActive && step === 1 ? (
                 <div className="mt-4 space-y-5">
                   <Field
-                    label="City you drive in"
+                    label="Launch city"
                     htmlFor="onboard-city"
                     error={
                       touched && city.trim().length < 2 ? "Enter the city you drive in." : undefined
@@ -330,9 +330,11 @@ export function DriverOnboarding() {
                       autoComplete="address-level2"
                       maxLength={100}
                       value={city}
-                      onChange={(e) => setCity(e.target.value)}
+                      readOnly
+                      aria-describedby="onboard-city-hint"
                     />
                   </Field>
+                  <p id="onboard-city-hint" className="text-sm text-ink-muted">Driver applications are being accepted for Prayagraj only.</p>
                   <fieldset>
                     <legend className="text-sm font-semibold text-ink">
                       How long have you driven for work?

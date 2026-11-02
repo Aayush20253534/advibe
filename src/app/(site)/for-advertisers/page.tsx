@@ -17,7 +17,7 @@ import { publicFAQs } from "@/components/public/faq-data";
 export const metadata: Metadata = {
   title: "For Advertisers | Vehicle Screen Campaigns",
   description:
-    "Explore vehicle-mounted outdoor advertising formats, location-based campaign planning and advertiser onboarding with AdVibe.",
+    "Explore vehicle-screen advertising formats and campaign planning in Prayagraj with AdVibe.",
 };
 
 // Purpose: explain to a business what running a campaign involves and what it controls.
@@ -25,8 +25,8 @@ export default function Page() {
   return (
     <>
       <PageHero
-        title="Run a campaign on screens that move through your city"
-        description="Put your ad on screens carried by bikes, auto rickshaws and cars. You choose the format, the area, the dates and the hours, and an AdVibe admin reviews everything before it runs."
+        title="Your next local campaign, on the move in Prayagraj"
+        description="Plan locally relevant advertising using digital screens on bikes, autos and cars in Prayagraj. Choose a format and schedule, then submit your creative for review. Availability is confirmed before booking."
         actions={[
           { label: "Create an advertiser account", href: "/signup?role=advertiser" },
           { label: "Estimate the cost", href: "/pricing", secondary: true },

@@ -2,107 +2,70 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
-import { Tabs } from "@/components/ui";
+import { ArrowUpRight, MapPin, Navigation2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Example cities for explaining area-based planning. Not a statement of where AdVibe operates.
-const cities = [
-  { name: "Delhi", x: 49, y: 21 },
-  { name: "Mumbai", x: 31, y: 62 },
-  { name: "Bengaluru", x: 45, y: 82 },
-  { name: "Hyderabad", x: 50, y: 64 },
-  { name: "Pune", x: 38, y: 65 },
-  { name: "Chennai", x: 59, y: 82 },
-  { name: "Kolkata", x: 78, y: 48 },
+// Planning landmarks, not live inventory or precise screen locations.
+const areas = [
+  { name: "Civil Lines", detail: "Commercial streets, shops and everyday local journeys", x: "37%", y: "35%" },
+  { name: "Katra", detail: "Student activity, markets and neighbourhood businesses", x: "70%", y: "24%" },
+  { name: "Naini", detail: "Residential connections and routes across the river", x: "57%", y: "72%" },
 ] as const;
 
 export function CoverageExplorer() {
-  const [chosen, setChosen] = React.useState<string>(cities[0].name);
+  const [selected, setSelected] = React.useState<(typeof areas)[number]["name"]>("Civil Lines");
+  const active = areas.find((area) => area.name === selected) ?? areas[0];
   return (
-    <section
-      aria-labelledby="coverage-heading"
-      id="coverage"
-      className="scroll-mt-24 bg-surface py-14 sm:py-20"
-    >
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1fr] lg:gap-16">
+    <section id="coverage" className="scroll-mt-24 bg-surface py-16 sm:py-20" aria-labelledby="coverage-heading">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
-          <h2
-            id="coverage-heading"
-            className="font-heading text-2xl font-bold text-ink sm:text-3xl"
-          >
-            Plan by city and area
-          </h2>
-          <p className="mt-3 max-w-xl text-base text-ink-muted">
-            Campaigns are planned by city and zone, so your ad runs where your customers are. Pick
-            an example city to see how planning starts.
+          <span className="inline-flex items-center gap-2 text-sm font-semibold text-signal"><MapPin className="size-4" aria-hidden="true" /> OUR FIRST CITY</span>
+          <h2 id="coverage-heading" className="mt-4 font-heading text-3xl font-bold tracking-tight text-ink sm:text-4xl">Local focus. Real-world routes.</h2>
+          <p className="mt-4 max-w-xl text-lg leading-7 text-ink-muted">
+            AdVibe is focusing on Prayagraj for its first launch. Explore familiar parts of the city while our team prepares approved screen inventory.
           </p>
-          <Tabs
-            label="Example cities"
-            tabs={cities.map((c) => ({ value: c.name, label: c.name }))}
-            value={chosen}
-            onValueChange={setChosen}
-            className="mt-6 flex-wrap"
-          />
-          <p className="mt-6 text-sm text-ink-muted">
-            Example cities only. Screen availability is confirmed for each campaign.
-          </p>
-          <Link
-            href={"/locations?city=" + encodeURIComponent(chosen)}
-            className="mt-6 inline-flex min-h-12 items-center rounded-lg border border-line-strong px-6 text-base font-semibold text-ink hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-          >
-            Explore sample areas in {chosen}
+          <div className="mt-7 grid gap-2 sm:grid-cols-3 lg:grid-cols-1">
+            {areas.map((area) => (
+              <button key={area.name} type="button" aria-pressed={selected === area.name} onClick={() => setSelected(area.name)}
+                className={cn("flex min-h-12 items-center justify-between rounded-lg border px-4 py-3 text-left text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal",
+                  selected === area.name ? "border-signal bg-signal-soft text-ink" : "border-line bg-white text-ink hover:border-line-strong")}>
+                {area.name}<Navigation2 className="size-4 text-signal" aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+          <p className="mt-4 text-sm text-ink-muted">Planning areas are illustrative, not confirmed coverage or available screens.</p>
+          <Link href="/locations" className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-signal hover:underline">
+            Check published locations <ArrowUpRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
-        <div className="rounded-lg border border-line bg-paper p-4 sm:p-6">
-          <div
-            className="relative mx-auto aspect-[1.35/1] w-full max-w-[520px]"
-            role="img"
-            aria-label={"Schematic map of India with " + chosen + " selected"}
-          >
-            <svg
-              viewBox="0 0 540 400"
-              preserveAspectRatio="xMidYMid meet"
-              className="absolute inset-0 size-full"
-              aria-hidden="true"
-            >
-              <path
-                d="M192 38 228 26 251 52 289 38 314 72 355 66 372 92 419 81 445 120 479 128 492 143 462 172 442 158 418 187 391 195 378 235 344 246 318 291 295 301 280 338 267 370 248 341 239 302 212 280 206 253 183 232 190 206 158 184 145 156 169 135 157 104 181 83Z"
-                fill="#e8f0fe"
-                stroke="#9fb0cc"
-                strokeWidth="2"
-                strokeLinejoin="round"
-              />
-              {/* Route lines between cities. fill="none" matters: the default fill is black. */}
-              <path
-                d="M207 75 249 93 258 163 281 205 272 309m57-210-29 66 57 61m-201-52 113 22m40 57 49-4 39-71"
-                fill="none"
-                stroke="#0866ff"
-                strokeOpacity="0.35"
-                strokeWidth="2"
-                strokeDasharray="4 6"
-              />
-            </svg>
-            {/* Pins show the selection; cities are chosen with the list beside the map.
-                (Pins as buttons overlapped on phones and duplicated the list.) */}
-            {cities.map((city) => {
-              const isChosen = city.name === chosen;
-              return (
-                <span
-                  key={city.name}
-                  aria-hidden
-                  className={cn(
-                    "absolute grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-white shadow-raised transition-transform",
-                    isChosen ? "z-10 size-9 bg-ink text-white" : "size-7 bg-signal text-white",
-                  )}
-                  style={{ left: city.x + "%", top: city.y + "%" }}
-                >
-                  <MapPin className="size-4" aria-hidden />
-                </span>
-              );
-            })}
+        <div className="overflow-hidden rounded-2xl border border-line bg-paper p-5 sm:p-7">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-semibold text-ink">Prayagraj area explorer</span>
+            <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-ink-muted">Schematic only</span>
           </div>
-          <p className="mt-3 text-center text-xs text-ink-muted">Schematic map. Not to scale.</p>
+          <div className="relative mt-5 h-[290px] overflow-hidden rounded-xl border border-line bg-[#eaf1fb] sm:h-[340px]" aria-label={"Illustrative city-area diagram with " + active.name + " selected"}>
+            <svg viewBox="0 0 600 350" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 size-full" aria-hidden="true">
+              <path d="M-40 240 Q120 180 250 240 T640 190" fill="none" stroke="#ffffff" strokeWidth="52" />
+              <path d="M-40 240 Q120 180 250 240 T640 190" fill="none" stroke="#a9c9ea" strokeWidth="22" />
+              <path d="M20 20 L530 320 M40 320 L570 50 M0 110 L600 90 M170 0 L220 350" fill="none" stroke="#ffffff" strokeWidth="10" strokeLinecap="round" />
+              <path d="M220 70 Q360 90 390 235" fill="none" stroke="#0866ff" strokeWidth="4" strokeDasharray="8 9" strokeLinecap="round" />
+            </svg>
+            {areas.map((area) => (
+              <button key={area.name} type="button" onClick={() => setSelected(area.name)} aria-label={"Explore " + area.name} aria-pressed={selected === area.name}
+                style={{ left: area.x, top: area.y }}
+                className={cn("absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white px-3 py-2 text-xs font-bold shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal",
+                  selected === area.name ? "bg-ink text-white" : "bg-surface text-ink")}>
+                {area.name}
+              </button>
+            ))}
+          </div>
+          <div aria-live="polite" className="mt-5 flex items-start gap-3 rounded-lg bg-white p-4">
+            <MapPin className="mt-1 size-5 shrink-0 text-signal" aria-hidden="true" />
+            <div>
+              <h3 className="font-heading font-bold text-ink">{active.name}</h3>
+              <p className="mt-1 text-sm leading-6 text-ink-muted">{active.detail}</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

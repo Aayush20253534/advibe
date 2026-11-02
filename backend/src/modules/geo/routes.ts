@@ -57,6 +57,8 @@ function conflicts(error:unknown):never{
 }
 export function createGeoRouter(config:AppConfig,{db,settings}:AuthDependencies):Router{
   const router=Router();
+  // Live rollout is restricted to Prayagraj; tests and development retain flexible fixture cities.
+  const prayagrajOnly=config.nodeEnv==="production";
   const admin=async(req:Request)=>{
     const p=await resolvePrincipal(req,db,settings);requireRole(p,"ADMIN");return p;
   };
@@ -65,7 +67,7 @@ export function createGeoRouter(config:AppConfig,{db,settings}:AuthDependencies)
     requireRole(p,"ADMIN","ADVERTISER","DRIVER");return p;
   };
   router.get("/public/locations",route(async(req,res)=>{
-    res.json(await listGeo(db,req,false));
+    res.json(await listGeo(db,req,false,prayagrajOnly));
   }));
   const formats=[
     ["bike_rear","Bike rear"],["auto_rear","Auto rear"],["auto_side","Auto side"],
@@ -95,19 +97,19 @@ export function createGeoRouter(config:AppConfig,{db,settings}:AuthDependencies)
       meta:{limit,nextCursor:next}});
   }));
   router.get("/locations",route(async(req,res)=>{
-    const p=await user(req);res.json(await listGeo(db,req,p.role==="ADMIN"));
+    const p=await user(req);res.json(await listGeo(db,req,p.role==="ADMIN",prayagrajOnly));
   }));
   router.get("/admin/locations",route(async(req,res)=>{
     await admin(req);res.json(await listGeo(db,req,true));
   }));
   router.get("/public/cities",route(async(req,res)=>{
     if(Object.keys(req.query).length)throw new HttpError(422,"VALIDATION_ERROR","Unsupported query");
-    const rows=await db.city.findMany({where:{state:"PUBLISHED"},orderBy:{slug:"asc"},take:100});
+    const rows=await db.city.findMany({where:{state:"PUBLISHED",...(prayagrajOnly?{slug:"prayagraj"}:{})},orderBy:{slug:"asc"},take:100});
     res.json({data:rows.map(cityView)});
   }));
   router.get("/public/zones",route(async(req,res)=>{
     if(Object.keys(req.query).length)throw new HttpError(422,"VALIDATION_ERROR","Unsupported query");
-    const zones=await db.zone.findMany({where:{state:"PUBLISHED",city:{state:"PUBLISHED"}},
+    const zones=await db.zone.findMany({where:{state:"PUBLISHED",city:{state:"PUBLISHED",...(prayagrajOnly?{slug:"prayagraj"}:{})}},
       orderBy:[{name:"asc"},{id:"asc"}],take:100});
     res.json({data:zones.map(zoneView)});
   }));

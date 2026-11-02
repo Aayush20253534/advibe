@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Field, Select } from "@/components/ui";
+import { Field, Input } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { formatCards, InfoNote, primaryButton } from "./marketing-blocks";
 
@@ -75,7 +75,7 @@ function Range({
 
 export function PricingPlanner() {
   const [choice, setChoice] = React.useState<Choice>("bike_rear");
-  const [city, setCity] = React.useState("Prayagraj");
+  const city = "Prayagraj";
   const [screens, setScreens] = React.useState(10);
   const [days, setDays] = React.useState(15);
   const [seconds, setSeconds] = React.useState(10);
@@ -91,7 +91,7 @@ export function PricingPlanner() {
   const daily = Math.round(base[choice] * (seconds / 10) * (plays / 100));
   const subtotal = daily * screens * days;
   const tax = Math.round(subtotal * 0.18);
-  const hasRate = city === "Prayagraj";
+  const hasRate = city === "Prayagraj"; // The launch calculator is intentionally single-city.
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(300px,0.9fr)]">
       <div className="rounded-lg border border-line bg-surface p-5 sm:p-6">
@@ -130,13 +130,7 @@ export function PricingPlanner() {
         </fieldset>
         <div className="mt-6 grid gap-6 sm:grid-cols-2">
           <Field label="City" htmlFor="pricing-city">
-            <Select value={city} onChange={(e) => setCity(e.target.value)}>
-              <option>Prayagraj</option>
-              <option>Lucknow</option>
-              <option>Delhi</option>
-              <option>Mumbai</option>
-              <option>Bengaluru</option>
-            </Select>
+            <Input id="pricing-city" value="Prayagraj, Uttar Pradesh" readOnly />
           </Field>
           <Range
             label="Screens"
@@ -178,7 +172,7 @@ export function PricingPlanner() {
         <InfoNote>
           How the example is calculated: daily rate × (ad length ÷ 10 seconds) × (plays ÷ 100) ×
           screens × days, plus 18% GST for illustration. These are not published AdVibe prices; your
-          real quote comes from the rate card for your city when you plan a campaign.
+          real quote comes from approved Prayagraj rates when you plan a campaign.
         </InfoNote>
       </div>
 

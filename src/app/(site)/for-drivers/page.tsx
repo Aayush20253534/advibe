@@ -18,7 +18,7 @@ import { publicFAQs } from "@/components/public/faq-data";
 export const metadata: Metadata = {
   title: "Become an AdVibe Driver Partner",
   description:
-    "Learn about the AdVibe driver partnership, supported vehicle formats, verification documents, screen installation and earnings process.",
+    "Explore the AdVibe driver partnership program for Prayagraj, including vehicle eligibility, verification and reviewed earnings.",
 };
 
 // Purpose: tell a driver what partnering involves, what they need and how they get paid.
@@ -26,8 +26,8 @@ export default function Page() {
   return (
     <>
       <PageHero
-        title="Earn from the routes you already drive"
-        description="Carry an AdVibe screen on your bike, auto rickshaw or car. It shows approved ads while you work, and your earnings appear in your partner portal."
+        title="Drive in Prayagraj? Explore partnering with AdVibe"
+        description="Apply to carry approved advertising screens on your vehicle during regular Prayagraj routes. Installation and earning eligibility depend on verification, approved hardware and the partner agreement."
         actions={[
           { label: "Apply as a driver partner", href: "/signup?role=driver" },
           { label: "See what you need", href: "#requirements", secondary: true },
