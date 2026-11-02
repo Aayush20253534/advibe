@@ -28,7 +28,7 @@ const roles = {
     signIn: "Secure sign in",
     wrongRoleMessage: "Your authenticated account does not have access to the driver portal.",
     navCount: 14,
-    rootTitle: "Overview",
+    rootTitle: "Today",
     next: { label: "Earnings", href: "/driver/earnings" },
   },
   admin: {

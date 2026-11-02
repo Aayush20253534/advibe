@@ -16,7 +16,7 @@ export function Breadcrumbs({ items, className }: { items: readonly Crumb[]; cla
               {item.href && !last ? (
                 <Link
                   href={item.href}
-                  className="rounded-sm underline-offset-4 hover:text-ink hover:underline"
+                  className="inline-flex min-h-11 items-center rounded-sm underline-offset-4 hover:text-ink hover:underline sm:min-h-0"
                 >
                   {item.label}
                 </Link>

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ApiSection } from "@/features/live/api-portal";
+import { DriverNotYetAvailable } from "@/features/driver-live/screens";
 
 export const metadata: Metadata = { title: "Screen activity", robots: { index: false, follow: false } };
 
 export default function Page() {
-  return <ApiSection />;
+  return <DriverNotYetAvailable kind="delivery" />;
 }

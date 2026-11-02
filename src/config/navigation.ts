@@ -48,7 +48,7 @@ export const portalNavigation: Record<PortalRole,NavItem[]> = {
     {label:"Profile and settings",href:"/advertiser/settings",icon:Settings,description:"Demo business details and browser display preferences",group:"account"},
   ],
   driver:[
-    {label:"Dashboard",href:"/driver",icon:House,description:"Sample booked work, screen inventory and driver notices"},
+    {label:"Today",href:"/driver",icon:House,description:"Sample booked work, screen inventory and driver notices"},
     {label:"Onboarding",href:"/driver/onboarding",icon:ListChecks,description:"Five-step demo partner application and review submission"},
     {label:"Verification status",href:"/driver/verification",icon:BadgeCheck,description:"View sample review request and seeded verification records"},
     {label:"Vehicle and screen",href:"/driver/vehicle",icon:CarFront,description:"Driver-owned vehicle, read-only screens and booking links"},

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ApiSection } from "@/features/live/api-portal";
+import { DriverToday } from "@/features/driver-live/screens";
 
-export const metadata: Metadata = { title: "Overview", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Today", robots: { index: false, follow: false } };
 
 export default function Page() {
-  return <ApiSection />;
+  return <DriverToday />;
 }

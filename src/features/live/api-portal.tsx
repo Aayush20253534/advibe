@@ -180,6 +180,12 @@ function SupportForm({session,role,onDone}:{session:LiveSession;role:PortalRole;
 }
 type ApiPortalContextValue={role:PortalRole;session:LiveSession;expire:(message:string)=>void};
 const ApiPortalContext=React.createContext<ApiPortalContextValue|null>(null);
+/** Session and expiry callback for screens rendered inside ApiPortal (driver pages). */
+export function useApiPortal(){
+ const value=React.useContext(ApiPortalContext);
+ if(!value)throw new Error("useApiPortal must be used inside ApiPortal");
+ return value;
+}
 /** Session check, revalidation and sign-out for a generic API portal (rendered by the layout). */
 export function ApiPortal({role,children}:{role:PortalRole;children:React.ReactNode}){
  const router=useRouter(),pathname=usePathname();
@@ -187,7 +193,6 @@ export function ApiPortal({role,children}:{role:PortalRole;children:React.ReactN
  const [authError,setAuthError]=React.useState("");
  const [loading,setLoading]=React.useState(true),[error,setError]=React.useState("");
  const [busy,setBusy]=React.useState(false);
- const section=pathname.split("/")[2]??"home";
  React.useEffect(()=>{
   const ac=new AbortController();
   void liveSession(ac.signal).then(current=>{
@@ -233,9 +238,7 @@ export function ApiPortal({role,children}:{role:PortalRole;children:React.ReactN
   signInHref={"/login?next="+encodeURIComponent(pathname)} signInLabel="Secure sign in"/>;
  if(!session||!context)return <PortalLoading message="Verifying authenticated session…"/>;
  return <ApiPortalContext.Provider value={context}>
-  <PortalShell role={role} pathname={pathname} title={heading(section)}
-   description="Only records returned by the authenticated AdVibe API are shown. No simulated financial or campaign activity."
-   signingOut={busy} onSignOut={()=>void signOut()}>
+  <PortalShell role={role} pathname={pathname} signingOut={busy} onSignOut={()=>void signOut()}>
    {error&&<div role="alert" className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800">{error}</div>}
    {children}
   </PortalShell>

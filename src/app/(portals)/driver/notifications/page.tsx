@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ApiSection } from "@/features/live/api-portal";
+import { DriverNotifications } from "@/features/driver-live/screens";
 
 export const metadata: Metadata = { title: "Notifications", robots: { index: false, follow: false } };
 
 export default function Page() {
-  return <ApiSection />;
+  return <DriverNotifications />;
 }

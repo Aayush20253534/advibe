@@ -90,10 +90,12 @@ try{
    assert.ok(mutations.some(x=>x.path.endsWith("/status")&&x.method==="PATCH"&&x.key));
   }else if(role==="driver"){
    await ensure(page,"/driver/earnings");
-   await page.getByText("Earned Paise").waitFor();
+   // M6 driver screens: earnings show as rupee amounts (22000 paise = Rs 220.00).
+   await page.getByText("₹220.00").waitFor();
    await ensure(page,"/driver/notifications");
    await page.getByText("Service updated").waitFor();
-   await page.getByRole("button",{name:"Manage"}).first().click();
+   await page.getByRole("button",{name:"Mark as read"}).first().click();
+   await page.waitForTimeout(500);
    assert.ok(mutations.some(x=>x.path.endsWith("/read")));
   }else{
    await ensure(page,"/advertiser/create-campaign");
