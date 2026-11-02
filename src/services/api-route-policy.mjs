@@ -1,6 +1,6 @@
 // Shared by the server proxy and Node contract tests. No Next/React runtime required.
 const firstSegments=new Set([
- "auth","me","businesses","public","drivers","admin","locations","screens",
+ "auth","me","businesses","public","enquiries","drivers","admin","locations","screens",
  "creatives","pricing","campaigns","reservations","payments","driver","reports","inventory",
  "tickets","notifications","support","maintenance","integrations",
 ]);
@@ -19,6 +19,7 @@ export function allowedApiPath(parts,method){
  if(parts.some(p=>typeof p!=="string"||p.length>180||
    !/^[A-Za-z0-9_-]+$/.test(p)))return false;
  if(!firstSegments.has(parts[0]))return false;
+ if(parts[0]==="enquiries")return parts.length===1&&method==="POST";
  const joined=parts.join("/");
  // Admin may inspect sanitized player health, never call device pairing or provisioning through this relay.
  if(method==="GET"&&/^admin\/devices\/[0-9a-f-]{36}\/player-status$/.test(joined))return true;

@@ -197,7 +197,9 @@ export function createDeviceRouter(config:AppConfig,auth:AuthDependencies,player
     const citySlug=req.query.citySlug;
     if(citySlug!==undefined&&(typeof citySlug!=="string"||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(citySlug)))
       throw new HttpError(422,"VALIDATION_ERROR","Invalid city slug");
-    const placement=req.query.placement;
+    if(config.nodeEnv==="production"&&citySlug!==undefined&&citySlug!=="prayagraj")
+       throw new HttpError(422,"CITY_NOT_LAUNCHED","AdVibe is currently available in Prayagraj only");
+     const placement=req.query.placement;
     const supported=["bike_rear","auto_rear","auto_side","car_rear","car_interior","helmet"];
     if(placement!==undefined&&(typeof placement!=="string"||!supported.includes(placement)))
       throw new HttpError(422,"VALIDATION_ERROR","Unsupported screen placement");
@@ -206,7 +208,7 @@ export function createDeviceRouter(config:AppConfig,auth:AuthDependencies,player
         ...(cursor?{id:{gt:cursor as string}}:{}),
         ...(placement?{placement:(placement as string).toUpperCase() as import("@prisma/client").ScreenPlacement}:{}),
         location:{state:"PUBLISHED",zone:{state:"PUBLISHED",city:{
-          state:"PUBLISHED",...(citySlug?{slug:citySlug as string}:{})}}},
+          state:"PUBLISHED",...(config.nodeEnv==="production"?{slug:"prayagraj"}:(citySlug?{slug:citySlug as string}:{}))}}},
         vehicle:{applications:{some:{state:"APPROVED"}}}},
       include:{location:{include:{zone:{include:{city:true}}}}},
       orderBy:{id:"asc"},take:limit+1,

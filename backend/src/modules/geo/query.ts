@@ -57,10 +57,11 @@ function filter(req:Request):GeoQuery {
 }
 interface GeoRow{id:string;slug:string;name:string;latitude:number;longitude:number;
   state:string;zoneId:string;zoneName:string;cityId:string;cityName:string;citySlug:string;}
-export async function listGeo(db:PrismaClient,req:Request,admin:boolean){
+export async function listGeo(db:PrismaClient,req:Request,admin:boolean,prayagrajOnly=false){
   const v=filter(req);
   const clauses:Prisma.Sql[]=[];
   if(!admin)clauses.push(Prisma.sql`l."state"='PUBLISHED' AND z."state"='PUBLISHED' AND c."state"='PUBLISHED'`);
+  if(!admin&&prayagrajOnly)clauses.push(Prisma.sql`c."slug"='prayagraj'`);
   if(v.citySlug)clauses.push(Prisma.sql`c."slug"=${v.citySlug}`);
   if(v.zoneId)clauses.push(Prisma.sql`l."zoneId"=${v.zoneId}::uuid`);
   if(v.cursor)clauses.push(Prisma.sql`l."id" > ${v.cursor}::uuid`);

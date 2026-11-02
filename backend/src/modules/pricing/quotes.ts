@@ -74,6 +74,8 @@ export function createQuoteRouter(config:AppConfig,{db,settings}:AuthDependencie
      if(screen.state!=="PAIRED"||!site||site.state!=="PUBLISHED"||
         site.zone.state!=="PUBLISHED"||site.zone.city.state!=="PUBLISHED")
       throw new HttpError(422,"SCREEN_UNAVAILABLE","Screen not mapped to a published location");
+      if(config.nodeEnv==="production"&&site.zone.city.slug!=="prayagraj")
+       throw new HttpError(422,"CITY_NOT_LAUNCHED","Only Prayagraj screens can be priced for launch");
      const authorized=await tx.driverApplication.count({where:{
       vehicleId:screen.vehicleId,driverUserId:screen.vehicle.driverUserId,state:"APPROVED"}});
      if(!authorized)throw new HttpError(422,"SCREEN_UNAVAILABLE","Driver application not approved");

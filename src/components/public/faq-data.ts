@@ -31,13 +31,13 @@ export const publicFAQs: PublicFAQ[] = [
   {
     question: "Which cities and areas are currently available?",
     answer:
-      "The locations page shows fictional sample areas to explain how planning works. It is not a list of cities where AdVibe operates. Screen availability is confirmed when you plan a campaign.",
+      "AdVibe is focusing on Prayagraj for its first launch. The locations page shows only locations published by the backend, not a promise of available screens. Availability is checked when you plan a campaign.",
     category: "General",
   },
   {
     question: "How can I become a driver partner?",
     answer:
-      "Register as a driver partner, complete personal and vehicle details, upload verification documents, pair an approved screen and add payout information. Approval is required before assignments.",
+      "Register to apply as a Prayagraj driver partner and enter your vehicle details. The partner agreement and document submission steps remain unavailable until the required approval process and secure storage are ready. A submitted application is not an approval.",
     category: "Drivers",
   },
   {
@@ -61,7 +61,7 @@ export const publicFAQs: PublicFAQ[] = [
   {
     question: "How can I contact support?",
     answer:
-      "If you have an account, open a support ticket from the Help section of your portal and follow the replies there. Otherwise, use the contact page to write to us by email.",
+      "If you have an account, open a support ticket from your portal. Otherwise use the contact page: verified site integrations can send an enquiry directly, and the fallback prepares an email in your email app.",
     category: "General",
   },
   {

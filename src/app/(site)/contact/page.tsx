@@ -5,7 +5,7 @@ import { ContactEnquiry } from "@/components/public/contact-enquiry";
 export const metadata: Metadata = {
   title: "Contact AdVibe | Enquiries & Support",
   description:
-    "Prepare an enquiry about AdVibe advertiser campaigns, driver partnerships and screen locations using a contact form.",
+    "Contact AdVibe about vehicle-screen advertising, campaign planning and driver partnerships in Prayagraj.",
 };
 
 // Purpose: get a question to the AdVibe team.
@@ -14,7 +14,7 @@ export default function Page() {
     <>
       <PageHero
         title="Contact AdVibe"
-        description="Ask about advertising, partnering as a driver or screens in your city."
+        description="Ask about advertising and driver partnerships in Prayagraj, the first AdVibe launch city."
       />
       <Section>
         <ContactEnquiry />

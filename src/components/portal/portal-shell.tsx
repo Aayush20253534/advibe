@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import * as RadixDialog from "@radix-ui/react-dialog";
-import { Bell, LogOut, Menu, ShieldCheck, X } from "lucide-react";
+import { Bell, LogOut, MapPin, Menu, ShieldCheck, X } from "lucide-react";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { Button, PageHeader, Tooltip, type Crumb } from "@/components/ui";
 import { portalNavigation, type NavItem, type PortalRole } from "@/config/navigation";
@@ -128,6 +128,7 @@ function SidebarContent({
       <div className="px-5 pt-5 pb-4">
         <BrandLogo href={"/" + role} width={132} />
         <p className="mt-3 text-sm font-semibold text-white">{portalLabel[role]}</p>
+        <p className="mt-1 text-xs text-[#c3d0e4]">Prayagraj launch workspace</p>
       </div>
       <nav aria-label={portalLabel[role]} className="flex-1 overflow-y-auto px-2 pb-6">
         <NavList role={role} pathname={pathname} dense={role === "admin"} onNavigate={onNavigate} />
@@ -220,6 +221,7 @@ export function PortalShell({
 
             <div className="ml-auto flex min-w-0 items-center gap-2 sm:gap-3">
               {context ? <div className="hidden min-w-0 md:block">{context}</div> : null}
+              <span className="hidden items-center gap-1.5 rounded-md bg-paper px-3 py-1.5 text-xs font-semibold text-ink-muted sm:inline-flex"><MapPin className="size-3.5" aria-hidden="true" /> Prayagraj</span>
               {role === "admin" ? (
                 <span className="hidden items-center gap-1.5 text-sm text-ink-muted xl:inline-flex">
                   <ShieldCheck className="size-4 text-success-fg" aria-hidden />

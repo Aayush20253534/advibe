@@ -6,6 +6,9 @@ const read=p=>fs.readFileSync(p,"utf8");
 test("B22 bridge allows only validated browser API paths",()=>{
  assert.equal(allowedApiPath(["auth","session"],"GET"),true);
  assert.equal(allowedApiPath(["auth","login"],"POST"),true);
+ assert.equal(allowedApiPath(["enquiries"],"POST"),true);
+ assert.equal(allowedApiPath(["enquiries"],"GET"),false);
+ assert.equal(allowedApiPath(["enquiries","other"],"POST"),false);
  assert.equal(allowedApiPath(["admin","reports","export"],"GET"),true);
  assert.equal(allowedApiPath(["support","tickets","f964d7a5-37c1-4d21-8d6d-0e9efdfb7ef4","messages"],"POST"),true);
  assert.equal(allowedApiPath(["webhooks","cashfree","payouts"],"POST"),false);

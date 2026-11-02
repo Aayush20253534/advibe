@@ -82,7 +82,7 @@ export function PublicShell({children}:{children:React.ReactNode}) {
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:py-14">
           <div className="space-y-4">
             <BrandLogo width={200} className="w-[180px]"/>
-            <p className="max-w-xs text-sm leading-6 text-[#c3d0e4]">Advertising on screens carried by bikes, auto rickshaws and cars.</p>
+            <p className="max-w-xs text-sm leading-6 text-[#c3d0e4]">Vehicle-screen advertising, starting with Prayagraj.</p>
           </div>
           <div><h2 className="mb-3 text-sm font-bold">Explore</h2><FooterLinks links={publicNavigation.filter(i=>!["Home","Help centre"].includes(i.label))}/></div>
           <div><h2 className="mb-3 text-sm font-bold">Sign in</h2><FooterLinks links={[
@@ -95,7 +95,7 @@ export function PublicShell({children}:{children:React.ReactNode}) {
         </div>
         <div className="border-t border-white/10">
           <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 px-4 py-4 text-sm text-[#c3d0e4] sm:px-6">
-            <span>© 2026 AdVibe</span>
+            <span>© 2026 AdVibe. Prayagraj pilot launch.</span>
           </div>
         </div>
       </footer>
