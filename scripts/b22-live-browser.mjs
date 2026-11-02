@@ -80,7 +80,9 @@ try{
   assert.equal(await page.getByText("DEMO DRIVER PORTAL").count(),0);
   if(role==="admin"){
    await ensure(page,"/admin");
-   await page.getByText(/confirmed Booking Gross Paise/i).waitFor();
+   // M7 admin overview: readable labels with rupee amounts (37000 paise = Rs 370.00).
+   await page.getByText("Confirmed bookings (gross)").waitFor();
+   await page.getByText("₹370.00").waitFor();
    await ensure(page,"/admin/users");
    await page.getByText("Driver Example").waitFor();
    await page.getByRole("button",{name:"Manage"}).first().click();
