@@ -4,9 +4,17 @@ import Link from "next/link";
 import {useRouter,useSearchParams} from "next/navigation";
 import {api,ApiError,liveSession} from "@/services/api-client";
 import {safeAuthNext} from "@/lib/auth-navigation.mjs";
+import {Alert,buttonVariants} from "@/components/ui";
+import {controlClass} from "@/components/ui/input";
+import {cn} from "@/lib/utils";
 type Mode="login"|"signup"|"verify"|"forgot"|"reset";
-const field="block w-full rounded-xl border border-slate-300 bg-white p-3 text-slate-900 focus:border-blue-600 focus:outline-none";
-const label="block text-sm font-semibold text-slate-700";
+const field=cn(controlClass,"mt-1.5 block min-h-11");
+const label="block text-sm font-semibold text-ink";
+const link="inline-flex min-h-11 items-center font-semibold text-signal underline-offset-4 hover:underline sm:min-h-0";
+const intro:Record<Mode,string>={login:"Use the email and password for your AdVibe account.",signup:"Create an advertiser or driver partner account. We’ll email you a code to confirm your address.",
+ verify:"Enter the 6-digit code from the email we sent you.",forgot:"Enter your account email and we’ll send you a link to choose a new password.",reset:"Choose a new password of at least 12 characters."};
+const otherLinks:Record<Mode,Array<[string,string]>>={login:[["/signup","Create an account"],["/forgot-password","Forgot password"]],signup:[["/login","Already have an account? Sign in"]],
+ verify:[["/login","Back to sign in"]],forgot:[["/login","Back to sign in"]],reset:[["/login","Back to sign in"]]};
 export function ApiAuthScreen({mode}:{mode:Mode}){
  const router=useRouter(),params=useSearchParams();
  const [role,setRole]=React.useState<"advertiser"|"driver">(params.get("role")==="driver"?"driver":"advertiser");
@@ -66,10 +74,9 @@ export function ApiAuthScreen({mode}:{mode:Mode}){
   finally{setLoading(false);}
  }
  const verification=mode==="verify";
- return <div className="grid place-items-center"><section className="w-full max-w-md rounded-2xl border border-blue-100 bg-white p-7 shadow-lg">
-  <div className="mb-4 text-xl font-extrabold text-[#06335b]">AdVibe · Secure account</div>
-  <h1 className="mb-2 text-2xl font-bold text-[#0b335e]">{mode==="login"?"Sign in":mode==="signup"?"Create account":mode==="verify"?"Verify email":mode==="forgot"?"Reset request":"Set new password"}</h1>
-  <p className="mb-5 text-sm text-slate-600">Authentication requires your verified AdVibe account.</p>
+ return <div className="grid place-items-center"><section className="w-full max-w-md rounded-lg border border-line bg-surface p-6 shadow-sm sm:p-8">
+  <h1 className="mb-2 font-heading text-2xl font-semibold text-ink">{mode==="login"?"Sign in":mode==="signup"?"Create account":mode==="verify"?"Verify email":mode==="forgot"?"Reset request":"Set new password"}</h1>
+  <p className="mb-6 text-sm text-ink-muted">{challengeId&&mode==="login"?"Open your authenticator app and enter the current 6-digit code.":intro[mode]}</p>
   <form className="space-y-4" onSubmit={async e=>{
    if(verification){
     e.preventDefault();setLoading(true);setError("");
@@ -81,18 +88,26 @@ export function ApiAuthScreen({mode}:{mode:Mode}){
    {verification?<><label className={label}>Challenge ID<input className={field} required value={challengeId} onChange={e=>setChallengeId(e.target.value)}/></label><label className={label}>Email code<input className={field} required pattern="[0-9]{6}" maxLength={6} value={code} onChange={e=>setCode(e.target.value)}/></label></>:
     <>{(mode==="signup"||mode==="forgot"||mode==="login"&&!challengeId)&&<label className={label}>Email<input className={field} type="email" required autoComplete="email" value={email} onChange={e=>setEmail(e.target.value)}/></label>}
      {mode==="login"&&challengeId?<label className={label}>Authenticator code<input className={field} inputMode="numeric" pattern="[0-9]{6}" maxLength={6} autoComplete="one-time-code" required value={code} onChange={e=>setCode(e.target.value)}/></label>:
-      (mode==="login"||mode==="signup"||mode==="reset")&&<label className={label}>{mode==="reset"?"New password":"Password"}<input className={field} type="password" autoComplete={mode==="login"?"current-password":"new-password"} minLength={mode==="login"?1:12} maxLength={mode==="login"?256:128} required value={password} onChange={e=>setPassword(e.target.value)}/></label>}</>}
-   {mode==="reset"&&!resetToken&&<p role="alert" className="text-sm text-red-700">Open the recovery link from your email to continue.</p>}
-   <button type="submit" disabled={loading||(mode==="reset"&&!resetToken)} className="min-h-11 w-full rounded-xl bg-blue-700 p-3 font-bold text-white hover:bg-blue-800 disabled:opacity-50">{loading?"Submitting…":verification?"Verify":challengeId?"Verify authenticator":mode==="login"?"Sign in":mode==="signup"?"Register":mode==="forgot"?"Send recovery email":"Reset password"}</button>
+      (mode==="login"||mode==="signup"||mode==="reset")&&<><label className={label}>{mode==="reset"?"New password":"Password"}<input className={field} type="password" autoComplete={mode==="login"?"current-password":"new-password"} minLength={mode==="login"?1:12} maxLength={mode==="login"?256:128} required value={password} onChange={e=>setPassword(e.target.value)} aria-describedby={mode==="login"?undefined:"password-hint"}/></label>{mode!=="login"&&<p id="password-hint" className="-mt-2 text-xs text-ink-muted">At least 12 characters.</p>}</>}</>}
+   {mode==="reset"&&!resetToken&&<Alert tone="warning">Open the recovery link from your email to continue.</Alert>}
+   <button type="submit" disabled={loading||(mode==="reset"&&!resetToken)} className={buttonVariants({variant:"primary",size:"lg",className:"w-full"})}>{loading?"Submitting…":verification?"Verify":challengeId?"Verify authenticator":mode==="login"?"Sign in":mode==="signup"?"Register":mode==="forgot"?"Send recovery email":"Reset password"}</button>
   </form>
-  {(notice||(mode==="login"&&params.get("verified")==="1"?"Email verified. Sign in to continue.":mode==="login"&&params.get("reset")==="1"?"Password changed. Sign in again.":""))&&<p role="status" className="mt-4 text-sm text-green-800">{notice||(params.get("verified")==="1"?"Email verified. Sign in to continue.":"Password changed. Sign in again.")}</p>}
-  {error&&<p role="alert" className="mt-4 text-sm text-red-700">{error}</p>}
-  {mode==="verify"&&<div className="mt-5 border-t border-blue-100 pt-5">
+  {(notice||(mode==="login"&&params.get("verified")==="1"?"Email verified. Sign in to continue.":mode==="login"&&params.get("reset")==="1"?"Password changed. Sign in again.":""))&&<p role="status" className="mt-4 rounded-md border border-success-border bg-success-bg p-3 text-sm text-success-fg">{notice||(params.get("verified")==="1"?"Email verified. Sign in to continue.":"Password changed. Sign in again.")}</p>}
+  {error&&<p role="alert" className="mt-4 rounded-md border border-danger-border bg-danger-bg p-3 text-sm text-danger-fg">{error}</p>}
+  {mode==="verify"&&<div className="mt-6 border-t border-line pt-5">
     <label className={label}>Resend to email<input className={field} type="email" autoComplete="email"
       maxLength={320} value={email} onChange={e=>setEmail(e.target.value)}/></label>
-    <button type="button" className="mt-3 text-sm font-semibold text-blue-800 underline disabled:opacity-50"
+    <button type="button" className={cn(link,"mt-3 text-sm disabled:opacity-50")}
       disabled={loading} onClick={()=>void resendVerification()}>Request a new verification email</button>
    </div>}
-   <div className="mt-5 flex flex-wrap gap-4 text-sm font-semibold text-blue-800"><Link href="/login">Sign in</Link><Link href="/signup">Register</Link><Link href="/forgot-password">Forgot password</Link><Link href="/">Home</Link></div>
+   <div className="mt-6 flex flex-wrap gap-x-5 gap-y-1 text-sm">{otherLinks[mode].map(([href,text])=><Link key={href} href={href} className={link}>{text}</Link>)}</div>
+ </section></div>;
+}
+const fallbackHeight:Record<Mode,string>={login:"min-h-[442px] sm:min-h-[414px]",signup:"min-h-[658px] sm:min-h-[630px]",
+ verify:"min-h-[613px] sm:min-h-[565px]",forgot:"min-h-[356px] sm:min-h-[348px]",reset:"min-h-[470px] sm:min-h-[442px]"};
+/** Suspense fallback the same size as the form card, so the page doesn't jump when the form loads. */
+export function AuthFallback({mode}:{mode:Mode}){
+ return <div className="grid place-items-center"><section aria-busy="true" className={cn("grid w-full max-w-md place-items-center rounded-lg border border-line bg-surface p-6 sm:p-8",fallbackHeight[mode])}>
+  <p role="status" className="text-sm text-ink-muted">Loading secure account form…</p>
  </section></div>;
 }

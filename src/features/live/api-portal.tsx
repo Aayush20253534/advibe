@@ -239,7 +239,7 @@ export function ApiPortal({role,children}:{role:PortalRole;children:React.ReactN
  if(!session||!context)return <PortalLoading message="Verifying authenticated session…"/>;
  return <ApiPortalContext.Provider value={context}>
   <PortalShell role={role} pathname={pathname} signingOut={busy} onSignOut={()=>void signOut()}>
-   {error&&<div role="alert" className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800">{error}</div>}
+   {error&&<div role="alert" className="rounded-md border border-danger-border bg-danger-bg p-4 text-sm text-danger-fg">{error}</div>}
    {children}
   </PortalShell>
  </ApiPortalContext.Provider>;
@@ -304,7 +304,7 @@ export function ApiSection(){
     <div className="flex flex-wrap gap-2"><button className={outline} onClick={()=>setRefresh(x=>x+1)}>Refresh</button>
      {role==="admin"&&(section==="analytics"||section==="audit"||section==="home")&&<button className={button}
       onClick={()=>void downloadApiCsv(section==="audit"?"/admin/audit-events/export":"/admin/reports/export","advibe-"+section+"-live.csv").catch(e=>setError(e instanceof Error?e.message:"Export unavailable"))}>Download verified CSV</button>}</div>
-    {error&&<div role="alert" className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-800">{error}</div>}
+    {error&&<div role="alert" className="rounded-md border border-danger-border bg-danger-bg p-4 text-sm text-danger-fg">{error}</div>}
     {section==="create-campaign"&&role==="advertiser"&&<CampaignForm session={session} onDone={()=>setRefresh(x=>x+1)}/>}
     {section==="support"&&<SupportForm role={role} session={session} onDone={()=>setRefresh(x=>x+1)}/>}
     {!endpoint?<div className="rounded-xl border border-amber-200 bg-white p-6">
