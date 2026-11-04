@@ -10,7 +10,12 @@ test("BlinkMyAd signup artwork and role-aware registration remain wired",()=>{
  assert.match(wrapper,/pathname===["']\/signup["']/);
  assert.match(page,/BmaSignupForm/);
  assert.match(frame,/bma-signup-hero\.jpg/);
- assert.match(frame,/bma-signup-logo\.jpg/);
+ assert.match(frame,/src="\/brand\/bma-signup-logo\.svg"/);
+ assert.doesNotMatch(frame,/bma-signup-logo\.jpg|logoUnavailable|mix-blend-screen/);
+ assert.match(frame,/max-w-\[550px\]/);
+ assert.match(form,/h-\[43px\]/);
+ assert.match(form,/space-y-\[11px\]/);
+ assert.match(form,/h-\[46px\]/);
  assert.ok(existsSync(new URL("../public/brand/bma-signup-logo.svg",import.meta.url)));
  assert.ok(existsSync(new URL("../public/brand/bma-signup-logo.jpg",import.meta.url)));
  assert.ok(existsSync(new URL("../public/brand/bma-signup-hero.jpg",import.meta.url)));
