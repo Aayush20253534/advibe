@@ -108,6 +108,54 @@ test("every first-party endpoint rejects anonymous access or invalid mutations w
           role + " access mismatch for " + item.path);
       });
     }
+
+    await t.test("advertiser profile writes require CSRF and create an owned business", async () => {
+      const identity = identities.ADVERTISER;
+      const payload = JSON.stringify({ displayName: "API Boundary Advertiser" });
+      const origin = "http://localhost:3000";
+      const invalid = await fetch(base + "/api/v1/me", { method: "PATCH",
+        headers: { Cookie: identity.Cookie, Origin: origin, "Content-Type": "application/json" },
+        body: payload });
+      assert.equal(invalid.status, 403, "profile must not mutate without CSRF");
+      const changed = await fetch(base + "/api/v1/me", { method: "PATCH",
+        headers: { Cookie: identity.Cookie, Origin: origin, "Content-Type": "application/json",
+          "X-CSRF-Token": identity.csrf }, body: payload });
+      assert.equal(changed.status, 200);
+      assert.equal((await changed.json()).data.displayName, "API Boundary Advertiser");
+
+      const created = await fetch(base + "/api/v1/businesses", { method: "POST",
+        headers: { Cookie: identity.Cookie, Origin: origin, "Content-Type": "application/json",
+          "X-CSRF-Token": identity.csrf },
+        body: JSON.stringify({ slug: "api-boundary-" + uid, displayName: "CI Owned Business",
+          city: "Prayagraj" }) });
+      assert.equal(created.status, 201);
+      const business = (await created.json()).data;
+      assert.equal(business.slug, "api-boundary-" + uid);
+      const own = await fetch(base + "/api/v1/businesses/me", { headers: { Cookie: identity.Cookie } });
+      assert.equal(own.status, 200);
+      assert.equal((await own.json()).data.id, business.id);
+    });
+
+    await t.test("driver support ticket is readable by its owner/admin but not another role", async () => {
+      const identity = identities.DRIVER;
+      const response = await fetch(base + "/api/v1/support/tickets", { method: "POST",
+        headers: { Cookie: identity.Cookie, Origin: "http://localhost:3000",
+          "Content-Type": "application/json", "X-CSRF-Token": identity.csrf,
+          "Idempotency-Key": "api-support-" + uid },
+        body: JSON.stringify({ category: "GENERAL", subject: "Driver access question",
+          description: "Please clarify the driver portal navigation." }) });
+      assert.equal(response.status, 201);
+      const ticketId = (await response.json()).data.id;
+      const view = role => fetch(base + "/api/v1/support/tickets/" + ticketId,
+        { headers: { Cookie: identities[role].Cookie } });
+      assert.equal((await view("DRIVER")).status, 200);
+      assert.equal((await view("ADMIN")).status, 200);
+      assert.equal((await view("ADVERTISER")).status, 404);
+      const list = await fetch(base + "/api/v1/support/tickets",
+        { headers: { Cookie: identity.Cookie } });
+      assert.equal(list.status, 200);
+      assert.ok((await list.json()).data.some(item => item.id === ticketId));
+    });
   } finally {
     await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
     await db.$disconnect();
