@@ -36,3 +36,7 @@ npm --prefix backend run check
 API-mode Chromium tests use intercepted backend responses, while backend integration tests use disposable PostgreSQL. They are **not a substitute for live staging E2E**. Until staging tests, deployment and independent provider approvals are complete, production readiness remains **blocked**.
 
 See [B22 API integration](docs/backend/B22_IMPLEMENTATION.md), [B23 release handover](docs/backend/B23_IMPLEMENTATION.md) and [production blockers](docs/PRODUCTION_READINESS.md).
+
+## BlinkMyAd engineering handbook and API test coverage
+
+Current code is still stored under the historical AdVibe repository/identifiers. Start with [docs/README.md](docs/README.md) for the BlinkMyAd architecture, full lifecycle diagrams, security, deployment, operations, integration gates and testing runbook. The added `backend/tests/api-route-inventory.test.mjs` and `api-boundaries.integration.test.mjs` cover the provider-independent Express surface, complementing the existing PostgreSQL domain tests. Cashfree, object storage, and Google Maps **live integrations are not exercised** by those new suites.
