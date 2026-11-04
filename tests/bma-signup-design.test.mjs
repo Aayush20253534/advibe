@@ -1,0 +1,21 @@
+import assert from "node:assert/strict";
+import {readFileSync,existsSync} from "node:fs";
+import test from "node:test";
+const read=(path)=>readFileSync(new URL(path,import.meta.url),"utf8");
+test("BlinkMyAd signup artwork and role-aware registration remain wired",()=>{
+ const page=read("../src/app/(auth)/signup/page.tsx");
+ const frame=read("../src/components/auth/bma-signup-frame.tsx");
+ const form=read("../src/components/auth/bma-signup-form.tsx");
+ const wrapper=read("../src/components/auth/auth-frame.tsx");
+ assert.match(wrapper,/pathname===["']\/signup["']/);
+ assert.match(page,/BmaSignupForm/);
+ assert.match(frame,/bma-signup-hero\.webp/);
+ assert.match(frame,/bma-signup-logo\.webp/);
+ assert.ok(existsSync(new URL("../public/brand/bma-signup-logo.svg",import.meta.url)));
+ assert.match(form,/api<\{challengeId:string\}>\("\/auth\/register"/);
+ assert.match(form,/role,email:email\.trim\(\)\.toLowerCase\(\),password,displayName/);
+ assert.match(form,/router\.replace\("\/verify\?challengeId="/);
+ assert.match(form,/minLength=\{12\}/);
+ assert.match(form,/Show password/);
+ assert.match(form,/Already have an account/);
+});

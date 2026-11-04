@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 205" role="img" aria-labelledby="title desc">
+<title id="title">BMA, Blink My Ad</title><desc id="desc">A neon blue purple speed mark followed by BMA in white and Blink My Ad below</desc>
+<defs>
+<linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#01e3f6"/><stop offset="48%" stop-color="#1982ff"/><stop offset="100%" stop-color="#a21cff"/></linearGradient>
+<linearGradient id="s" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#8c25ff"/><stop offset="100%" stop-color="#cc35f9"/></linearGradient>
+</defs>
+<g transform="skewX(-10)">
+<path d="M58 23h70c45 0 56 37 38 60-6 8-13 13-24 17 38 14 40 49 18 69-11 10-26 15-47 15H49l9-35h55c20 0 25-18 6-22H68l8-34h44c20 0 24-21 5-21H67z" fill="url(#b)"/>
+<path d="M6 61h86l-9 18H0zM-8 104h86l-10 18h-84zM-6 146h86l-10 18h-84z" fill="url(#s)"/>
+</g>
+<text x="194" y="127" fill="#ffffff" font-family="Arial,Helvetica,sans-serif" font-style="italic" font-weight="900" letter-spacing="-9" font-size="133">BMA</text>
+<text x="204" y="177" fill="#ffffff" font-family="Arial,Helvetica,sans-serif" font-style="italic" letter-spacing=".2" font-size="47">Blink My Ad</text>
+</svg>
