@@ -10,15 +10,15 @@ export function BmaSignupFrame({children}:{children:React.ReactNode}){
  return <div data-portal="public" className="grid min-h-dvh bg-[#f2f6ff] text-[#091a3b] lg:grid-cols-[49%_51%]">
   <a href="#auth-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-[#102452]">Skip to signup form</a>
   <aside className="relative hidden min-h-dvh overflow-hidden bg-[#020d31] text-white lg:block">
-   <Image src={heroUnavailable?"/images/hero/hero-city.webp":"/brand/bma-signup-hero.webp"} onError={()=>setHeroUnavailable(true)} alt="" fill priority sizes="(min-width:1024px) 49vw, 0px"
+   <Image src={heroUnavailable?"/images/hero/hero-city.webp":"/brand/bma-signup-hero.jpg"} onError={()=>setHeroUnavailable(true)} alt="" fill priority sizes="(min-width:1024px) 49vw, 0px"
     className="object-cover object-bottom" />
    {heroUnavailable&&<Image src="/images/hero/hero-car.png" alt="" width={900} height={640} className="absolute bottom-[5%] left-[1%] w-[98%] object-contain" />}
    <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-[#020b2b]/65 via-[#020b2b]/10 to-transparent" />
    <div className="relative z-10 flex min-h-dvh flex-col px-10 pb-12 pt-9 xl:px-[clamp(3rem,5.3vw,6rem)] xl:pt-10">
     <div className="flex items-center gap-5 xl:gap-7">
-     <Link href="/" aria-label="BlinkMyAd home" className="block w-[197px] shrink-0 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-white xl:w-[218px]">
-      <Image src={logoUnavailable?"/brand/bma-signup-logo.svg":"/brand/bma-signup-logo.webp"} onError={()=>setLogoUnavailable(true)} alt="BMA, Blink My Ad" width={620} height={207}
-       priority className="block h-auto w-full max-w-full object-contain mix-blend-screen" />
+     <Link href="/" aria-label="BlinkMyAd home" className="relative block aspect-[3.12/1] w-[197px] shrink-0 overflow-hidden rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-white xl:w-[218px]">
+      <Image src={logoUnavailable?"/brand/bma-signup-logo.svg":"/brand/bma-signup-logo.jpg"} onError={()=>setLogoUnavailable(true)} alt="BMA, Blink My Ad" fill
+       priority sizes="(min-width:1280px) 218px, 197px" className="object-contain scale-[1.58] mix-blend-screen" />
      </Link>
      <span aria-hidden="true" className="h-7 w-px shrink-0 bg-white/35" />
      <Link href="/" className="inline-flex min-h-11 items-center gap-2 whitespace-nowrap text-sm font-medium text-[#d7e3fc] transition hover:text-white focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
@@ -40,8 +40,8 @@ export function BmaSignupFrame({children}:{children:React.ReactNode}){
    <div aria-hidden="true" className="pointer-events-none absolute -right-[22%] top-[13%] -z-10 aspect-square w-[75%] rounded-full border-[72px] border-white/25" />
    <div className="w-full max-w-[632px]">
     <div className="mb-6 flex items-center justify-between gap-4 lg:hidden">
-     <Link href="/" aria-label="BlinkMyAd home" className="max-w-[170px] rounded-md bg-[#020b2b] px-2 py-1.5">
-      <Image src={logoUnavailable?"/brand/bma-signup-logo.svg":"/brand/bma-signup-logo.webp"} onError={()=>setLogoUnavailable(true)} alt="BMA, Blink My Ad" width={620} height={207} priority className="h-auto w-full mix-blend-screen" />
+     <Link href="/" aria-label="BlinkMyAd home" className="relative block aspect-[3.12/1] w-[170px] shrink-0 overflow-hidden rounded-md bg-[#020b2b]">
+      <Image src={logoUnavailable?"/brand/bma-signup-logo.svg":"/brand/bma-signup-logo.jpg"} onError={()=>setLogoUnavailable(true)} alt="BMA, Blink My Ad" fill priority sizes="170px" className="object-contain scale-[1.58] mix-blend-screen" />
      </Link>
      <Link href="/" className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-[#174de8]">
       <ArrowLeft aria-hidden="true" className="size-4"/> Home

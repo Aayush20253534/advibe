@@ -9,9 +9,11 @@ test("BlinkMyAd signup artwork and role-aware registration remain wired",()=>{
  const wrapper=read("../src/components/auth/auth-frame.tsx");
  assert.match(wrapper,/pathname===["']\/signup["']/);
  assert.match(page,/BmaSignupForm/);
- assert.match(frame,/bma-signup-hero\.webp/);
- assert.match(frame,/bma-signup-logo\.webp/);
+ assert.match(frame,/bma-signup-hero\.jpg/);
+ assert.match(frame,/bma-signup-logo\.jpg/);
  assert.ok(existsSync(new URL("../public/brand/bma-signup-logo.svg",import.meta.url)));
+ assert.ok(existsSync(new URL("../public/brand/bma-signup-logo.jpg",import.meta.url)));
+ assert.ok(existsSync(new URL("../public/brand/bma-signup-hero.jpg",import.meta.url)));
  assert.match(form,/api<\{challengeId:string\}>\("\/auth\/register"/);
  assert.match(form,/role,email:email\.trim\(\)\.toLowerCase\(\),password,displayName/);
  assert.match(form,/router\.replace\("\/verify\?challengeId="/);
