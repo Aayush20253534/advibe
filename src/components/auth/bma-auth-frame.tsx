@@ -34,15 +34,15 @@ export function BmaAuthFrame({mode,children}:{mode:Mode;children:ReactNode}){
     </div>
    </div>
   </aside>
-  <main id="auth-main" tabIndex={-1} className="relative isolate flex min-h-dvh flex-col items-center justify-center overflow-x-hidden bg-[#eff5ff] px-4 py-5 outline-none sm:px-7 lg:h-dvh lg:min-h-0 lg:overflow-y-auto lg:px-[clamp(1.25rem,3vw,4rem)] lg:py-3">
+  <main id="auth-main" tabIndex={-1} className="relative isolate flex min-h-dvh flex-col items-center justify-center overflow-x-hidden bg-[#eff5ff] px-4 py-5 outline-none sm:px-7 lg:h-dvh lg:min-h-0 lg:overflow-y-auto lg:px-[clamp(1.25rem,3vw,4rem)] lg:py-4">
    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_100%_5%,rgba(197,218,253,.8),transparent_58%),linear-gradient(133deg,#f4f8ff_0%,#e8f1ff_100%)]"/>
-   <div className="w-full max-w-[590px] shrink-0">
+   <div className={mode==="signup"?"w-full max-w-[510px] shrink-0":"w-full max-w-[590px] shrink-0"}>
     <div className="mb-4 flex items-center justify-between rounded-xl bg-[#06143a] px-3 py-2 lg:hidden">
      <Link href="/" aria-label="BlinkMyAd home" className="relative block aspect-[3.16/1] w-[145px] shrink-0"><Image src="/brand/bma-signup-logo.svg" alt="BMA, Blink My Ad" fill priority sizes="145px" className="object-contain"/></Link>
      <Link href="/" className="inline-flex min-h-10 items-center gap-1 text-sm font-medium text-white"><ArrowLeft aria-hidden="true" className="size-4"/> Website</Link>
     </div>
     {children}
-    <nav aria-label="Legal" className="mt-3 flex justify-center gap-6 text-xs text-[#516488]"><Link href="/privacy" className="hover:text-[#1352c7] hover:underline">Privacy policy</Link><Link href="/terms" className="hover:text-[#1352c7] hover:underline">Terms of service</Link></nav>
+    <nav aria-label="Legal" className={mode==="signup"?"mt-2 flex justify-center gap-5 text-xs text-[#516488]":"mt-3 flex justify-center gap-6 text-xs text-[#516488]"}><Link href="/privacy" className="hover:text-[#1352c7] hover:underline">Privacy policy</Link><Link href="/terms" className="hover:text-[#1352c7] hover:underline">Terms of service</Link></nav>
    </div>
   </main>
  </div>;
