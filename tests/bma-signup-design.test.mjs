@@ -32,3 +32,19 @@ test("BlinkMyAd signup artwork and role-aware registration remain wired",()=>{
  assert.match(form,/Show password/);
  assert.match(form,/Already have an account/);
 });
+
+test("signup policy and pending-email recovery use real backend endpoints",()=>{
+ const form=read("../src/components/auth/bma-signup-form.tsx");
+ const schemas=read("../backend/src/modules/auth/schemas.ts");
+ const routes=read("../backend/src/modules/auth/routes.ts");
+ assert.match(form,/passwordStrong=password\.length>=12/);
+ assert.match(form,/uppercase · lowercase · symbol/);
+ assert.match(form,/ACCOUNT_EXISTS/);
+ assert.match(form,/DELIVERY_UNAVAILABLE/);
+ assert.match(form,/api\("\/auth\/resend-verification"/);
+ assert.match(form,/password\.length>0&&!passwordStrong/);
+ assert.match(schemas,/export const accountPasswordSchema/);
+ assert.match(schemas,/newPassword: accountPasswordSchema/);
+ assert.match(routes,/pending\.status !== "PENDING"/);
+ assert.match(routes,/argon2\.verify\(pending\.passwordHash, input\.password\)/);
+});

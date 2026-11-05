@@ -140,3 +140,66 @@ test("B3 blocks unprotected Admin login before B4 MFA", async () => {
     await db.$disconnect();
   }
 });
+
+
+test("BMA pending signup resumes after provider email outage without creating a duplicate", async () => {
+  const db = new PrismaClient();
+  const sent: AuthEmail[] = [];
+  let sends = 0;
+  const app = createApp(config, createLogger(config), async () => { await db.user.count(); }, {
+    db, settings, sender: async message => {
+      sends++;
+      if (sends === 1) throw new Error("Simulated email provider outage");
+      sent.push(message);
+    },
+  });
+  const server = app.listen(0, "127.0.0.1");
+  try {
+    await once(server, "listening");
+    await db.$connect();
+    const base = "http://127.0.0.1:" + (server.address() as AddressInfo).port + "/api/v1/auth/";
+    const emailAddress = "bma-pending-" + randomUUID().slice(0, 12) + "@example.invalid";
+    const registration = {
+      email: emailAddress, password: "SecureResumablePass!2026",
+      role: "advertiser", displayName: "Pending Advertiser",
+    };
+    const post = (path: string, body: Record<string, unknown>) => fetch(base + path, {
+      method: "POST", headers: { "Content-Type": "application/json",
+        Origin: "http://localhost:3000" }, body: JSON.stringify(body),
+    });
+
+    const first = await post("register", registration);
+    assert.equal(first.status, 503, "Failed email leaves a pending user");
+    assert.equal((await first.json() as {error:{code:string}}).error.code, "DELIVERY_UNAVAILABLE");
+    const pending = await db.user.findUniqueOrThrow({ where: { email: emailAddress } });
+    assert.equal(pending.status, "PENDING");
+    assert.equal(await db.user.count({ where: { email: emailAddress } }), 1);
+
+    const retry = await post("register", registration);
+    assert.equal(retry.status, 201, "Matching pending user can retry");
+    const body = await retry.json() as {data:{challengeId:string}};
+    assert.match(body.data.challengeId, /^[a-f0-9-]{36}$/i);
+    assert.equal(sent.length, 1);
+    assert.equal(await db.user.count({ where: { email: emailAddress } }), 1);
+    const persisted = await db.user.findUniqueOrThrow({ where: { email: emailAddress } });
+    assert.equal(persisted.id, pending.id);
+    assert.equal(persisted.role, "ADVERTISER");
+    assert.equal(persisted.displayName, "Pending Advertiser");
+
+    const impostor = await post("register", { ...registration, password: "DifferentSecret!2026" });
+    assert.equal(impostor.status, 409, "A different password cannot hijack pending registration");
+    assert.equal((await impostor.json() as {error:{code:string}}).error.code, "ACCOUNT_EXISTS");
+    assert.equal(sent.length, 1);
+
+    const code = sent[0]!.text.match(/code is (\d{6})\. Challenge ID:/)?.[1];
+    assert.ok(code);
+    const verified = await post("verify", { challengeId: body.data.challengeId, code });
+    assert.equal(verified.status, 201);
+    const duplicate = await post("register", registration);
+    assert.equal(duplicate.status, 409, "Verified accounts must never re-register");
+  } finally {
+    await new Promise<void>((resolve, reject) =>
+      server.close(error => error ? reject(error) : resolve()));
+    await db.$disconnect();
+  }
+});
