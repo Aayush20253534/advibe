@@ -18,11 +18,15 @@ export function BmaSignupForm(){
  const [showPassword,setShowPassword]=React.useState(false);
  const [loading,setLoading]=React.useState(false);
  const [error,setError]=React.useState("");
+ const [notice,setNotice]=React.useState("");
+ const [canResend,setCanResend]=React.useState(false);
+ const passwordStrong=password.length>=12&&password.length<=128&&/[A-Z]/.test(password)&&/[a-z]/.test(password)&&/[^A-Za-z0-9\s]/.test(password);
 
  async function submit(event:React.FormEvent<HTMLFormElement>){
   event.preventDefault();
   if(loading)return;
-  setLoading(true);setError("");
+  if(!passwordStrong){setError("Password must contain 12+ characters, uppercase, lowercase and a symbol.");return;}
+  setLoading(true);setError("");setNotice("");setCanResend(false);
   try{
    const result=await api<{challengeId:string}>("/auth/register",{
     method:"POST",body:{role,email:email.trim().toLowerCase(),password,displayName:displayName.trim()},
@@ -30,8 +34,26 @@ export function BmaSignupForm(){
    setPassword("");
    router.replace("/verify?challengeId="+encodeURIComponent(result.challengeId));
   }catch(err){
-   setError(err instanceof ApiError?err.message:"Unable to reach the registration service. Please try again.");
+   if(err instanceof ApiError&&err.code==="ACCOUNT_EXISTS"){
+    setCanResend(true);
+    setError("This email is already registered. Sign in, or resend verification if your account is pending.");
+   }else if(err instanceof ApiError&&err.code==="DELIVERY_UNAVAILABLE"){
+    setCanResend(true);
+    setError("Your pending account was saved, but the verification email could not be delivered. Retry with the same password or request another email.");
+   }else{
+    setError(err instanceof ApiError?err.message:"Unable to reach the registration service. Please try again.");
+   }
   }finally{setLoading(false);}
+ }
+
+ async function resendVerification(){
+  if(loading||!email.trim())return;
+  setLoading(true);setError("");setNotice("");
+  try{
+   await api("/auth/resend-verification",{method:"POST",body:{email:email.trim().toLowerCase()}});
+   setNotice("Verification requested. If your account is pending and email delivery is available, use the link in your inbox or spam folder.");
+  }catch(err){setError(err instanceof ApiError?err.message:"Could not request another verification email.");}
+  finally{setLoading(false);}
  }
 
  return <section className="w-full rounded-[16px] border border-[#dbe4f2] bg-white px-5 py-4 shadow-[0_14px_42px_rgba(40,70,130,.11)] sm:px-6 lg:px-7" aria-labelledby="bma-signup-title">
@@ -53,13 +75,13 @@ export function BmaSignupForm(){
    </label>
    <label className={fieldLabel}>Email
     <input className={field} type="email" name="email" autoComplete="email" required maxLength={320}
-     value={email} disabled={loading} onChange={e=>setEmail(e.target.value)} />
+     value={email} disabled={loading} onChange={e=>{setEmail(e.target.value);setCanResend(false);}} />
    </label>
    <div>
     <label htmlFor="bma-signup-password" className={fieldLabel}>Password</label>
     <div className="relative">
      <input id="bma-signup-password" className={field+" pr-12"} type={showPassword?"text":"password"} name="password"
-      autoComplete="new-password" minLength={12} maxLength={128} required value={password}
+      autoComplete="new-password" minLength={12} maxLength={128} required value={password} aria-invalid={password.length>0&&!passwordStrong}
       aria-describedby="bma-signup-password-hint" disabled={loading} onChange={e=>setPassword(e.target.value)} />
      <button type="button" aria-label={showPassword?"Hide password":"Show password"} aria-pressed={showPassword}
       className="absolute inset-y-0 right-1 top-1 inline-flex w-10 items-center justify-center rounded-md text-[#60718f] transition hover:text-[#184fd9] focus-visible:outline-2 focus-visible:outline-[#2466f5]"
@@ -67,9 +89,11 @@ export function BmaSignupForm(){
       {showPassword?<EyeOff aria-hidden="true" className="size-5" />:<Eye aria-hidden="true" className="size-5" />}
      </button>
     </div>
-    <p id="bma-signup-password-hint" className="mt-1 text-xs text-[#637492]">At least 12 characters.</p>
+    <p id="bma-signup-password-hint" className={"mt-1 text-[11px] "+(password.length>0?(passwordStrong?"text-[#187046]":"text-[#a52424]"):"text-[#637492]")}>12+ characters · uppercase · lowercase · symbol</p>
    </div>
    {error&&<p role="alert" className="rounded-lg border border-[#f4c6c6] bg-[#fff4f3] px-3 py-2 text-sm text-[#a72324]">{error}</p>}
+   {canResend&&<button type="button" disabled={loading} onClick={()=>void resendVerification()} className="text-left text-xs font-semibold text-[#0759ec] hover:underline disabled:opacity-60">Resend verification email</button>}
+   {notice&&<p role="status" className="rounded-lg border border-[#bce3d0] bg-[#effaf3] px-3 py-2 text-xs text-[#205c3f]">{notice}</p>}
    <button type="submit" disabled={loading} className="mt-0.5 flex h-[43px] w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-[#115cf5] via-[#0575ff] to-[#008ff7] text-[15px] font-semibold text-white shadow-[0_8px_16px_rgba(0,83,236,.15)] transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#115cf5] disabled:cursor-not-allowed disabled:opacity-65">
     {loading?"Creating account…":"Register"}
    </button>

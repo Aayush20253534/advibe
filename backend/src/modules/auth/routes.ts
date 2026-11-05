@@ -95,8 +95,8 @@ async function issueChallenge(
 
 async function sendVerification(sender: EmailSender, webOrigin: string, to: string, challenge: { id: string; code: string }) {
   await sender({
-    to, subject: "AdVibe email verification",
-    text: "Your AdVibe verification code is " + challenge.code +
+    to, subject: "BlinkMyAd email verification",
+    text: "Your BlinkMyAd verification code is " + challenge.code +
       ". Challenge ID: " + challenge.id +
       ". The code expires in 10 minutes. If you did not request this, ignore this email.\n" +
       "Verify your account: " + webOrigin + "/verify?challengeId=" + encodeURIComponent(challenge.id),
@@ -114,7 +114,7 @@ export function createAuthRouter(
     await takeAuthRateSlot(db, settings, "register-ip", requestIp(req), 12, 3600);
     await takeAuthRateSlot(db, settings, "register-email", input.email, 4, 3600);
     const hash = await argon2.hash(input.password, argonOptions);
-    let user;
+    let user: { id: string; email: string };
     try {
       user = await db.user.create({ data: {
         email: input.email, passwordHash: hash, displayName: input.displayName,
@@ -122,10 +122,19 @@ export function createAuthRouter(
         status: "PENDING",
       } });
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+      if (!(error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")) {
+        throw error;
+      }
+      // An email provider outage must not trap users in a permanent 409 loop.
+      // Reuse only an unverified account with the SAME password and role:
+      // a different applicant must never be able to take over or change it.
+      const pending = await db.user.findUnique({ where: { email: input.email } });
+      if (!pending || pending.status !== "PENDING" || pending.emailVerifiedAt ||
+          pending.role !== (input.role === "driver" ? "DRIVER" : "ADVERTISER") ||
+          !pending.passwordHash || !(await argon2.verify(pending.passwordHash, input.password))) {
         throw new HttpError(409, "ACCOUNT_EXISTS", "Account already registered");
       }
-      throw error;
+      user = { id: pending.id, email: pending.email };
     }
     const challenge = await issueChallenge(db, settings, user, "VERIFY_EMAIL");
     try {
@@ -340,8 +349,8 @@ export function createAuthRouter(
       const challenge = await issueChallenge(db, settings, user, "PASSWORD_RESET");
       const resetToken = challenge.id + "." + challenge.code;
       try {
-        await sender({ to: user.email, subject: "AdVibe password reset",
-          text: "To reset your AdVibe password open: " + settings.webOrigin +
+        await sender({ to: user.email, subject: "BlinkMyAd password reset",
+          text: "To reset your BlinkMyAd password open: " + settings.webOrigin +
             "/reset-password#token=" + resetToken +
             "\nThis link expires in 20 minutes. If you did not request it, ignore this email.",
         });
