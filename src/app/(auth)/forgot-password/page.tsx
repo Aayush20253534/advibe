@@ -1,7 +1,7 @@
-import {ApiAuthScreen,AuthFallback} from "@/components/auth/api-auth-screen";
+import {BmaRecoveryFallback,BmaRecoveryForm} from "@/components/auth/bma-recovery-form";
 import type {Metadata} from "next";
 import {Suspense} from "react";
-export const metadata:Metadata={title:"Password Recovery",robots:{index:false,follow:false}};
+export const metadata:Metadata={title:"Forgot Password | BlinkMyAd",robots:{index:false,follow:false}};
 export default function Page(){
- return <Suspense fallback={<AuthFallback mode="forgot"/>}><ApiAuthScreen mode="forgot"/></Suspense>;
+ return <Suspense fallback={<BmaRecoveryFallback mode="forgot"/>}><BmaRecoveryForm mode="forgot"/></Suspense>;
 }

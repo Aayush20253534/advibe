@@ -6,7 +6,10 @@ import {ArrowLeft, Check} from "lucide-react";
 import {BrandLogo} from "@/components/brand/brand-logo";
 export function AuthFrame({children}:{children:React.ReactNode}){
  const pathname=usePathname();
- if(pathname==="/signup"||pathname==="/login"||pathname==="/signin")return <BmaAuthFrame mode={pathname==="/signup"?"signup":"login"}>{children}</BmaAuthFrame>;
+ if(pathname==="/signup"||pathname==="/login"||pathname==="/signin"||pathname==="/forgot-password"||pathname==="/reset-password"){
+  const mode=pathname==="/signup"?"signup":pathname==="/forgot-password"?"forgot":pathname==="/reset-password"?"reset":"login";
+  return <BmaAuthFrame mode={mode}>{children}</BmaAuthFrame>;
+ }
  return <div data-portal="public" className="min-h-dvh bg-paper">
   <a href="#auth-main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-brand-blue">Skip to authentication form</a>
   <div className="grid min-h-dvh lg:grid-cols-[minmax(300px,.92fr)_minmax(0,1.08fr)]">
