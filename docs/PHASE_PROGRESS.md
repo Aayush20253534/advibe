@@ -19,3 +19,7 @@ Branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3`. Date: 7 Nove
 | 12 Release preparation | Documentation and review handoff prepared; deployment blocked | Cost/environment/recovery/launch reports complete; no B23 approval flags or paid/live operations enabled; branch/PR publication and CI status recorded at handoff |
 
 External blockers are listed in `KNOWN_BLOCKERS.md`. Pending work is not completion. This file is the resumption checkpoint; no work continues automatically after the active session ends.
+
+## PR verification follow-up
+
+Draft PR #10 is published. On commit `3522fb1`, GitHub Actions passed frontend verification, full backend verification and the encrypted restore drill. Browser execution found ambiguous legacy password locators in Chromium/WebKit and a Firefox container home-ownership mismatch. Exact password labels and ephemeral home ownership are corrected without changing application authentication. Every browser suite now runs even when another fails, while the aggregate job still fails; screenshots and axe details are retained for diagnosis. Browser acceptance remains pending the rerun.

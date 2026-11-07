@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import {launchBrowser} from "./browser-engine.mjs";
+import {saveBrowserFailure} from "./browser-evidence.mjs";
 const BASE=process.env.BASE_URL||"http://127.0.0.1:3101";
 const id="11111111-1111-4111-8111-111111111111";
 const browser=await launchBrowser();
@@ -40,7 +41,7 @@ try{
  assert.equal(await page.getByLabel("Account type").inputValue(),"driver");
  await page.getByLabel("Full name").fill("Example Driver");
  await page.getByLabel("Email").fill("driver@example.invalid");
- await page.getByLabel("Password").fill("SecurePasswordForTesting!2026");
+ await page.getByLabel("Password",{exact:true}).fill("SecurePasswordForTesting!2026");
  await page.getByRole("button",{name:"Register"}).click();
  await page.waitForURL("**/verify?challengeId="+id);
  await page.reload();
@@ -57,7 +58,7 @@ try{
  await page.getByRole("button",{name:"Reset password"}).click();
  await page.waitForURL("**/login?reset=1");
  await page.getByLabel("Email").fill("driver@example.invalid");
- await page.getByLabel("Password").fill("SecureSecondPassword!2026");
+ await page.getByLabel("Password",{exact:true}).fill("SecureSecondPassword!2026");
  await page.getByRole("button",{name:"Sign in",exact:true}).click();
  await page.waitForURL("**/driver");
  for(const endpoint of ["/auth/register","/auth/verify","/auth/forgot-password",
@@ -65,4 +66,5 @@ try{
   assert.ok(actions.some(x=>x.path===endpoint),endpoint);
  console.log("Part 2 auth browser contract passed");
  await context.close();
-}finally{await browser.close();}
+}catch(error){await saveBrowserFailure(browser,"auth",error);throw error;}
+finally{await browser.close();}

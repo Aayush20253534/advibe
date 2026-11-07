@@ -1,13 +1,11 @@
 // Synthetic frontend QA only. No provider calls, user accounts or commercial actions.
 import assert from "node:assert/strict";
-import { mkdirSync } from "node:fs";
 import { AxeBuilder } from "@axe-core/playwright";
 import { browserName, launchBrowser } from "./browser-engine.mjs";
+import { saveBrowserEvidence, saveBrowserFailure } from "./browser-evidence.mjs";
 
 const base=process.env.BASE_URL??"http://127.0.0.1:3101";
 const browser=await launchBrowser();
-const out=`test-results/public/${browserName}`;
-mkdirSync(out,{recursive:true});
 try{
   for(const width of [390,768,1440]){
     const context=await browser.newContext({viewport:{width,height:900},reducedMotion:"reduce"});
@@ -20,9 +18,9 @@ try{
       assert.equal(await page.locator("h1").count(),1,`${path}: one primary heading`);
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path}: no overflow at ${width}`);
       const result=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+      await saveBrowserEvidence(page,`${path.slice(1)||"home"}-${width}`,{violations:result.violations});
       assert.deepEqual(result.violations.filter(x=>["serious","critical"].includes(x.impact)).map(x=>x.id),[],`${path}: accessibility at ${width}`);
       if(path==="/locations")await page.getByRole("heading",{name:"Coverage data is unavailable"}).waitFor();
-      await page.screenshot({path:`${out}/${path.slice(1)||"home"}-${width}.png`,fullPage:true,animations:"disabled"});
     }
     await page.goto(base+"/",{waitUntil:"networkidle"});
     if(width<1280){
@@ -36,4 +34,5 @@ try{
     await context.close();
   }
   console.log(`${browserName}: public responsive, failure, keyboard and axe checks passed`);
-}finally{await browser.close();}
+}catch(error){await saveBrowserFailure(browser,"public",error);throw error;}
+finally{await browser.close();}

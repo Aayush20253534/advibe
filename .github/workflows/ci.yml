@@ -108,6 +108,9 @@ jobs:
         run: node --test tests/b22-api-integration.test.mjs
       - name: Build authenticated API frontend
         run: npm run build
+      - name: Match Firefox home ownership to the ephemeral container user
+        if: matrix.browser == 'firefox'
+        run: chown "$(id -u):$(id -g)" "$HOME"
       - name: Run cross-role API mode browser smoke with intercepted contract data
         shell: bash
         run: |
@@ -127,10 +130,12 @@ jobs:
             cat /tmp/advibe-b22-next.log
             exit 1
           fi
-          BASE_URL=http://127.0.0.1:3101 npm run test:live-browser
-          BASE_URL=http://127.0.0.1:3101 npm run test:auth-browser
-          BASE_URL=http://127.0.0.1:3101 npm run test:portal-shell
-          BASE_URL=http://127.0.0.1:3101 npm run test:public-browser
+          browser_failures=0
+          BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:live-browser || browser_failures=$((browser_failures + 1))
+          BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:auth-browser || browser_failures=$((browser_failures + 1))
+          BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:portal-shell || browser_failures=$((browser_failures + 1))
+          BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:public-browser || browser_failures=$((browser_failures + 1))
+          test "$browser_failures" -eq 0
       - name: Save synthetic browser screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import {launchBrowser} from "./browser-engine.mjs";
+import {saveBrowserFailure} from "./browser-evidence.mjs";
 const BASE=process.env.BASE_URL||"http://127.0.0.1:3101";
 const uid="11111111-1111-4111-8111-111111111111";
 const campaignId="22222222-2222-4222-8222-222222222222";
@@ -66,7 +67,7 @@ try{
   assert.equal(await page.getByText("Continue as demo "+role).count(),0);
   await ensure(page,"/login?next=%2F"+role);
   await page.getByLabel("Email").fill("verified@example.invalid");
-  await page.getByLabel("Password").fill("valid-live-password");
+  await page.getByLabel("Password",{exact:true}).fill("valid-live-password");
   await page.getByRole("button",{name:"Sign in",exact:true}).click();
   if(role==="admin"){
    await page.getByText("Enter your authenticator's 6-digit code.").waitFor();
@@ -116,4 +117,5 @@ try{
   passes++;await context.close();
  }
  console.log("B22 live browser API-mode role flows passed: "+passes+"/3");
-}finally{await browser.close();}
+}catch(error){await saveBrowserFailure(browser,"role-flows",error);throw error;}
+finally{await browser.close();}
