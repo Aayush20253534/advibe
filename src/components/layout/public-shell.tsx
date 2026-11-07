@@ -111,7 +111,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
           <FooterLinks title="Portals" links={[{ label: "Advertiser portal", href: "/advertiser" }, { label: "Driver partner portal", href: "/driver" }, { label: "Sign up", href: "/signup" }]} />
           <FooterLinks title="Legal" links={[{ label: "Privacy policy", href: "/privacy" }, { label: "Terms and conditions", href: "/terms" }]} />
         </div>
-        <div className="border-t border-white/10"><div className="mx-auto max-w-[1280px] px-5 py-6 text-xs text-[#c3d0e4] sm:px-8">© 2026 AdVibe. Prayagraj pilot launch.</div></div>
+        <div className="border-t border-white/10"><div className="mx-auto max-w-[1280px] px-5 py-6 text-xs text-[#c3d0e4] sm:px-8">© 2026 BlinkMyAd. Prayagraj pilot launch.</div></div>
       </footer>
 
       {mobileOpen && <div className="fixed inset-0 z-[90] xl:hidden">

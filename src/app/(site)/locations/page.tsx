@@ -14,7 +14,7 @@ export default function Page() {
     <>
       <PageHero
         title="Advertising locations in Prayagraj"
-        description="Explore locations published by AdVibe for our first launch city. Find an area and plan a local vehicle-screen campaign."
+        description="Explore locations published by BlinkMyAd for our first launch city. Find an area and plan a local vehicle-screen campaign."
         note="Only published backend locations are shown. A location listing does not guarantee available screens or booking dates."
       />
       <Section>
@@ -23,7 +23,7 @@ export default function Page() {
       <CTA
         title="Plan a Prayagraj campaign"
         text="Have a specific route or neighbourhood in mind? Ask the team about the current Prayagraj rollout."
-        label="Contact AdVibe"
+        label="Contact BlinkMyAd"
         href="/contact"
       />
     </>

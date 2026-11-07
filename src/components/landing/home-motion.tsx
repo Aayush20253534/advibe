@@ -19,7 +19,8 @@ export function ScrollReveal({ children, className = "", delay = 0, direction = 
   return (
     <motion.div
       className={className}
-      initial={reduced ? false : { opacity: 0, x, y }}
+      data-scroll-reveal
+      initial={reduced ? false : { opacity: 1, x, y }}
       whileInView={reduced ? undefined : { opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, amount: 0.13, margin: "0px 0px -42px 0px" }}
       transition={{ duration: 0.62, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -65,7 +66,7 @@ export function CinematicHeroArt() {
 
 const steps: { title: string; text: string; icon: LucideIcon }[] = [
   { title: "Advertiser", text: "Uploads a creative and builds a campaign draft", icon: UploadCloud },
-  { title: "Review", text: "An AdVibe admin reviews the creative and campaign", icon: ClipboardCheck },
+  { title: "Review", text: "An BlinkMyAd admin reviews the creative and campaign", icon: ClipboardCheck },
   { title: "Vehicle screen", text: "Approved ads play on assigned screens", icon: MonitorPlay },
   { title: "Driver partner", text: "Earnings are recorded for the driver carrying the screen", icon: UserRound },
 ];
@@ -79,7 +80,7 @@ function TimelineStep({ step, index, progress }: {
   const Icon = step.icon;
   return (
     <motion.li style={reduced ? undefined : { opacity, scale }} className="relative z-10 flex min-h-64 flex-col items-start rounded-2xl border border-[#27517f] bg-[#09284c]/95 p-7 shadow-[0_20px_50px_rgba(0,0,0,.14)] sm:min-h-60">
-      <span className="absolute -top-4 left-7 flex size-9 items-center justify-center rounded-full bg-[#FF6A00] font-heading font-extrabold text-white shadow-[0_4px_20px_rgba(255,106,0,.2)]">{index + 1}</span>
+      <span className="absolute -top-4 left-7 flex size-9 items-center justify-center rounded-full bg-[#FF6A00] font-heading font-extrabold text-[#041B3D] shadow-[0_4px_20px_rgba(255,106,0,.2)]">{index + 1}</span>
       <span className="mb-6 inline-flex size-15 items-center justify-center rounded-xl border border-[#4b7298] bg-[#143e68] text-[#cbe5ff]"><Icon className="size-8" aria-hidden="true" /></span>
       <h3 className="font-heading text-xl font-bold text-white">{step.title}</h3>
       <p className="mt-3 text-sm leading-6 text-[#c3d0e4]">{step.text}</p>
@@ -121,7 +122,7 @@ export function IndiaNetworkMap() {
   return (
     <div ref={ref} className="relative overflow-hidden rounded-[28px] border border-[#d9e6f6] bg-[#f3f8ff]" aria-label="Illustrative India expansion map with Prayagraj marked as the starting location">
       <svg className="w-full" viewBox="118 91 490 470" role="img" aria-labelledby="av-india-map-title av-india-map-desc">
-        <title id="av-india-map-title">Initial AdVibe launch in Prayagraj</title>
+        <title id="av-india-map-title">Initial BlinkMyAd launch in Prayagraj</title>
         <desc id="av-india-map-desc">Geographical outline of India, with Prayagraj highlighted and four illustrative future network lines that do not indicate available services.</desc>
         <defs>
           <linearGradient id="av-map-fill" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#e1eeff" /><stop offset="1" stopColor="#b4d1f8" /></linearGradient>

@@ -23,7 +23,7 @@ const guides = [
   { label: "Estimating the cost", href: "/pricing" },
   { label: "Becoming a driver partner", href: "/for-drivers" },
   { label: "Prayagraj locations", href: "/locations" },
-  { label: "Contacting AdVibe", href: "/contact" },
+  { label: "Contacting BlinkMyAd", href: "/contact" },
 ];
 
 export function HelpSearch() {
@@ -106,7 +106,7 @@ export function HelpSearch() {
             Signed-in users can open a ticket from their portal. Everyone else can write to us.
           </p>
           <Link href="/contact" className={textLink + " mt-3 inline-block"}>
-            Contact AdVibe
+            Contact BlinkMyAd
           </Link>
         </div>
       </aside>

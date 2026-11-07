@@ -35,6 +35,7 @@
   .av-section-title { font-size: clamp(2.35rem,9vw,3rem); }
 }
 @media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal] { opacity: 1 !important; transform: none !important; }
   .av-hero-moving { display: none !important; }
   .av-hero-still { display: block !important; }
   .av-scroll-cue svg { animation: none; }

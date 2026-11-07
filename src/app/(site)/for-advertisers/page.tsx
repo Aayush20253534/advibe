@@ -17,7 +17,7 @@ import { publicFAQs } from "@/components/public/faq-data";
 export const metadata: Metadata = {
   title: "For Advertisers | Vehicle Screen Campaigns",
   description:
-    "Explore vehicle-screen advertising formats and campaign planning in Prayagraj with AdVibe.",
+    "Explore vehicle-screen advertising formats and campaign planning in Prayagraj with BlinkMyAd.",
 };
 
 // Purpose: explain to a business what running a campaign involves and what it controls.

@@ -9,10 +9,10 @@ import { CampaignTimeline, CinematicHeroArt, IndiaNetworkMap, ScrollReveal } fro
 import "@/components/landing/homepage.css";
 
 export const metadata: Metadata = {
-  title: "Vehicle Screen Advertising in Prayagraj | AdVibe",
-  description: "AdVibe connects advertisers and driver partners through approved vehicle-screen campaigns, starting in Prayagraj with a platform built for India.",
+  title: "Vehicle Screen Advertising in Prayagraj | BlinkMyAd",
+  description: "BlinkMyAd connects advertisers and driver partners through approved vehicle-screen campaigns, starting in Prayagraj with a platform built for India.",
   openGraph: {
-    title: "AdVibe | Your Brand Belongs on the Move",
+    title: "BlinkMyAd | Your Brand Belongs on the Move",
     description: "Plan reviewed digital out-of-home advertising on everyday vehicles. Starting in Prayagraj, built for India.",
     type: "website",
   },
@@ -86,7 +86,7 @@ export default function HomePage() {
             </ScrollReveal>
             <ScrollReveal delay={.19}>
               <p className="mt-9 max-w-[480px] text-lg leading-8 text-[#e1e9f3]">
-                Put your business on digital displays mounted on everyday vehicles. AdVibe connects advertisers, driver partners and local routes, starting with Prayagraj.
+                Put your business on digital displays mounted on everyday vehicles. BlinkMyAd connects advertisers, driver partners and local routes, starting with Prayagraj.
               </p>
             </ScrollReveal>
             <ScrollReveal className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" delay={.29}>
@@ -120,7 +120,7 @@ export default function HomePage() {
       <section id="how-it-works" aria-labelledby="process-title" className="relative scroll-mt-22 overflow-hidden bg-[#03152C] py-28 text-white lg:py-34">
         <div className="pointer-events-none absolute left-[-15%] right-[-15%] top-1/2 h-[380px] rotate-[-9deg] border-t-2 border-[#FF6A00]/20 [box-shadow:0_-7px_42px_rgba(255,106,0,.12)]" aria-hidden="true" />
         <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
-          <ScrollReveal><div className="text-center"><p className="av-eyebrow text-[#79b4ff]">HOW ADVIBE WORKS</p><h2 id="process-title" className="mx-auto mt-5 max-w-3xl font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">From idea to approved campaign.</h2><div className="av-underline mx-auto mt-6" aria-hidden="true" /></div></ScrollReveal>
+          <ScrollReveal><div className="text-center"><p className="av-eyebrow text-[#79b4ff]">HOW BLINKMYAD WORKS</p><h2 id="process-title" className="mx-auto mt-5 max-w-3xl font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">From idea to approved campaign.</h2><div className="av-underline mx-auto mt-6" aria-hidden="true" /></div></ScrollReveal>
           <CampaignTimeline />
           <p className="mt-10 text-center text-sm text-[#b4c6dd]">Illustrative workflow. Playback and driver earnings depend on approved assignments and platform verification.</p>
         </div>
@@ -164,7 +164,7 @@ export default function HomePage() {
       <section id="india-coverage" aria-labelledby="india-title" className="scroll-mt-24 bg-[#f5f8fc] py-28 lg:py-36">
         <div className="mx-auto grid max-w-[1280px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
           <ScrollReveal>
-            <SectionHeading eyebrow="INDIA-WIDE VISION" title={<>Starting local.<br />Built to go further.</>} description="AdVibe is beginning in Prayagraj, with a platform designed for vehicle-based advertising across India." />
+            <SectionHeading eyebrow="INDIA-WIDE VISION" title={<>Starting local.<br />Built to go further.</>} description="BlinkMyAd is beginning in Prayagraj, with a platform designed for vehicle-based advertising across India." />
             <div className="mt-8 flex items-center gap-3 rounded-xl border border-[#dce4f0] bg-white px-5 py-4 text-sm text-[#041B3D]"><MapPin className="size-5 shrink-0 text-[#FF6A00]" aria-hidden="true" /><span><strong>Prayagraj</strong> is the initial launch city. Other locations are not verified as active.</span></div>
             <div className="mt-8"><BlueButton href="/locations">Explore locations</BlueButton></div>
           </ScrollReveal>
@@ -187,7 +187,7 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8"><ScrollReveal>
           <h2 id="start-title" className="max-w-[690px] font-heading text-[clamp(2.8rem,5vw,5.5rem)] font-extrabold leading-[1.08] tracking-tight">Take your brand <span className="text-[#FF6A00]">further.</span></h2>
           <div className="av-underline mt-5" aria-hidden="true" />
-          <p className="mt-7 max-w-[600px] text-lg leading-8 text-[#d8e4f2]">Start planning an AdVibe campaign or explore becoming a driver partner.</p>
+          <p className="mt-7 max-w-[600px] text-lg leading-8 text-[#d8e4f2]">Start planning an BlinkMyAd campaign or explore becoming a driver partner.</p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row"><BlueButton href="/signup?role=advertiser">Create an advertiser account</BlueButton><BlueButton outlined href="/for-drivers">Become a driver partner</BlueButton></div>
         </ScrollReveal></div>
       </section>

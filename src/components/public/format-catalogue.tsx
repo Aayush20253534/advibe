@@ -141,7 +141,7 @@ export function FormatCatalogue() {
       </div>
       <InfoNote>
         The images are illustrations of how each placement could look, not photos of installed
-        AdVibe screens. Exact screen sizes, hardware and availability are confirmed for each
+        BlinkMyAd screens. Exact screen sizes, hardware and availability are confirmed for each
         campaign before it is booked.
       </InfoNote>
     </div>

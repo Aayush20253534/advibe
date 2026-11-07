@@ -92,7 +92,7 @@ export function ContactEnquiry() {
           name, email, subject: "[Prayagraj] " + subject,
           message: body, consent: true, captchaToken,
         } });
-        setFeedback("Your enquiry has been received by AdVibe.");
+        setFeedback("Your enquiry has been received by BlinkMyAd.");
         form.reset();
         setMessage("");
       } catch (reason) {
@@ -108,7 +108,7 @@ export function ContactEnquiry() {
     setFeedback("Your email app is opening. Send the message from there; this website has not sent it.");
     window.location.href =
       "mailto:support@advibe.in?subject=" +
-      encodeURIComponent("[AdVibe Prayagraj] " + subject) +
+      encodeURIComponent("[BlinkMyAd Prayagraj] " + subject) +
       "&body=" +
       encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n" + body);
   }
@@ -183,7 +183,7 @@ export function ContactEnquiry() {
         </div>
         <label className="mt-5 flex items-start gap-3 text-sm leading-6 text-ink-muted">
           <input type="checkbox" name="consent" className="mt-1 size-4 accent-signal" required />
-          <span>I agree that AdVibe may use these details to respond to my enquiry. <Link href="/privacy" className="font-semibold text-signal underline">Privacy notice</Link></span>
+          <span>I agree that BlinkMyAd may use these details to respond to my enquiry. <Link href="/privacy" className="font-semibold text-signal underline">Privacy notice</Link></span>
         </label>
         {siteKey ? (
           <div className="mt-5">

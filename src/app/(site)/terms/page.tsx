@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import Link from "next/link";
 import {FileCheck2,Info} from "lucide-react";
-export const metadata:Metadata={title:"Terms & Conditions | Legal Review Pending",description:"AdVibe terms preview, pending commercial and legal approval."};
+export const metadata:Metadata={title:"Terms & Conditions | Legal Review Pending",description:"BlinkMyAd terms preview, pending commercial and legal approval."};
 export default function Page(){return <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6"><span className="inline-flex items-center gap-2 rounded-full border border-warning-border bg-warning-bg px-4 py-2 text-sm font-semibold text-warning-fg"><Info className="size-4"/> Legal approval pending</span>
  <h1 className="mt-5 font-heading text-3xl font-bold text-ink sm:text-4xl">Terms & Conditions</h1>
  <p className="mt-4 text-base leading-7 text-ink-muted">Final advertiser and driver partner terms have not yet been supplied or approved. This page is a preview, not an operative agreement or an offer of guaranteed availability, revenue or earnings.</p>

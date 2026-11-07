@@ -43,7 +43,7 @@ export default function Page() {
             },
             {
               title: "What is allowed",
-              text: "Ads must follow AdVibe's content rules and the law. Misleading or prohibited content is rejected.",
+              text: "Ads must follow BlinkMyAd's content rules and the law. Misleading or prohibited content is rejected.",
               icon: ShieldCheck,
             },
           ]}

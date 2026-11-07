@@ -6,7 +6,7 @@ import { Field, Input } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { formatCards, InfoNote, primaryButton } from "./marketing-blocks";
 
-// Example rates used only by this public calculator. They are not published AdVibe prices.
+// Example rates used only by this public calculator. They are not published BlinkMyAd prices.
 const base: Record<
   "bike_rear" | "auto_rear" | "auto_side" | "car_rear" | "car_interior" | "helmet",
   number
@@ -171,7 +171,7 @@ export function PricingPlanner() {
         </div>
         <InfoNote>
           How the example is calculated: daily rate × (ad length ÷ 10 seconds) × (plays ÷ 100) ×
-          screens × days, plus 18% GST for illustration. These are not published AdVibe prices; your
+          screens × days, plus 18% GST for illustration. These are not published BlinkMyAd prices; your
           real quote comes from approved Prayagraj rates when you plan a campaign.
         </InfoNote>
       </div>

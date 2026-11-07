@@ -3,18 +3,18 @@ import { BadgeCheck, Eye, Lock, Scale } from "lucide-react";
 import { Benefits, CTA, Heading, PageHero, Section } from "@/components/public/marketing-blocks";
 
 export const metadata: Metadata = {
-  title: "About AdVibe | Vision & Mission",
+  title: "About BlinkMyAd | Vision & Mission",
   description:
-    "Learn about AdVibe's vision for connecting brands and driver partners through mobile outdoor advertising.",
+    "Learn about BlinkMyAd's vision for connecting brands and driver partners through mobile outdoor advertising.",
 };
 
-// Purpose: why AdVibe exists and the principles it works by.
+// Purpose: why BlinkMyAd exists and the principles it works by.
 export default function Page() {
   return (
     <>
       <PageHero
-        title="About AdVibe"
-        description="AdVibe puts advertising on screens carried by everyday vehicles, so local businesses can reach people on the move and drivers can earn from the routes they already drive."
+        title="About BlinkMyAd"
+        description="BlinkMyAd puts advertising on screens carried by everyday vehicles, so local businesses can reach people on the move and drivers can earn from the routes they already drive."
       />
       <Section labelledBy="why">
         <div className="grid gap-10 lg:grid-cols-2">
@@ -41,7 +41,7 @@ export default function Page() {
                   "Driver partners",
                   "Bike, auto and car drivers who want to earn from their routes.",
                 ],
-                ["AdVibe admins", "The team that reviews creatives, campaigns and partners."],
+                ["BlinkMyAd admins", "The team that reviews creatives, campaigns and partners."],
               ].map(([k, v]) => (
                 <div key={k} className="grid gap-1 py-4 sm:grid-cols-[10rem_1fr]">
                   <dt className="font-semibold text-ink">{k}</dt>
@@ -81,8 +81,8 @@ export default function Page() {
       </Section>
       <CTA
         title="Talk to us"
-        text="Questions about advertising, partnering or working with AdVibe?"
-        label="Contact AdVibe"
+        text="Questions about advertising, partnering or working with BlinkMyAd?"
+        label="Contact BlinkMyAd"
         href="/contact"
       />
     </>

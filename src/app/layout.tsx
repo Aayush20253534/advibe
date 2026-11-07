@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { brand } from "@/config/brand";
 import { Overpass } from "next/font/google";
 import "./globals.css";
 import { MockProviderBanner } from "@/components/layout/mock-provider-banner";
@@ -12,9 +13,9 @@ const overpass = Overpass({
 });
 
 export const metadata: Metadata = {
-  title: { default: "AdVibe", template: "%s | AdVibe" },
-  description: "Your Brand. Everywhere. An outdoor and mobility advertising platform.",
-  applicationName: "AdVibe",
+  title: { default: brand.name, template: "%s | " + brand.name },
+  description: brand.description,
+  applicationName: brand.name,
   icons: { icon: "/icon.png", shortcut: "/icon.png", apple: "/icon.png" },
 };
 
