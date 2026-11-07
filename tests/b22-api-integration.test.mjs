@@ -48,7 +48,7 @@ test("All portal layouts require authenticated API mode with no demo fallback",(
  const live=read("src/features/live/api-portal.tsx");
  assert.match(live,/liveSession/);
  assert.match(live,/csrfToken/);
- assert.match(live,/newIdempotencyKey/);
+ assert.match(read("src/features/advertiser-live/workflows.tsx"),/newIdempotencyKey/);
  assert.doesNotMatch(live,/useDemoStore|useDemoAuth|DEMO_USERS/);
 });
 test("B22 live routes include secure login, MFA and signup without browser-persisted secrets",()=>{

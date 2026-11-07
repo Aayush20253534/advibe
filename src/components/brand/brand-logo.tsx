@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { brand } from "@/config/brand";
 
 type BrandLogoProps = {
   href?: string;
@@ -18,10 +19,10 @@ export function BrandLogo({
   const logo = (
     <Image
       // 800 px derivative of the original artwork (public/brand/advibe-logo.png, 2048 px).
-      src="/brand/advibe-logo-800.png"
-      alt="AdVibe — Your Brand. Everywhere."
+      src={brand.assets.public.src}
+      alt={brand.assets.public.alt}
       width={width}
-      height={Math.round((width * 682) / 2048)}
+      height={Math.round((width * brand.assets.public.height) / brand.assets.public.width)}
       priority={priority}
       className={cn("block h-auto max-w-full object-contain", className)}
     />
