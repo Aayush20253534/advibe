@@ -1,4 +1,6 @@
-# AdVibe\n\nDevelopment external-provider mocks are available for Cashfree, refunds, payouts, local mail, Turnstile, and fail-closed private media/KYC upload stubs. These do not replace the real backend database. Set `ADVIBE_EXTERNAL_MODE=mock` in a development-only backend; see [mock provider documentation](docs/MOCK_EXTERNAL_PROVIDERS.md). AdVibe typography uses the same native system-font approach used by Facebook interfaces.
+# AdVibe
+
+Development external-provider mocks are available for Cashfree, refunds, payouts, local mail, Turnstile, and fail-closed private media/KYC upload stubs. These do not replace the real backend database. Set `ADVIBE_EXTERNAL_MODE=mock` in a development-only backend; see [mock provider documentation](docs/MOCK_EXTERNAL_PROVIDERS.md). AdVibe typography uses the same native system-font approach used by Facebook interfaces.
 
 AdVibe is a Next.js 16 frontend and an Express/TypeScript + Prisma/PostgreSQL backend for mobile digital-screen advertising. The repository contains backend milestones B0–B23.
 
@@ -8,7 +10,11 @@ The application now uses **authenticated backend API routing only**. There is no
 
 Part 2 adds server-confirmed role redirects, email-verification links and resend, Admin MFA session checks, reset-token handling and session-revocation UX. See [Part 2 authentication](docs/PART_2_AUTH.md).
 
-Part 4 adds a dedicated server-authenticated Admin portal for reviews, users, catalog, pricing, evidence and audit reporting (see [Part 4 Admin integration](docs/PART_4_ADMIN.md)).\n\nPart 3 replaces the temporary advertiser tables with dedicated authenticated dashboards, campaign drafts/edits/submission, private creative upload lifecycle, eligible screen discovery, pricing quotes, account management, billing records, reports, support and notifications. Read [Part 3 advertiser integration](docs/PART_3_ADVERTISER.md). Checkout and real payment operations remain Part 6; deployment and staging E2E are separate release gates.\n\nThe former standalone demo components and fixtures remain **unreferenced by the live entry routes** pending complete deletion during the final cleanup phase. Legacy feature pages must still be migrated to dedicated API-backed UI; today's API portal is a limited functional bridge, not the finished production experience. The public marketing site remains available.
+Part 4 adds a dedicated server-authenticated Admin portal for reviews, users, catalog, pricing, evidence and audit reporting (see [Part 4 Admin integration](docs/PART_4_ADMIN.md)).
+
+Part 3 replaces the temporary advertiser tables with dedicated authenticated dashboards, campaign drafts/edits/submission, private creative upload lifecycle, eligible screen discovery, pricing quotes, account management, billing records, reports, support and notifications. Read [Part 3 advertiser integration](docs/PART_3_ADVERTISER.md). Checkout and real payment operations remain Part 6; deployment and staging E2E are separate release gates.
+
+The former standalone demo components and fixtures remain **unreferenced by the live entry routes** pending complete deletion during the final cleanup phase. Legacy feature pages must still be migrated to dedicated API-backed UI; today's API portal is a limited functional bridge, not the finished production experience. The public marketing site remains available.
 
 ## Local configuration
 

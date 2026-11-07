@@ -15,3 +15,5 @@ Source: `d2ac1f3`, 7 November 2026. Runtime: Linux x64, Node 24.22.1; repository
 Initial failing tests are in `tests/part22-integration.test.mjs`: a stale orange CTA assertion after the blue redesign, and a focus-return regex requiring obsolete whitespace. The focus-return behavior exists in current source. Preserve the intent with current contrast checks and whitespace-independent assertions, then verify actual behavior in browser.
 
 Historical M9 results are historical evidence only. Current verification is recorded separately, including skipped or blocked checks.
+
+Foundation follow-up: dependency installation exposed one existing lint failure in the password-reset effect; repaired without disabling the rule. Frontend lint, typecheck and production build now pass. All 143 frontend tests (including 5 new request-client regressions) pass. Backend lint/types/unit/build pass. A local PostgreSQL 16.15 run is being prepared. Managed browser preview fails because it appends Vite-only `--host`/`--strictPort` options to `next dev`; no browser results are claimed.

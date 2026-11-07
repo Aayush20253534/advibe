@@ -5,8 +5,8 @@ Branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3`. Date: 7 Nove
 | Phase | Status | Evidence / remaining work |
 | --- | --- | --- |
 | 0 Audit | Complete; baseline verification still expanding | Source inventory, initial 136/138 frontend tests, route inventory 1/1; five audit documents committed |
-| 1 Foundation | In progress | Install dependencies, repair environment and current contracts |
-| 2 Design system | Pending | Preserve current tokens and approved assets |
+| 1 Foundation | Implemented and locally checked | Lockfiles + npm ci, environment repairs, reset token/lint fix, client regressions 5/5, all frontend tests 143/143, lint/types/build pass. Browser blocked by preview CLI injecting unsupported Next.js flags. |
+| 2 Design system | In progress | Preserve current tokens; centralize brand policy and reusable controls |
 | 3 Public experience | Pending | Review motion and responsive flows |
 | 4 Authentication | Pending | Fresh disposable DB tests |
 | 5 Advertiser | Pending | Fresh workflow tests and fixes |

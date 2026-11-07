@@ -21,13 +21,15 @@ jobs:
         with:
           node-version: "22"
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: ESLint
         run: npm run lint
       - name: TypeScript
         run: npm run typecheck
       - name: Backend-only frontend integration contracts
         run: npm run test:integration
+      - name: Runtime client regressions and current route contract
+        run: npm run test:client && npm run contracts:check
       - name: Backend B0 OpenAPI contract tests
         run: npm run test:contracts
       - name: Production build
@@ -67,7 +69,7 @@ jobs:
         with:
           node-version: "22"
       - name: Install isolated backend dependencies
-        run: npm install --prefix backend --no-audit --no-fund
+        run: npm ci --prefix backend --no-audit --no-fund
       - name: Validate Prisma schema
         run: npm --prefix backend run db:validate
       - name: Apply versioned PostgreSQL migrations
@@ -98,7 +100,7 @@ jobs:
         with:
           node-version: "22"
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Assert API-mode proxy, auth and portal boundaries
         run: node --test tests/b22-api-integration.test.mjs
       - name: Build authenticated API frontend

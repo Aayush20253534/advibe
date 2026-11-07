@@ -5,12 +5,40 @@ export class ApiError extends Error{
 }
 type Envelope<T>={data:T;meta?:{nextCursor?:string|null;unreadCount?:number}};
 const base="/api/backend/";
+function serviceUrl(path:string):string{
+ if(!path.startsWith("/")||path.startsWith("//")||path.includes("..")||/[#\\]/.test(path))
+  throw new ApiError(400,"INVALID_PATH","Invalid service path");
+ return base+path.slice(1);
+}
+async function request(path:string,init:RequestInit={},signal?:AbortSignal):Promise<Response>{
+ const url=serviceUrl(path);
+ const timeout=AbortSignal.timeout(15000);
+ try{
+  return await fetch(url,{...init,credentials:"same-origin",cache:"no-store",
+   signal:signal?AbortSignal.any([signal,timeout]):timeout});
+ }catch(e){
+  if(signal?.aborted)throw e;
+  throw new ApiError(503,timeout.aborted?"REQUEST_TIMEOUT":"NETWORK_UNAVAILABLE",
+   timeout.aborted?"The service took too long to respond. Try again.":"Could not connect to BlinkMyAd. Try again.");
+ }
+}
+async function envelope<T>(response:Response):Promise<Envelope<T>>{
+ let payload:unknown;
+ try{payload=await response.json();}catch{
+  throw new ApiError(response.ok?502:response.status,"INVALID_RESPONSE","The service returned an unreadable response");
+ }
+ if(!response.ok){
+  const error=(payload as {error?:{code?:string;message?:string}}|null)?.error;
+  throw new ApiError(response.status,error?.code??"HTTP_ERROR",error?.message??"The operation could not be completed");
+ }
+ if(!payload||typeof payload!=="object"||!("data" in payload))
+  throw new ApiError(502,"INVALID_RESPONSE","The service returned an incomplete response");
+ return payload as Envelope<T>;
+}
 export async function api<T=unknown>(path:string,options:{
  method?:"GET"|"POST"|"PATCH"|"PUT"|"DELETE";body?:unknown;csrfToken?:string;
  idempotencyKey?:string;signal?:AbortSignal;
 }={}):Promise<T>{
- if(!path.startsWith("/")||path.startsWith("//")||path.includes("..")||/[#\\]/.test(path))
-  throw new ApiError(400,"INVALID_PATH","Invalid service path");
  const method=options.method??"GET";
  const headers:Record<string,string>={Accept:"application/json"};
  if(method!=="GET"){
@@ -18,34 +46,14 @@ export async function api<T=unknown>(path:string,options:{
   if(options.csrfToken)headers["X-CSRF-Token"]=options.csrfToken;
   if(options.idempotencyKey)headers["Idempotency-Key"]=options.idempotencyKey;
  }
- let response:Response;
- try{
-  response=await fetch(base+path.slice(1),{
-   method,credentials:"same-origin",cache:"no-store",headers,
-   ...(method!=="GET"?{body:JSON.stringify(options.body??{})}:{}),signal:options.signal,
-  });
- }catch(e){
-  if(options.signal?.aborted)throw e;
-  throw new ApiError(503,"NETWORK_UNAVAILABLE","Could not connect to AdVibe. No sample data has been substituted.");
- }
- let payload:unknown=null;
- try{payload=await response.json();}catch{
-  throw new ApiError(response.status,"INVALID_RESPONSE","The API returned an unreadable response");
- }
- if(!response.ok){
-  const e=(payload as {error?:{code?:string;message?:string}})?.error;
-  throw new ApiError(response.status,e?.code??"HTTP_ERROR",
-   e?.message??"The operation could not be completed");
- }
- return (payload as Envelope<T>).data;
+ const response=await request(path,{method,headers,
+  ...(method!=="GET"?{body:JSON.stringify(options.body??{})}:{})},options.signal);
+ return (await envelope<T>(response)).data;
 }
 export async function apiPage<T>(path:string,signal?:AbortSignal):Promise<{
  data:T[];meta:{nextCursor?:string|null;unreadCount?:number}}>{
- const response=await fetch(base+path.replace(/^\//,""),{
-  credentials:"same-origin",cache:"no-store",signal});
- const payload=await response.json() as Envelope<T[]> & {error?:{code?:string;message?:string}};
- if(!response.ok)throw new ApiError(response.status,payload.error?.code??"HTTP_ERROR",
-  payload.error?.message??"Unable to fetch records");
+ const payload=await envelope<T[]>(await request(path,{},signal));
+ if(!Array.isArray(payload.data))throw new ApiError(502,"INVALID_RESPONSE","The service returned an invalid record list");
  return {data:payload.data,meta:payload.meta??{}};
 }
 export function newIdempotencyKey(){return crypto.randomUUID();}
@@ -57,7 +65,7 @@ export async function liveSession(signal?:AbortSignal):Promise<LiveSession>{
  return session;
 }
 export async function downloadApiCsv(path:string,filename:string){
- const r=await fetch(base+path.replace(/^\//,""),{credentials:"same-origin",cache:"no-store"});
+ const r=await request(path);
  if(!r.ok)throw new ApiError(r.status,"EXPORT_FAILED","Could not export live records");
  if(!(r.headers.get("content-type")??"").includes("text/csv"))
   throw new ApiError(502,"EXPORT_TYPE_INVALID","Invalid export response");

@@ -8,12 +8,13 @@ const light=hex=>{
  return .2126*r+.7152*g+.0722*b;
 };
 const contrast=(a,b)=>{const l=light(a),r=light(b);return (Math.max(l,r)+.05)/(Math.min(l,r)+.05)};
-test("approved orange is preserved while CTA text meets 4.5:1 normal-text contrast",()=>{
+test("marketing CTA colors meet 4.5:1 normal-text contrast",()=>{
  assert.ok(contrast("#041b3d","#ff6a00")>=4.5);
  assert.ok(contrast("#ffffff","#ff6a00")<4.5);
  assert.match(read("src/components/ui/button.tsx"),/bg-brand-orange text-brand-navy/);
- assert.match(read("src/components/layout/public-shell.tsx"),/bg-brand-orange px-5 text-sm font-semibold text-brand-navy/);
- assert.match(read("src/app/(site)/page.tsx"),/bg-brand-orange text-brand-navy/);
+ assert.ok(contrast("#ffffff","#0866ff")>=4.5);
+ assert.match(read("src/components/layout/public-shell.tsx"),/bg-\[#0866FF\] px-5 text-sm font-semibold text-white/);
+ assert.match(read("src/app/(site)/page.tsx"),/av-button-blue/);
  assert.match(read("src/components/public/marketing-blocks.tsx"),/bg-\[#ff6a00\].*text-\[#041b3d\]/);
 });
 test("public nav links resolve to implemented site pages",()=>{
@@ -49,7 +50,7 @@ test("choice controls use pressed-button group, not orphaned tab roles",()=>{
 });
 test("mobile nav focuses trigger after restoring inert backgrounds",()=>{
  const site=read("src/components/layout/public-shell.tsx"),portal=read("src/components/layout/portal-shell.tsx");
- assert.match(site,/requestAnimationFrame\(\(\)=>openButton\.current\?\.focus\(\)\)/);
+ assert.match(site,/requestAnimationFrame\(\(\)\s*=>\s*openButton\.current\?\.focus\(\)\)/);
  assert.match(portal,/requestAnimationFrame\(\(\)=>menuButtonRef\.current\?\.focus\(\)\)/);
  assert.match(site,/inert=\{mobileOpen\}/);
  assert.match(portal,/inert=\{mobileOpen\}/);
