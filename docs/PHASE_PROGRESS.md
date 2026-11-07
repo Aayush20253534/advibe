@@ -8,8 +8,8 @@ Branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3`. Date: 7 Nove
 | 1 Foundation | Implemented and locally checked | Lockfiles + npm ci, environment repairs, reset token/lint fix, client regressions 5/5, all frontend tests 143/143, lint/types/build pass. Browser blocked by preview CLI injecting unsupported Next.js flags. |
 | 2 Design system | Implemented; browser verification blocked | Preserved tokens/artwork, brand config, shared cursor controls, removed unreachable generic portal; lint/types/build and 30 integration checks pass |
 | 3 Public experience | Implemented; browser verification blocked | BlinkMyAd copy, preserved artwork, readable pre-hydration scroll sections, timeline contrast, public error recovery; lint/types/build and 143 tests pass |
-| 4 Authentication | In progress | Auth/security disposable DB checks pass; idle expiry and visible sign-out errors being completed |
-| 5 Advertiser | Pending | Fresh workflow tests and fixes |
+| 4 Authentication | Implemented; browser/provider verification blocked | Auth/security database suites pass; server-issued idle expiry clears all three portals; sign-out errors visible; lint/types/build tracked in final QA |
+| 5 Advertiser | In progress | Campaign/creative/pricing/booking DB suites pass; repairing cursor navigation |
 | 6 Driver | Pending | Fresh workflow tests and fixes |
 | 7 Administration | Pending | Fresh boundary tests and fixes |
 | 8 Integrations | Pending | Gated integration work and provider report |

@@ -5,6 +5,7 @@ import {type PortalRole} from "@/config/navigation";
 import {PortalShell} from "@/components/portal/portal-shell";
 import {PortalAccessRequired,PortalLoading} from "@/components/portal/portal-access";
 import {api,liveSession,type LiveSession} from "@/services/api-client";
+import {useSessionExpiry} from "@/services/use-session-expiry";
 type ApiPortalContextValue={role:PortalRole;session:LiveSession;expire:(message:string)=>void};
 const ApiPortalContext=React.createContext<ApiPortalContextValue|null>(null);
 /** Session and expiry callback for screens rendered inside ApiPortal (driver pages). */
@@ -52,6 +53,7 @@ export function ApiPortal({role,children}:{role:PortalRole;children:React.ReactN
   return ()=>{active=false;document.removeEventListener("visibilitychange",revalidate);};
  },[role]);
  const expire=React.useCallback((message:string)=>{setSession(null);setAuthError(message);},[]);
+ useSessionExpiry(session,React.useCallback(()=>expire("Your session has expired. Sign in again."),[expire]));
  const context=React.useMemo(()=>session?{role,session,expire}:null,[role,session,expire]);
  async function signOut(){
   if(!session)return;

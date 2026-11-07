@@ -4,6 +4,7 @@ import Link from "next/link";
 import {usePathname,useRouter} from "next/navigation";
 import {PortalShell} from "@/components/portal/portal-shell";
 import {PortalAccessRequired,PortalLoading} from "@/components/portal/portal-access";
+import {useSessionExpiry} from "@/services/use-session-expiry";
 import {Select} from "@/components/ui";
 import {api,apiPage,liveSession} from "@/services/api-client";
 import type {LiveSession} from "@/services/api-client";
@@ -58,6 +59,7 @@ export function AdvertiserPortal({children}:{children:React.ReactNode}){
   document.addEventListener("visibilitychange",check);
   return ()=>{active=false;document.removeEventListener("visibilitychange",check);};
  },[]);
+ useSessionExpiry(session,React.useCallback(()=>{setSession(null);setBusinesses([]);setAuthError("Your session has expired. Sign in again.");},[]));
  const signOut=async()=>{
   if(!session)return;
   try{await api("/auth/logout",{method:"POST",csrfToken:session.csrfToken,body:{}});setSession(null);router.replace("/login");router.refresh();}
@@ -80,6 +82,7 @@ export function AdvertiserPortal({children}:{children:React.ReactNode}){
  return <Auth.Provider value={{session,business,businesses,reloadBusinesses,refreshSession}}>
   <PortalShell role="advertiser" pathname={pathname} title={detailTitle} context={businessSwitcher}
    onSignOut={()=>void signOut()}>
+   {authError&&<Notice kind="error">{authError}</Notice>}
    {!business&&segment!=="settings"&&<Notice kind="warning">No business is registered for this account. Create one in <Link className="font-bold underline" href="/advertiser/settings">Profile and settings</Link> before managing campaigns or creatives.</Notice>}
    {children}
   </PortalShell>
