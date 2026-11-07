@@ -4,7 +4,7 @@ Branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3`. Date: 7 Nove
 
 | Phase | Status | Evidence / remaining work |
 | --- | --- | --- |
-| 0 Audit | Complete; baseline verification still expanding | Source inventory, initial 136/138 frontend tests, route inventory 1/1; five audit documents committed |
+| 0 Audit | Complete | Source inventory, initial 136/138 frontend tests, route inventory 1/1; five audit documents committed |
 | 1 Foundation | Implemented and locally checked | Lockfiles + npm ci, environment repairs, reset token/lint fix, client regressions 5/5, all frontend tests 143/143, lint/types/build pass. Browser blocked by preview CLI injecting unsupported Next.js flags. |
 | 2 Design system | Implemented; browser verification blocked | Preserved tokens/artwork, brand config, shared cursor controls, removed unreachable generic portal; lint/types/build and 30 integration checks pass |
 | 3 Public experience | Implemented; browser verification blocked | BlinkMyAd copy, preserved artwork, readable pre-hydration scroll sections, timeline contrast, public error recovery; lint/types/build and 143 tests pass |
@@ -16,6 +16,6 @@ Branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3`. Date: 7 Nove
 | 9 Security | Implemented and locally checked; independent review pending | Bounded relay/cookie regressions, baseline headers, tooling advisory remediation, SHA-pinned Actions; npm audit 0/0 findings; 152 frontend checks and complete fresh PostgreSQL backend check pass |
 | 10 Performance/SEO/accessibility | Implemented and build-measured; browser metrics blocked | Canonical/indexing regressions, OG/WebSite metadata, responsive hero sources, production-only request reduction; lint/types/build and 154 frontend checks pass; bundle figures recorded, no Lighthouse claim |
 | 11 QA | Local verification complete; browser/provider acceptance blocked | 154 frontend + 222 backend tests pass with zero skips; full lint/types/build/contracts, audit and synthetic encrypted restore pass. CI now discovers all tests and configures three browsers; execution still unverified. |
-| 12 Release preparation | In progress | Cost/environment/recovery/launch runbooks, final report and review branch/PR |
+| 12 Release preparation | Documentation and review handoff prepared; deployment blocked | Cost/environment/recovery/launch reports complete; no B23 approval flags or paid/live operations enabled; branch/PR publication and CI status recorded at handoff |
 
 External blockers are listed in `KNOWN_BLOCKERS.md`. Pending work is not completion. This file is the resumption checkpoint; no work continues automatically after the active session ends.

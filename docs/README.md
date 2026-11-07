@@ -2,6 +2,10 @@
 
 BlinkMyAd is the product name for the repository originally built as AdVibe. Legacy `ADVIBE_*`, `advibe_*`, existing database migrations and paths remain intentionally unchanged until separately reviewed migrations are approved. **Do not rename them to make the branding look tidy.**
 
+## Current readiness pass
+
+Start with the [engineering report](ENGINEERING_READINESS_REPORT.md), [QA evidence](QA_RESULTS.md), [launch checklist](TESTING_LAUNCH_CHECKLIST.md), [security review](SECURITY_REVIEW.md), [cost plan](COST_AND_QUOTA_PLAN.md) and [deployment guide](DEPLOYMENT_AND_ENVIRONMENT.md). These supersede stale readiness claims in historical milestone documents.
+
 ## Current system documentation
 
 1. [System architecture](system/01-system-architecture.md)

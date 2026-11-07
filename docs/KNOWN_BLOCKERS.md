@@ -13,6 +13,10 @@ No commercial release is approved by this work.
 | Payout provider | Implement and verify approved gateway with beneficiary verification and reconciliation | Default unavailable adapter stays fail closed |
 | Google Maps | Restricted browser key and approved billing; separately restricted server key only if geocoding is needed | Database inventory remains usable without maps |
 | Physical screens | Certified hardware, installation, pairing keys and pilot evidence | No device activation or exposure claims |
+| Browser/visual/performance acceptance | Repair managed preview CLI adapter or run and review committed CI/staging browser matrix and metrics | No screenshots or Lighthouse scores claimed |
+| Frontend payment/device completeness | Finish approved merchant checkout acceptance and applicable driver device/activity views after provider/hardware contract is available | Honest unavailable states, no fake operation |
+| Vercel inspection | Authorize connected team for project advibe after detailed access returned 403 | No unauthorized fallback or configuration change |
+| CI | Enable/authorize Actions and review exact PR commit results; current status recorded in report | No remote green status inferred from local tests |
 | Deployment approvals | Account-owned staging, HTTPS, secrets, B23 evidence, recovery and operator signoffs | No approval flags set by this session |
 | Render inspection | Connector has no selected workspace; explicit workspace selection required by connector | No service or configuration mutations |
 | Commercial host plan | Confirm compliant hosting terms and budget; no paid plan activation authorized | Cost report documents constraints |

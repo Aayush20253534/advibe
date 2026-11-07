@@ -1,48 +1,34 @@
-# AdVibe
+# BlinkMyAd
 
-Development external-provider mocks are available for Cashfree, refunds, payouts, local mail, Turnstile, and fail-closed private media/KYC upload stubs. These do not replace the real backend database. Set `ADVIBE_EXTERNAL_MODE=mock` in a development-only backend; see [mock provider documentation](docs/MOCK_EXTERNAL_PROVIDERS.md). AdVibe typography uses the same native system-font approach used by Facebook interfaces.
+BlinkMyAd is a vehicle-screen advertising platform for an initial Prayagraj rollout. The repository retains its historical name `advibe` and internal `ADVIBE_*` identifiers.
 
-AdVibe is a Next.js 16 frontend and an Express/TypeScript + Prisma/PostgreSQL backend for mobile digital-screen advertising. The repository contains backend milestones B0–B23.
+Next.js 16.4.2 / React 19 frontend, Express 5 / Prisma 6.19 / PostgreSQL backend. Dedicated advertiser, driver and administrator portals use server-authenticated API records through a same-origin relay. No runtime demo account or fictional production record is substituted when the backend is unavailable. Explicit development provider mocks do not replace the real database.
 
-## Integration cutover: Parts 1–2
+**Launch verdict: Not ready.** Source/build/database checks pass locally; browser acceptance, verified staging, legal/provider/storage/hardware gates and some advanced integrations remain unresolved. Read the [engineering report](docs/ENGINEERING_READINESS_REPORT.md), [current QA evidence](docs/QA_RESULTS.md) and [owner actions](docs/KNOWN_BLOCKERS.md).
 
-The application now uses **authenticated backend API routing only**. There is no runtime demo switch. Login, signup and role portals use the Express API through the same-origin Next.js server relay at `/api/backend/*`. When the backend is missing, requests fail closed. No sample user, fictional payment, or seeded campaign is substituted.
+## Development
 
-Part 2 adds server-confirmed role redirects, email-verification links and resend, Admin MFA session checks, reset-token handling and session-revocation UX. See [Part 2 authentication](docs/PART_2_AUTH.md).
-
-Part 4 adds a dedicated server-authenticated Admin portal for reviews, users, catalog, pricing, evidence and audit reporting (see [Part 4 Admin integration](docs/PART_4_ADMIN.md)).
-
-Part 3 replaces the temporary advertiser tables with dedicated authenticated dashboards, campaign drafts/edits/submission, private creative upload lifecycle, eligible screen discovery, pricing quotes, account management, billing records, reports, support and notifications. Read [Part 3 advertiser integration](docs/PART_3_ADVERTISER.md). Checkout and real payment operations remain Part 6; deployment and staging E2E are separate release gates.
-
-The former standalone demo components and fixtures remain **unreferenced by the live entry routes** pending complete deletion during the final cleanup phase. Legacy feature pages must still be migrated to dedicated API-backed UI; today's API portal is a limited functional bridge, not the finished production experience. The public marketing site remains available.
-
-## Local configuration
-
-Run Node.js 22+ and PostgreSQL 16. Provision backend environment variables as described in [backend documentation](backend/README.md) and apply Prisma migrations. Then create `.env.local` from `.env.example`, ensuring `ADVIBE_BACKEND_ORIGIN` points to your actual API server.
+Use Node 22+ and a disposable PostgreSQL 16 database. Configure `backend/.env` and root `.env.local` from their templates. Keep real credentials out of Git; backend CORS/auth origins must match the frontend. Follow [environment setup](docs/DEPLOYMENT_AND_ENVIRONMENT.md).
 
 ```bash
-npm install
-npm --prefix backend install
+npm ci
+npm --prefix backend ci
 npm --prefix backend run db:migrate:deploy
 npm --prefix backend run dev
 # In another terminal
 npm run dev
 ```
 
-The backend must use the exact frontend origin for `CORS_ORIGINS` and `AUTH_WEB_ORIGIN`. Production requires HTTPS, the full B23 release admission gates, an approved PostgreSQL instance, real operator MFA and separately provisioned providers.
+`ADVIBE_EXTERNAL_MODE=mock` is permitted only in development; production rejects mock providers. See [development provider modes](docs/MOCK_EXTERNAL_PROVIDERS.md). Auth/session/ownership checks always belong to the backend.
 
 ## Verification
 
 ```bash
 npm run check
-npm run test:integration
+# Dedicated test database, NODE_ENV=test and DB_TEST_ALLOWED=true required:
 npm --prefix backend run check
 ```
 
-API-mode Chromium tests use intercepted backend responses, while backend integration tests use disposable PostgreSQL. They are **not a substitute for live staging E2E**. Until staging tests, deployment and independent provider approvals are complete, production readiness remains **blocked**.
+The frontend check runs every unit/runtime/legacy contract test, type/lint checks, current route inventory and production build. Backend checks cover domain/security/database boundaries and HTTP smoke. Browser scripts intercept synthetic API data and are configured for Chromium, Firefox and WebKit in CI; actual provider sandbox and hosted staging acceptance remain separate.
 
-See [B22 API integration](docs/backend/B22_IMPLEMENTATION.md), [B23 release handover](docs/backend/B23_IMPLEMENTATION.md) and [production blockers](docs/PRODUCTION_READINESS.md).
-
-## BlinkMyAd engineering handbook and API test coverage
-
-Current code is still stored under the historical AdVibe repository/identifiers. Start with [docs/README.md](docs/README.md) for the BlinkMyAd architecture, full lifecycle diagrams, security, deployment, operations, integration gates and testing runbook. The added `backend/tests/api-route-inventory.test.mjs` and `api-boundaries.integration.test.mjs` cover the provider-independent Express surface, complementing the existing PostgreSQL domain tests. Cashfree, object storage, and Google Maps **live integrations are not exercised** by those new suites.
+See the [engineering handbook](docs/README.md), [current route inventory](contracts/api-routes.current.json), [security review](docs/SECURITY_REVIEW.md), [cost plan](docs/COST_AND_QUOTA_PLAN.md) and [launch checklist](docs/TESTING_LAUNCH_CHECKLIST.md). The B0 OpenAPI file is historical, not a complete current contract. Existing migrations and business logic are preserved.
