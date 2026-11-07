@@ -230,7 +230,7 @@ export function CampaignIndex() {
         }
       />
       {list.rows.length ? <CampaignTable rows={list.rows} /> : null}
-      <Pagination busy={list.busy} next={list.next} more={list.more} first={list.first} />
+      <Pagination hasPrevious={list.hasPrevious} busy={list.busy} next={list.next} more={list.more} first={list.first} />
     </Panel>
   );
 }

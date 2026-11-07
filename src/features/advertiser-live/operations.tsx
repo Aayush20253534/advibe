@@ -77,7 +77,7 @@ export function Directory({kind}:{kind:"locations"|"ad-formats"}){
      <p className="font-bold text-ink">{s.name}</p><p className="mt-1 text-sm text-ink-muted">{s.zone}, {s.city}</p>
      <p className="mt-2 text-xs text-ink-muted">Published area. Screen and booking availability are confirmed separately.</p>
     </div>)}
-   </div><Pagination busy={sites.busy} next={sites.next} more={sites.more} first={sites.first}/>
+   </div><Pagination hasPrevious={sites.hasPrevious} busy={sites.busy} next={sites.next} more={sites.more} first={sites.first}/>
   </Panel>}
   {kind==="ad-formats"&&<Panel title="Ad formats">
    <CollectionNotice busy={formats.busy} error={formats.error} length={formats.rows.length}/>
@@ -94,7 +94,7 @@ export function Directory({kind}:{kind:"locations"|"ad-formats"}){
      <p className="mt-1 text-sm text-ink-muted">{s.location} · {s.zone}, {s.city}</p>
      <p className="mt-2 break-all text-xs text-ink-subtle">Screen ID: {s.id}</p>
     </div>)}</div>
-   <Pagination busy={inventory.busy} next={inventory.next} more={inventory.more} first={inventory.first}/>
+   <Pagination hasPrevious={inventory.hasPrevious} busy={inventory.busy} next={inventory.next} more={inventory.more} first={inventory.first}/>
   </Panel>
  </div>;
 }
@@ -164,7 +164,7 @@ export function MoneyAndQuotes(){
     <div><p className="font-bold">{money(p.amountPaise)}</p><p className="text-xs text-ink-muted">Payment order {p.orderId}</p></div>
     <Tag name={p.status??p.state??"unknown"}/>
    </div>)}</div>
-   <Pagination busy={payments.busy} next={payments.next} more={payments.more} first={payments.first}/>
+   <Pagination hasPrevious={payments.hasPrevious} busy={payments.busy} next={payments.next} more={payments.more} first={payments.first}/>
    <Notice kind="warning">Online payment isn&apos;t available here yet. A payment only counts as paid once AdVibe confirms it with the payment provider.</Notice>
   </Panel>
  </div>;
@@ -217,7 +217,7 @@ export function AccountNotifications(){
     <p className="mt-2 text-xs text-ink-subtle">{formatDate(n.createdAt)}</p></div>
     {n.readAt?<Tag name="read"/>:<button className={secondary} disabled={busy===n.id} onClick={()=>void read(n.id)}>Mark read</button>}
    </div>
-  </div>)}</div><Pagination busy={notifications.busy} next={notifications.next} more={notifications.more} first={notifications.first}/>
+  </div>)}</div><Pagination hasPrevious={notifications.hasPrevious} busy={notifications.busy} next={notifications.next} more={notifications.more} first={notifications.first}/>
  </Panel>;
 }
 export function AccountSupport(){
@@ -265,7 +265,7 @@ export function AccountSupport(){
      <label className={label}>Message<textarea required maxLength={2000} className={field} rows={3} value={reply} onChange={e=>setReply(e.target.value)}/></label>
      <button className={primary} disabled={busy||!reply.trim()}>Send message</button>
     </form>}
-   </div>)}</div><Pagination busy={tickets.busy} next={tickets.next} more={tickets.more} first={tickets.first}/>
+   </div>)}</div><Pagination hasPrevious={tickets.hasPrevious} busy={tickets.busy} next={tickets.next} more={tickets.more} first={tickets.first}/>
   </Panel>
  </div>;
 }
