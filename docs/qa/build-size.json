@@ -1,0 +1,55 @@
+{
+  "measurement": "Prerendered HTML and directly referenced JS files, gzip individually; not network or Web Vitals",
+  "node": "24.22.1",
+  "next": "16.4.2",
+  "routes": [
+    {
+      "route": "/",
+      "htmlBytes": 115218,
+      "htmlGzipBytes": 18447,
+      "scriptFiles": 14,
+      "referencedJavaScriptBytes": 905486,
+      "referencedJavaScriptGzipBytes": 285907
+    },
+    {
+      "route": "/locations",
+      "htmlBytes": 28550,
+      "htmlGzipBytes": 6424,
+      "scriptFiles": 13,
+      "referencedJavaScriptBytes": 796612,
+      "referencedJavaScriptGzipBytes": 249322
+    },
+    {
+      "route": "/login",
+      "htmlBytes": 18013,
+      "htmlGzipBytes": 4504,
+      "scriptFiles": 13,
+      "referencedJavaScriptBytes": 758511,
+      "referencedJavaScriptGzipBytes": 238947
+    },
+    {
+      "route": "/advertiser",
+      "htmlBytes": 11759,
+      "htmlGzipBytes": 2920,
+      "scriptFiles": 13,
+      "referencedJavaScriptBytes": 801062,
+      "referencedJavaScriptGzipBytes": 251075
+    },
+    {
+      "route": "/driver",
+      "htmlBytes": 11615,
+      "htmlGzipBytes": 2890,
+      "scriptFiles": 13,
+      "referencedJavaScriptBytes": 794413,
+      "referencedJavaScriptGzipBytes": 248483
+    },
+    {
+      "route": "/admin",
+      "htmlBytes": 11600,
+      "htmlGzipBytes": 2889,
+      "scriptFiles": 13,
+      "referencedJavaScriptBytes": 794813,
+      "referencedJavaScriptGzipBytes": 248669
+    }
+  ]
+}

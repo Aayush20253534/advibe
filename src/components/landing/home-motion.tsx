@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ClipboardCheck, MonitorPlay, UploadCloud, UserRound } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -30,7 +30,11 @@ export function ScrollReveal({ children, className = "", delay = 0, direction = 
   );
 }
 
-/** Three layered, genuinely independent vehicle animations, with a static accessible fallback. */
+// One responsive image selection avoids preloading both desktop and mobile artwork.
+const heroImage = getImageProps({ src: "/images/hero/hero-city.webp", alt: "", fill: true, sizes: "100vw", loading: "eager", fetchPriority: "high" }).props;
+const stillImage = getImageProps({ src: "/images/hero/hero-static.webp", alt: "", fill: true, sizes: "100vw" }).props;
+
+/** Layered vehicle motion with a static mobile/reduced-motion image. */
 export function CinematicHeroArt() {
   const reduced = useReducedMotion();
   const first = (x: number, delay: number) => ({
@@ -40,10 +44,11 @@ export function CinematicHeroArt() {
   });
   return (
     <div className="av-hero-media absolute inset-0 overflow-hidden" aria-hidden="true">
-      <Image src="/images/hero/hero-city.webp" alt="" fill priority sizes="100vw" className="object-cover object-center" />
-      <div className="av-hero-still absolute inset-0">
-        <Image src="/images/hero/hero-static.webp" alt="" fill priority sizes="100vw" className="object-cover object-[66%_center]" />
-      </div>
+      <picture className="av-hero-still absolute inset-0">
+        <source media="(max-width: 1023px), (prefers-reduced-motion: reduce)" srcSet={stillImage.srcSet} sizes="100vw" />
+        {/* Next getImageProps supplies the optimized responsive sources for this picture. */}
+        <img {...heroImage} alt="" className="object-cover object-center" />
+      </picture>
       <div className="av-hero-moving absolute inset-0">
         <motion.div className="av-vehicle av-vehicle-car" {...first(68, 0.25)}>
           <Image src="/images/hero/hero-car.png" alt="" fill sizes="360px" className="object-contain object-bottom" />
@@ -66,7 +71,7 @@ export function CinematicHeroArt() {
 
 const steps: { title: string; text: string; icon: LucideIcon }[] = [
   { title: "Advertiser", text: "Uploads a creative and builds a campaign draft", icon: UploadCloud },
-  { title: "Review", text: "An BlinkMyAd admin reviews the creative and campaign", icon: ClipboardCheck },
+  { title: "Review", text: "A BlinkMyAd admin reviews the creative and campaign", icon: ClipboardCheck },
   { title: "Vehicle screen", text: "Approved ads play on assigned screens", icon: MonitorPlay },
   { title: "Driver partner", text: "Earnings are recorded for the driver carrying the screen", icon: UserRound },
 ];

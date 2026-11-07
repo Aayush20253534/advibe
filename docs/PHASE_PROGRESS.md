@@ -14,8 +14,8 @@ Branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3`. Date: 7 Nove
 | 7 Administration | Implemented; browser verification blocked | Admin final-page navigation and keyboard selection repaired; 7 client/component regressions and admin contracts pass; support/admin/release DB suites, frontend lint/types/build, backend build/smoke and migration reapply pass |
 | 8 Integrations | Implemented within available credentials; provider verification blocked | Optional on-demand published-area maps + public pagination; ad-format cursor regression fixed; map tests, frontend lint/types/build and full fresh PostgreSQL backend check pass; provider matrix documents unavailable live seams |
 | 9 Security | Implemented and locally checked; independent review pending | Bounded relay/cookie regressions, baseline headers, tooling advisory remediation, SHA-pinned Actions; npm audit 0/0 findings; 152 frontend checks and complete fresh PostgreSQL backend check pass |
-| 10 Performance/SEO/accessibility | In progress | Indexing/canonical safeguards, build measurements; browser metrics remain unavailable |
-| 11 QA | Pending | Consolidated verification |
+| 10 Performance/SEO/accessibility | Implemented and build-measured; browser metrics blocked | Canonical/indexing regressions, OG/WebSite metadata, responsive hero sources, production-only request reduction; lint/types/build and 154 frontend checks pass; bundle figures recorded, no Lighthouse claim |
+| 11 QA | In progress | Full-suite CI commands, cross-browser configuration and evidence consolidation |
 | 12 Release preparation | Pending | Cost, deployment, recovery and final verdict |
 
 External blockers are listed in `KNOWN_BLOCKERS.md`. Pending work is not completion. This file is the resumption checkpoint; no work continues automatically after the active session ends.

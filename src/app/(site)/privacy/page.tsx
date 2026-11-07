@@ -1,7 +1,7 @@
-import type {Metadata} from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import Link from "next/link";
 import {FileText,Info,Mail} from "lucide-react";
-export const metadata:Metadata={title:"Privacy Notice | Legal Review Pending",description:"BlinkMyAd privacy notice preview. The final policy awaits legal approval."};
+export const metadata = publicMetadata("/privacy", "Privacy Notice | Legal Review Pending", "BlinkMyAd privacy notice preview. The final policy awaits legal approval.");
 export default function Page(){return <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6"><span className="inline-flex items-center gap-2 rounded-full border border-warning-border bg-warning-bg px-4 py-2 text-sm font-semibold text-warning-fg"><Info className="size-4"/> Legal approval pending</span>
  <h1 className="mt-5 font-heading text-3xl font-bold text-ink sm:text-4xl">Privacy Notice</h1>
  <p className="mt-4 text-base leading-7 text-ink-muted">This page is a preview. It is not BlinkMyAd’s final privacy policy. Legal review and verified operating details are required before real customer, driver or payment data is collected.</p>

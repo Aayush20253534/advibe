@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,15 +8,7 @@ import {
 import { CampaignTimeline, CinematicHeroArt, IndiaNetworkMap, ScrollReveal } from "@/components/landing/home-motion";
 import "@/components/landing/homepage.css";
 
-export const metadata: Metadata = {
-  title: "Vehicle Screen Advertising in Prayagraj | BlinkMyAd",
-  description: "BlinkMyAd connects advertisers and driver partners through approved vehicle-screen campaigns, starting in Prayagraj with a platform built for India.",
-  openGraph: {
-    title: "BlinkMyAd | Your Brand Belongs on the Move",
-    description: "Plan reviewed digital out-of-home advertising on everyday vehicles. Starting in Prayagraj, built for India.",
-    type: "website",
-  },
-};
+export const metadata = publicMetadata("/", "Vehicle Screen Advertising in Prayagraj", "BlinkMyAd connects advertisers and driver partners through approved vehicle-screen campaigns, starting in Prayagraj with a platform built for India.");
 
 const valuePoints = [
   { icon: CarFront, title: "Vehicle-mounted advertising", body: "Put your business on display along everyday roads and commutes." },

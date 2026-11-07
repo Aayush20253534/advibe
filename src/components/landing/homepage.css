@@ -1,6 +1,6 @@
 /* Homepage-only motion and responsive artwork. All content remains readable without JS. */
 .av-hero { min-height: max(740px, calc(100svh - 72px)); }
-.av-hero-still { display: none; }
+.av-hero-still { display: block; }
 .av-hero-moving { display: block; pointer-events: none; }
 .av-vehicle { position: absolute; }
 .av-vehicle-car { width: clamp(250px, 22vw, 380px); height: clamp(190px, 19vw, 285px); bottom: 13%; right: 0%; z-index: 1; }
@@ -24,7 +24,7 @@
 @media (max-width: 1023px) {
   .av-hero { min-height: 770px; align-items: flex-start; }
   .av-hero-moving { display: none; }
-  .av-hero-still { display: block; }
+  .av-hero-still img { object-position: 66% center; }
   .av-hero .av-hero-media > .absolute:last-child { background: linear-gradient(180deg,#03152cf9 0%,#03152ce8 22%,#03152cb8 58%,#03152c35 90%),linear-gradient(90deg,#03152cb0,transparent 92%); }
 }
 @media (max-width: 639px) {

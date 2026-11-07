@@ -1,12 +1,8 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import { PageHero, Section } from "@/components/public/marketing-blocks";
 import { ContactEnquiry } from "@/components/public/contact-enquiry";
 
-export const metadata: Metadata = {
-  title: "Contact BlinkMyAd | Enquiries & Support",
-  description:
-    "Contact BlinkMyAd about vehicle-screen advertising, campaign planning and driver partnerships in Prayagraj.",
-};
+export const metadata = publicMetadata("/contact", "Contact BlinkMyAd | Enquiries & Support", "Contact BlinkMyAd about vehicle-screen advertising, campaign planning and driver partnerships in Prayagraj.");
 
 // Purpose: get a question to the BlinkMyAd team.
 export default function Page() {

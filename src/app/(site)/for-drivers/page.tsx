@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import {
   Benefits,
   CTA,
@@ -15,11 +15,7 @@ import { DriverVehicleTabs } from "@/components/public/driver-vehicle-tabs";
 import { FAQList } from "@/components/public/faq-list";
 import { publicFAQs } from "@/components/public/faq-data";
 
-export const metadata: Metadata = {
-  title: "Become an BlinkMyAd Driver Partner",
-  description:
-    "Explore the BlinkMyAd driver partnership program for Prayagraj, including vehicle eligibility, verification and reviewed earnings.",
-};
+export const metadata = publicMetadata("/for-drivers", "Become a BlinkMyAd Driver Partner", "Explore the BlinkMyAd driver partnership program for Prayagraj, including vehicle eligibility, verification and reviewed earnings.");
 
 // Purpose: tell a driver what partnering involves, what they need and how they get paid.
 export default function Page() {

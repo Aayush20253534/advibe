@@ -1,15 +1,11 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import { Benefits, CTA, Heading, PageHero, Section } from "@/components/public/marketing-blocks";
 import { FormatCatalogue } from "@/components/public/format-catalogue";
 import { FAQList } from "@/components/public/faq-list";
 import { publicFAQs } from "@/components/public/faq-data";
 import { Eye, FileImage, ShieldCheck, Target } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Ad Formats | Digital Vehicle Advertising",
-  description:
-    "Compare bike, auto-rickshaw and car advertising placements, screen formats, creative concepts and example specifications.",
-};
+export const metadata = publicMetadata("/ad-formats", "Ad Formats | Digital Vehicle Advertising", "Compare bike, auto-rickshaw and car advertising placements, screen formats, creative concepts and example specifications.");
 
 // Purpose: help an advertiser pick a placement and prepare the right creative for it.
 export default function Page() {

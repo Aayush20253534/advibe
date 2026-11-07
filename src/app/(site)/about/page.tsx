@@ -1,12 +1,8 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import { BadgeCheck, Eye, Lock, Scale } from "lucide-react";
 import { Benefits, CTA, Heading, PageHero, Section } from "@/components/public/marketing-blocks";
 
-export const metadata: Metadata = {
-  title: "About BlinkMyAd | Vision & Mission",
-  description:
-    "Learn about BlinkMyAd's vision for connecting brands and driver partners through mobile outdoor advertising.",
-};
+export const metadata = publicMetadata("/about", "About BlinkMyAd | Vision & Mission", "Learn about BlinkMyAd's vision for connecting brands and driver partners through mobile outdoor advertising.");
 
 // Purpose: why BlinkMyAd exists and the principles it works by.
 export default function Page() {
