@@ -135,6 +135,9 @@ jobs:
           BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:auth-browser || browser_failures=$((browser_failures + 1))
           BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:portal-shell || browser_failures=$((browser_failures + 1))
           BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:public-browser || browser_failures=$((browser_failures + 1))
+          if [ "$PLAYWRIGHT_BROWSER" = chromium ]; then
+            BASE_URL=http://127.0.0.1:3101 timeout 900s node scripts/lighthouse-mobile.mjs || browser_failures=$((browser_failures + 1))
+          fi
           test "$browser_failures" -eq 0
       - name: Save synthetic browser screenshots
         if: always()
