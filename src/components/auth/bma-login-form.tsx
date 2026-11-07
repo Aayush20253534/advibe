@@ -55,7 +55,7 @@ export function BmaLoginForm(){
      </div>
      <div className="flex items-center justify-between gap-3">
       <span className="inline-flex items-center gap-1.5 text-xs text-[#627694]"><LockKeyhole aria-hidden="true" className="size-3.5"/> Secure sign-in</span>
-      <Link href="/forgot-password" className="text-sm font-semibold text-[#0955e8] hover:underline">Forgot password?</Link>
+      <Link prefetch={false} href="/forgot-password" className="text-sm font-semibold text-[#0955e8] hover:underline">Forgot password?</Link>
      </div>
     </>
    }
@@ -66,7 +66,7 @@ export function BmaLoginForm(){
    </button>
    {isMfa&&<button type="button" disabled={loading} className="block w-full text-center text-sm font-semibold text-[#135ad8] hover:underline" onClick={()=>{setChallengeId("");setTicket("");setCode("");setNotice("");setError("");}}>Back to email sign-in</button>}
   </form>
-  <div className="mt-7 border-t border-[#dce4f0] pt-6 text-center text-sm text-[#536380]">Don’t have an account?{" "}<Link href="/signup" className="font-semibold text-[#0759ec] hover:underline">Create account</Link></div>
+  <div className="mt-7 border-t border-[#dce4f0] pt-6 text-center text-sm text-[#536380]">Don’t have an account?{" "}<Link prefetch={false} href="/signup" className="font-semibold text-[#0759ec] hover:underline">Create account</Link></div>
  </section>;
 }
 export function BmaLoginFallback(){

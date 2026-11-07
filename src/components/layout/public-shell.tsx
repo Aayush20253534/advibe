@@ -79,7 +79,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
         <div className="mx-auto flex min-h-[72px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:px-6 xl:px-10">
           <BrandLogo priority className="w-[146px] sm:w-[165px]" width={183} />
           <nav aria-label="Public website" className="hidden flex-1 items-center justify-center gap-0.5 xl:flex">
-            {desktopNavigation.map(item => <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={cn(
+            {desktopNavigation.map(item => <Link prefetch={false} key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={cn(
               "relative inline-flex min-h-10 items-center rounded-lg px-2.5 py-2 text-sm font-semibold text-white/85 transition-colors hover:bg-white/10 hover:text-white",
               pathname === item.href && "bg-[#0866FF] text-white",
             )}>{item.label}</Link>)}
@@ -88,13 +88,13 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
                 More <ChevronDown className="size-4 transition-transform group-open:rotate-180" aria-hidden="true" />
               </summary>
               <div className="absolute left-0 top-[calc(100%+8px)] z-[70] min-w-52 rounded-xl border border-[#315174] bg-[#041B3D] p-2 shadow-2xl">
-                {moreNavigation.map(item => <Link key={item.href} href={item.href} className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/90 hover:bg-[#153b70]">{item.label}</Link>)}
+                {moreNavigation.map(item => <Link prefetch={false} key={item.href} href={item.href} className="flex min-h-11 items-center rounded-lg px-3 text-sm text-white/90 hover:bg-[#153b70]">{item.label}</Link>)}
               </div>
             </details>
           </nav>
           <div className="hidden shrink-0 items-center gap-2 sm:flex">
-            <Link href="/login" className="inline-flex min-h-10 items-center justify-center rounded-lg border border-white/60 px-4 text-sm font-semibold text-white transition-colors hover:bg-white/10">Sign in</Link>
-            <Link href="/signup" className="inline-flex min-h-10 items-center justify-center rounded-lg bg-[#0866FF] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0052D6]">Sign up</Link>
+            <Link prefetch={false} href="/login" className="inline-flex min-h-10 items-center justify-center rounded-lg border border-white/60 px-4 text-sm font-semibold text-white transition-colors hover:bg-white/10">Sign in</Link>
+            <Link prefetch={false} href="/signup" className="inline-flex min-h-10 items-center justify-center rounded-lg bg-[#0866FF] px-5 text-sm font-semibold text-white transition-colors hover:bg-[#0052D6]">Sign up</Link>
           </div>
           <button ref={openButton} type="button" aria-expanded={mobileOpen} aria-controls="advibe-public-navigation" aria-label="Open public navigation" onClick={() => setMobileOpen(true)} className="inline-flex size-11 items-center justify-center rounded-xl border border-white/15 hover:bg-white/10 xl:hidden"><Menu className="size-6" aria-hidden="true" /></button>
         </div>
@@ -123,15 +123,15 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
           </div>
           <nav aria-label="Mobile public pages" className="flex-1 overflow-y-auto px-3 py-4">
             {publicNavigation.map(item => <div key={item.href}>
-              <Link href={item.href} onClick={() => setMobileOpen(false)} aria-current={pathname === item.href ? "page" : undefined} className={cn("flex min-h-11 items-center rounded-lg px-3 text-base font-semibold text-white/85 hover:bg-white/10", pathname === item.href && "bg-[#0866FF] text-white")}>{item.label}</Link>
+              <Link prefetch={false} href={item.href} onClick={() => setMobileOpen(false)} aria-current={pathname === item.href ? "page" : undefined} className={cn("flex min-h-11 items-center rounded-lg px-3 text-base font-semibold text-white/85 hover:bg-white/10", pathname === item.href && "bg-[#0866FF] text-white")}>{item.label}</Link>
               {"children" in item && <div className="ml-3 border-l border-white/15 pl-3">
-                {item.children.map(child => <Link key={child.href} href={child.href} onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center rounded-lg px-2 text-sm text-[#c3d0e4] hover:bg-white/10">{child.label}</Link>)}
+                {item.children.map(child => <Link prefetch={false} key={child.href} href={child.href} onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center rounded-lg px-2 text-sm text-[#c3d0e4] hover:bg-white/10">{child.label}</Link>)}
               </div>}
             </div>)}
           </nav>
           <div className="grid shrink-0 grid-cols-2 gap-3 border-t border-white/10 p-4">
-            <Link href="/login" onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center justify-center rounded-lg border border-white/30 text-sm font-semibold">Sign in</Link>
-            <Link href="/signup" onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center justify-center rounded-lg bg-[#0866FF] text-sm font-semibold text-white">Sign up</Link>
+            <Link prefetch={false} href="/login" onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center justify-center rounded-lg border border-white/30 text-sm font-semibold">Sign in</Link>
+            <Link prefetch={false} href="/signup" onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center justify-center rounded-lg bg-[#0866FF] text-sm font-semibold text-white">Sign up</Link>
           </div>
         </div>
       </div>}
@@ -140,5 +140,5 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
 }
 
 function FooterLinks({ title, links }: { title: string; links: ReadonlyArray<{ label: string; href: string }> }) {
-  return <div><h2 className="mb-5 font-heading text-base font-bold text-white">{title}</h2><ul className="space-y-3">{links.map(link => <li key={link.href}><Link href={link.href} className="inline-flex min-h-6 items-center text-sm text-[#c3d0e4] transition-colors hover:text-white hover:underline">{link.label}</Link></li>)}</ul></div>;
+  return <div><h2 className="mb-5 font-heading text-base font-bold text-white">{title}</h2><ul className="space-y-3">{links.map(link => <li key={link.href}><Link prefetch={false} href={link.href} className="inline-flex min-h-6 items-center text-sm text-[#c3d0e4] transition-colors hover:text-white hover:underline">{link.label}</Link></li>)}</ul></div>;
 }

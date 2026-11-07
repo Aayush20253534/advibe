@@ -29,6 +29,7 @@ export function BrandLogo({
   );
   return href ? (
     <Link
+      prefetch={false}
       href={href}
       className="inline-flex shrink-0 items-center rounded focus-visible:outline-offset-4"
     >

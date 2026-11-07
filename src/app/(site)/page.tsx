@@ -47,7 +47,7 @@ const approval = [
 ];
 
 function BlueButton({ href, children, outlined = false }: { href: string; children: React.ReactNode; outlined?: boolean }) {
-  return <Link href={href} className={outlined ? "av-button-outline" : "av-button-blue"}>{children}<ArrowUpRight className="size-4 shrink-0" aria-hidden="true" /></Link>;
+  return <Link prefetch={false} href={href} className={outlined ? "av-button-outline" : "av-button-blue"}>{children}<ArrowUpRight className="size-4 shrink-0" aria-hidden="true" /></Link>;
 }
 
 function SectionHeading({ eyebrow, title, description, invert = false }: { eyebrow: string; title: React.ReactNode; description?: string; invert?: boolean }) {
@@ -131,7 +131,7 @@ export default function HomePage() {
                   <h3 className="mt-3 max-w-[440px] font-heading text-3xl font-extrabold leading-tight text-[#041B3D]">{item.title}</h3>
                   <p className="mt-3 max-w-[400px] text-sm leading-6 text-[#4a5b78]">{item.description}</p>
                   <ul className="mt-5 space-y-2">{item.points.map(point => <li key={point} className="flex items-start gap-2 text-sm text-[#041B3D]"><Check className="mt-0.5 size-4 shrink-0 text-[#FF6A00]" aria-hidden="true" />{point}</li>)}</ul>
-                  <Link href={item.href} className="av-button-blue mt-7">{item.label}<ArrowUpRight className="size-4" aria-hidden="true" /></Link>
+                  <Link prefetch={false} href={item.href} className="av-button-blue mt-7">{item.label}<ArrowUpRight className="size-4" aria-hidden="true" /></Link>
                 </div>
               </article>
             </ScrollReveal>)}
@@ -144,7 +144,7 @@ export default function HomePage() {
           <ScrollReveal><div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end"><SectionHeading eyebrow="AD FORMATS" invert title={<>Choose the screen.<br />Shape the campaign.</>} description="Explore advertising placements designed for everyday vehicles. Availability depends on verified hardware and approved inventory." /><BlueButton href="/ad-formats" outlined>Compare all formats</BlueButton></div></ScrollReveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {formats.map((format, i) => <ScrollReveal delay={i * .09} key={format.anchor}>
-              <Link href={`/ad-formats#${format.anchor}`} className="group block h-full overflow-hidden rounded-2xl border border-[#315174] bg-[#09284C] transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[#408fff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff8a37]">
+              <Link prefetch={false} href={`/ad-formats#${format.anchor}`} className="group block h-full overflow-hidden rounded-2xl border border-[#315174] bg-[#09284C] transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[#408fff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff8a37]">
                 <div className="relative aspect-[1.15] overflow-hidden bg-[#183f69]"><Image src={format.image} alt={format.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px" className="object-cover transition-transform duration-700 group-hover:scale-105" /></div>
                 <div className="p-5"><div className="flex items-start justify-between gap-2"><h3 className="font-heading text-lg font-bold text-white">{format.name}</h3><ArrowUpRight className="mt-1 size-4 shrink-0 text-[#ff8a37] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" /></div><p className="mt-3 text-sm leading-6 text-[#c3d0e4]">{format.description}</p></div>
               </Link>
@@ -166,7 +166,7 @@ export default function HomePage() {
 
       <section id="review" aria-labelledby="review-title" className="bg-white py-28 lg:py-34">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-          <ScrollReveal><div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><SectionHeading eyebrow="BUILT WITH ACCOUNTABILITY" title="Reviewed before it runs." description="A campaign draft is not a confirmed booking. Creatives, inventory and schedules must pass review before activation." /><Link href="/for-advertisers" className="inline-flex min-h-11 items-center gap-2 self-start font-semibold text-[#0866FF] hover:underline">How campaigns work <ArrowRight className="size-4" aria-hidden="true" /></Link></div></ScrollReveal>
+          <ScrollReveal><div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><SectionHeading eyebrow="BUILT WITH ACCOUNTABILITY" title="Reviewed before it runs." description="A campaign draft is not a confirmed booking. Creatives, inventory and schedules must pass review before activation." /><Link prefetch={false} href="/for-advertisers" className="inline-flex min-h-11 items-center gap-2 self-start font-semibold text-[#0866FF] hover:underline">How campaigns work <ArrowRight className="size-4" aria-hidden="true" /></Link></div></ScrollReveal>
           <div className="mt-14 grid gap-5 md:grid-cols-3">
             {approval.map(({ icon: Icon, title, body }, i) => <ScrollReveal delay={i * .13} key={title}><article className="relative h-full rounded-[22px] border border-[#dce4f0] bg-[#f5f8fc] p-8 sm:p-10"><div className="mb-8 flex size-16 items-center justify-center rounded-2xl border border-[#cae0ff] bg-[#e8f0fe] text-[#0866FF]"><Icon className="size-8" aria-hidden="true" /></div><span className="text-sm font-bold tracking-widest text-[#0866FF]">0{i + 1}</span><h3 className="mt-3 font-heading text-2xl font-bold text-[#041B3D]">{title}</h3><p className="mt-4 text-base leading-7 text-[#4a5b78]">{body}</p><CheckCheck className="absolute right-8 top-9 size-6 text-[#FF6A00]" aria-hidden="true" /></article></ScrollReveal>)}
           </div>
