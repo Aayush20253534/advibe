@@ -144,6 +144,12 @@ test("B9 city/zone/location catalog, GiST radius/bbox, privacy and screen mappin
     assert.equal(formats.length,6);
     assert.match(formats[0]!.description,/not bookable/i);
     assert.equal((await get("/public/formats?cursor=broken")).status,422);
+    const formatPage=await read<{data:Array<{placement:string}>;meta:{nextCursor:string}}>(await get("/public/formats?limit=1"));
+    const formatNext=await get("/public/formats?limit=1&cursor="+formatPage.meta.nextCursor);
+    assert.equal(formatNext.status,200);
+    const nextFormat=await read<{data:Array<{placement:string}>}>(formatNext);
+    assert.equal(nextFormat.data[0]!.placement,formats[1]!.placement);
+    assert.notEqual(nextFormat.data[0]!.placement,formatPage.data[0]!.placement);
     const vehicle=await db.vehicle.create({data:{driverUserId:driver.id,type:"AUTO",
       model:"B9 Auto",year:2025}});
     const screen=await db.screen.create({data:{vehicleId:vehicle.id,placement:"AUTO_REAR",

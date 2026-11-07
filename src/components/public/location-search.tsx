@@ -3,9 +3,11 @@
 import * as React from "react";
 import Link from "next/link";
 import { ArrowUpRight, MapPin, RefreshCw, Search } from "lucide-react";
-import { Input } from "@/components/ui";
+import { CursorPagination, Input } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { outlineButton } from "./marketing-blocks";
+import { apiPage } from "@/services/api-client";
+import { PublishedAreaMap } from "./published-area-map";
 
 type PublishedLocation = {
   id: string;
@@ -17,7 +19,7 @@ type PublishedLocation = {
   lat: number;
   lng: number;
 };
-type ResponseData = { data?: PublishedLocation[]; error?: { message?: string } };
+
 
 export function LocationSearch() {
   const [locations, setLocations] = React.useState<PublishedLocation[]>([]);
@@ -25,31 +27,32 @@ export function LocationSearch() {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
   const [reload, setReload] = React.useState(0);
+  const [cursor, setCursor] = React.useState<string | null>(null);
+  const [next, setNext] = React.useState<string | null>(null);
   React.useEffect(() => {
     const controller = new AbortController();
     const read = async () => {
       setLoading(true);
       setError("");
       try {
-        const response = await fetch("/api/backend/public/locations?citySlug=prayagraj&limit=100", {
-          signal: controller.signal, credentials: "same-origin", cache: "no-store",
-        });
-        const payload: ResponseData = await response.json();
-        if (!response.ok || !Array.isArray(payload.data)) {
-          throw new Error(payload.error?.message ?? "Published locations could not be loaded.");
-        }
+        const payload = await apiPage<PublishedLocation>(
+          "/public/locations?citySlug=prayagraj&limit=20" + (cursor ? "&cursor=" + encodeURIComponent(cursor) : ""), controller.signal,
+        );
+        if (controller.signal.aborted) return;
+        setNext(payload.meta.nextCursor ?? null);
         setLocations(payload.data.filter((item) => item.citySlug === "prayagraj"));
       } catch (reason) {
         if (controller.signal.aborted) return;
         setError(reason instanceof Error ? reason.message : "Locations could not be loaded.");
         setLocations([]);
+        setNext(null);
       } finally {
         if (!controller.signal.aborted) setLoading(false);
       }
     };
     void read();
     return () => controller.abort();
-  }, [reload]);
+  }, [reload, cursor]);
 
   const filtered = locations.filter((item) =>
     [item.name, item.zone].some((value) => value.toLowerCase().includes(query.trim().toLowerCase())),
@@ -66,7 +69,7 @@ export function LocationSearch() {
             </div>
             <span className="rounded-full bg-signal-soft px-3 py-1.5 text-xs font-semibold text-signal">Single-city launch</span>
           </div>
-          <label htmlFor="location-search" className="mt-6 block text-sm font-semibold text-ink">Search area or landmark</label>
+          <label htmlFor="location-search" className="mt-6 block text-sm font-semibold text-ink">Search areas on this page</label>
           <div className="relative mt-2">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" aria-hidden="true" />
             <Input id="location-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search published Prayagraj locations" className="pl-10" />
@@ -105,7 +108,10 @@ export function LocationSearch() {
             </div>
           )}
         </div>
+        <div className="px-5 pb-4"><CursorPagination busy={loading} hasPrevious={!!cursor} hasNext={!!next} onFirst={() => setCursor(null)} onNext={() => setCursor(next)}/></div>
       </div>
+      <div className="space-y-5">
+      {!loading && !error && <PublishedAreaMap locations={filtered} />}
       <aside className="h-fit rounded-xl border border-line bg-paper p-6">
         <h2 className="font-heading text-xl font-bold text-ink">Plan around Prayagraj</h2>
         <p className="mt-3 leading-7 text-ink-muted">Published areas help you plan a campaign. They are not a guarantee of active screens, booking slots or delivery.</p>
@@ -116,6 +122,7 @@ export function LocationSearch() {
         </div>
         <Link href="/signup?role=advertiser" className={cn(outlineButton, "mt-7 w-full")}>Create advertiser account <ArrowUpRight className="ml-2 size-4" aria-hidden="true" /></Link>
       </aside>
+      </div>
     </div>
   );
 }
