@@ -3,7 +3,7 @@
 import * as React from "react";
 import { ApiError, api, apiPage } from "@/services/api-client";
 import { useApiPortal } from "@/features/live/api-portal";
-import { StatusBadge, type StatusTone } from "@/components/ui";
+import { CursorPagination, StatusBadge, type StatusTone } from "@/components/ui";
 
 /* Shapes returned by the backend (backend/src/modules/drivers, earnings, support). */
 export type DriverProfile = {
@@ -95,22 +95,25 @@ export function errorMessage(e: unknown) {
 export function useDriverResource<T>(path: string | null, kind: "one" | "list" = "list") {
   const { expire } = useApiPortal();
   const [version, setVersion] = React.useState(0);
-  const [state, setState] = React.useState<{ key: string; data: T | null; error: string }>({
+  const [page, setPage] = React.useState<{path:string|null;cursor:string|null}>({path:null,cursor:null});
+  const cursor = page.path === path ? page.cursor : null;
+  const [state, setState] = React.useState<{ key: string; data: T | null; error: string; next:string|null }>({
     key: "",
     data: null,
-    error: "",
+    error: "", next:null,
   });
-  const key = String(path) + "|" + version;
+  const key = String(path) + "|" + String(cursor) + "|" + version;
   React.useEffect(() => {
     if (!path) return;
     const ac = new AbortController();
+    const url = path + (cursor ? (path.includes("?") ? "&" : "?") + "cursor=" + encodeURIComponent(cursor) : "");
     const load =
       kind === "list"
-        ? apiPage<unknown>(path, ac.signal).then((r) => r.data as unknown as T)
-        : api<T>(path, { signal: ac.signal });
+        ? apiPage<unknown>(url, ac.signal).then((r) => ({data:r.data as unknown as T,next:r.meta.nextCursor??null}))
+        : api<T>(path, { signal: ac.signal }).then(data=>({data,next:null}));
     load
-      .then((data) => {
-        if (!ac.signal.aborted) setState({ key, data, error: "" });
+      .then(({data,next}) => {
+        if (!ac.signal.aborted) setState({ key, data, next, error: "" });
       })
       .catch((e) => {
         if (ac.signal.aborted) return;
@@ -118,17 +121,24 @@ export function useDriverResource<T>(path: string | null, kind: "one" | "list" =
           expire("Your session has expired or was revoked.");
           return;
         }
-        setState({ key, data: null, error: errorMessage(e) });
+        setState({ key, data: null, next:null, error: errorMessage(e) });
       });
     return () => ac.abort();
-  }, [path, kind, key, expire]);
+  }, [path, kind, key, cursor, expire]);
   const ready = !!path && state.key === key;
   return {
     data: ready ? state.data : null,
     error: ready ? state.error : "",
     loading: !!path && !ready,
     reload: () => setVersion((v) => v + 1),
+    next:ready?state.next:null,hasPrevious:!!cursor,
+    first:()=>setPage({path,cursor:null}),
+    more:()=>{if(ready&&state.next)setPage({path,cursor:state.next});},
   };
+}
+
+export function DriverPager({state}:{state:{loading:boolean;next:string|null;hasPrevious:boolean;first:()=>void;more:()=>void}}){
+ return <CursorPagination busy={state.loading} hasNext={!!state.next} hasPrevious={state.hasPrevious} onFirst={state.first} onNext={state.more}/>;
 }
 
 export const rupees = (paise: number | null | undefined) =>

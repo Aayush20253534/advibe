@@ -25,6 +25,7 @@ import {
   rupees,
   shortDate,
   useDriverResource,
+  DriverPager,
   vehicleNames,
   type Application,
   type DriverProfile,
@@ -47,13 +48,13 @@ function journeyStage(app: Application | null): { index: number; note: string } 
   if (app.state === "draft")
     return { index: 0, note: `Application in progress: ${app.completedStep} of 5 steps done.` };
   if (app.state === "submitted" || app.state === "under_review")
-    return { index: 1, note: "Your application is with AdVibe for review." };
+    return { index: 1, note: "Your application is with BlinkMyAd for review." };
   if (app.state === "changes_requested")
-    return { index: 1, note: "AdVibe asked for changes to your application." };
+    return { index: 1, note: "BlinkMyAd asked for changes to your application." };
   if (app.state === "rejected") return { index: 1, note: "Your application wasn't approved." };
   return {
     index: 2,
-    note: "Approved. AdVibe will contact you to arrange the screen installation.",
+    note: "Approved. BlinkMyAd will contact you to arrange the screen installation.",
   };
 }
 
@@ -143,7 +144,7 @@ export function DriverToday() {
       <Block title="Today's assignment">
         <p className="flex items-start gap-2 text-base text-ink-muted">
           <Clock3 className="mt-1 size-4 shrink-0" aria-hidden />
-          Ad assignments will appear here once your screen is installed and AdVibe starts assigning
+          Ad assignments will appear here once your screen is installed and BlinkMyAd starts assigning
           campaigns. This part of the portal isn&apos;t available yet.
         </p>
       </Block>
@@ -269,7 +270,7 @@ export function DriverVerification() {
                 ))}
               </ul>
             ) : (
-              "Document upload isn't available in the portal yet. AdVibe will tell you how to send your licence, RC and insurance."
+              "Document upload isn't available in the portal yet. BlinkMyAd will tell you how to send your licence, RC and insurance."
             )}
           </CheckRow>
           <CheckRow done={submitted} title="Application submitted">
@@ -277,10 +278,10 @@ export function DriverVerification() {
               ? `Submitted ${shortDate(app?.submittedAt)}.`
               : "Available once the partner agreement is published."}
           </CheckRow>
-          <CheckRow done={app?.state === "approved"} title="Approved by AdVibe">
+          <CheckRow done={app?.state === "approved"} title="Approved by BlinkMyAd">
             {app?.state === "approved"
               ? "You're approved."
-              : "An AdVibe admin reviews every application."}
+              : "An BlinkMyAd admin reviews every application."}
           </CheckRow>
         </ul>
       </Block>
@@ -330,7 +331,7 @@ export function DriverVehicles() {
       setModel("");
       setYear("");
       setTouched(false);
-      setNotice("Vehicle added. AdVibe checks it as part of your application.");
+      setNotice("Vehicle added. BlinkMyAd checks it as part of your application.");
       list.reload();
     } catch (err) {
       setError(errorMessage(err));
@@ -361,6 +362,7 @@ export function DriverVehicles() {
             </li>
           ))}
         </ul>
+        <DriverPager state={list}/>
       </Block>
       <Block title="Add a vehicle">
         <form onSubmit={(e) => void add(e)} noValidate className="space-y-5">
@@ -405,7 +407,7 @@ export function DriverVehicles() {
             />
           </Field>
           <p className="text-sm text-ink-muted">
-            Don&apos;t enter your number plate here. AdVibe checks registration details separately.
+            Don&apos;t enter your number plate here. BlinkMyAd checks registration details separately.
           </p>
           {error ? <Alert tone="danger">{error}</Alert> : null}
           {notice ? <Alert tone="success">{notice}</Alert> : null}
@@ -441,13 +443,13 @@ export function DriverEarnings() {
         <Metric label="In a payout" value={rupees(d.reservedPaise)} />
       </div>
       <p className="text-sm text-ink-muted">
-        Amounts are what AdVibe has recorded for you. Available is total earned, minus paid out,
+        Amounts are what BlinkMyAd has recorded for you. Available is total earned, minus paid out,
         minus amounts already in a payout.
       </p>
       <Block title="Earning entries">
         {entries.length === 0 ? (
           <p className="text-base text-ink-muted">
-            No earnings yet. They appear here once your screen runs campaigns.
+            No earnings yet. They appear after delivery evidence is reviewed and earnings are approved.
           </p>
         ) : (
           <ul className="divide-y divide-line">
@@ -471,7 +473,7 @@ export function DriverPayouts() {
     <div className="max-w-3xl space-y-4">
       {s.error ? <Alert tone="danger">{s.error}</Alert> : null}
       <Alert tone="info">
-        Payouts are made by AdVibe after each period is checked. Bank payouts aren&apos;t switched
+        Payouts are made by BlinkMyAd after each period is checked. Bank payouts aren&apos;t switched
         on yet, so nothing here is sent automatically.
       </Alert>
       <Block title="Payout history">
@@ -493,6 +495,7 @@ export function DriverPayouts() {
             ))}
           </ul>
         )}
+        <DriverPager state={s}/>
       </Block>
     </div>
   );
@@ -535,6 +538,7 @@ export function DriverMaintenance() {
             </li>
           ))}
         </ul>
+        <DriverPager state={m}/>
       </Block>
     </div>
   );
@@ -603,6 +607,7 @@ export function DriverNotifications() {
           </li>
         ))}
       </ul>
+      <DriverPager state={n}/>
     </div>
   );
 }
@@ -774,6 +779,7 @@ export function DriverSupport() {
             </li>
           ))}
         </ul>
+        <DriverPager state={tickets}/>
       </Block>
     </div>
   );
