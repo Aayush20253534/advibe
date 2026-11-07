@@ -1,0 +1,39 @@
+// Synthetic frontend QA only. No provider calls, user accounts or commercial actions.
+import assert from "node:assert/strict";
+import { mkdirSync } from "node:fs";
+import { AxeBuilder } from "@axe-core/playwright";
+import { browserName, launchBrowser } from "./browser-engine.mjs";
+
+const base=process.env.BASE_URL??"http://127.0.0.1:3101";
+const browser=await launchBrowser();
+const out=`test-results/public/${browserName}`;
+mkdirSync(out,{recursive:true});
+try{
+  for(const width of [390,768,1440]){
+    const context=await browser.newContext({viewport:{width,height:900},reducedMotion:"reduce"});
+    await context.route("**/api/backend/**",route=>route.fulfill({status:503,contentType:"application/json",body:JSON.stringify({error:{code:"TEST_UNAVAILABLE",message:"Temporary service interruption"}})}));
+    const page=await context.newPage();
+    const errors=[];page.on("pageerror",error=>errors.push(error.message));
+    for(const path of ["/","/locations","/login"]){
+      await page.goto(base+path,{waitUntil:"networkidle"});
+      await page.evaluate(()=>document.fonts.ready);
+      assert.equal(await page.locator("h1").count(),1,`${path}: one primary heading`);
+      assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path}: no overflow at ${width}`);
+      const result=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+      assert.deepEqual(result.violations.filter(x=>["serious","critical"].includes(x.impact)).map(x=>x.id),[],`${path}: accessibility at ${width}`);
+      if(path==="/locations")await page.getByRole("heading",{name:"Coverage data is unavailable"}).waitFor();
+      await page.screenshot({path:`${out}/${path.slice(1)||"home"}-${width}.png`,fullPage:true,animations:"disabled"});
+    }
+    await page.goto(base+"/",{waitUntil:"networkidle"});
+    if(width<1280){
+      const open=page.getByRole("button",{name:"Open public navigation"});await open.click();
+      await page.getByRole("dialog",{name:"Public navigation menu"}).waitFor();
+      await page.keyboard.press("Escape");
+      await page.getByRole("dialog",{name:"Public navigation menu"}).waitFor({state:"detached"});
+      await page.waitForFunction(()=>document.activeElement?.getAttribute("aria-label")==="Open public navigation");
+    }
+    assert.deepEqual(errors,[],"Uncaught browser errors");
+    await context.close();
+  }
+  console.log(`${browserName}: public responsive, failure, keyboard and axe checks passed`);
+}finally{await browser.close();}

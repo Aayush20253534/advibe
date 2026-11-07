@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
-import {chromium} from "playwright";
+import {launchBrowser} from "./browser-engine.mjs";
 const BASE=process.env.BASE_URL||"http://127.0.0.1:3101";
 const id="11111111-1111-4111-8111-111111111111";
-const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+const browser=await launchBrowser();
 try{
  const context=await browser.newContext();
  const page=await context.newPage();

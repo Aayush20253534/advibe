@@ -5,7 +5,7 @@
 //
 // Set PW_CHROMIUM_PATH to use a specific Chromium binary.
 import assert from "node:assert/strict";
-import { chromium } from "playwright";
+import {launchBrowser} from "./browser-engine.mjs";
 import { AxeBuilder } from "@axe-core/playwright";
 
 const BASE = process.env.BASE_URL || "http://127.0.0.1:3101";
@@ -42,11 +42,7 @@ const roles = {
   },
 };
 
-const browser = await chromium.launch(
-  process.env.PW_CHROMIUM_PATH
-    ? { executablePath: process.env.PW_CHROMIUM_PATH, args: ["--no-sandbox"] }
-    : { args: ["--no-sandbox"] },
-);
+const browser=await launchBrowser();
 
 /** A context whose backend answers as `sessionRole` (null = signed out). */
 async function portalContext(sessionRole, viewport = { width: 1440, height: 900 }) {

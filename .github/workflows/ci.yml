@@ -26,12 +26,10 @@ jobs:
         run: npm run lint
       - name: TypeScript
         run: npm run typecheck
-      - name: Backend-only frontend integration contracts
-        run: npm run test:integration
-      - name: Runtime client regressions and current route contract
-        run: npm run test:client && npm run contracts:check
-      - name: Backend B0 OpenAPI contract tests
-        run: npm run test:contracts
+      - name: All frontend unit, runtime and legacy contract regressions
+        run: npm run test:all
+      - name: Current backend route contract
+        run: npm run contracts:check
       - name: Production build
         run: npm run build
 
@@ -80,7 +78,11 @@ jobs:
         run: npm --prefix backend run db:migrate:deploy
 
   live-portal-smoke:
-    name: B22 authenticated API-mode cross-portal Chromium
+    name: API-mode browser checks (${{ matrix.browser }})
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.56.1-noble
@@ -92,6 +94,7 @@ jobs:
     env:
       NEXT_TELEMETRY_DISABLED: "1"
       ADVIBE_BACKEND_ORIGIN: "https://api.example.invalid"
+      PLAYWRIGHT_BROWSER: ${{ matrix.browser }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -127,11 +130,12 @@ jobs:
           BASE_URL=http://127.0.0.1:3101 npm run test:live-browser
           BASE_URL=http://127.0.0.1:3101 npm run test:auth-browser
           BASE_URL=http://127.0.0.1:3101 npm run test:portal-shell
-      - name: Save live browser failure screenshots
-        if: failure()
+          BASE_URL=http://127.0.0.1:3101 npm run test:public-browser
+      - name: Save synthetic browser screenshots
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: b22-live-browser-failures
+          name: browser-evidence-${{ matrix.browser }}
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7

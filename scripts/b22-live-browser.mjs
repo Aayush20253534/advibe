@@ -1,12 +1,12 @@
 import assert from "node:assert/strict";
-import {chromium} from "playwright";
+import {launchBrowser} from "./browser-engine.mjs";
 const BASE=process.env.BASE_URL||"http://127.0.0.1:3101";
 const uid="11111111-1111-4111-8111-111111111111";
 const campaignId="22222222-2222-4222-8222-222222222222";
 const ownerId="33333333-3333-4333-8333-333333333333";
 const creativeId="44444444-4444-4444-8444-444444444444";
 const ensure=async(page,path)=>{await page.goto(BASE+path,{waitUntil:"domcontentloaded"});};
-const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+const browser=await launchBrowser();
 let passes=0;
 try{
  for(const role of ["advertiser","driver","admin"]){
