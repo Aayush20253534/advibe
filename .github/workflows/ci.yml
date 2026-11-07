@@ -15,9 +15,9 @@ jobs:
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Install dependencies
@@ -63,9 +63,9 @@ jobs:
       DIRECT_URL: postgresql://advibe_ci:ci_only_password@localhost:5432/advibe_ci?schema=public
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Install isolated backend dependencies
@@ -94,9 +94,9 @@ jobs:
       ADVIBE_BACKEND_ORIGIN: "https://api.example.invalid"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Install dependencies
@@ -129,11 +129,12 @@ jobs:
           BASE_URL=http://127.0.0.1:3101 npm run test:portal-shell
       - name: Save live browser failure screenshots
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: b22-live-browser-failures
           path: test-results/
           if-no-files-found: ignore
+          retention-days: 7
 
   encrypted-restore-drill:
     name: B23 real encrypted PostgreSQL backup/restore drill (synthetic data)
@@ -162,7 +163,7 @@ jobs:
       PGPASSWORD: ci_only_b23_password
       PGSSLMODE: prefer
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Install age and PostgreSQL client
         run: |
           sudo apt-get update -qq
@@ -201,8 +202,8 @@ jobs:
       contents: read
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Test B23 operational controls and unapproved release defaults

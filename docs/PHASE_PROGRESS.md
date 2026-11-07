@@ -13,8 +13,8 @@ Branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3`. Date: 7 Nove
 | 6 Driver | Implemented; browser/provider verification blocked | Added cursor navigation for vehicles/payouts/maintenance/notifications/support; earnings copy requires reviewed evidence; legal/storage gates preserved; frontend checks pass |
 | 7 Administration | Implemented; browser verification blocked | Admin final-page navigation and keyboard selection repaired; 7 client/component regressions and admin contracts pass; support/admin/release DB suites, frontend lint/types/build, backend build/smoke and migration reapply pass |
 | 8 Integrations | Implemented within available credentials; provider verification blocked | Optional on-demand published-area maps + public pagination; ad-format cursor regression fixed; map tests, frontend lint/types/build and full fresh PostgreSQL backend check pass; provider matrix documents unavailable live seams |
-| 9 Security | In progress | Bounded relay streams, cookie boundaries, headers and dependency review |
-| 10 Performance/SEO/accessibility | Pending | Actual measurements and fixes |
+| 9 Security | Implemented and locally checked; independent review pending | Bounded relay/cookie regressions, baseline headers, tooling advisory remediation, SHA-pinned Actions; npm audit 0/0 findings; 152 frontend checks and complete fresh PostgreSQL backend check pass |
+| 10 Performance/SEO/accessibility | In progress | Indexing/canonical safeguards, build measurements; browser metrics remain unavailable |
 | 11 QA | Pending | Consolidated verification |
 | 12 Release preparation | Pending | Cost, deployment, recovery and final verdict |
 
