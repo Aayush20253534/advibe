@@ -23,3 +23,7 @@ External blockers are listed in `KNOWN_BLOCKERS.md`. Pending work is not complet
 ## PR verification follow-up
 
 Draft PR #10 is published. On commit `3522fb1`, GitHub Actions passed frontend verification, full backend verification and the encrypted restore drill. Browser execution found ambiguous legacy password locators in Chromium/WebKit and a Firefox container home-ownership mismatch. Exact password labels and ephemeral home ownership are corrected without changing application authentication. Every browser suite now runs even when another fails, while the aggregate job still fails; screenshots and axe details are retained for diagnosis. Browser acceptance remains pending the rerun.
+
+The second CI run (`43d1b24`) passed all 18 portal-shell scenarios in each of Chromium, Firefox and WebKit. It exposed stale MFA/recovery wording and an insufficient-contrast location badge (4.2:1 on its pale background). The tests now follow the current recovery confirmation fields and assert token scrubbing; the badge uses the darker existing blue. Timeline text no longer fades with scroll. Public capture scrolls through the page and checks loaded images before saving full-page screenshots. Complete browser acceptance still requires the next run.
+
+Screenshot review also identified overly light authentication gradients. Login/signup/recovery buttons now use blue stops with 5.74:1–6.12:1 white-text contrast and darken on hover. Full local checks are rerun for these UI changes; browser thresholds remain unchanged.

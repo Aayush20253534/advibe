@@ -70,7 +70,7 @@ try{
   await page.getByLabel("Password",{exact:true}).fill("valid-live-password");
   await page.getByRole("button",{name:"Sign in",exact:true}).click();
   if(role==="admin"){
-   await page.getByText("Enter your authenticator's 6-digit code.").waitFor();
+   await page.getByRole("heading",{level:1,name:"Verify authenticator",exact:true}).waitFor();
    await page.getByLabel("Authenticator code").fill("123456");
    await page.getByRole("button",{name:"Verify authenticator"}).click();
   }

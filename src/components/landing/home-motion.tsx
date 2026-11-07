@@ -80,11 +80,10 @@ function TimelineStep({ step, index, progress }: {
   step: (typeof steps)[number]; index: number; progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
   const reduced = useReducedMotion();
-  const opacity = useTransform(progress, [index * .23, index * .23 + .13], [0.65, 1]);
   const scale = useTransform(progress, [index * .23, index * .23 + .13], [.985, 1]);
   const Icon = step.icon;
   return (
-    <motion.li style={reduced ? undefined : { opacity, scale }} className="relative z-10 flex min-h-64 flex-col items-start rounded-2xl border border-[#27517f] bg-[#09284c]/95 p-7 shadow-[0_20px_50px_rgba(0,0,0,.14)] sm:min-h-60">
+    <motion.li style={reduced ? { scale: 1 } : { scale }} className="relative z-10 flex min-h-64 flex-col items-start rounded-2xl border border-[#27517f] bg-[#09284c]/95 p-7 shadow-[0_20px_50px_rgba(0,0,0,.14)] sm:min-h-60">
       <span className="absolute -top-4 left-7 flex size-9 items-center justify-center rounded-full bg-[#FF6A00] font-heading font-extrabold text-[#041B3D] shadow-[0_4px_20px_rgba(255,106,0,.2)]">{index + 1}</span>
       <span className="mb-6 inline-flex size-15 items-center justify-center rounded-xl border border-[#4b7298] bg-[#143e68] text-[#cbe5ff]"><Icon className="size-8" aria-hidden="true" /></span>
       <h3 className="font-heading text-xl font-bold text-white">{step.title}</h3>

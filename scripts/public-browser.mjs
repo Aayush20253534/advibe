@@ -6,6 +6,18 @@ import { saveBrowserEvidence, saveBrowserFailure } from "./browser-evidence.mjs"
 
 const base=process.env.BASE_URL??"http://127.0.0.1:3101";
 const browser=await launchBrowser();
+async function preparePublicPage(page){
+  // Exercise each viewport so native lazy images and intersection observers run.
+  const height=await page.evaluate(()=>document.documentElement.scrollHeight);
+  for(let top=0;top<height;top+=700){
+    await page.evaluate(y=>window.scrollTo(0,y),top);
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  }
+  await page.waitForFunction(()=>Array.from(document.images).filter(img=>img.getClientRects().length>0).every(img=>img.complete));
+  const broken=await page.evaluate(()=>Array.from(document.images).filter(img=>img.getClientRects().length>0&&!img.naturalWidth).map(img=>img.currentSrc));
+  assert.deepEqual(broken,[],"Rendered images load successfully");
+  await page.evaluate(()=>window.scrollTo(0,0));
+}
 try{
   for(const width of [390,768,1440]){
     const context=await browser.newContext({viewport:{width,height:900},reducedMotion:"reduce"});
@@ -15,6 +27,7 @@ try{
     for(const path of ["/","/locations","/login"]){
       await page.goto(base+path,{waitUntil:"networkidle"});
       await page.evaluate(()=>document.fonts.ready);
+      await preparePublicPage(page);
       assert.equal(await page.locator("h1").count(),1,`${path}: one primary heading`);
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path}: no overflow at ${width}`);
       const result=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();

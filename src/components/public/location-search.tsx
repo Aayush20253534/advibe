@@ -67,7 +67,7 @@ export function LocationSearch() {
               <h2 className="font-heading text-xl font-bold text-ink">Published locations</h2>
               <p className="mt-1 text-sm text-ink-muted">Prayagraj, Uttar Pradesh</p>
             </div>
-            <span className="rounded-full bg-signal-soft px-3 py-1.5 text-xs font-semibold text-signal">Single-city launch</span>
+            <span className="rounded-full bg-signal-soft px-3 py-1.5 text-xs font-semibold text-signal-hover">Single-city launch</span>
           </div>
           <label htmlFor="location-search" className="mt-6 block text-sm font-semibold text-ink">Search areas on this page</label>
           <div className="relative mt-2">

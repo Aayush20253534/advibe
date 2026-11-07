@@ -94,7 +94,7 @@ export function BmaSignupForm(){
    {error&&<p role="alert" className="rounded-lg border border-[#f4c6c6] bg-[#fff4f3] px-3 py-2 text-sm text-[#a72324]">{error}</p>}
    {canResend&&<button type="button" disabled={loading} onClick={()=>void resendVerification()} className="text-left text-xs font-semibold text-[#0759ec] hover:underline disabled:opacity-60">Resend verification email</button>}
    {notice&&<p role="status" className="rounded-lg border border-[#bce3d0] bg-[#effaf3] px-3 py-2 text-xs text-[#205c3f]">{notice}</p>}
-   <button type="submit" disabled={loading} className="mt-0.5 flex h-[43px] w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-[#115cf5] via-[#0575ff] to-[#008ff7] text-[15px] font-semibold text-white shadow-[0_8px_16px_rgba(0,83,236,.15)] transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#115cf5] disabled:cursor-not-allowed disabled:opacity-65">
+   <button type="submit" disabled={loading} className="mt-0.5 flex h-[43px] w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1559d6] via-[#075dcc] to-[#0064c8] text-[15px] font-semibold text-white shadow-[0_8px_16px_rgba(0,83,236,.15)] transition hover:brightness-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#115cf5] disabled:cursor-not-allowed disabled:opacity-65">
     {loading?"Creating account…":"Register"}
    </button>
   </form>

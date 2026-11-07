@@ -114,7 +114,7 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
    {error&&<p role="alert" className="rounded-lg border border-[#f1c2c2] bg-[#fff1f1] px-3 py-2 text-sm text-[#a32424]">{error}</p>}
    {notice&&<p role="status" className="rounded-lg border border-[#bcdccb] bg-[#f0faf3] px-3 py-3 text-sm text-[#245a3c]">{notice}</p>}
    <button type="submit" disabled={loading||(mode==="reset"&&(!token||!tokenLoaded))}
-    className="flex h-[46px] w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1559f6] via-[#056eff] to-[#079ff7] text-[15px] font-semibold text-white shadow-[0_8px_20px_rgba(18,90,235,.18)] hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1859ed] disabled:cursor-not-allowed disabled:opacity-60">
+    className="flex h-[46px] w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1559d6] via-[#075dcc] to-[#0064c8] text-[15px] font-semibold text-white shadow-[0_8px_20px_rgba(18,90,235,.18)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1859ed] disabled:cursor-not-allowed disabled:opacity-60">
     {loading?"Submitting…":mode==="forgot"?"Send reset link":"Reset password"}
    </button>
   </form>
