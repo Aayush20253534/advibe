@@ -164,7 +164,15 @@ test("B20 support RBAC, maintenance, durable notifications, lease/retry/dead let
    {body:"Should be rejected"},"b20-closed-"+tag)).status,409);
   const firstJob=await db.durableJob.findFirstOrThrow({where:{
    ticketId:stored.id,recipientUserId:driver.id,state:"PENDING"}});
-  const lease=await leaseJobs(db,50);
+  // Other suites leave durable jobs and immutable audit history in the same disposable DB.
+  // Do not assume this test's recipient appears in the first FIFO batch.
+  const fixtureIds=new Set((await db.durableJob.findMany({where:{ticketId:stored.id,state:"PENDING",attempts:0},select:{id:true}})).map(x=>x.id));
+  const claimed:Awaited<ReturnType<typeof leaseJobs>>=[];
+  for(let batch=0;batch<100;batch++){
+   const next=await leaseJobs(db,50);claimed.push(...next);
+   if([...fixtureIds].every(id=>claimed.some(x=>x.id===id))||!next.length)break;
+  }
+  const lease=claimed.filter(x=>fixtureIds.has(x.id));
   assert.ok(lease.length>0);
   const specific=lease.find(x=>x.id===firstJob.id)!;
   assert.ok(specific);

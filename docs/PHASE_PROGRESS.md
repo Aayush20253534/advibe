@@ -11,8 +11,8 @@ Branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3`. Date: 7 Nove
 | 4 Authentication | Implemented; browser/provider verification blocked | Auth/security database suites pass; server-issued idle expiry clears all three portals; sign-out errors visible; lint/types/build tracked in final QA |
 | 5 Advertiser | Implemented; browser/provider verification blocked | Campaign/creative/pricing/reservation/payment DB suites pass with synthetic adapters; final cursor page now retains First page; frontend checks pass |
 | 6 Driver | Implemented; browser/provider verification blocked | Added cursor navigation for vehicles/payouts/maintenance/notifications/support; earnings copy requires reviewed evidence; legal/storage gates preserved; frontend checks pass |
-| 7 Administration | In progress | Admin cursor and keyboard fixes; support queue regression repair |
-| 8 Integrations | Pending | Gated integration work and provider report |
+| 7 Administration | Implemented; browser verification blocked | Admin final-page navigation and keyboard selection repaired; 7 client/component regressions and admin contracts pass; support/admin/release DB suites, frontend lint/types/build, backend build/smoke and migration reapply pass |
+| 8 Integrations | In progress | Optional published-area maps, provider boundaries and cursor regression |
 | 9 Security | Pending | Threat review and regression evidence |
 | 10 Performance/SEO/accessibility | Pending | Actual measurements and fixes |
 | 11 QA | Pending | Consolidated verification |

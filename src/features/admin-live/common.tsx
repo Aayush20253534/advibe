@@ -2,7 +2,7 @@
 import * as React from "react";
 import {api,apiPage,newIdempotencyKey,ApiError} from "@/services/api-client";
 import type {LiveSession} from "@/services/api-client";
-import {Alert as UiAlert,Button,Dialog,SkeletonList,StatusBadge,buttonVariants,type StatusTone} from "@/components/ui";
+import {Alert as UiAlert,Button,CursorPagination,Dialog,SkeletonList,StatusBadge,buttonVariants,type StatusTone} from "@/components/ui";
 import {controlClass} from "@/components/ui/input";
 import {cn} from "@/lib/utils";
 export {api,newIdempotencyKey};
@@ -63,7 +63,8 @@ export function Table<T>({caption,rows,cols,rowKey,activeKey,onRowFocus}:{captio
   <table className="w-full border-collapse text-left text-sm">
    <caption className="sr-only">{caption}</caption>
    <thead className="bg-paper text-ink-muted"><tr>{cols.map(c=><th key={c.key} scope="col" className={cn("border-b border-line px-3 py-2 font-semibold whitespace-nowrap",c.numeric&&"text-right",c.className)}>{c.header}</th>)}</tr></thead>
-   <tbody>{rows.map(r=>{const k=rowKey(r);const active=activeKey===k;return <tr key={k} aria-selected={activeKey!==undefined?active:undefined} onClick={onRowFocus?()=>onRowFocus(r):undefined}
+   <tbody>{rows.map(r=>{const k=rowKey(r);const active=activeKey===k;return <tr key={k} aria-selected={activeKey!==undefined?active:undefined} onClick={onRowFocus?()=>onRowFocus(r):undefined} tabIndex={onRowFocus?0:undefined}
+    onKeyDown={onRowFocus?e=>{if(e.target===e.currentTarget&&(e.key==="Enter"||e.key===" ")){e.preventDefault();onRowFocus(r);}}:undefined}
     className={cn("border-b border-line last:border-0",active&&"bg-signal-soft",onRowFocus&&"cursor-pointer hover:bg-paper")}>
     {cols.map(c=><td key={c.key} data-numeric={c.numeric?"":undefined} className={cn("px-3 py-2 align-middle text-ink",c.numeric&&"text-right whitespace-nowrap",c.className)}>{c.cell(r)}</td>)}
    </tr>;})}</tbody>
@@ -97,17 +98,13 @@ export function useRows<T>(path:string|null){
   return ()=>controller.abort();
  },[path,cursor,version,key]);
  const ready=!!path&&state.key===key;
- return {rows:ready?state.rows:[] as T[],next:ready?state.next:null,
+ return {rows:ready?state.rows:[] as T[],next:ready?state.next:null,hasPrevious:!!cursor,
   loading:!!path&&!ready,error:ready?state.error:"",
   refresh:()=>setVersion(x=>x+1),first:()=>setOffset({path,cursor:null}),
   more:()=>{if(ready&&state.next)setOffset({path,cursor:state.next});}};
 }
-export function Pager({state}:{state:{next:string|null;loading:boolean;first:()=>void;more:()=>void}}){
- if(!state.next&&!state.loading)return null;
- return <div className="flex gap-2">
-  <button type="button" className={secondary} disabled={state.loading} onClick={state.first}>First page</button>
-  {state.next&&<button type="button" className={secondary} disabled={state.loading} onClick={state.more}>Next page</button>}
- </div>;
+export function Pager({state}:{state:{next:string|null;loading:boolean;hasPrevious:boolean;first:()=>void;more:()=>void}}){
+ return <CursorPagination busy={state.loading} hasNext={!!state.next} hasPrevious={state.hasPrevious} onFirst={state.first} onNext={state.more}/>;
 }
 export function FetchState({state,empty="No matching records."}:{state:{loading:boolean;error:string;rows:unknown[]};empty?:string}){
  return <>{state.loading&&<SkeletonList rows={2} label="Loading"/>}

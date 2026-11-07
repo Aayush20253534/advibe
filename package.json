@@ -23,7 +23,7 @@
     "test:admin-live": "node --test tests/b4-admin-live-contract.test.mjs",
     "test:visual": "node scripts/visual-design-system.mjs",
     "test:portal-shell": "node scripts/portal-shell-browser.mjs",
-    "test:client": "node --experimental-transform-types --test tests/api-client.runtime.test.mjs",
+    "test:client": "TSX_TSCONFIG_PATH=tests/tsconfig.runtime.json node --import tsx --test tests/api-client.runtime.test.mjs tests/cursor-pagination.runtime.test.tsx",
     "contracts:update": "node scripts/api-route-contract.mjs",
     "contracts:check": "node scripts/api-route-contract.mjs --check"
   },
@@ -58,6 +58,7 @@
     "postcss": "^8.5.0",
     "prettier": "^3.9.10",
     "tailwindcss": "^4.0.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3"
   },
   "overrides": {
