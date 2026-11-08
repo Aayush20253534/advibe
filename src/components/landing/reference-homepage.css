@@ -156,8 +156,6 @@
   /* Reserve exactly one media slot on phones: copy first, video second. */
   .bma-ref-hero .bma-ref-hero-art { position: absolute !important; inset: auto 0 0 !important; width: 100% !important; height: auto !important; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; z-index: 0; }
   .bma-ref-hero-video { position: relative; inset: auto; order: 0; z-index: 1; display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; }
-  /* With video hidden for reduced motion, the still image must provide the media height. */
-  @media (prefers-reduced-motion: reduce) { .bma-ref-hero .bma-ref-hero-art { position: relative !important; inset: auto !important; } }
   .bma-ref-hero-caption { z-index: 2; bottom: 8px; right: 12px; font-size: 10px; }
   .bma-ref-proof { grid-template-columns: 1fr 1fr; min-height: 0; padding-block: 9px; gap: 0; font-size: 11px; }.bma-ref-proof>* { padding: 7px 0; }.bma-ref-proof strong { font-size: 12px; }.bma-ref-proof>span:nth-child(3) { text-align: left; border-left: 0; }
   .bma-ref-formats { padding-block: 28px 18px; }.bma-ref-section-heading { display: block; margin-bottom: 20px; }.bma-ref-eyebrow { font-size: 11px; }.bma-ref-section-heading h2 { margin-top: 9px; font-size: clamp(28px, 7vw, 40px); line-height: 1.08; }.bma-ref-section-heading>p { max-width: none; margin-top: 12px; padding: 0; font-size: 14px; }
@@ -169,6 +167,8 @@
   .bma-ref-closing-inner { display: block; padding-block: 28px; }.bma-ref-closing h2 { width: 100%; font-size: clamp(28px, 7.3vw, 44px); line-height: 1; }.bma-ref-closing-action { border: 0; padding: 0; margin-top: 20px; }.bma-ref-closing-action p { font-size: 13px; margin-bottom: 10px; }.bma-ref-closing-glyph { top: 30%; right: -10px; width: 37%; height: 85%; opacity: .5; }
   .bma-ref-footer { padding-top: 28px; }.bma-ref-footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 24px 15px; padding-bottom: 20px; }.bma-ref-footer-brand { grid-column: 1 / -1; padding: 0 0 22px; border-right: 0; border-bottom: 1px solid #515968; }.bma-ref-footer-brand>a { width: 200px; }.bma-ref-footer-brand p { font-size: 13px; margin-top: 10px; }.bma-ref-footer-column h2 { font-size: 12px; margin-bottom: 7px; }.bma-ref-footer-column a { font-size: 12px; min-height: 32px; }.bma-ref-footer-bottom { display: block; font-size: 11px; padding-top: 14px; padding-bottom: 10px; }.bma-ref-footer-bottom>div { margin-top: 3px; gap: 20px; }.bma-ref-footer-bottom a+a { border: 0; padding-left: 0; }
 }
+/* When autoplay is disabled on phones, let the static artwork occupy the media slot. */
+@media (max-width: 700px) and (prefers-reduced-motion: reduce) { .bma-ref-hero .bma-ref-hero-art { position: relative !important; inset: auto !important; } }
 @media (prefers-reduced-motion: reduce) { .bma-reference-home *, [data-homepage="true"] .bma-ref-button { animation: none !important; transition: none !important; }.bma-ref-format-photo:hover img,.bma-ref-button:hover { transform: none; } }
 @media (forced-colors: active) { .bma-ref-button,.bma-ref-dashboard,.bma-ref-creative-art { border: 1px solid CanvasText; }.bma-ref-route path { stroke: Highlight; } }
 
