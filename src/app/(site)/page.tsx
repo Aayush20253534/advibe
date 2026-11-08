@@ -21,11 +21,11 @@ export default function HomePage() {
           <div className="bma-hero-footnote"><MapPin size={14} aria-hidden="true" /> Prayagraj pilot <span aria-hidden="true">/</span> Free to start a draft</div>
         </div>
         <div className="bma-hero-visual">
-          <div className="bma-hero-image"><Image src="/images/blinkmyad/fleet.webp" alt="Custom 3D concept of BlinkMyAd advertising screens on an auto rickshaw and scooter" fill priority sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover" /></div>
+          <div className="bma-hero-image"><Image src="/images/blinkmyad/fleet.webp" alt="Custom 3D concept of BlinkMyAd advertising screens on an auto rickshaw and scooter" fill priority fetchPriority="high" sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover" /></div>
           <div className="bma-hero-caption"><span>More than a fixed point.<br /><strong>A moving canvas.</strong></span><span>Vehicle & screen concepts<br />Illustrative artwork</span></div>
         </div>
       </div>
-      <div className="bma-container bma-hero-bottom"><span>Your city. Your audience. Your next move.</span><a href="#formats" aria-label="Explore advertising formats below"><ArrowDown size={17} aria-hidden="true" /> Discover BlinkMyAd</a></div>
+      <div className="bma-container bma-hero-bottom"><span>Your city. Your audience. Your next move.</span><a href="#formats"><ArrowDown size={17} aria-hidden="true" /> Discover BlinkMyAd</a></div>
     </section>
 
     <section className="bma-proof-strip" aria-label="The BlinkMyAd approach"><div className="bma-container">

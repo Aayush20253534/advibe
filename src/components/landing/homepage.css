@@ -76,7 +76,7 @@
 .bma-page-hero-inner{display:grid;grid-template-columns:1fr .74fr;align-items:center;gap:70px;padding-block:64px}.bma-page-hero-inner:has(>div:only-child){display:block}
 .bma-page-hero h1{font-size:clamp(38px,4.5vw,64px);line-height:1.08;font-weight:750;letter-spacing:-.055em;max-width:800px;margin-top:20px}.bma-page-hero p{font-size:16px;line-height:1.8;color:var(--ink-muted);max-width:630px;margin-top:24px}.bma-page-hero .bma-hero-note{font-size:12px;line-height:1.7;margin-top:20px}
 .bma-page-hero-art{aspect-ratio:1.15;position:relative;overflow:hidden;background:var(--paper)}
-.bma-reveal{opacity:1;transform:none}.bma-reveal[data-reveal=waiting]{opacity:.01;transform:translateY(22px)}.bma-reveal[data-reveal=visible]{opacity:1;transform:none;transition:opacity .65s ease,transform .65s cubic-bezier(.2,.8,.2,1)}.bma-reveal:focus-within{opacity:1!important;transform:none!important}
+.bma-reveal{opacity:1;transform:none}.bma-reveal[data-reveal=waiting]{opacity:0;transform:translateY(22px)}.bma-reveal[data-reveal=visible]{opacity:1;transform:none;transition:opacity .65s ease,transform .65s cubic-bezier(.2,.8,.2,1)}.bma-reveal:focus-within{opacity:1!important;transform:none!important}
 @keyframes bma-image-enter{from{clip-path:inset(0 0 0 100%);transform:scale(1.04)}to{clip-path:inset(0);transform:scale(1)}}
 @keyframes bma-format-enter{from{opacity:.4;transform:translateX(9px)}to{opacity:1;transform:none}}
 @media(min-width:1600px){.bma-hero-visual{min-height:580px}}
