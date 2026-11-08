@@ -1,60 +1,48 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { publicMetadata } from "@/config/public-metadata";
-import { CampaignJourney, FormatExplorer, Reveal } from "@/components/landing/brand-experience";
-import { FAQList } from "@/components/public/faq-list";
-import { publicFAQs } from "@/components/public/faq-data";
-import { primaryButton, outlineButton } from "@/components/public/marketing-blocks";
+import { CampaignPreview, BrandGlyph } from "@/components/landing/campaign-preview";
 
-export const metadata = publicMetadata("/", "Advertising that moves with the city", "Put your brand on everyday journeys. Explore BlinkMyAd vehicle-screen advertising and plan your next campaign, starting in Prayagraj.");
+export const metadata = publicMetadata("/", "Outdoor advertising. In motion.", "Put your brand on the journeys that matter. Explore BlinkMyAd vehicle advertising and create your next campaign, starting in Prayagraj.");
+
+const formats = [
+  { name: "Auto advertising", image: "02-auto-advertising", description: "High-visibility branding on electric rickshaws.", alt: "White electric rickshaw with a blue BlinkMyAd advertising display", href: "/ad-formats#auto_rear" },
+  { name: "In-car screens", image: "03-in-car-screen", description: "Bring your message inside the ride.", alt: "BlinkMyAd advertising screen mounted behind a black leather car headrest", href: "/ad-formats#car_interior" },
+  { name: "Rear-window displays", image: "04-rear-window-display", description: "A bold, unmissable canvas on the move.", alt: "White sedan with a cobalt BlinkMyAd rear-window display", href: "/ad-formats#car_rear" },
+] as const;
 
 export default function HomePage() {
-  return <>
-    <section className="bma-home-hero" aria-labelledby="hero-title">
-      <div className="bma-container bma-hero-grid">
-        <div className="bma-hero-copy">
-          <span className="bma-eyebrow"><span className="bma-small-square" /> Outdoor advertising. In motion.</span>
-          <h1 id="hero-title">Great brands.<br />Seen on<br /><span>the move.</span></h1>
-          <p>Turn everyday journeys into a place for your brand. Vehicle-screen advertising, starting in Prayagraj.</p>
-          <div className="bma-hero-actions"><Link href="/signup?role=advertiser" className={primaryButton}>Create a campaign <ArrowUpRight size={17} aria-hidden="true" /></Link><Link href="/ad-formats" className="bma-inline-link">Explore the formats <ArrowRight size={16} aria-hidden="true" /></Link></div>
-          <div className="bma-hero-footnote"><MapPin size={14} aria-hidden="true" /> Prayagraj pilot <span aria-hidden="true">/</span> Free to start a draft</div>
-        </div>
-        <div className="bma-hero-visual">
-          <div className="bma-hero-image"><Image src="/images/blinkmyad/fleet.webp" alt="Custom 3D concept of BlinkMyAd advertising screens on an auto rickshaw and scooter" fill priority fetchPriority="high" sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover" /></div>
-          <div className="bma-hero-caption"><span>More than a fixed point.<br /><strong>A moving canvas.</strong></span><span>Vehicle & screen concepts<br />Illustrative artwork</span></div>
-        </div>
-      </div>
-      <div className="bma-container bma-hero-bottom"><span>Your city. Your audience. Your next move.</span><a href="#formats"><ArrowDown size={17} aria-hidden="true" /> Discover BlinkMyAd</a></div>
+  return <div className="bma-reference-home">
+    <section className="bma-ref-hero" aria-labelledby="hero-title">
+      <Image className="bma-ref-hero-art" src="/images/blinkmyad/homepage/01-hero-fleet.webp" alt="Illustrative concept of BlinkMyAd advertising on a white electric rickshaw and sedan" fill priority fetchPriority="high" sizes="100vw" unoptimized />
+      <div className="bma-ref-wrap bma-ref-hero-inner"><div className="bma-ref-hero-copy">
+        <p className="bma-ref-eyebrow bma-ref-hero-eyebrow"><span aria-hidden="true" />Outdoor advertising. In motion.</p>
+        <h1 id="hero-title"><span>Turn heads.</span><span>Own the</span><span>streets.</span></h1>
+        <p className="bma-ref-intro">Put your brand on the journeys that matter.<br className="bma-ref-desktop-break" /> Vehicle advertising, built around your campaign.</p>
+        <div className="bma-ref-hero-actions"><Link className="bma-ref-button" href="/signup?role=advertiser">Create a campaign <ArrowUpRight aria-hidden="true" /></Link><a className="bma-ref-text-link" href="#formats">Explore ad formats <ArrowDown aria-hidden="true" /></a></div>
+      </div></div>
+      <p className="bma-ref-hero-caption">Built for real-world attention.</p>
     </section>
 
-    <section className="bma-proof-strip" aria-label="The BlinkMyAd approach"><div className="bma-container">
-      {[["01", "Built for everyday routes", "Reach people as the city moves."], ["02", "Planned around your business", "Choose formats, dates and daily hours."], ["03", "Reviewed before launch", "Creative and availability checked first."]].map(([number, title, text]) => <div key={number}><span>{number}</span><div><h2>{title}</h2><p>{text}</p></div></div>)}
+    <div className="bma-ref-wrap bma-ref-proof" aria-label="The BlinkMyAd approach"><strong>Prayagraj pilot</strong><span>Street-level visibility</span><span>Flexible formats</span><span>Campaign control</span></div>
+
+    <section id="formats" className="bma-ref-formats bma-ref-wrap" aria-labelledby="formats-title">
+      <div className="bma-ref-section-heading"><div><p className="bma-ref-eyebrow">01 / The formats</p><h2 id="formats-title">Different journeys.<br />One powerful presence.</h2></div><p>Find the right canvas for your brand.</p></div>
+      <div className="bma-ref-format-grid">{formats.map((format, index) => <article className="bma-ref-format" key={format.image}>
+        <Link href={format.href} className="bma-ref-format-photo" aria-label={`Explore ${format.name}`}><Image src={`/images/blinkmyad/homepage/${format.image}.webp`} alt={format.alt} fill sizes="(min-width: 1600px) 480px, (min-width: 701px) 31vw, 100vw" /></Link>
+        <div className="bma-ref-format-info"><div><h3><span>0{index + 1}</span>{format.name}</h3><p>{format.description}</p></div><Link href={format.href} className="bma-ref-round-link" aria-label={`View ${format.name}`}><ArrowUpRight aria-hidden="true" /></Link></div>
+      </article>)}</div>
+      <Link className="bma-ref-text-link bma-ref-all-formats" href="/ad-formats">Explore all ad formats <ArrowUpRight aria-hidden="true" /></Link>
+    </section>
+
+    <section id="how-it-works" className="bma-ref-process" aria-labelledby="journey-title"><div className="bma-ref-wrap">
+      <div className="bma-ref-process-top"><div className="bma-ref-process-copy"><p className="bma-ref-eyebrow">02 / From plan to placement</p><h2 id="journey-title">Your next campaign.<br />A clear way forward.</h2><svg className="bma-ref-route" viewBox="0 0 600 66" fill="none" aria-hidden="true"><path className="bma-ref-route-base" d="M10 50H330C350 50 350 26 373 26H600" /><path className="bma-ref-route-draw" d="M10 50H330C350 50 350 26 373 26H600" pathLength="1" /><circle cx="10" cy="50" r="7" /></svg></div><CampaignPreview /></div>
+      <ol className="bma-ref-steps" aria-label="How your campaign works"><li><span>01</span><div><h3>Plan your campaign</h3><p>Choose your city, format and dates.</p></div></li><li><span>02</span><div><h3>Add your creative</h3><p>Give your message a moving canvas.</p></div></li><li><span>03</span><div><h3>Review and launch</h3><p>Confirm your campaign details.</p></div></li></ol>
     </div></section>
 
-    <section id="formats" className="bma-section" aria-labelledby="formats-title"><div className="bma-container">
-      <Reveal><div className="bma-section-heading"><div><span className="bma-eyebrow">The formats</span><h2 id="formats-title">Different journeys.<br />One clear message.</h2></div><p>From the street to the passenger seat, find a canvas that fits your campaign.</p></div></Reveal>
-      <Reveal><FormatExplorer /></Reveal>
-    </div></section>
+    <section className="bma-ref-city" aria-labelledby="city-title"><div className="bma-ref-wrap bma-ref-city-inner"><div className="bma-ref-city-copy"><p className="bma-ref-eyebrow">03 / Our first city</p><h2 id="city-title">Big ambition.<br />Starting in Prayagraj.</h2><p>A focused city pilot. Built around the places people move, meet and discover.</p><Link href="/locations" className="bma-ref-button bma-ref-button-outline">Explore Prayagraj <ArrowUpRight aria-hidden="true" /></Link></div><figure className="bma-ref-city-figure"><Image src="/images/blinkmyad/homepage/05-prayagraj-city.webp" alt="Illustrative white Prayagraj riverfront diorama with electric rickshaws following a blue route beside the ghats and bridge" width={1942} height={809} sizes="(min-width: 701px) 69vw, 100vw" /><figcaption>Illustrative city view</figcaption></figure></div></section>
 
-    <section className="bma-section bma-dark" aria-labelledby="journey-title"><div className="bma-container">
-      <Reveal><div className="bma-section-heading"><div><span className="bma-eyebrow">From idea to the street</span><h2 id="journey-title">A campaign.<br />A clear path to launch.</h2></div><p>Your creative, schedule and campaign updates in one advertiser workspace.</p></div></Reveal>
-      <Reveal><CampaignJourney /></Reveal>
-      <div className="bma-dark-footer"><p>Build a draft at your own pace. Nothing is booked or charged when you save it.</p><Link href="/for-advertisers" className="bma-inline-link">For advertisers <ArrowRight size={17} aria-hidden="true" /></Link></div>
-    </div></section>
-
-    <section className="bma-section" aria-labelledby="city-title"><div className="bma-container bma-city-grid">
-      <Reveal><span className="bma-eyebrow">Our first chapter</span><h2 id="city-title" className="bma-display">One city.<br />So much to say.</h2><p className="bma-body">We’re starting in Prayagraj. A city of neighbourhood businesses, busy commutes and stories waiting to be seen.</p><p className="bma-body">Explore published locations and plan around the people you want to reach. Screen availability is confirmed for each campaign.</p><Link href="/locations" className={outlineButton}>Explore Prayagraj <ArrowUpRight size={17} aria-hidden="true" /></Link></Reveal>
-      <Reveal><div className="bma-city-art" aria-label="Abstract route illustration for the Prayagraj pilot; not a live coverage map"><span className="bma-city-index">01 / FIRST CITY</span><div className="bma-city-route" aria-hidden="true"><i /><i /><i /></div><div className="bma-city-name"><MapPin size={28} aria-hidden="true" /><strong>Prayagraj</strong><span>Uttar Pradesh, India</span></div><span className="bma-city-note">Route illustration · Pilot launch</span></div></Reveal>
-    </div></section>
-
-    <section className="bma-partner-section" aria-labelledby="partner-title"><div className="bma-container bma-partner-grid">
-      <div className="bma-partner-art"><Image src="/images/blinkmyad/auto.webp" alt="Illustrative concept of an advertising screen mounted on an auto rickshaw" fill sizes="(min-width: 900px) 50vw, 100vw" className="object-cover" /><span className="bma-art-label">Illustrative concept</span></div>
-      <Reveal className="bma-partner-copy"><span className="bma-eyebrow">For driver partners</span><h2 id="partner-title" className="bma-display">Your regular routes.<br />A new opportunity.</h2><p className="bma-body">Apply to carry approved advertising on your vehicle. Follow your application, assignments and recorded earnings in your partner workspace.</p><Link href="/signup?role=driver" className={primaryButton}>Become a partner <ArrowUpRight size={17} aria-hidden="true" /></Link><p className="bma-small-note">Subject to verification, installation approval and the partner agreement.</p></Reveal>
-    </div></section>
-
-    <section className="bma-section" aria-labelledby="questions-title"><div className="bma-container bma-faq-grid"><div><span className="bma-eyebrow">Good to know</span><h2 id="questions-title" className="bma-display">Before your<br />first move.</h2><Link href="/help-center" className="bma-inline-link">Visit the help centre <ArrowRight size={16} aria-hidden="true" /></Link></div><FAQList items={publicFAQs.filter(f => f.category === "Advertisers").slice(0, 4)} /></div></section>
-
-    <section className="bma-closing" aria-labelledby="closing-title"><div className="bma-container"><div><span className="bma-eyebrow">Make your next move visible.</span><h2 id="closing-title">The city is moving.<br />Bring your brand along.</h2></div><Link href="/signup?role=advertiser" className="bma-white-button">Create a campaign <ArrowUpRight size={20} aria-hidden="true" /></Link></div></section>
-  </>;
+    <section className="bma-ref-closing" aria-labelledby="closing-title"><div className="bma-ref-wrap bma-ref-closing-inner"><h2 id="closing-title">Let’s get<br />your brand moving.</h2><div className="bma-ref-closing-action"><p>Your next move starts here.</p><Link href="/signup?role=advertiser" className="bma-ref-button bma-ref-button-white">Create a campaign <ArrowUpRight aria-hidden="true" /></Link></div><BrandGlyph className="bma-ref-closing-glyph" /></div></section>
+  </div>;
 }

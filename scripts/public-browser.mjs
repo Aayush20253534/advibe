@@ -37,12 +37,13 @@ try{
       if(path==="/locations")await page.getByRole("heading",{name:"Coverage data is unavailable"}).waitFor();
     }
     await page.goto(base+"/",{waitUntil:"networkidle"});
-    await page.getByRole("button",{name:"Bike & scooter",exact:false}).click();
-    assert.equal(await page.getByRole("button",{name:"Bike & scooter",exact:false}).getAttribute("aria-pressed"),"true");
-    assert.match(await page.locator("#format-stage img").getAttribute("alt"),/scooter/);
-    await page.getByRole("button",{name:"Ready for review",exact:false}).click();
-    assert.match(await page.locator("#campaign-explanation").innerText(),/Submitted for review/);
-    if(width<1280){
+    assert.equal(await page.locator(".bma-ref-format-grid article").count(),3);
+    await page.getByRole("combobox",{name:"Preview ad format"}).selectOption("In-car screens");
+    assert.equal(await page.getByRole("combobox",{name:"Preview ad format"}).inputValue(),"In-car screens");
+    await page.getByRole("button",{name:"Change sample creative"}).click();
+    assert.match(await page.getByRole("status").innerText(),/In-car screens\. Sample creative 2 of 3/);
+    assert.equal(await page.getByRole("link",{name:"Review campaign",exact:false}).getAttribute("href"),"/signup?role=advertiser");
+    if(width<900){
       const open=page.getByRole("button",{name:"Open public navigation"});await open.click();
       await page.getByRole("dialog",{name:"Public navigation menu"}).waitFor();
       await page.keyboard.press("Escape");

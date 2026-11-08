@@ -6,15 +6,16 @@ const page = read("src/app/(site)/page.tsx");
 const motion = read("src/components/landing/brand-experience.tsx");
 const shell = read("src/components/layout/public-shell.tsx");
 const css = read("src/components/landing/homepage.css");
+const homepageFooter = read("src/components/landing/homepage-chrome.tsx");
 
 test("public narrative retains advertiser, partner, format and location routes", () => {
-  for (const href of ["/signup?role=advertiser", "/signup?role=driver", "/for-advertisers", "/ad-formats", "/locations", "/help-center"]) assert.ok(page.includes(href),href);
+  for (const href of ["/signup?role=advertiser", "/for-drivers", "/for-advertisers", "/ad-formats", "/locations", "/help-center"]) assert.ok((page + homepageFooter).includes(href),href);
   assert.match(page,/Prayagraj pilot/);
-  assert.match(page,/availability is confirmed for each campaign/);
+  assert.match(page,/A focused city pilot/);
 });
 test("new brand and format artwork is committed and represented as illustrative", () => {
   for (const asset of ["fleet","auto","bike","interior","helmet","car-rear","auto-side"]) assert.ok(existsSync(new URL(`../public/images/blinkmyad/${asset}.webp`,import.meta.url)),asset);
-  assert.match(page,/Illustrative artwork/);
+  assert.match(page,/Illustrative concept/);
   assert.match(motion,/Illustrative concept/);
   assert.match(read("src/config/brand.ts"),/Blink My Ad Pvt Ltd/);
   assert.doesNotMatch(read("src/components/public/contact-enquiry.tsx"),/mailto:|support@advibe/);
