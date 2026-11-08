@@ -3,12 +3,14 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { brand } from "@/config/brand";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { publicNavigation } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 import { trapOverlayTab } from "@/lib/overlay-focus";
+import { HomepageFooter } from "@/components/landing/homepage-chrome";
+import "@/components/landing/reference-homepage.css";
 
 const desktopNavigation = [
   { label: "Home", href: "/" },
@@ -33,6 +35,7 @@ const footerExplore = [
 
 export function PublicShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const mobileClose = React.useRef<HTMLButtonElement>(null);
@@ -71,15 +74,15 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
   }, [mobileOpen]);
 
   return (
-    <div data-portal="public" className="min-h-screen bg-background">
+    <div data-portal="public" data-homepage={isHome || undefined} className="min-h-screen bg-background">
       <a href="#public-main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3">Skip to main content</a>
       <header inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className={cn(
         "sticky top-0 z-50 border-b border-line bg-white text-ink transition-[background-color,box-shadow] duration-300",
         scrolled && "shadow-[0_2px_12px_rgba(20,25,35,.05)]",
       )}>
-        <div className="mx-auto flex min-h-[72px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:px-6 xl:px-10">
-          <BrandLogo priority className="w-[150px] sm:w-[174px]" width={183} />
-          <nav aria-label="Public website" className="hidden flex-1 items-center justify-center gap-0.5 xl:flex">
+        <div className={cn("mx-auto flex min-h-[72px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:px-6 xl:px-10", isHome && "bma-ref-header-row")}>
+          <BrandLogo priority className={isHome ? "bma-ref-header-logo" : "w-[150px] sm:w-[174px]"} width={isHome ? 240 : 183} />
+          {isHome ? <nav aria-label="Public website" className="bma-ref-nav"><Link href="/ad-formats">Ad formats</Link><a href="#how-it-works">How it works</a><Link href="/for-drivers">For drivers</Link><Link href="/about">About</Link></nav> : <nav aria-label="Public website" className="hidden flex-1 items-center justify-center gap-0.5 xl:flex">
             {desktopNavigation.map(item => <Link prefetch={false} key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={cn(
               "relative inline-flex min-h-10 items-center rounded px-2.5 py-2 text-[13px] font-medium text-ink-muted transition-colors hover:text-signal",
               pathname === item.href && "text-signal",
@@ -92,17 +95,17 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
                 {moreNavigation.map(item => <Link prefetch={false} key={item.href} href={item.href} onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")} className="flex min-h-11 items-center rounded-lg px-3 text-sm text-ink hover:bg-paper">{item.label}</Link>)}
               </div>
             </details>
-          </nav>
-          <div className="hidden shrink-0 items-center gap-2 sm:flex">
+          </nav>}
+          <div className={cn("hidden shrink-0 items-center gap-2 sm:flex", isHome && "bma-ref-header-actions")}>
             <Link prefetch={false} href="/login" className="inline-flex min-h-10 items-center justify-center rounded-md px-3 text-[13px] font-semibold text-ink transition-colors hover:bg-paper">Sign in</Link>
-            <Link prefetch={false} href="/signup?role=advertiser" className="inline-flex min-h-10 items-center justify-center rounded-md bg-signal px-4 text-[13px] font-semibold text-white transition-colors hover:bg-signal-hover">Create a campaign</Link>
+            <Link prefetch={false} href="/signup?role=advertiser" className={isHome ? "bma-ref-button" : "inline-flex min-h-10 items-center justify-center rounded-md bg-signal px-4 text-[13px] font-semibold text-white transition-colors hover:bg-signal-hover"}>Create a campaign {isHome && <ArrowUpRight aria-hidden="true" />}</Link>
           </div>
-          <button ref={openButton} type="button" aria-expanded={mobileOpen} aria-controls="advibe-public-navigation" aria-label="Open public navigation" onClick={() => setMobileOpen(true)} className="inline-flex size-11 items-center justify-center rounded-md border border-line hover:bg-paper xl:hidden"><Menu className="size-6" aria-hidden="true" /></button>
+          <button ref={openButton} type="button" aria-expanded={mobileOpen} aria-controls="advibe-public-navigation" aria-label="Open public navigation" onClick={() => setMobileOpen(true)} className={cn("inline-flex size-11 items-center justify-center rounded-md border border-line hover:bg-paper xl:hidden", isHome && "bma-ref-menu-button")}><Menu className="size-6" aria-hidden="true" /></button>
         </div>
       </header>
       <main inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} id="public-main" tabIndex={-1} className="min-h-[55dvh] outline-none">{children}</main>
       <footer inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className="border-t border-white/10 bg-night text-white">
-        <div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-16 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr] lg:gap-8 lg:py-20">
+        {isHome ? <HomepageFooter /> : <><div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-16 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr] lg:gap-8 lg:py-20">
           <div className="space-y-5">
             <BrandLogo inverse width={200} className="w-[180px]" />
             <p className="max-w-[250px] text-sm leading-7 text-[#bac1ce]">Vehicle-screen advertising for a more visible India. Starting in Prayagraj.</p>
@@ -112,7 +115,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
           <FooterLinks title="Portals" links={[{ label: "Advertiser portal", href: "/advertiser" }, { label: "Driver partner portal", href: "/driver" }, { label: "Sign up", href: "/signup" }]} />
           <FooterLinks title="Legal" links={[{ label: "Privacy policy", href: "/privacy" }, { label: "Terms and conditions", href: "/terms" }]} />
         </div>
-        <div className="border-t border-white/10"><div className="mx-auto max-w-[1280px] px-5 py-6 text-xs text-[#bac1ce] sm:px-8">© 2026 {brand.legalName}. Prayagraj pilot launch.</div></div>
+        <div className="border-t border-white/10"><div className="mx-auto max-w-[1280px] px-5 py-6 text-xs text-[#bac1ce] sm:px-8">© 2026 {brand.legalName}. Prayagraj pilot launch.</div></div></>}
       </footer>
 
       {mobileOpen && <div className="fixed inset-0 z-[90] xl:hidden">
