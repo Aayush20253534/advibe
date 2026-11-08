@@ -12,11 +12,11 @@ Assets: credentials/sessions, advertiser ownership, private identity documents, 
 | --- | --- | --- | --- |
 | High | Chunked or large bodies could exhaust relay memory before size checks | Bounded stream reader stops at 64 KiB inbound / 2 MB upstream; total 12-second budget and disconnect cancellation | Exact-limit, multibyte, oversize, stalled-source cancellation and actual route tests pass. Host connection/concurrency limits still required. |
 | Medium | Relay copied unrelated site cookies and upstream cookies | Only `__Host-advibe_session` / `advibe_dev_session` forwarded; duplicate sessions preserved for backend rejection | Runtime cookie-isolation test and existing auth tests pass |
-| Medium | Expired portal sessions left stale private UI visible | Shared idle expiry clears all three portals; backend remains authority | Types/build and auth tests pass; browser expiry flow still unverified |
+| Medium | Expired portal sessions left stale private UI visible | Shared idle expiry clears all three portals; backend remains authority | Types/build/auth tests and synthetic expiry-on-focus browser checks pass in Chromium, Firefox and WebKit; hosted-origin acceptance remains |
 | Medium | Public frontend lacked baseline response protections | `nosniff`, frame denial, referrer policy, camera/microphone/geolocation restrictions, limited CSP object/base/frame policy | Build records headers; real deployed headers/TLS unverified. No claim of full script CSP protection. |
 | High advisory | Prisma tooling's `deepmerge-ts` and `effect` versions carried advisories | Scoped fixed transitive versions, preserving Prisma 6.19 and migration history | Client generation and full fresh DB/migration verification rerun. This application does not use Effect RPC in its request authorization path. |
 | Medium advisory | TypeScript ESLint tooling's minimatch glob amplification advisory | Scoped minimatch 11.0.1 pin under typescript-estree | Lint, types and full frontend/backend checks rerun; do not lint attacker-supplied repositories with privileged secrets |
-| Medium | Floating dependency installs and mutable action tags | Both npm lockfiles, `npm ci`, reviewed SHA-pinned checkout/setup-node/upload-artifact | Lock integrity/install checks; Actions still require remote execution evidence |
+| Medium | Floating dependency installs and mutable action tags | Both npm lockfiles, `npm ci`, reviewed SHA-pinned checkout/setup-node/upload-artifact | Lock integrity/install checks and complete seven-job remote CI runs pass; exact identities are in `qa/ci-verification.json` |
 | Medium | Malformed ignore file could expose local mock mail | Repaired literal newline escapes; `.mock-local` ignored | Tracked working-tree scan found no high-confidence provider/private-key patterns; full-history secret scanning still required |
 
 ## Boundary review
@@ -44,6 +44,6 @@ Advisories: [minimatch](https://github.com/advisories/GHSA-g3hv-75wg-m249), [dee
 
 1. Before accepting real people/data: legal documents, account-owned staging, verified email, private storage/worker, access policy and restore evidence.
 2. Before financial/hardware activity: actual provider sandbox, approved policies, unavailable payout gateway, hardware pilot and B23 admission evidence. Leave all flags disabled until then.
-3. Before production review: cross-browser accessibility/security flows, load measurements, independent security review, full-history/provider secret scan, nonce CSP and validated host/WAF/rate-limit topology.
+3. Before production review: hosted cross-browser accessibility/security acceptance beyond the passing synthetic CI scope, load measurements, independent security review, full-history/provider secret scan, nonce CSP and validated host/WAF/rate-limit topology.
 
 No real payment, refund, payout, KYC collection, production migration or device activation occurred during this review.
