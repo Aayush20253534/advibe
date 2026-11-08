@@ -3,28 +3,30 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { brand } from "@/config/brand";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { publicNavigation } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 import { trapOverlayTab } from "@/lib/overlay-focus";
 import { HomepageFooter } from "@/components/landing/homepage-chrome";
 import "@/components/landing/reference-homepage.css";
 
-const desktopNavigation = [
-  { label: "Home", href: "/" },
-  { label: "For advertisers", href: "/for-advertisers" },
-  { label: "For drivers", href: "/for-drivers" },
+const primaryNavigation = [
   { label: "Ad formats", href: "/ad-formats" },
+  { label: "About", href: "/about" },
+  { label: "How it works", href: "/#how-it-works" },
+  { label: "For drivers", href: "/for-drivers" },
+  { label: "For advertisers", href: "/for-advertisers" },
+] as const;
+
+const mobileExtraNavigation = [
+  { label: "Home", href: "/" },
   { label: "Locations", href: "/locations" },
   { label: "Pricing", href: "/pricing" },
-] as const;
-const moreNavigation = [
-  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "Help centre", href: "/help-center" },
 ] as const;
+
 const footerExplore = [
   { label: "For advertisers", href: "/for-advertisers" },
   { label: "For drivers", href: "/for-drivers" },
@@ -80,27 +82,25 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
         "sticky top-0 z-50 border-b border-line bg-white text-ink transition-[background-color,box-shadow] duration-300",
         scrolled && "shadow-[0_2px_12px_rgba(20,25,35,.05)]",
       )}>
-        <div className={cn("mx-auto flex min-h-[72px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:px-6 xl:px-10", isHome && "bma-ref-header-row")}>
-          <BrandLogo priority className={isHome ? "bma-ref-header-logo" : "w-[150px] sm:w-[174px]"} width={isHome ? 240 : 183} />
-          {isHome ? <nav aria-label="Public website" className="bma-ref-nav"><Link href="/ad-formats">Ad formats</Link><a href="#how-it-works">How it works</a><Link href="/for-drivers">For drivers</Link><Link href="/about">About</Link></nav> : <nav aria-label="Public website" className="hidden flex-1 items-center justify-center gap-0.5 xl:flex">
-            {desktopNavigation.map(item => <Link prefetch={false} key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={cn(
-              "relative inline-flex min-h-10 items-center rounded px-2.5 py-2 text-[13px] font-medium text-ink-muted transition-colors hover:text-signal",
-              pathname === item.href && "text-signal",
-            )}>{item.label}</Link>)}
-            <details className="group relative">
-              <summary className={cn("flex min-h-10 cursor-pointer list-none items-center gap-1 rounded px-2.5 py-2 text-[13px] font-medium text-ink-muted marker:content-none hover:text-signal", moreNavigation.some(x => pathname === x.href) && "text-signal")}>
-                More <ChevronDown className="size-4 transition-transform group-open:rotate-180" aria-hidden="true" />
-              </summary>
-              <div className="absolute left-0 top-[calc(100%+8px)] z-[70] min-w-52 rounded-md border border-line bg-white p-2 shadow-2xl">
-                {moreNavigation.map(item => <Link prefetch={false} key={item.href} href={item.href} onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")} className="flex min-h-11 items-center rounded-lg px-3 text-sm text-ink hover:bg-paper">{item.label}</Link>)}
-              </div>
-            </details>
-          </nav>}
-          <div className={cn("hidden shrink-0 items-center gap-2 sm:flex", isHome && "bma-ref-header-actions")}>
+        <div className="bma-ref-header-row mx-auto flex min-h-[72px] max-w-[1440px] items-center justify-between gap-3 px-4 sm:px-6 xl:px-10">
+          <BrandLogo priority className="bma-ref-header-logo" width={240} />
+          <nav aria-label="Public website" className="bma-ref-nav">
+            {primaryNavigation.map(item => (
+              <Link
+                prefetch={false}
+                key={item.href}
+                href={item.href}
+                aria-current={pathname === item.href ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="bma-ref-header-actions hidden shrink-0 items-center gap-2 sm:flex">
             <Link prefetch={false} href="/login" className="inline-flex min-h-10 items-center justify-center rounded-md px-3 text-[13px] font-semibold text-ink transition-colors hover:bg-paper">Sign in</Link>
-            <Link prefetch={false} href="/signup?role=advertiser" className={isHome ? "bma-ref-button" : "inline-flex min-h-10 items-center justify-center rounded-md bg-signal px-4 text-[13px] font-semibold text-white transition-colors hover:bg-signal-hover"}>Create a campaign {isHome && <ArrowUpRight aria-hidden="true" />}</Link>
+            <Link prefetch={false} href="/signup?role=advertiser" className="bma-ref-button">Create a campaign <ArrowUpRight aria-hidden="true" /></Link>
           </div>
-          <button ref={openButton} type="button" aria-expanded={mobileOpen} aria-controls="advibe-public-navigation" aria-label="Open public navigation" onClick={() => setMobileOpen(true)} className={cn("inline-flex size-11 items-center justify-center rounded-md border border-line hover:bg-paper xl:hidden", isHome && "bma-ref-menu-button")}><Menu className="size-6" aria-hidden="true" /></button>
+          <button ref={openButton} type="button" aria-expanded={mobileOpen} aria-controls="advibe-public-navigation" aria-label="Open public navigation" onClick={() => setMobileOpen(true)} className="bma-ref-menu-button inline-flex size-11 items-center justify-center rounded-md border border-line hover:bg-paper xl:hidden"><Menu className="size-6" aria-hidden="true" /></button>
         </div>
       </header>
       <main inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} id="public-main" tabIndex={-1} className="min-h-[55dvh] outline-none">{children}</main>
@@ -126,16 +126,25 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
             <button ref={mobileClose} type="button" onClick={() => { setMobileOpen(false); window.requestAnimationFrame(() => openButton.current?.focus()); }} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-xl border border-white/15"><X className="size-6" aria-hidden="true" /></button>
           </div>
           <nav aria-label="Mobile public pages" className="flex-1 overflow-y-auto px-3 py-4">
-            {publicNavigation.map(item => <div key={item.href}>
-              <Link prefetch={false} href={item.href} onClick={() => setMobileOpen(false)} aria-current={pathname === item.href ? "page" : undefined} className={cn("flex min-h-11 items-center rounded-lg px-3 text-base font-semibold text-white/85 hover:bg-white/10", pathname === item.href && "bg-signal text-white")}>{item.label}</Link>
-              {"children" in item && <div className="ml-3 border-l border-white/15 pl-3">
-                {item.children.map(child => <Link prefetch={false} key={child.href} href={child.href} onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center rounded-lg px-2 text-sm text-[#bac1ce] hover:bg-white/10">{child.label}</Link>)}
-              </div>}
-            </div>)}
+            {primaryNavigation.map(item => (
+              <Link prefetch={false} key={item.href} href={item.href} onClick={() => setMobileOpen(false)}
+                aria-current={pathname === item.href ? "page" : undefined}
+                className={cn("flex min-h-11 items-center rounded-lg px-3 text-base font-semibold text-white/85 hover:bg-white/10", pathname === item.href && "bg-signal text-white")}>
+                {item.label}
+              </Link>
+            ))}
+            <div className="my-3 border-t border-white/15" aria-hidden="true" />
+            {mobileExtraNavigation.map(item => (
+              <Link prefetch={false} key={item.href} href={item.href} onClick={() => setMobileOpen(false)}
+                aria-current={pathname === item.href ? "page" : undefined}
+                className={cn("flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-white/75 hover:bg-white/10", pathname === item.href && "bg-signal text-white")}>
+                {item.label}
+              </Link>
+            ))}
           </nav>
           <div className="grid shrink-0 grid-cols-2 gap-3 border-t border-white/10 p-4">
             <Link prefetch={false} href="/login" onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center justify-center rounded-lg border border-white/30 text-sm font-semibold">Sign in</Link>
-            <Link prefetch={false} href="/signup" onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center justify-center rounded-lg bg-signal text-sm font-semibold text-white">Sign up</Link>
+            <Link prefetch={false} href="/signup?role=advertiser" onClick={() => setMobileOpen(false)} className="flex min-h-11 items-center justify-center rounded-lg bg-signal text-sm font-semibold text-white">Create campaign</Link>
           </div>
         </div>
       </div>}
