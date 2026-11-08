@@ -55,18 +55,18 @@ export function BmaLoginForm(){
      </div>
      <div className="flex items-center justify-between gap-3">
       <span className="inline-flex items-center gap-1.5 text-xs text-[#627694]"><LockKeyhole aria-hidden="true" className="size-3.5"/> Secure sign-in</span>
-      <Link href="/forgot-password" className="text-sm font-semibold text-[#0955e8] hover:underline">Forgot password?</Link>
+      <Link prefetch={false} href="/forgot-password" className="text-sm font-semibold text-[#0955e8] hover:underline">Forgot password?</Link>
      </div>
     </>
    }
    {(notice||(!isMfa&&status))&&<p role="status" className="rounded-lg border border-[#bbe6d3] bg-[#ebf8f1] px-3 py-2 text-sm text-[#17623a]">{notice||status}</p>}
    {error&&<p role="alert" className="rounded-lg border border-[#f1baba] bg-[#fff1f1] px-3 py-2 text-sm text-[#a11c1c]">{error}</p>}
-   <button type="submit" disabled={loading} className="flex h-[50px] w-full items-center justify-center rounded-[11px] bg-gradient-to-r from-[#1559f6] via-[#056eff] to-[#079ff7] text-base font-semibold text-white shadow-[0_8px_20px_rgba(18,90,235,.2)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70">
+   <button type="submit" disabled={loading} className="flex h-[50px] w-full items-center justify-center rounded-[11px] bg-gradient-to-r from-[#1559d6] via-[#075dcc] to-[#0064c8] text-base font-semibold text-white shadow-[0_8px_20px_rgba(18,90,235,.2)] transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-70">
     {loading?"Signing in…":isMfa?"Verify authenticator":"Sign in"}
    </button>
    {isMfa&&<button type="button" disabled={loading} className="block w-full text-center text-sm font-semibold text-[#135ad8] hover:underline" onClick={()=>{setChallengeId("");setTicket("");setCode("");setNotice("");setError("");}}>Back to email sign-in</button>}
   </form>
-  <div className="mt-7 border-t border-[#dce4f0] pt-6 text-center text-sm text-[#536380]">Don’t have an account?{" "}<Link href="/signup" className="font-semibold text-[#0759ec] hover:underline">Create account</Link></div>
+  <div className="mt-7 border-t border-[#dce4f0] pt-6 text-center text-sm text-[#536380]">Don’t have an account?{" "}<Link prefetch={false} href="/signup" className="font-semibold text-[#0759ec] hover:underline">Create account</Link></div>
  </section>;
 }
 export function BmaLoginFallback(){

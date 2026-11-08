@@ -2,6 +2,7 @@ export { Alert, type AlertTone } from "./alert";
 export { Badge, badgeVariants, StatusBadge, type StatusTone } from "./badge";
 export { Breadcrumbs, type Crumb } from "./breadcrumbs";
 export { Button, buttonVariants } from "./button";
+export { CursorPagination } from "./cursor-pagination";
 export {
   Card,
   CardContent,

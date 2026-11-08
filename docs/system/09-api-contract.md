@@ -39,3 +39,7 @@
 Run `npm --prefix backend run test:api-route-inventory` to enumerate all current router declarations and verify each major module retains a domain test file. Run `npm --prefix backend run test:api-boundaries` against an isolated disposable PostgreSQL DB to probe **every non-provider route** for public-read behavior and anonymous access/input rejection; a separate role matrix verifies representative privileged reads. For meaningful positive and negative business state transitions run all existing module integration suites (`npm --prefix backend run check`).
 
 **Not a live API assertion:** These tests establish local registration/auth semantics and endpoint boundaries. Live Cashfree, S3/object storage and Google Maps are excluded and require separate credentialed staging acceptance tests.
+
+## Current machine-readable route inventory
+
+`contracts/api-routes.current.json` records methods and paths extracted from Express. Regenerate with `npm run contracts:update`; CI runs `npm run contracts:check`. It complements the historical B0 design schema without pretending that outdated request/response schemas are current. Domain schemas remain in the backend Zod definitions.

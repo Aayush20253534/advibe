@@ -5,7 +5,7 @@ const stops = [
   },
   {
     title: "Review",
-    text: "An AdVibe admin approves the creative and the campaign",
+    text: "An BlinkMyAd admin approves the creative and the campaign",
   },
   {
     title: "Vehicle screen",
@@ -19,7 +19,7 @@ const stops = [
 ];
 
 /**
- * The "route line": how a campaign travels through AdVibe. It draws itself once
+ * The "route line": how a campaign travels through BlinkMyAd. It draws itself once
  * when the page loads (the homepage's single orchestrated motion) and is static
  * for anyone who prefers reduced motion. Styles live in globals.css (.route-*).
  */
@@ -49,7 +49,7 @@ export function RouteLine() {
         ))}
       </ol>
       <figcaption className="mt-6 text-xs text-[#9fb0cc]">
-        How a campaign moves through AdVibe. Illustration.
+        How a campaign moves through BlinkMyAd. Illustration.
       </figcaption>
     </figure>
   );

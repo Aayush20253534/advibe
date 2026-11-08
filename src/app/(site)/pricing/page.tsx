@@ -1,14 +1,10 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import { CTA, Heading, PageHero, Section } from "@/components/public/marketing-blocks";
 import { PricingPlanner } from "@/components/public/pricing-planner";
 import { FAQList } from "@/components/public/faq-list";
 import { publicFAQs } from "@/components/public/faq-data";
 
-export const metadata: Metadata = {
-  title: "Advertising Pricing & Cost Calculator",
-  description:
-    "Estimate example vehicle-screen advertising costs for Prayagraj. Final rates and availability require a confirmed quote.",
-};
+export const metadata = publicMetadata("/pricing", "Advertising Pricing & Cost Calculator", "Estimate example vehicle-screen advertising costs for Prayagraj. Final rates and availability require a confirmed quote.");
 
 // Purpose: explain how cost is built up and let people try an example estimate.
 export default function Page() {

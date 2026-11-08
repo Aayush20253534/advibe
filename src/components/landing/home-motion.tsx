@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ClipboardCheck, MonitorPlay, UploadCloud, UserRound } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -19,7 +19,8 @@ export function ScrollReveal({ children, className = "", delay = 0, direction = 
   return (
     <motion.div
       className={className}
-      initial={reduced ? false : { opacity: 0, x, y }}
+      data-scroll-reveal
+      initial={reduced ? false : { opacity: 1, x, y }}
       whileInView={reduced ? undefined : { opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, amount: 0.13, margin: "0px 0px -42px 0px" }}
       transition={{ duration: 0.62, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -29,7 +30,11 @@ export function ScrollReveal({ children, className = "", delay = 0, direction = 
   );
 }
 
-/** Three layered, genuinely independent vehicle animations, with a static accessible fallback. */
+// One responsive image selection avoids preloading both desktop and mobile artwork.
+const heroImage = getImageProps({ src: "/images/hero/hero-city.webp", alt: "", fill: true, sizes: "100vw", loading: "eager", fetchPriority: "high" }).props;
+const stillImage = getImageProps({ src: "/images/hero/hero-static.webp", alt: "", fill: true, sizes: "100vw" }).props;
+
+/** Layered vehicle motion with a static mobile/reduced-motion image. */
 export function CinematicHeroArt() {
   const reduced = useReducedMotion();
   const first = (x: number, delay: number) => ({
@@ -39,10 +44,11 @@ export function CinematicHeroArt() {
   });
   return (
     <div className="av-hero-media absolute inset-0 overflow-hidden" aria-hidden="true">
-      <Image src="/images/hero/hero-city.webp" alt="" fill priority sizes="100vw" className="object-cover object-center" />
-      <div className="av-hero-still absolute inset-0">
-        <Image src="/images/hero/hero-static.webp" alt="" fill priority sizes="100vw" className="object-cover object-[66%_center]" />
-      </div>
+      <picture className="av-hero-still absolute inset-0">
+        <source media="(max-width: 1023px), (prefers-reduced-motion: reduce)" srcSet={stillImage.srcSet} sizes="100vw" />
+        {/* Next getImageProps supplies the optimized responsive sources for this picture. */}
+        <img {...heroImage} alt="" className="object-cover object-center" />
+      </picture>
       <div className="av-hero-moving absolute inset-0">
         <motion.div className="av-vehicle av-vehicle-car" {...first(68, 0.25)}>
           <Image src="/images/hero/hero-car.png" alt="" fill sizes="360px" className="object-contain object-bottom" />
@@ -65,7 +71,7 @@ export function CinematicHeroArt() {
 
 const steps: { title: string; text: string; icon: LucideIcon }[] = [
   { title: "Advertiser", text: "Uploads a creative and builds a campaign draft", icon: UploadCloud },
-  { title: "Review", text: "An AdVibe admin reviews the creative and campaign", icon: ClipboardCheck },
+  { title: "Review", text: "A BlinkMyAd admin reviews the creative and campaign", icon: ClipboardCheck },
   { title: "Vehicle screen", text: "Approved ads play on assigned screens", icon: MonitorPlay },
   { title: "Driver partner", text: "Earnings are recorded for the driver carrying the screen", icon: UserRound },
 ];
@@ -74,12 +80,11 @@ function TimelineStep({ step, index, progress }: {
   step: (typeof steps)[number]; index: number; progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
   const reduced = useReducedMotion();
-  const opacity = useTransform(progress, [index * .23, index * .23 + .13], [0.65, 1]);
   const scale = useTransform(progress, [index * .23, index * .23 + .13], [.985, 1]);
   const Icon = step.icon;
   return (
-    <motion.li style={reduced ? undefined : { opacity, scale }} className="relative z-10 flex min-h-64 flex-col items-start rounded-2xl border border-[#27517f] bg-[#09284c]/95 p-7 shadow-[0_20px_50px_rgba(0,0,0,.14)] sm:min-h-60">
-      <span className="absolute -top-4 left-7 flex size-9 items-center justify-center rounded-full bg-[#FF6A00] font-heading font-extrabold text-white shadow-[0_4px_20px_rgba(255,106,0,.2)]">{index + 1}</span>
+    <motion.li style={reduced ? { scale: 1 } : { scale }} className="relative z-10 flex min-h-64 flex-col items-start rounded-2xl border border-[#27517f] bg-[#09284c]/95 p-7 shadow-[0_20px_50px_rgba(0,0,0,.14)] sm:min-h-60">
+      <span className="absolute -top-4 left-7 flex size-9 items-center justify-center rounded-full bg-[#FF6A00] font-heading font-extrabold text-[#041B3D] shadow-[0_4px_20px_rgba(255,106,0,.2)]">{index + 1}</span>
       <span className="mb-6 inline-flex size-15 items-center justify-center rounded-xl border border-[#4b7298] bg-[#143e68] text-[#cbe5ff]"><Icon className="size-8" aria-hidden="true" /></span>
       <h3 className="font-heading text-xl font-bold text-white">{step.title}</h3>
       <p className="mt-3 text-sm leading-6 text-[#c3d0e4]">{step.text}</p>
@@ -121,7 +126,7 @@ export function IndiaNetworkMap() {
   return (
     <div ref={ref} className="relative overflow-hidden rounded-[28px] border border-[#d9e6f6] bg-[#f3f8ff]" aria-label="Illustrative India expansion map with Prayagraj marked as the starting location">
       <svg className="w-full" viewBox="118 91 490 470" role="img" aria-labelledby="av-india-map-title av-india-map-desc">
-        <title id="av-india-map-title">Initial AdVibe launch in Prayagraj</title>
+        <title id="av-india-map-title">Initial BlinkMyAd launch in Prayagraj</title>
         <desc id="av-india-map-desc">Geographical outline of India, with Prayagraj highlighted and four illustrative future network lines that do not indicate available services.</desc>
         <defs>
           <linearGradient id="av-map-fill" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#e1eeff" /><stop offset="1" stopColor="#b4d1f8" /></linearGradient>

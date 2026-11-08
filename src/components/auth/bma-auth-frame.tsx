@@ -21,11 +21,11 @@ export function BmaAuthFrame({mode,children}:{mode:Mode;children:ReactNode}){
    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[46%] bg-gradient-to-b from-[#030b2a]/45 via-[#030b2a]/10 to-transparent"/>
    <div className="relative z-10 flex h-full flex-col px-[clamp(1.75rem,4vw,4.5rem)] py-[clamp(1.2rem,2.7vh,2.25rem)]">
     <div className="flex shrink-0 items-center gap-[clamp(1rem,2vw,2rem)]">
-     <Link href="/" aria-label="BlinkMyAd home" className="relative block aspect-[3.16/1] w-[clamp(9.2rem,12.5vw,12.6rem)] shrink-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+     <Link prefetch={false} href="/" aria-label="BlinkMyAd home" className="relative block aspect-[3.16/1] w-[clamp(9.2rem,12.5vw,12.6rem)] shrink-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
       <Image src="/brand/bma-signup-logo.svg" alt="BMA, Blink My Ad" fill priority sizes="204px" className="object-contain"/>
      </Link>
      <span aria-hidden="true" className="h-7 w-px shrink-0 bg-white/35"/>
-     <Link href="/" className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap text-[clamp(.75rem,.98vw,.93rem)] font-medium text-[#dce7fc] transition hover:text-white"><ArrowLeft aria-hidden="true" className="size-4"/> Back to website</Link>
+     <Link prefetch={false} href="/" className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap text-[clamp(.75rem,.98vw,.93rem)] font-medium text-[#dce7fc] transition hover:text-white"><ArrowLeft aria-hidden="true" className="size-4"/> Back to website</Link>
     </div>
     <div className="mt-[clamp(1.9rem,5vh,3.8rem)] max-w-[610px]">
      <h2 className="font-heading text-[clamp(2rem,3vw,3.45rem)] font-bold leading-[1.09] tracking-[-.032em] text-white">{screen.title}</h2>
@@ -40,11 +40,11 @@ export function BmaAuthFrame({mode,children}:{mode:Mode;children:ReactNode}){
    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_100%_5%,rgba(197,218,253,.8),transparent_58%),linear-gradient(133deg,#f4f8ff_0%,#e8f1ff_100%)]"/>
    <div className={mode==="login"?"w-full max-w-[590px] shrink-0":"w-full max-w-[510px] shrink-0"}>
     <div className="mb-4 flex items-center justify-between rounded-xl bg-[#06143a] px-3 py-2 lg:hidden">
-     <Link href="/" aria-label="BlinkMyAd home" className="relative block aspect-[3.16/1] w-[145px] shrink-0"><Image src="/brand/bma-signup-logo.svg" alt="BMA, Blink My Ad" fill priority sizes="145px" className="object-contain"/></Link>
-     <Link href="/" className="inline-flex min-h-10 items-center gap-1 text-sm font-medium text-white"><ArrowLeft aria-hidden="true" className="size-4"/> Website</Link>
+     <Link prefetch={false} href="/" aria-label="BlinkMyAd home" className="relative block aspect-[3.16/1] w-[145px] shrink-0"><Image src="/brand/bma-signup-logo.svg" alt="BMA, Blink My Ad" fill priority sizes="145px" className="object-contain"/></Link>
+     <Link prefetch={false} href="/" className="inline-flex min-h-10 items-center gap-1 text-sm font-medium text-white"><ArrowLeft aria-hidden="true" className="size-4"/> Website</Link>
     </div>
     {children}
-    <nav aria-label="Legal" className={mode==="signup"?"mt-2 flex justify-center gap-5 text-xs text-[#516488]":"mt-3 flex justify-center gap-6 text-xs text-[#516488]"}><Link href="/privacy" className="hover:text-[#1352c7] hover:underline">Privacy policy</Link><Link href="/terms" className="hover:text-[#1352c7] hover:underline">Terms of service</Link></nav>
+    <nav aria-label="Legal" className={mode==="signup"?"mt-2 flex justify-center gap-5 text-xs text-[#516488]":"mt-3 flex justify-center gap-6 text-xs text-[#516488]"}><Link prefetch={false} href="/privacy" className="hover:text-[#1352c7] hover:underline">Privacy policy</Link><Link prefetch={false} href="/terms" className="hover:text-[#1352c7] hover:underline">Terms of service</Link></nav>
    </div>
   </main>
  </div>;

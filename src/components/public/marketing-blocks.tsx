@@ -268,7 +268,7 @@ export const advertiserBenefits = [
   },
   {
     title: "Reviewed before it runs",
-    text: "Every creative and every campaign is checked by an AdVibe admin before it is scheduled.",
+    text: "Every creative and every campaign is checked by an BlinkMyAd admin before it is scheduled.",
     icon: BadgeCheck,
   },
 ];
@@ -285,7 +285,7 @@ export const driverBenefits = [
   },
   {
     title: "Earnings you can check",
-    text: "Your partner portal shows each earning entry and payout status as AdVibe records them.",
+    text: "Your partner portal shows each earning entry and payout status as BlinkMyAd records them.",
     icon: Clock3,
   },
   {
@@ -312,7 +312,7 @@ export const advertiserSteps = [
   },
   {
     title: "Submit for review",
-    text: "An AdVibe admin approves the campaign before anything is scheduled.",
+    text: "An BlinkMyAd admin approves the campaign before anything is scheduled.",
     icon: BarChart3,
   },
 ];

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,15 +8,7 @@ import {
 import { CampaignTimeline, CinematicHeroArt, IndiaNetworkMap, ScrollReveal } from "@/components/landing/home-motion";
 import "@/components/landing/homepage.css";
 
-export const metadata: Metadata = {
-  title: "Vehicle Screen Advertising in Prayagraj | AdVibe",
-  description: "AdVibe connects advertisers and driver partners through approved vehicle-screen campaigns, starting in Prayagraj with a platform built for India.",
-  openGraph: {
-    title: "AdVibe | Your Brand Belongs on the Move",
-    description: "Plan reviewed digital out-of-home advertising on everyday vehicles. Starting in Prayagraj, built for India.",
-    type: "website",
-  },
-};
+export const metadata = publicMetadata("/", "Vehicle Screen Advertising in Prayagraj", "BlinkMyAd connects advertisers and driver partners through approved vehicle-screen campaigns, starting in Prayagraj with a platform built for India.");
 
 const valuePoints = [
   { icon: CarFront, title: "Vehicle-mounted advertising", body: "Put your business on display along everyday roads and commutes." },
@@ -55,7 +47,7 @@ const approval = [
 ];
 
 function BlueButton({ href, children, outlined = false }: { href: string; children: React.ReactNode; outlined?: boolean }) {
-  return <Link href={href} className={outlined ? "av-button-outline" : "av-button-blue"}>{children}<ArrowUpRight className="size-4 shrink-0" aria-hidden="true" /></Link>;
+  return <Link prefetch={false} href={href} className={outlined ? "av-button-outline" : "av-button-blue"}>{children}<ArrowUpRight className="size-4 shrink-0" aria-hidden="true" /></Link>;
 }
 
 function SectionHeading({ eyebrow, title, description, invert = false }: { eyebrow: string; title: React.ReactNode; description?: string; invert?: boolean }) {
@@ -86,7 +78,7 @@ export default function HomePage() {
             </ScrollReveal>
             <ScrollReveal delay={.19}>
               <p className="mt-9 max-w-[480px] text-lg leading-8 text-[#e1e9f3]">
-                Put your business on digital displays mounted on everyday vehicles. AdVibe connects advertisers, driver partners and local routes, starting with Prayagraj.
+                Put your business on digital displays mounted on everyday vehicles. BlinkMyAd connects advertisers, driver partners and local routes, starting with Prayagraj.
               </p>
             </ScrollReveal>
             <ScrollReveal className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" delay={.29}>
@@ -120,7 +112,7 @@ export default function HomePage() {
       <section id="how-it-works" aria-labelledby="process-title" className="relative scroll-mt-22 overflow-hidden bg-[#03152C] py-28 text-white lg:py-34">
         <div className="pointer-events-none absolute left-[-15%] right-[-15%] top-1/2 h-[380px] rotate-[-9deg] border-t-2 border-[#FF6A00]/20 [box-shadow:0_-7px_42px_rgba(255,106,0,.12)]" aria-hidden="true" />
         <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
-          <ScrollReveal><div className="text-center"><p className="av-eyebrow text-[#79b4ff]">HOW ADVIBE WORKS</p><h2 id="process-title" className="mx-auto mt-5 max-w-3xl font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">From idea to approved campaign.</h2><div className="av-underline mx-auto mt-6" aria-hidden="true" /></div></ScrollReveal>
+          <ScrollReveal><div className="text-center"><p className="av-eyebrow text-[#79b4ff]">HOW BLINKMYAD WORKS</p><h2 id="process-title" className="mx-auto mt-5 max-w-3xl font-heading text-4xl font-extrabold tracking-tight sm:text-5xl">From idea to approved campaign.</h2><div className="av-underline mx-auto mt-6" aria-hidden="true" /></div></ScrollReveal>
           <CampaignTimeline />
           <p className="mt-10 text-center text-sm text-[#b4c6dd]">Illustrative workflow. Playback and driver earnings depend on approved assignments and platform verification.</p>
         </div>
@@ -139,7 +131,7 @@ export default function HomePage() {
                   <h3 className="mt-3 max-w-[440px] font-heading text-3xl font-extrabold leading-tight text-[#041B3D]">{item.title}</h3>
                   <p className="mt-3 max-w-[400px] text-sm leading-6 text-[#4a5b78]">{item.description}</p>
                   <ul className="mt-5 space-y-2">{item.points.map(point => <li key={point} className="flex items-start gap-2 text-sm text-[#041B3D]"><Check className="mt-0.5 size-4 shrink-0 text-[#FF6A00]" aria-hidden="true" />{point}</li>)}</ul>
-                  <Link href={item.href} className="av-button-blue mt-7">{item.label}<ArrowUpRight className="size-4" aria-hidden="true" /></Link>
+                  <Link prefetch={false} href={item.href} className="av-button-blue mt-7">{item.label}<ArrowUpRight className="size-4" aria-hidden="true" /></Link>
                 </div>
               </article>
             </ScrollReveal>)}
@@ -152,7 +144,7 @@ export default function HomePage() {
           <ScrollReveal><div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end"><SectionHeading eyebrow="AD FORMATS" invert title={<>Choose the screen.<br />Shape the campaign.</>} description="Explore advertising placements designed for everyday vehicles. Availability depends on verified hardware and approved inventory." /><BlueButton href="/ad-formats" outlined>Compare all formats</BlueButton></div></ScrollReveal>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {formats.map((format, i) => <ScrollReveal delay={i * .09} key={format.anchor}>
-              <Link href={`/ad-formats#${format.anchor}`} className="group block h-full overflow-hidden rounded-2xl border border-[#315174] bg-[#09284C] transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[#408fff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff8a37]">
+              <Link prefetch={false} href={`/ad-formats#${format.anchor}`} className="group block h-full overflow-hidden rounded-2xl border border-[#315174] bg-[#09284C] transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[#408fff] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff8a37]">
                 <div className="relative aspect-[1.15] overflow-hidden bg-[#183f69]"><Image src={format.image} alt={format.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px" className="object-cover transition-transform duration-700 group-hover:scale-105" /></div>
                 <div className="p-5"><div className="flex items-start justify-between gap-2"><h3 className="font-heading text-lg font-bold text-white">{format.name}</h3><ArrowUpRight className="mt-1 size-4 shrink-0 text-[#ff8a37] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" /></div><p className="mt-3 text-sm leading-6 text-[#c3d0e4]">{format.description}</p></div>
               </Link>
@@ -164,7 +156,7 @@ export default function HomePage() {
       <section id="india-coverage" aria-labelledby="india-title" className="scroll-mt-24 bg-[#f5f8fc] py-28 lg:py-36">
         <div className="mx-auto grid max-w-[1280px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
           <ScrollReveal>
-            <SectionHeading eyebrow="INDIA-WIDE VISION" title={<>Starting local.<br />Built to go further.</>} description="AdVibe is beginning in Prayagraj, with a platform designed for vehicle-based advertising across India." />
+            <SectionHeading eyebrow="INDIA-WIDE VISION" title={<>Starting local.<br />Built to go further.</>} description="BlinkMyAd is beginning in Prayagraj, with a platform designed for vehicle-based advertising across India." />
             <div className="mt-8 flex items-center gap-3 rounded-xl border border-[#dce4f0] bg-white px-5 py-4 text-sm text-[#041B3D]"><MapPin className="size-5 shrink-0 text-[#FF6A00]" aria-hidden="true" /><span><strong>Prayagraj</strong> is the initial launch city. Other locations are not verified as active.</span></div>
             <div className="mt-8"><BlueButton href="/locations">Explore locations</BlueButton></div>
           </ScrollReveal>
@@ -174,7 +166,7 @@ export default function HomePage() {
 
       <section id="review" aria-labelledby="review-title" className="bg-white py-28 lg:py-34">
         <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-          <ScrollReveal><div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><SectionHeading eyebrow="BUILT WITH ACCOUNTABILITY" title="Reviewed before it runs." description="A campaign draft is not a confirmed booking. Creatives, inventory and schedules must pass review before activation." /><Link href="/for-advertisers" className="inline-flex min-h-11 items-center gap-2 self-start font-semibold text-[#0866FF] hover:underline">How campaigns work <ArrowRight className="size-4" aria-hidden="true" /></Link></div></ScrollReveal>
+          <ScrollReveal><div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><SectionHeading eyebrow="BUILT WITH ACCOUNTABILITY" title="Reviewed before it runs." description="A campaign draft is not a confirmed booking. Creatives, inventory and schedules must pass review before activation." /><Link prefetch={false} href="/for-advertisers" className="inline-flex min-h-11 items-center gap-2 self-start font-semibold text-[#0866FF] hover:underline">How campaigns work <ArrowRight className="size-4" aria-hidden="true" /></Link></div></ScrollReveal>
           <div className="mt-14 grid gap-5 md:grid-cols-3">
             {approval.map(({ icon: Icon, title, body }, i) => <ScrollReveal delay={i * .13} key={title}><article className="relative h-full rounded-[22px] border border-[#dce4f0] bg-[#f5f8fc] p-8 sm:p-10"><div className="mb-8 flex size-16 items-center justify-center rounded-2xl border border-[#cae0ff] bg-[#e8f0fe] text-[#0866FF]"><Icon className="size-8" aria-hidden="true" /></div><span className="text-sm font-bold tracking-widest text-[#0866FF]">0{i + 1}</span><h3 className="mt-3 font-heading text-2xl font-bold text-[#041B3D]">{title}</h3><p className="mt-4 text-base leading-7 text-[#4a5b78]">{body}</p><CheckCheck className="absolute right-8 top-9 size-6 text-[#FF6A00]" aria-hidden="true" /></article></ScrollReveal>)}
           </div>
@@ -187,7 +179,7 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8"><ScrollReveal>
           <h2 id="start-title" className="max-w-[690px] font-heading text-[clamp(2.8rem,5vw,5.5rem)] font-extrabold leading-[1.08] tracking-tight">Take your brand <span className="text-[#FF6A00]">further.</span></h2>
           <div className="av-underline mt-5" aria-hidden="true" />
-          <p className="mt-7 max-w-[600px] text-lg leading-8 text-[#d8e4f2]">Start planning an AdVibe campaign or explore becoming a driver partner.</p>
+          <p className="mt-7 max-w-[600px] text-lg leading-8 text-[#d8e4f2]">Start planning an BlinkMyAd campaign or explore becoming a driver partner.</p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row"><BlueButton href="/signup?role=advertiser">Create an advertiser account</BlueButton><BlueButton outlined href="/for-drivers">Become a driver partner</BlueButton></div>
         </ScrollReveal></div>
       </section>

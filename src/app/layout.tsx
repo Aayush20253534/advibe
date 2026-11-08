@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import { siteOrigin } from "@/services/site-origin.mjs";
+import { brand } from "@/config/brand";
 import { Overpass } from "next/font/google";
 import "./globals.css";
 import { MockProviderBanner } from "@/components/layout/mock-provider-banner";
@@ -12,9 +14,10 @@ const overpass = Overpass({
 });
 
 export const metadata: Metadata = {
-  title: { default: "AdVibe", template: "%s | AdVibe" },
-  description: "Your Brand. Everywhere. An outdoor and mobility advertising platform.",
-  applicationName: "AdVibe",
+  title: { default: brand.name, template: "%s | " + brand.name },
+  description: brand.description,
+  applicationName: brand.name,
+  robots: { index: process.env.SITE_INDEXING_ENABLED === "true" && !!siteOrigin(process.env.NEXT_PUBLIC_APP_URL), follow: false },
   icons: { icon: "/icon.png", shortcut: "/icon.png", apple: "/icon.png" },
 };
 
@@ -24,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={overpass.variable}>
       <body className="min-h-screen antialiased">
-        <MockProviderBanner />
+        {process.env.NODE_ENV !== "production" && <MockProviderBanner />}
         {children}
       </body>
     </html>

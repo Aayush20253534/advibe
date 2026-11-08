@@ -82,7 +82,7 @@ export function createGeoRouter(config:AppConfig,{db,settings}:AuthDependencies)
     const limit=limitRaw===undefined?20:Number(limitRaw);
     let start=0;
     if(req.query.cursor!==undefined){
-      if(typeof req.query.cursor!=="string"||!/^[A-Za-z0-9_-]{8,30}$/.test(req.query.cursor))
+      if(typeof req.query.cursor!=="string"||!/^[A-Za-z0-9_-]{2,30}$/.test(req.query.cursor))
         throw new HttpError(422,"VALIDATION_ERROR","Invalid cursor");
       try{start=Number(Buffer.from(req.query.cursor,"base64url").toString("utf8"));}
       catch{throw new HttpError(422,"VALIDATION_ERROR","Invalid cursor");}

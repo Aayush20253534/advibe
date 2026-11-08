@@ -1,30 +1,21 @@
-# AdVibe Production Readiness — Mandatory Backend and Launch Work
+# BlinkMyAd production readiness
 
-**Status: NOT production-ready. B0–B23 backend and frontend integration components are implemented in source and CI, including a B23 staging-only deployment blueprint, release admission guard and encrypted backup/restore tooling. Actual hosting, production provider onboarding, private storage configuration and operator signoffs remain pending; legal/tax approval D04 remains outstanding. Dedicated ClamAV/FFmpeg worker and private object storage are not deployed. Hardware manufacture, physical installation attestation and firmware keys are not provisioned. Live private storage, scanner vendor and legal retention/sign-off remain unconfigured. A submitted application is not KYC or hardware approval. No AdVibe Neon production database or verified email sender has been verified. Admin authenticator must be operator-enrolled, and the frontend source now requires the backend-authenticated API; live deployment and E2E verification remain unconfirmed.**
+**Verdict: Not ready for a real-user controlled testing launch.**
 
-Backend baseline: [B0 architecture](backend/B0_ARCHITECTURE.md), [database](backend/B0_DATABASE.md), [API migration map](backend/B0_API_MAPPING.md), [decisions](backend/B0_DECISIONS.md), and [versioned OpenAPI](../contracts/openapi.v1.json).
+The current source uses authenticated backend-only portals. Historical statements that a browser demo is enabled by default are obsolete. Local checks and three-engine browser CI pass; provider mocks, synthetic database tests and local-browser measurements do not prove staging or commercial readiness.
 
-The browser demo remains available by default. Separately, B22 live API mode uses server-authenticated roles when explicitly enabled and connected to a deployed backend; no live infrastructure or legal approval is implied. Client-only payment/KYC/device statuses are not reliable proof.
+Use these current records:
 
-| Blocker | Required before any real-user launch |
-| --- | --- |
-| Authentication & RBAC | Secure user database, password hashing, email/SMS validation, MFA for Admin, real sessions and server-side per-record ownership enforcement |
-| Persistent database | Real transactional storage, migrations, backups, schema constraints, reservation concurrency, rate limits and idempotency |
-| Creative storage | Private file uploads, media validation, malware scanning, moderation, secure distribution and deployment controls |
-| Cashfree collection | Server-created payment orders, verified webhooks, refund settlement, tax/invoice compliance and reconciliation |
-| Driver KYC | Consent-led identity/license/RC/insurance validation, secure documents and approved data retention policy |
-| Screens / IoT | Certified installation, secure pairing, device heartbeats, approved playback, logs, uptime and tamper monitoring |
-| Verified exposure | Consented geolocation, route telemetry, playback proof, aggregation and accuracy review |
-| Driver payouts | Bank verification, payout provider and ledger, TDS/tax review, receipts and reconciliation |
-| Support and notifications | Authenticated service desk, real transport, opt-in, escalation, dispatch and audit trails |
-| Legal | Approved Privacy Policy, Terms, driver partnership agreement, advertiser cancellation/content policy and actual commercial terms |
-| Monitoring/security | API observability, error tracking, immutable audit trails, incident procedures, threat modeling and vulnerability testing |
-| Hosting and accessibility | Account-owned Vercel project, HTTPS, environment security, tested domain, cross-browser/manual QA and privacy sign-off |
+- [Engineering and feature report](ENGINEERING_READINESS_REPORT.md)
+- [QA results and evidence](QA_RESULTS.md)
+- [Browser screenshots and visual review](BROWSER_VISUAL_QA.md)
+- [Performance and accessibility measurements](PERFORMANCE_AND_ACCESSIBILITY.md)
+- [Launch checklist](TESTING_LAUNCH_CHECKLIST.md)
+- [Owner actions and blockers](KNOWN_BLOCKERS.md)
+- [Security review](SECURITY_REVIEW.md)
+- [Provider status](PROVIDER_INTEGRATION_STATUS.md)
+- [Deployment/environment guide](DEPLOYMENT_AND_ENVIRONMENT.md)
+- [Recovery runbook](BACKUP_AND_RECOVERY_RUNBOOK.md)
+- [Cost/quota plan](COST_AND_QUOTA_PLAN.md)
 
-Suggested order: legal/product approval and service contracts; secure API identity and database; asset/media/inventory; payments and webhook reconciliation; driver compliance; device telemetry; bank payouts; support/notifications; security and manual acceptance; production deployment.
-
-## Safe demo-preview deployment
-
-A hosted **demo** may be used for design review after green CI, successful browser smoke, HTTPS, clear fictional-data disclosures, legal preview labeling and disabling indexing with SITE_INDEXING_ENABLED=false. Never enter production secrets under NEXT_PUBLIC variables. Do not accept real payments, identity files, account details or bookings.
-
-Part 23's health endpoint proves only the frontend responds; it cannot prove secure server auth, financial processing or live device connectivity.
+B23 admission flags and the evidence template remain unapproved. Payments, payouts, identity collection, booking/device activation and public indexing require their own evidence and authorization. No live launch or commercial rollout is implied by a successful build or PR.

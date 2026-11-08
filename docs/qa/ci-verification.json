@@ -1,0 +1,219 @@
+{
+  "date": "2026-11-07",
+  "repository": "Aayush20253534/advibe",
+  "pullRequest": 10,
+  "branch": "work/blinkmyad-production-readiness",
+  "environment": {
+    "node": "22.23.4",
+    "playwright": "1.56.1",
+    "container": "mcr.microsoft.com/playwright:v1.56.1-noble",
+    "postgresql": "16 disposable CI service",
+    "browserApi": "intercepted synthetic fixtures"
+  },
+  "checkpoints": [
+    {
+      "commit": "fe0bac790e85db20a21afd77b6bfd78d73f7b0b4",
+      "runId": 42399346735,
+      "url": "https://github.com/Aayush20253534/advibe/actions/runs/42399346735",
+      "jobs": [
+        {
+          "id": 128483537067,
+          "name": "Express B23 production-gated B0\u2013B23 backend tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128483537108,
+          "name": "verify",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128483537115,
+          "name": "B23 real encrypted PostgreSQL backup/restore drill (synthetic data)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128483892123,
+          "name": "API-mode browser checks (firefox)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128483892190,
+          "name": "API-mode browser checks (webkit)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128483892211,
+          "name": "API-mode browser checks (chromium)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128484429298,
+          "name": "B23 release preparation and fail-closed evidence validation",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "screenshots": 45,
+      "axeReports": 45,
+      "axeViolations": 0
+    },
+    {
+      "commit": "f4d973ed3b38e577a01560cf1c308cfdc7e3033f",
+      "runId": 42399736804,
+      "url": "https://github.com/Aayush20253534/advibe/actions/runs/42399736804",
+      "jobs": [
+        {
+          "id": 128484712004,
+          "name": "verify",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128484712182,
+          "name": "B23 real encrypted PostgreSQL backup/restore drill (synthetic data)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128484712199,
+          "name": "Express B23 production-gated B0\u2013B23 backend tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128485127404,
+          "name": "API-mode browser checks (chromium)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128485127443,
+          "name": "API-mode browser checks (firefox)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128485127445,
+          "name": "API-mode browser checks (webkit)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128485905747,
+          "name": "B23 release preparation and fail-closed evidence validation",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13585435845,
+          "name": "browser-evidence-firefox",
+          "bytes": 11138841,
+          "digest": "sha256:b4ef2fdc88f1cfb372f4dd3f9cf0e89fd51daeb9ae648f597ce9a594e8897383"
+        },
+        {
+          "id": 13584584816,
+          "name": "browser-evidence-chromium",
+          "bytes": 11587422,
+          "digest": "sha256:a74cb6a0e4c027325450394046c0429ef845f7fd1ebb490478acf18d74ddfd48"
+        },
+        {
+          "id": 13584553366,
+          "name": "browser-evidence-webkit",
+          "bytes": 8673296,
+          "digest": "sha256:3b024a95b08d27c7246e14dda7c0eff180a3338061f5a4ef9a42585a59c4a62a"
+        }
+      ],
+      "lighthouse": "Six measured mobile navigations; not field metrics"
+    },
+    {
+      "commit": "eaf2211b8a5bed47f42593e0bcd1708e7f58b3cc",
+      "runId": 42400468155,
+      "url": "https://github.com/Aayush20253534/advibe/actions/runs/42400468155",
+      "jobs": [
+        {
+          "id": 128486905133,
+          "name": "verify",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128486905379,
+          "name": "B23 real encrypted PostgreSQL backup/restore drill (synthetic data)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128486905413,
+          "name": "Express B23 production-gated B0\u2013B23 backend tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128487183211,
+          "name": "API-mode browser checks (webkit)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128487183259,
+          "name": "API-mode browser checks (firefox)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128487183282,
+          "name": "API-mode browser checks (chromium)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 128487909270,
+          "name": "B23 release preparation and fail-closed evidence validation",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": 13585038585,
+          "name": "browser-evidence-firefox",
+          "bytes": 11138841,
+          "digest": "sha256:51d6ab742c7d4307593c905a08ef0dd78ad0af2d17f8a697fb6d71ebecd246ed"
+        },
+        {
+          "id": 13585003727,
+          "name": "browser-evidence-webkit",
+          "bytes": 8673296,
+          "digest": "sha256:89e830f05b2f2b8ecc1329e2f726846357eea79a61fe219622dd6b8a6f9f852c"
+        },
+        {
+          "id": 13584643609,
+          "name": "browser-evidence-chromium",
+          "bytes": 11608491,
+          "digest": "sha256:6a0f1570aca20c36ca5f0a8b4056082d3a63c3e574424ef703661b24b96a41f0"
+        }
+      ],
+      "screenshots": 45,
+      "axeReports": 45,
+      "axeViolations": 0,
+      "screenshotHashesMatchPriorGreenRun": true,
+      "lighthouseSummary": "lighthouse-summary.json"
+    }
+  ],
+  "limits": [
+    "No real provider E2E",
+    "No hosted staging verification",
+    "Browser fixture and separate real-DB suites are distinct",
+    "Release-evidence job validates fail-closed gates, not approval",
+    "Lighthouse measurement success does not imply every numerical goal is met"
+  ],
+  "primaryEvidenceCommit": "eaf2211b8a5bed47f42593e0bcd1708e7f58b3cc"
+}

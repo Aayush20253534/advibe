@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import {PublishedAreaMap} from "@/components/public/published-area-map";
 import {api,newIdempotencyKey} from "@/services/api-client";
 import {StatusTag,useAuth,useCollection,Panel,Notice,CollectionNotice,Pagination,field,label,primary,secondary,message,money,formatDate,
  type Campaign,type Site,type ScreenFormat,type Quote,type Payment} from "./common";
@@ -58,7 +59,7 @@ export function BusinessSettings(){
   </Panel>
   {business&&!newBusiness&&<Panel title="Business verification">
    <Tag name={business.verificationStatus}/>
-   <p className="text-sm text-ink-muted">AdVibe verifies businesses separately. Editing these details doesn&apos;t change the verification status.</p>
+   <p className="text-sm text-ink-muted">BlinkMyAd verifies businesses separately. Editing these details doesn&apos;t change the verification status.</p>
   </Panel>}
  </div>;
 }
@@ -70,14 +71,16 @@ export function Directory({kind}:{kind:"locations"|"ad-formats"}){
  return <div className="space-y-5">
   <Notice>A listed location or screen isn&apos;t a guarantee that it can be booked. Availability is confirmed when you request a quote in Billing and payments.</Notice>
   {kind==="locations"&&<Panel title="Locations">
-   <label className={label}>Search Prayagraj area or location<input className={field+" max-w-lg"} value={search} onChange={e=>setSearch(e.target.value)}/></label>
+   <label className={label}>Search areas on this page<input className={field+" max-w-lg"} value={search} onChange={e=>setSearch(e.target.value)}/></label>
    <CollectionNotice busy={sites.busy} error={sites.error} length={sites.rows.length}/>
    <div className="mt-4 grid gap-3 sm:grid-cols-2">
     {sites.rows.filter(s=>[s.name,s.city,s.zone].join(" ").toLowerCase().includes(search.toLowerCase())).map(s=><div key={s.id} className="rounded-lg border border-line p-4">
      <p className="font-bold text-ink">{s.name}</p><p className="mt-1 text-sm text-ink-muted">{s.zone}, {s.city}</p>
      <p className="mt-2 text-xs text-ink-muted">Published area. Screen and booking availability are confirmed separately.</p>
     </div>)}
-   </div><Pagination busy={sites.busy} next={sites.next} more={sites.more} first={sites.first}/>
+   </div>
+   {!sites.busy&&!sites.error&&<PublishedAreaMap locations={sites.rows.filter(s=>[s.name,s.city,s.zone].join(" ").toLowerCase().includes(search.toLowerCase()))}/>}
+   <Pagination hasPrevious={sites.hasPrevious} busy={sites.busy} next={sites.next} more={sites.more} first={sites.first}/>
   </Panel>}
   {kind==="ad-formats"&&<Panel title="Ad formats">
    <CollectionNotice busy={formats.busy} error={formats.error} length={formats.rows.length}/>
@@ -94,7 +97,7 @@ export function Directory({kind}:{kind:"locations"|"ad-formats"}){
      <p className="mt-1 text-sm text-ink-muted">{s.location} · {s.zone}, {s.city}</p>
      <p className="mt-2 break-all text-xs text-ink-subtle">Screen ID: {s.id}</p>
     </div>)}</div>
-   <Pagination busy={inventory.busy} next={inventory.next} more={inventory.more} first={inventory.first}/>
+   <Pagination hasPrevious={inventory.hasPrevious} busy={inventory.busy} next={inventory.next} more={inventory.more} first={inventory.first}/>
   </Panel>
  </div>;
 }
@@ -164,8 +167,8 @@ export function MoneyAndQuotes(){
     <div><p className="font-bold">{money(p.amountPaise)}</p><p className="text-xs text-ink-muted">Payment order {p.orderId}</p></div>
     <Tag name={p.status??p.state??"unknown"}/>
    </div>)}</div>
-   <Pagination busy={payments.busy} next={payments.next} more={payments.more} first={payments.first}/>
-   <Notice kind="warning">Online payment isn&apos;t available here yet. A payment only counts as paid once AdVibe confirms it with the payment provider.</Notice>
+   <Pagination hasPrevious={payments.hasPrevious} busy={payments.busy} next={payments.next} more={payments.more} first={payments.first}/>
+   <Notice kind="warning">Online payment isn&apos;t available here yet. A payment only counts as paid once BlinkMyAd confirms it with the payment provider.</Notice>
   </Panel>
  </div>;
 }
@@ -217,7 +220,7 @@ export function AccountNotifications(){
     <p className="mt-2 text-xs text-ink-subtle">{formatDate(n.createdAt)}</p></div>
     {n.readAt?<Tag name="read"/>:<button className={secondary} disabled={busy===n.id} onClick={()=>void read(n.id)}>Mark read</button>}
    </div>
-  </div>)}</div><Pagination busy={notifications.busy} next={notifications.next} more={notifications.more} first={notifications.first}/>
+  </div>)}</div><Pagination hasPrevious={notifications.hasPrevious} busy={notifications.busy} next={notifications.next} more={notifications.more} first={notifications.first}/>
  </Panel>;
 }
 export function AccountSupport(){
@@ -265,7 +268,7 @@ export function AccountSupport(){
      <label className={label}>Message<textarea required maxLength={2000} className={field} rows={3} value={reply} onChange={e=>setReply(e.target.value)}/></label>
      <button className={primary} disabled={busy||!reply.trim()}>Send message</button>
     </form>}
-   </div>)}</div><Pagination busy={tickets.busy} next={tickets.next} more={tickets.more} first={tickets.first}/>
+   </div>)}</div><Pagination hasPrevious={tickets.hasPrevious} busy={tickets.busy} next={tickets.next} more={tickets.more} first={tickets.first}/>
   </Panel>
  </div>;
 }

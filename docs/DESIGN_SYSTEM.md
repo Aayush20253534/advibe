@@ -68,3 +68,11 @@ Plain, active and specific. Buttons say exactly what happens ("Submit for review
 
 - `BASE_URL=http://127.0.0.1:3000 npm run test:visual` against a running production build compares `/design-system` at 390 and 1440px with `tests/visual/baselines`, runs axe (WCAG 2.2 AA) on the page and with the dialog and drawer open, checks focus returns after closing the dialog, and fails on horizontal overflow or console errors. Add `-- --update` to rewrite baselines after an intended visual change. Baselines were captured on Linux with Playwright's Chromium; font rendering differs on other platforms. This check is not part of CI.
 - Prettier (`.prettierrc.json`) formats only files touched by the redesign: `npx prettier --write <files>`.
+
+## Current engineering additions
+
+`src/config/brand.ts` separates the BlinkMyAd product name from approved legacy artwork and internal `ADVIBE_*` identifiers. `BrandLogo` resolves the public asset from that configuration. Existing BMA auth artwork remains unchanged; this does not resolve the owner's artwork approval decision.
+
+`CursorPagination` provides keyboard-accessible First/Next controls and last-page feedback. Callers must pass whether a previous cursor exists so users can return from the final page. Existing color, type, spacing, skeleton, dialog, table and chart systems are retained.
+
+The obsolete generic `ApiSection`, its dynamic data dumping and duplicate forms were removed. Dedicated advertiser, driver and admin screens remain the live routes. Security assertions now point to those active implementations; no security tests were deleted.

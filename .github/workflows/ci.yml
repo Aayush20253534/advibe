@@ -15,21 +15,21 @@ jobs:
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: ESLint
         run: npm run lint
       - name: TypeScript
         run: npm run typecheck
-      - name: Backend-only frontend integration contracts
-        run: npm run test:integration
-      - name: Backend B0 OpenAPI contract tests
-        run: npm run test:contracts
+      - name: All frontend unit, runtime and legacy contract regressions
+        run: npm run test:all
+      - name: Current backend route contract
+        run: npm run contracts:check
       - name: Production build
         run: npm run build
 
@@ -61,13 +61,13 @@ jobs:
       DIRECT_URL: postgresql://advibe_ci:ci_only_password@localhost:5432/advibe_ci?schema=public
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Install isolated backend dependencies
-        run: npm install --prefix backend --no-audit --no-fund
+        run: npm ci --prefix backend --no-audit --no-fund
       - name: Validate Prisma schema
         run: npm --prefix backend run db:validate
       - name: Apply versioned PostgreSQL migrations
@@ -78,7 +78,11 @@ jobs:
         run: npm --prefix backend run db:migrate:deploy
 
   live-portal-smoke:
-    name: B22 authenticated API-mode cross-portal Chromium
+    name: API-mode browser checks (${{ matrix.browser }})
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.56.1-noble
@@ -90,19 +94,23 @@ jobs:
     env:
       NEXT_TELEMETRY_DISABLED: "1"
       ADVIBE_BACKEND_ORIGIN: "https://api.example.invalid"
+      PLAYWRIGHT_BROWSER: ${{ matrix.browser }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Assert API-mode proxy, auth and portal boundaries
         run: node --test tests/b22-api-integration.test.mjs
       - name: Build authenticated API frontend
         run: npm run build
+      - name: Match Firefox home ownership to the ephemeral container user
+        if: matrix.browser == 'firefox'
+        run: chown "$(id -u):$(id -g)" "$HOME"
       - name: Run cross-role API mode browser smoke with intercepted contract data
         shell: bash
         run: |
@@ -122,16 +130,23 @@ jobs:
             cat /tmp/advibe-b22-next.log
             exit 1
           fi
-          BASE_URL=http://127.0.0.1:3101 npm run test:live-browser
-          BASE_URL=http://127.0.0.1:3101 npm run test:auth-browser
-          BASE_URL=http://127.0.0.1:3101 npm run test:portal-shell
-      - name: Save live browser failure screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
+          browser_failures=0
+          BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:live-browser || browser_failures=$((browser_failures + 1))
+          BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:auth-browser || browser_failures=$((browser_failures + 1))
+          BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:portal-shell || browser_failures=$((browser_failures + 1))
+          BASE_URL=http://127.0.0.1:3101 timeout 240s npm run test:public-browser || browser_failures=$((browser_failures + 1))
+          if [ "$PLAYWRIGHT_BROWSER" = chromium ]; then
+            BASE_URL=http://127.0.0.1:3101 timeout 900s node scripts/lighthouse-mobile.mjs || browser_failures=$((browser_failures + 1))
+          fi
+          test "$browser_failures" -eq 0
+      - name: Save synthetic browser screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: b22-live-browser-failures
+          name: browser-evidence-${{ matrix.browser }}
           path: test-results/
           if-no-files-found: ignore
+          retention-days: 7
 
   encrypted-restore-drill:
     name: B23 real encrypted PostgreSQL backup/restore drill (synthetic data)
@@ -160,7 +175,7 @@ jobs:
       PGPASSWORD: ci_only_b23_password
       PGSSLMODE: prefer
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Install age and PostgreSQL client
         run: |
           sudo apt-get update -qq
@@ -199,8 +214,8 @@ jobs:
       contents: read
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
       - name: Test B23 operational controls and unapproved release defaults

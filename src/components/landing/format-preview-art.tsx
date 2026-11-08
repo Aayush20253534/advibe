@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Placement } from "@/types/domain";
 
 // AI-generated illustrations supplied by the owner (public/images/formats). They show how a
-// placement could look; they are not photographs of real AdVibe installations, and are labelled.
+// placement could look; they are not photographs of real BlinkMyAd installations, and are labelled.
 const photos: Partial<Record<Placement, { src: string; alt: string }>> = {
   auto_rear: {
     src: "/images/formats/auto-rear.webp",

@@ -2,7 +2,7 @@
 import * as React from "react";
 import {apiPage,ApiError} from "@/services/api-client";
 import type {LiveSession} from "@/services/api-client";
-import {Alert,buttonVariants,SkeletonList,StatusBadge,type StatusTone} from "@/components/ui";
+import {Alert,CursorPagination,buttonVariants,SkeletonList,StatusBadge,type StatusTone} from "@/components/ui";
 import {controlClass} from "@/components/ui/input";
 import {cn} from "@/lib/utils";
 export type Business={id:string;slug:string;displayName:string;city:string|null;legalName:string|null;verificationStatus:string};
@@ -40,7 +40,7 @@ export function useCollection<T>(path:string|null){
   return ()=>{active=false;controller.abort();};
  },[path,cursor,version,key]);
  const ready=!!path&&response.key===key;
- return {rows:ready?response.rows:[] as T[],next:ready?response.next:null,
+ return {rows:ready?response.rows:[] as T[],next:ready?response.next:null,hasPrevious:!!cursor,
   busy:!!path&&!ready,error:ready?response.error:"",
   refresh:()=>setVersion(v=>v+1),
   first:()=>setPage({path,cursor:null}),
@@ -66,12 +66,8 @@ export const field=cn(controlClass,"mt-1.5 block min-h-11 py-2");
 export const primary=buttonVariants({variant:"primary"});
 export const secondary=buttonVariants({variant:"outline"});
 export const label="block text-sm font-semibold text-ink";
-export function Pagination({busy,next,more,first}:{busy:boolean;next:string|null;more:()=>void;first:()=>void}){
- if(!next&&!busy)return null;
- return <div className="flex flex-wrap gap-2 pt-2">
-  <button type="button" className={buttonVariants({variant:"outline",size:"sm"})} onClick={first} disabled={busy}>First page</button>
-  {next&&<button type="button" className={buttonVariants({variant:"outline",size:"sm"})} onClick={more} disabled={busy}>Next page</button>}
- </div>;
+export function Pagination({busy,next,hasPrevious,more,first}:{busy:boolean;next:string|null;hasPrevious:boolean;more:()=>void;first:()=>void}){
+ return <CursorPagination busy={busy} hasPrevious={hasPrevious} hasNext={!!next} onFirst={first} onNext={more}/>;
 }
 /** Loading, error and empty states for a fetched list. */
 export function CollectionNotice({busy,error,length,empty="Nothing here yet."}:{busy:boolean;error:string;length:number;empty?:React.ReactNode}){

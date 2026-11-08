@@ -87,7 +87,7 @@ export function DriverVehicleTabs() {
           long the screen is online and your partner agreement.
         </p>
         <p className="mt-4 rounded-lg border border-white/25 p-4 text-sm">
-          AdVibe does not publish a guaranteed monthly amount. You see the confirmed rate in your
+          BlinkMyAd does not publish a guaranteed monthly amount. You see the confirmed rate in your
           agreement before you sign.
         </p>
         <Link href="/signup?role=driver" className={primaryButton + " mt-6 w-full"}>

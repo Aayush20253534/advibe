@@ -5,7 +5,8 @@ import {PortalShell} from "@/components/portal/portal-shell";
 import {PortalAccessRequired,PortalLoading} from "@/components/portal/portal-access";
 import {api,liveSession} from "@/services/api-client";
 import type {LiveSession} from "@/services/api-client";
-import {AdminContext,explain} from "./common";
+import {useSessionExpiry} from "@/services/use-session-expiry";
+import {AdminContext,explain,Alert} from "./common";
 /** Session and MFA-verified role check for every admin page (rendered by the layout). */
 export function AdminPortal({children}:{children:React.ReactNode}){
  const router=useRouter(),pathname=usePathname();
@@ -36,6 +37,7 @@ export function AdminPortal({children}:{children:React.ReactNode}){
   document.addEventListener("visibilitychange",verify);
   return ()=>{active=false;document.removeEventListener("visibilitychange",verify);};
  },[]);
+ useSessionExpiry(session,React.useCallback(()=>{setSession(null);setError("Your session has expired. Sign in with Admin MFA again.");},[]));
  async function signOut(){
   if(!session)return;
   try{
@@ -58,6 +60,7 @@ export function AdminPortal({children}:{children:React.ReactNode}){
   retryLabel="Retry secure session" onRetry={()=>{setLoading(true);setRetry(v=>v+1);}}/>;
  return <AdminContext.Provider value={{session}}>
   <PortalShell role="admin" pathname={pathname} title={titles[path]} onSignOut={()=>void signOut()}>
+   {error&&<Alert type="error">{error}</Alert>}
    {children}
   </PortalShell>
  </AdminContext.Provider>;

@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-07T17:37:07.782Z",
+  "environment": "Disposable local PostgreSQL 16.15; synthetic suite fixtures only",
+  "tools": {
+    "pg_dump": "pg_dump (PostgreSQL) 16.15 (Debian 16.15-1.pgdg13+2)",
+    "age": "1.2.1"
+  },
+  "backupMs": 188,
+  "restoreMs": 1347,
+  "encryptedBytes": 334516,
+  "encryptedMode": "600",
+  "archiveSha256": "c9b9e9df63108a82c9cc296da028228eb6f8f50f2a7b3e4ddf25efbe4e9a0059",
+  "counts": {
+    "users": 80,
+    "migrations": 20,
+    "auditEvents": 143,
+    "tables": 70
+  },
+  "nonemptyRestoreRejected": true,
+  "liveRecoveryVerified": false
+}

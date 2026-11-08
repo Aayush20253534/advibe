@@ -22,7 +22,7 @@ export function CoverageExplorer() {
           <span className="inline-flex items-center gap-2 text-sm font-semibold text-signal"><MapPin className="size-4" aria-hidden="true" /> OUR FIRST CITY</span>
           <h2 id="coverage-heading" className="mt-4 font-heading text-3xl font-bold tracking-tight text-ink sm:text-4xl">Local focus. Real-world routes.</h2>
           <p className="mt-4 max-w-xl text-lg leading-7 text-ink-muted">
-            AdVibe is focusing on Prayagraj for its first launch. Explore familiar parts of the city while our team prepares approved screen inventory.
+            BlinkMyAd is focusing on Prayagraj for its first launch. Explore familiar parts of the city while our team prepares approved screen inventory.
           </p>
           <div className="mt-7 grid gap-2 sm:grid-cols-3 lg:grid-cols-1">
             {areas.map((area) => (

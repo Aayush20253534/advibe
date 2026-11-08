@@ -10,6 +10,7 @@
 
 # Next.js
 /.next/
+next-env.d.ts
 /out/
 /build
 /dist
@@ -36,6 +37,10 @@ coverage/
 playwright-report/
 test-results/
 
-# Development-only mock email outbox. Contains OTP and reset secrets; never commit.\n/backend/.mock-local/\n/.mock-local/\n\n# B1 backend artifacts
+# Development-only mock email outbox. Contains OTP and reset secrets; never commit.
+/backend/.mock-local/
+/.mock-local/
+
+# B1 backend artifacts
 /backend/node_modules/
 /backend/dist/

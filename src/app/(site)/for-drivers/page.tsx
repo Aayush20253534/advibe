@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import {
   Benefits,
   CTA,
@@ -15,18 +15,14 @@ import { DriverVehicleTabs } from "@/components/public/driver-vehicle-tabs";
 import { FAQList } from "@/components/public/faq-list";
 import { publicFAQs } from "@/components/public/faq-data";
 
-export const metadata: Metadata = {
-  title: "Become an AdVibe Driver Partner",
-  description:
-    "Explore the AdVibe driver partnership program for Prayagraj, including vehicle eligibility, verification and reviewed earnings.",
-};
+export const metadata = publicMetadata("/for-drivers", "Become a BlinkMyAd Driver Partner", "Explore the BlinkMyAd driver partnership program for Prayagraj, including vehicle eligibility, verification and reviewed earnings.");
 
 // Purpose: tell a driver what partnering involves, what they need and how they get paid.
 export default function Page() {
   return (
     <>
       <PageHero
-        title="Drive in Prayagraj? Explore partnering with AdVibe"
+        title="Drive in Prayagraj? Explore partnering with BlinkMyAd"
         description="Apply to carry approved advertising screens on your vehicle during regular Prayagraj routes. Installation and earning eligibility depend on verification, approved hardware and the partner agreement."
         actions={[
           { label: "Apply as a driver partner", href: "/signup?role=driver" },
@@ -34,7 +30,7 @@ export default function Page() {
         ]}
       />
       <Section labelledBy="why">
-        <Heading id="why" title="What partnering with AdVibe means" />
+        <Heading id="why" title="What partnering with BlinkMyAd means" />
         <Benefits items={driverBenefits} />
       </Section>
       <Section muted labelledBy="vehicles">

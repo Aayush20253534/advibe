@@ -1,12 +1,13 @@
 import assert from "node:assert/strict";
-import {chromium} from "playwright";
+import {launchBrowser} from "./browser-engine.mjs";
+import {saveBrowserFailure} from "./browser-evidence.mjs";
 const BASE=process.env.BASE_URL||"http://127.0.0.1:3101";
 const uid="11111111-1111-4111-8111-111111111111";
 const campaignId="22222222-2222-4222-8222-222222222222";
 const ownerId="33333333-3333-4333-8333-333333333333";
 const creativeId="44444444-4444-4444-8444-444444444444";
 const ensure=async(page,path)=>{await page.goto(BASE+path,{waitUntil:"domcontentloaded"});};
-const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+const browser=await launchBrowser();
 let passes=0;
 try{
  for(const role of ["advertiser","driver","admin"]){
@@ -66,10 +67,10 @@ try{
   assert.equal(await page.getByText("Continue as demo "+role).count(),0);
   await ensure(page,"/login?next=%2F"+role);
   await page.getByLabel("Email").fill("verified@example.invalid");
-  await page.getByLabel("Password").fill("valid-live-password");
+  await page.getByLabel("Password",{exact:true}).fill("valid-live-password");
   await page.getByRole("button",{name:"Sign in",exact:true}).click();
   if(role==="admin"){
-   await page.getByText("Enter your authenticator's 6-digit code.").waitFor();
+   await page.getByRole("heading",{level:1,name:"Verify authenticator",exact:true}).waitFor();
    await page.getByLabel("Authenticator code").fill("123456");
    await page.getByRole("button",{name:"Verify authenticator"}).click();
   }
@@ -116,4 +117,5 @@ try{
   passes++;await context.close();
  }
  console.log("B22 live browser API-mode role flows passed: "+passes+"/3");
-}finally{await browser.close();}
+}catch(error){await saveBrowserFailure(browser,"role-flows",error);throw error;}
+finally{await browser.close();}

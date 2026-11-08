@@ -5,7 +5,8 @@
 //
 // Set PW_CHROMIUM_PATH to use a specific Chromium binary.
 import assert from "node:assert/strict";
-import { chromium } from "playwright";
+import {launchBrowser} from "./browser-engine.mjs";
+import {saveBrowserEvidence} from "./browser-evidence.mjs";
 import { AxeBuilder } from "@axe-core/playwright";
 
 const BASE = process.env.BASE_URL || "http://127.0.0.1:3101";
@@ -42,11 +43,7 @@ const roles = {
   },
 };
 
-const browser = await chromium.launch(
-  process.env.PW_CHROMIUM_PATH
-    ? { executablePath: process.env.PW_CHROMIUM_PATH, args: ["--no-sandbox"] }
-    : { args: ["--no-sandbox"] },
-);
+const browser=await launchBrowser();
 
 /** A context whose backend answers as `sessionRole` (null = signed out). */
 async function portalContext(sessionRole, viewport = { width: 1440, height: 900 }) {
@@ -112,6 +109,7 @@ async function axeClean(page, label) {
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .analyze();
   const serious = result.violations.filter((v) => ["serious", "critical"].includes(v.impact));
+  await saveBrowserEvidence(page, label, { violations: result.violations });
   assert.deepEqual(
     serious.map((v) => v.id),
     [],

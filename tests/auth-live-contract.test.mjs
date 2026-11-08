@@ -19,5 +19,5 @@ test("email deep links and protected portal sessions are present",()=>{
  assert.match(backend,/resend-verification/);
  const portal=read("src/features/live/api-portal.tsx");
  assert.match(portal,/visibilitychange/);
- assert.match(portal,/e\.status===401/);
+ assert.match(read("src/features/driver-live/common.tsx"),/e\.status === 401/);
 });

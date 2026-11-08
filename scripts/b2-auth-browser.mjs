@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
-import {chromium} from "playwright";
+import {launchBrowser} from "./browser-engine.mjs";
+import {saveBrowserFailure} from "./browser-evidence.mjs";
 const BASE=process.env.BASE_URL||"http://127.0.0.1:3101";
 const id="11111111-1111-4111-8111-111111111111";
-const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
+const browser=await launchBrowser();
 try{
  const context=await browser.newContext();
  const page=await context.newPage();
@@ -25,6 +26,7 @@ try{
   if(path==="/auth/forgot-password")return send(201,{message:"If eligible"});
   if(path==="/auth/reset-password"){
    assert.ok(body.resetToken.startsWith(id+"."));
+   assert.equal(body.newPassword,"SecureSecondPassword!2026");
    return send(201,{message:"Password updated"});
   }
   if(path==="/auth/login"){signedIn=true;return send(201,{userId:id,role:"driver"});}
@@ -40,7 +42,7 @@ try{
  assert.equal(await page.getByLabel("Account type").inputValue(),"driver");
  await page.getByLabel("Full name").fill("Example Driver");
  await page.getByLabel("Email").fill("driver@example.invalid");
- await page.getByLabel("Password").fill("SecurePasswordForTesting!2026");
+ await page.getByLabel("Password",{exact:true}).fill("SecurePasswordForTesting!2026");
  await page.getByRole("button",{name:"Register"}).click();
  await page.waitForURL("**/verify?challengeId="+id);
  await page.reload();
@@ -49,15 +51,17 @@ try{
  await page.getByRole("button",{name:"Verify",exact:true}).click();
  await page.waitForURL("**/login?verified=1");
  await page.goto(BASE+"/forgot-password");
- await page.getByLabel("Email").fill("driver@example.invalid");
- await page.getByRole("button",{name:"Send recovery email"}).click();
- await page.getByText("If the account is eligible, recovery instructions have been sent.").waitFor();
+ await page.getByLabel("Email address",{exact:true}).fill("driver@example.invalid");
+ await page.getByRole("button",{name:"Send reset link",exact:true}).click();
+ await page.getByRole("status").filter({hasText:"If your account is eligible, a recovery link will be sent."}).waitFor();
  await page.goto(BASE+"/reset-password#token="+id+"."+"b".repeat(43));
- await page.getByLabel("New password").fill("SecureSecondPassword!2026");
+ await page.getByLabel("New password",{exact:true}).fill("SecureSecondPassword!2026");
+ await page.getByLabel("Confirm new password",{exact:true}).fill("SecureSecondPassword!2026");
+ assert.equal(new URL(page.url()).hash,"","Recovery token is removed from the address bar");
  await page.getByRole("button",{name:"Reset password"}).click();
  await page.waitForURL("**/login?reset=1");
  await page.getByLabel("Email").fill("driver@example.invalid");
- await page.getByLabel("Password").fill("SecureSecondPassword!2026");
+ await page.getByLabel("Password",{exact:true}).fill("SecureSecondPassword!2026");
  await page.getByRole("button",{name:"Sign in",exact:true}).click();
  await page.waitForURL("**/driver");
  for(const endpoint of ["/auth/register","/auth/verify","/auth/forgot-password",
@@ -65,4 +69,5 @@ try{
   assert.ok(actions.some(x=>x.path===endpoint),endpoint);
  console.log("Part 2 auth browser contract passed");
  await context.close();
-}finally{await browser.close();}
+}catch(error){await saveBrowserFailure(browser,"auth",error);throw error;}
+finally{await browser.close();}

@@ -21,14 +21,17 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
  const [error,setError]=React.useState("");
  const [notice,setNotice]=React.useState("");
  const [tokenLoaded,setTokenLoaded]=React.useState(mode==="forgot");
+ const consumedToken=React.useRef<string|null>(null);
 
  React.useEffect(()=>{
   if(mode!=="reset")return;
-  const params=new URLSearchParams(window.location.hash.replace(/^#/,""));
-  const found=params.get("token")??"";
-  setToken(found);
-  setTokenLoaded(true);
+  // Retain only in this mounted form; Strict Mode can replay the effect after the URL is scrubbed.
+  if(consumedToken.current===null){
+   const params=new URLSearchParams(window.location.hash.replace(/^#/,""));
+   consumedToken.current=params.get("token")??"";
+  }
   if(window.location.hash)window.history.replaceState(null,"",window.location.pathname+window.location.search);
+  React.startTransition(()=>{setToken(consumedToken.current??"");setTokenLoaded(true);});
  },[mode]);
 
  const validPassword=password.length>=12&&password.length<=128&&/[A-Z]/.test(password)&&/[a-z]/.test(password)&&/[^A-Za-z0-9\s]/.test(password);
@@ -49,12 +52,12 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
     setNotice("If your account is eligible, a recovery link will be sent. Check your inbox and spam folder. The link expires in 20 minutes.");
    }else{
     await api("/auth/reset-password",{method:"POST",body:{resetToken:token,newPassword:password}});
-    setPassword("");setConfirm("");setToken("");
+    setPassword("");setConfirm("");setToken("");consumedToken.current="";
     router.replace("/login?reset=1");router.refresh();
    }
   }catch(err){
    if(mode==="reset"&&err instanceof ApiError&&err.code==="INVALID_CREDENTIALS"){
-    setToken("");setError("This recovery link has expired or has already been used. Request another link.");
+    setToken("");consumedToken.current="";setError("This recovery link has expired or has already been used. Request another link.");
    }else{
     setError(err instanceof ApiError?err.message:"The authentication service could not be reached. Please try again.");
    }
@@ -111,7 +114,7 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
    {error&&<p role="alert" className="rounded-lg border border-[#f1c2c2] bg-[#fff1f1] px-3 py-2 text-sm text-[#a32424]">{error}</p>}
    {notice&&<p role="status" className="rounded-lg border border-[#bcdccb] bg-[#f0faf3] px-3 py-3 text-sm text-[#245a3c]">{notice}</p>}
    <button type="submit" disabled={loading||(mode==="reset"&&(!token||!tokenLoaded))}
-    className="flex h-[46px] w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1559f6] via-[#056eff] to-[#079ff7] text-[15px] font-semibold text-white shadow-[0_8px_20px_rgba(18,90,235,.18)] hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1859ed] disabled:cursor-not-allowed disabled:opacity-60">
+    className="flex h-[46px] w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1559d6] via-[#075dcc] to-[#0064c8] text-[15px] font-semibold text-white shadow-[0_8px_20px_rgba(18,90,235,.18)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1859ed] disabled:cursor-not-allowed disabled:opacity-60">
     {loading?"Submitting…":mode==="forgot"?"Send reset link":"Reset password"}
    </button>
   </form>

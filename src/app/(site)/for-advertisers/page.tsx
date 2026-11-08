@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { publicMetadata } from "@/config/public-metadata";
 import {
   Benefits,
   CTA,
@@ -14,11 +14,7 @@ import {
 import { FAQList } from "@/components/public/faq-list";
 import { publicFAQs } from "@/components/public/faq-data";
 
-export const metadata: Metadata = {
-  title: "For Advertisers | Vehicle Screen Campaigns",
-  description:
-    "Explore vehicle-screen advertising formats and campaign planning in Prayagraj with AdVibe.",
-};
+export const metadata = publicMetadata("/for-advertisers", "For Advertisers | Vehicle Screen Campaigns", "Explore vehicle-screen advertising formats and campaign planning in Prayagraj with BlinkMyAd.");
 
 // Purpose: explain to a business what running a campaign involves and what it controls.
 export default function Page() {

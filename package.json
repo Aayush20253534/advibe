@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "check": "npm run lint && npm run typecheck && npm run test:integration && npm run test:contracts && npm run build",
+    "check": "npm run lint && npm run typecheck && npm run test:all && npm run contracts:check && npm run build",
     "health:deployment": "node scripts/deployment-health.mjs",
     "test:contracts": "node --test tests/backend-contract.test.mjs",
     "test:live-browser": "node scripts/b22-live-browser.mjs",
@@ -22,7 +22,12 @@
     "test:mock-contract": "node --test tests/external-mock-font-contract.test.mjs",
     "test:admin-live": "node --test tests/b4-admin-live-contract.test.mjs",
     "test:visual": "node scripts/visual-design-system.mjs",
-    "test:portal-shell": "node scripts/portal-shell-browser.mjs"
+    "test:portal-shell": "node scripts/portal-shell-browser.mjs",
+    "test:client": "node scripts/test-frontend.mjs --runtime",
+    "contracts:update": "node scripts/api-route-contract.mjs",
+    "contracts:check": "node scripts/api-route-contract.mjs --check",
+    "test:all": "node scripts/test-frontend.mjs",
+    "test:public-browser": "node scripts/public-browser.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.0",
@@ -51,10 +56,12 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.4.2",
+    "lighthouse": "13.6.0",
     "playwright": "1.56.1",
     "postcss": "^8.5.0",
     "prettier": "^3.9.10",
     "tailwindcss": "^4.0.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3"
   },
   "overrides": {
@@ -62,7 +69,10 @@
     "@typescript-eslint/parser": "8.72.0",
     "@typescript-eslint/type-utils": "8.72.0",
     "@typescript-eslint/utils": "8.72.0",
-    "@typescript-eslint/typescript-estree": "8.72.0",
+    "@typescript-eslint/typescript-estree": {
+      ".": "8.72.0",
+      "minimatch": "11.0.1"
+    },
     "@typescript-eslint/scope-manager": "8.72.0",
     "@typescript-eslint/visitor-keys": "8.72.0",
     "typescript-eslint": "8.72.0"

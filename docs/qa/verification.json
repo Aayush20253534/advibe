@@ -1,0 +1,247 @@
+{
+  "date": "2026-11-07",
+  "environment": {
+    "node": "24.22.1",
+    "platform": "Linux x64",
+    "postgresql": "16.15 disposable local instance",
+    "ciNode": "22.23.4; remote execution passed; see ci-verification.json"
+  },
+  "backend": {
+    "command": "npm run db:validate && npm run db:migrate:deploy && npm run check && npm run db:migrate:deploy",
+    "exitCode": 0,
+    "total": 222,
+    "passed": 222,
+    "failed": 0,
+    "skipped": 0,
+    "suites": [
+      {
+        "suite": "test",
+        "tests": 15,
+        "pass": 15,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:external-mocks",
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:api-route-inventory",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:api-boundaries",
+        "tests": 169,
+        "pass": 169,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:db",
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:auth",
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:security",
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:accounts",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:drivers",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:kyc",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:devices",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:geo",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:creatives",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:pricing",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:campaigns",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:reservations",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:payments",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:delivery",
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:player",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:telemetry",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:earnings",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:finance",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:support",
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:admin",
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "suite": "test:release",
+        "tests": 3,
+        "pass": 3,
+        "fail": 0,
+        "skipped": 0
+      }
+    ],
+    "logSha256": "7cf64befbe8a46dc7d5e25821ee2919827c819166340e9301dbafa6a177f7152"
+  },
+  "dependencyAudit": {
+    "frontend": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "backend": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    }
+  },
+  "browser": {
+    "status": "passed in GitHub Actions",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "publicWidths": [
+      390,
+      768,
+      1440
+    ],
+    "screenshotsPerMatrix": 45,
+    "axeReportsPerMatrix": 45,
+    "reportedAxeViolations": 0,
+    "evidence": "ci-verification.json",
+    "limits": "Synthetic intercepted API data; not real provider E2E or full manual accessibility acceptance"
+  },
+  "providerSandbox": "not executed",
+  "sourceSecretScan": {
+    "trackedFiles": 915,
+    "highConfidenceFindings": 0,
+    "scope": "working tree known key patterns only; not full-history or comprehensive"
+  },
+  "frontend": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "tests": 154,
+    "pass": 154,
+    "fail": 0,
+    "skipped": 0,
+    "logSha256": "91b22b506cb81be3e3ae588d9fc1527c814173e13b343a9926535e889e24e4b9",
+    "checkpointCommit": "eaf2211b8a5bed47f42593e0bcd1708e7f58b3cc"
+  }
+}
