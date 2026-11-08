@@ -45,6 +45,11 @@ services:
         sync: false
       - key: PRICING_TAX_POLICY_APPROVED
         value: "false"
+      # Optional providers stay off; no S3/Cashfree secret prompts until opted in.
+      - key: CLOUD_STORAGE_ENABLED
+        value: "false"
+      - key: CASHFREE_ENABLED
+        value: "false"
       - key: PAYMENTS_ENABLED
         value: "false"
       - key: B18_PAYOUTS_ENABLED

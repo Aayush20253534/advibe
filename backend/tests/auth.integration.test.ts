@@ -26,6 +26,7 @@ const settings = loadAuthSettings({
 }, config);
 
 test("B3 register, verification, session, reset, logout and security tests", async () => {
+  assert.deepEqual(config.integrations, { cloudStorage: false, cashfree: false });
   const db = new PrismaClient();
   const sent: AuthEmail[] = [];
   const app = createApp(config, createLogger(config), async () => { await db.user.count(); }, {

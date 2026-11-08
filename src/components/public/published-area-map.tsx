@@ -12,9 +12,10 @@ export function PublishedAreaMap({ locations }: { locations: Area[] }) {
   const [selected, setSelected] = useState("");
   const [enabled, setEnabled] = useState(false);
   const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY;
-  const valid = locations.filter((area) => mapsEmbedUrl(key, area.lat, area.lng));
+  const mapsEnabled = process.env.NEXT_PUBLIC_GOOGLE_MAPS_ENABLED;
+  const valid = locations.filter((area) => mapsEmbedUrl(key, area.lat, area.lng, mapsEnabled));
   const area = valid.find((item) => item.id === selected) ?? valid[0];
-  const url = area && mapsEmbedUrl(key, area.lat, area.lng);
+  const url = area && mapsEmbedUrl(key, area.lat, area.lng, mapsEnabled);
   if (!area || !url) return null;
 
   return (

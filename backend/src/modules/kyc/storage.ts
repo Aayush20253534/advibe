@@ -1,6 +1,7 @@
 import { GetObjectCommand, HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { HttpError } from "../../lib/http-error.js";
+import { loadIntegrationFlags, requireIntegration } from "../../config/integrations.js";
 
 export interface KycObjectInfo { sizeBytes: number; contentType: string; versionId: string; }
 export interface PrivateKycStorage {
@@ -15,11 +16,14 @@ export interface PrivateKycStorage {
 export function createPrivateKycStorage(env: NodeJS.ProcessEnv = process.env): PrivateKycStorage {
   const bucket = env.KYC_S3_BUCKET;
   const region = env.KYC_S3_REGION;
-  const client = region ? new S3Client({ region }) : null;
+  const flags = loadIntegrationFlags(env);
+  let client: S3Client | undefined;
   function configured() {
-    if (!bucket || !client || !/^[a-z0-9.-]{3,63}$/.test(bucket)) {
+    requireIntegration(flags, "cloudStorage");
+    if (!bucket || !region || !/^[a-z0-9.-]{3,63}$/.test(bucket)) {
       throw new HttpError(503, "PRIVATE_STORAGE_UNAVAILABLE", "Private document storage is unavailable");
     }
+    client ??= new S3Client({ region });
     return { bucket, client };
   }
   return {

@@ -1,3 +1,4 @@
+import { loadIntegrationFlags, requireIntegration } from "../../config/integrations.js";
 import { HttpError } from "../../lib/http-error.js";
 export type RemoteTransfer={
  reference:string;amountPaise:bigint;currency:"INR";state:"PENDING"|"SUCCESS"|"FAILED";
@@ -14,6 +15,7 @@ export interface PayoutGateway {
  * CI injects a deterministic contract-level fake gateway, not a live bank.
  */
 export function configuredPayoutGateway():PayoutGateway {
+ requireIntegration(loadIntegrationFlags(),"cashfree");
  throw new HttpError(503,"PAYOUT_PROVIDER_UNAVAILABLE",
   "Verified payout gateway is not configured");
 }

@@ -1,6 +1,7 @@
 import { GetObjectCommand, HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { HttpError } from "../../lib/http-error.js";
+import { loadIntegrationFlags, requireIntegration } from "../../config/integrations.js";
 export interface MediaObject { sizeBytes:number; contentType:string; versionId:string }
 export interface PrivateCreativeStorage {
   signedPut(key:string,mime:string,size:number,seconds:number):Promise<{url:string;headers:Record<string,string>}>;
@@ -11,8 +12,10 @@ export interface PrivateCreativeStorage {
 }
 export function createCreativeStorage(env:NodeJS.ProcessEnv=process.env):PrivateCreativeStorage {
   const bucket=env.CREATIVE_S3_BUCKET,region=env.CREATIVE_S3_REGION;
+  const flags=loadIntegrationFlags(env);
   let client:S3Client|undefined;
   function connect(){
+    requireIntegration(flags,"cloudStorage");
     if(!bucket||!/^[a-z0-9.-]{3,63}$/.test(bucket)||!region)
       throw new HttpError(503,"PRIVATE_MEDIA_UNAVAILABLE","Private creative storage unconfigured");
     client??=new S3Client({region});return {client,bucket};

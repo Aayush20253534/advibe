@@ -1,6 +1,7 @@
 import { createApp } from "./app.js";
 import { releaseGate } from "./ops/release.js";
 import { loadConfig } from "./config/env.js";
+import { validateEnabledIntegrations } from "./config/integrations.js";
 import { assertDatabaseReady, createDatabase } from "./db/client.js";
 import { createLogger } from "./lib/logger.js";
 import { createResendSender } from "./modules/auth/email.js";
@@ -12,6 +13,7 @@ import { mockEmailSender,mockCaptchaVerifier,mockCashfreeGateway,mockRefundGatew
 async function main(): Promise<void> {
   const config = loadConfig();
   const mode = externalMode(); // Reject mock services on public production runtimes.
+  validateEnabledIntegrations();
   const release = releaseGate(process.env);
   const logger = createLogger(config);
   const authSettings = loadAuthSettings(process.env, config);
@@ -35,12 +37,12 @@ async function main(): Promise<void> {
     db, settings: authSettings, sender: mock ? mockEmailSender() : createResendSender(authSettings),
   },
    mock ? mockCaptchaVerifier() : undefined,
-   mock ? {storage:mockKycStorage()} : undefined,
-   mock ? {storage:mockCreativeStorage()} : undefined,
-   mock ? {gateway:mockCashfreeGateway()} : undefined,
+   mock && config.integrations.cloudStorage ? {storage:mockKycStorage()} : undefined,
+   mock && config.integrations.cloudStorage ? {storage:mockCreativeStorage()} : undefined,
+   mock && config.integrations.cashfree ? {gateway:mockCashfreeGateway()} : undefined,
    undefined,
-   mock ? {gateway:mockPayoutGateway()} : undefined,
-   mock ? {gateway:mockRefundGateway()} : undefined,
+   mock && config.integrations.cashfree ? {gateway:mockPayoutGateway()} : undefined,
+   mock && config.integrations.cashfree ? {gateway:mockRefundGateway()} : undefined,
   );
   const server = app.listen(config.port, config.host, () => {
     logger.info({ host: config.host, port: config.port, environment: config.nodeEnv, releaseStage: release.mode, externalMode:mode },

@@ -8,6 +8,8 @@ Start with the [engineering report](ENGINEERING_READINESS_REPORT.md), [QA eviden
 
 ## Current system documentation
 
+[Optional provider switches and environment setup](OPTIONAL_INTEGRATIONS.md): storage, Cashfree and Google Maps default off; credentials are validated only after opt-in.
+
 1. [System architecture](system/01-system-architecture.md)
 2. [Identity, sessions, authorization](system/02-identity-access.md)
 3. [Advertiser and campaign workflow](system/03-advertiser-campaigns.md)

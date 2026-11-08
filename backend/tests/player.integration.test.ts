@@ -23,7 +23,7 @@ if(!["localhost","127.0.0.1","::1"].includes(database.hostname)||
 
 test("B16 signed device playlists, heartbeat claims and immediate pause/revocation",async()=>{
  const db=new PrismaClient();
- const config=loadConfig({NODE_ENV:"test",LOG_LEVEL:"silent"});
+ const config=loadConfig({NODE_ENV:"test",LOG_LEVEL:"silent",CLOUD_STORAGE_ENABLED:"true"});
  const settings=loadAuthSettings({AUTH_SECRET:"ci_only_dev_test_auth_secret_32_characters_long_value",
   MFA_ENCRYPTION_KEY:"3f4e8bb1976542ac8ef51b03d9607a2acb8970645a1ed3c0b7d14982f63a0e57"},config);
  await db.$connect();
@@ -229,6 +229,12 @@ test("B16 signed device playlists, heartbeat claims and immediate pause/revocati
   assert.equal((await adminPost(delivery+"/resume",{expectedRevision:2},"b16-resume-"+seed)).status,200);
   const restored=await readManifest();
   assert.equal(restored.entries.length,1);checkSignature(restored);
+  config.integrations.cloudStorage=false;
+  const getsBeforeDisable=signedGets;
+  const storageDisabled=await readManifest();
+  checkSignature(storageDisabled);
+  assert.deepEqual(storageDisabled.entries,[]);
+  assert.equal(signedGets,getsBeforeDisable,"Disabled storage must not issue private media URLs");
   await db.screen.update({where:{id:screens[0]!.id},data:{state:"REVOKED"}});
   assert.equal((await deviceSend("GET","/devices/manifest")).status,401);
   assert.equal((await deviceSend("POST","/devices/heartbeat",{

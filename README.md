@@ -21,6 +21,8 @@ npm run dev
 
 `ADVIBE_EXTERNAL_MODE=mock` is permitted only in development; production rejects mock providers. See [development provider modes](docs/MOCK_EXTERNAL_PROVIDERS.md). Auth/session/ownership checks always belong to the backend.
 
+Cloud storage, Cashfree and Google Maps now default to **disabled**, independently of mock mode. No credentials for those providers are required until their enable switches are `true`. See [optional provider configuration](docs/OPTIONAL_INTEGRATIONS.md); auth/database/email requirements remain separate.
+
 ## Verification
 
 ```bash
