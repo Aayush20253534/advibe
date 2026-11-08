@@ -42,7 +42,7 @@ export function PartSevenHeader({title,description,eyebrow}:{title:string;descri
    <h1 className="text-2xl font-extrabold tracking-tight text-brand-navy sm:text-3xl">{title}</h1>
    <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
   </div>
-  <Link href="/advertiser/create-campaign" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-brand-orange px-5 text-sm font-bold text-white hover:bg-[#dd5e00]">
+  <Link href="/advertiser/create-campaign" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-brand-orange px-5 text-sm font-bold text-white hover:bg-signal-hover">
    <Plus className="size-4" aria-hidden/> Create Campaign <ArrowRight className="size-4" aria-hidden/>
   </Link>
  </div>;

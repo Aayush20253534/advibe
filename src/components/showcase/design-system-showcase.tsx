@@ -43,14 +43,14 @@ import {
 } from "@/components/ui";
 
 const colours = [
-  { token: "ink", hex: "#041B3D", role: "Text, sidebar, dark surfaces", dark: true },
-  { token: "night", hex: "#03152C", role: "Hero and footer only", dark: true },
-  { token: "signal", hex: "#0866FF", role: "The only action and selection colour", dark: true },
-  { token: "beacon", hex: "#FF6A00", role: "Main marketing CTA and live state, ink text" },
-  { token: "paper", hex: "#F7F9FC", role: "App background" },
-  { token: "line", hex: "#DCE4F0", role: "Borders and dividers" },
-  { token: "line-strong", hex: "#7A8AA5", role: "Form control borders (3.5:1)" },
-  { token: "ink-muted", hex: "#4A5B78", role: "Secondary text (6.9:1 on white)", dark: true },
+  { token: "ink", hex: "#171A20", role: "Text, sidebar, dark surfaces", dark: true },
+  { token: "night", hex: "#15181E", role: "Hero and footer only", dark: true },
+  { token: "signal", hex: "#1958F5", role: "The only action and selection colour", dark: true },
+  { token: "beacon", hex: "#1958F5", role: "Legacy action alias, white text", dark: true },
+  { token: "paper", hex: "#F6F7F9", role: "App background" },
+  { token: "line", hex: "#E0E3E9", role: "Borders and dividers" },
+  { token: "line-strong", hex: "#7C8594", role: "Form control borders" },
+  { token: "ink-muted", hex: "#555E6C", role: "Secondary text", dark: true },
 ] as const;
 
 const statusColours = [
@@ -215,12 +215,12 @@ export function DesignSystemShowcase() {
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         <PageHeader
           breadcrumbs={[{ label: "Internal" }, { label: "Design system" }]}
-          title="AdVibe design system"
+          title="BlinkMyAd design system"
           description="Tokens and components shared by the public site and the advertiser, driver and admin portals. Internal reference: not linked from the site and not indexed by search engines."
           actions={
-            // The approved wordmark is white and orange, so it sits on night (see docs/BRAND.md).
+            // Inverse BlinkMyAd wordmark for a charcoal surface.
             <div className="rounded-lg bg-night px-4 py-3">
-              <BrandLogo width={140} />
+              <BrandLogo inverse width={140} />
             </div>
           }
         />

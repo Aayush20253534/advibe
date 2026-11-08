@@ -22,7 +22,9 @@ export default function Page() {
   return (
     <>
       <PageHero
-        title="Drive in Prayagraj? Explore partnering with BlinkMyAd"
+        title="Your routes. New possibilities."
+        eyebrow="For driver partners"
+        image={{ src: "/images/blinkmyad/auto.webp", alt: "BlinkMyAd vehicle advertising concept" }}
         description="Apply to carry approved advertising screens on your vehicle during regular Prayagraj routes. Installation and earning eligibility depend on verification, approved hardware and the partner agreement."
         actions={[
           { label: "Apply as a driver partner", href: "/signup?role=driver" },

@@ -71,14 +71,14 @@ function Sidebar({role, collapsed, onToggle, onNavigate, mobile=false}:{
     <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[linear-gradient(160deg,#03152e,#062650_58%,#03152e)] text-white">
       <div className={cn("flex h-[76px] min-h-[76px] items-center border-b border-white/10 px-4", collapsed && "justify-center px-2")}>
         {collapsed ? <Link href={"/"+role} className="flex size-11 items-center justify-center rounded-lg bg-[#12366d]" aria-label={portalNames[role]+" home"}><Image src="/icon.png" alt="" width={36} height={36} className="size-9 object-contain"/></Link>
-          : <BrandLogo href={"/"+role} width={183} className="w-[174px]" priority />}
+          : <BrandLogo inverse href={"/"+role} width={183} className="w-[174px]" priority />}
       </div>
       <SidebarNavigation role={role} collapsed={collapsed} onNavigate={onNavigate}/>
       {!collapsed && (
         <Link href={promo[2]} onClick={onNavigate}
           className="group mx-3 mb-3 shrink-0 rounded-xl border border-[#2862ad]/45 bg-[radial-gradient(circle_at_90%_20%,#147bff69,transparent_55%),linear-gradient(140deg,#102c62,#041b3d)] p-4 shadow-inner transition-transform hover:-translate-y-0.5">
-          <p className="text-[10px] font-bold uppercase tracking-[.14em] text-[#8ab8ff]">AdVibe</p>
-          <p className="mt-2 max-w-44 text-lg font-bold leading-6">{promo[0]} <span className="text-brand-orange">with AdVibe</span></p>
+          <p className="text-[10px] font-bold uppercase tracking-[.14em] text-[#8ab8ff]">BlinkMyAd</p>
+          <p className="mt-2 max-w-44 text-lg font-bold leading-6">{promo[0]} <span className="text-brand-orange">with BlinkMyAd</span></p>
           <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-[#b5d7ff]">{promo[1]} <ArrowRight className="size-4" aria-hidden/></span>
         </Link>
       )}
@@ -299,7 +299,7 @@ export function PortalShell({role,children}:{role:PortalRole;children:React.Reac
               {children}
             </main>
             <footer className="flex flex-wrap justify-between gap-2 border-t border-line bg-white px-4 py-4 text-xs text-muted-foreground sm:px-6 lg:px-8">
-              <span>AdVibe · {portalNames[role]}</span><Link href="/design-system" className="text-brand-blue hover:underline">UI reference</Link>
+              <span>BlinkMyAd · {portalNames[role]}</span><Link href="/design-system" className="text-brand-blue hover:underline">UI reference</Link>
             </footer>
           </div>
         </div>

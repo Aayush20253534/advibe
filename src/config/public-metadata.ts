@@ -12,7 +12,7 @@ export function publicMetadata(path: string, title: string, description: string)
     ...(url ? { alternates: { canonical: url } } : {}),
     openGraph: {
       title: `${title} | ${brand.name}`, description, siteName: brand.name, type: "website", locale: "en_IN",
-      ...(url ? { url, images: [{ url: new URL("/images/hero/hero-static.webp", origin!).toString(), alt: "Illustrative vehicle advertising formats" }] } : {}),
+      ...(url ? { url, images: [{ url: new URL("/images/blinkmyad/fleet.webp", origin!).toString(), alt: "BlinkMyAd vehicle-screen concept artwork" }] } : {}),
     },
     twitter: { card: "summary_large_image", title: `${title} | ${brand.name}`, description },
   };

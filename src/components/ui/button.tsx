@@ -6,15 +6,15 @@ import { cn } from "@/lib/utils";
 /**
  * Buttons say exactly what happens ("Submit for review", not "Submit").
  * primary: the one action colour (signal) in every portal.
- * brand: beacon orange, reserved for the main marketing call to action; always ink text.
+ * brand: the same cobalt action used throughout the public website.
  */
 export const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 rounded-lg font-semibold whitespace-nowrap transition-colors duration-150 select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal disabled:pointer-events-none disabled:opacity-50 aria-busy:cursor-progress",
+  "inline-flex shrink-0 items-center justify-center gap-2 rounded-md font-semibold whitespace-nowrap transition-colors duration-150 select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal disabled:pointer-events-none disabled:opacity-50 aria-busy:cursor-progress",
   {
     variants: {
       variant: {
         primary: "bg-signal text-white hover:bg-signal-hover",
-        brand: "bg-brand-orange text-brand-navy hover:bg-beacon-hover",
+        brand: "bg-signal text-white hover:bg-signal-hover",
         secondary: "bg-signal-soft text-ink hover:bg-[#d9e6fd]",
         outline: "border border-line-strong bg-surface text-ink hover:bg-paper",
         ghost: "bg-transparent text-ink hover:bg-surface-sunken",
@@ -24,7 +24,7 @@ export const buttonVariants = cva(
       size: {
         sm: "min-h-9 px-3 text-sm",
         md: "min-h-11 px-4 text-sm",
-        lg: "min-h-12 px-6 text-base",
+        lg: "min-h-12 px-5 text-sm",
         icon: "size-11 min-h-11 px-0",
         "icon-sm": "size-9 min-h-9 px-0",
       },

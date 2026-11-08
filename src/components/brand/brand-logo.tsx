@@ -8,6 +8,7 @@ type BrandLogoProps = {
   className?: string;
   width?: number;
   priority?: boolean;
+  inverse?: boolean;
 };
 
 export function BrandLogo({
@@ -15,16 +16,16 @@ export function BrandLogo({
   className,
   width = 185,
   priority = false,
+  inverse = false,
 }: BrandLogoProps) {
   const logo = (
     <Image
-      // 800 px derivative of the original artwork (public/brand/advibe-logo.png, 2048 px).
       src={brand.assets.public.src}
       alt={brand.assets.public.alt}
       width={width}
       height={Math.round((width * brand.assets.public.height) / brand.assets.public.width)}
       priority={priority}
-      className={cn("block h-auto max-w-full object-contain", className)}
+      className={cn("block h-auto max-w-full object-contain", inverse && "brightness-0 invert", className)}
     />
   );
   return href ? (

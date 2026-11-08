@@ -185,8 +185,8 @@ export function Analytics(){
   <Card title="Downloads">
    <p className="text-sm text-ink-muted">CSV files of the recorded report and the audit log. Values that aren&apos;t confirmed by a provider are left out, not estimated.</p>
    <div className="flex flex-wrap gap-2">
-    <button className={secondary} onClick={()=>void download("/admin/reports/export","advibe-admin-report.csv")}>Download report (CSV)</button>
-    <button className={secondary} onClick={()=>void download("/admin/audit-events/export","advibe-admin-audit.csv")}>Download audit log (CSV)</button>
+    <button className={secondary} onClick={()=>void download("/admin/reports/export","blinkmyad-admin-report.csv")}>Download report (CSV)</button>
+    <button className={secondary} onClick={()=>void download("/admin/audit-events/export","blinkmyad-admin-audit.csv")}>Download audit log (CSV)</button>
    </div>{error&&<Alert type="error">{error}</Alert>}
   </Card>
  </div>;
@@ -195,7 +195,7 @@ type AuditRow={id:string;actorUserId:string|null;action:string;resourceType:stri
 export function Audit(){
  const rows=useRows<AuditRow>("/admin/audit-events?limit=30");
  const [error,setError]=React.useState("");
- async function exportCsv(){setError("");try{await downloadApiCsv("/admin/audit-events/export","advibe-audit.csv");}catch(e){setError(explain(e));}}
+ async function exportCsv(){setError("");try{await downloadApiCsv("/admin/audit-events/export","blinkmyad-audit.csv");}catch(e){setError(explain(e));}}
  return <Card title="Audit log" tools={<div className="flex gap-2">
   <button className={secondary} onClick={rows.refresh}>Refresh</button><button className={secondary} onClick={()=>void exportCsv()}>Download CSV</button>
  </div>}>

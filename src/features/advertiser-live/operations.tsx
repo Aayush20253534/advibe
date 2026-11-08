@@ -183,7 +183,7 @@ export function Reports(){
   const rows=[["Campaign","Status","Start","End","Revision"],...campaigns.rows.map(c=>[c.title,c.status,c.startDate,c.endDate,String(c.revision)])];
   const csv="\uFEFF"+rows.map(row=>row.map(safe).join(",")).join("\r\n")+"\r\n";
   const link=document.createElement("a"),url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
-  link.href=url;link.download="advibe-advertiser-campaigns.csv";link.click();URL.revokeObjectURL(url);
+  link.href=url;link.download="blinkmyad-advertiser-campaigns.csv";link.click();URL.revokeObjectURL(url);
  }
  return <div className="space-y-5">
   <Notice>These figures count your saved campaigns (up to 100). They don&apos;t estimate reach, impressions, revenue or settlements.</Notice>

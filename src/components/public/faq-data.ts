@@ -5,9 +5,9 @@ export type PublicFAQ = {
 };
 export const publicFAQs: PublicFAQ[] = [
   {
-    question: "What is AdVibe and how does it work?",
+    question: "What is BlinkMyAd and how does it work?",
     answer:
-      "AdVibe is a planned mobile outdoor advertising platform connecting advertisers and eligible driver partners. Advertisers create campaigns, select vehicle-screen placements and submit creatives for review.",
+      "BlinkMyAd is a planned mobile outdoor advertising platform connecting advertisers and eligible driver partners. Advertisers create campaigns, select vehicle-screen placements and submit creatives for review.",
     category: "General",
   },
   {
@@ -31,7 +31,7 @@ export const publicFAQs: PublicFAQ[] = [
   {
     question: "Which cities and areas are currently available?",
     answer:
-      "AdVibe is focusing on Prayagraj for its first launch. The locations page shows only locations published by the backend, not a promise of available screens. Availability is checked when you plan a campaign.",
+      "BlinkMyAd is focusing on Prayagraj for its first launch. The locations page shows only locations published by the backend, not a promise of available screens. Availability is checked when you plan a campaign.",
     category: "General",
   },
   {

@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { siteOrigin } from "@/services/site-origin.mjs";
 import { brand } from "@/config/brand";
-import { Overpass } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
+import "@/components/landing/homepage.css";
 import { MockProviderBanner } from "@/components/layout/mock-provider-banner";
 
 // Headings and display text only. Body and app text keep the platform UI font.
 // next/font downloads the font at build time and serves it from this site.
-const overpass = Overpass({
+const manrope = Manrope({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-overpass",
+  variable: "--font-manrope",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={overpass.variable}>
+    <html lang="en" className={manrope.variable}>
       <body className="min-h-screen antialiased">
         {process.env.NODE_ENV !== "production" && <MockProviderBanner />}
         {children}

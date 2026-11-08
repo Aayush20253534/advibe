@@ -38,7 +38,7 @@ export function RouteLine() {
             <h3 className="font-heading text-lg font-semibold text-white md:mt-10">
               {stop.title}
               {stop.live ? (
-                <span className="route-live ml-2 inline-flex items-center gap-1.5 rounded-full bg-beacon px-2 py-0.5 align-middle font-sans text-xs font-semibold text-ink">
+                <span className="route-live ml-2 inline-flex items-center gap-1.5 rounded-full bg-beacon px-2 py-0.5 align-middle font-sans text-xs font-semibold text-white">
                   <span className="size-1.5 rounded-full bg-ink" aria-hidden />
                   Live
                 </span>

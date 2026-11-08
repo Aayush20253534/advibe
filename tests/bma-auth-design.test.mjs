@@ -5,18 +5,16 @@ const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 test("both auth routes share a compact, properly composed frame",()=>{
  const wrapper=read("src/components/auth/auth-frame.tsx");
  const frame=read("src/components/auth/bma-auth-frame.tsx");
- assert.match(wrapper,/pathname==="\/login"/);
- assert.match(wrapper,/BmaAuthFrame/);
- assert.match(frame,/lg:h-dvh/);
- assert.match(frame,/lg:overflow-hidden/);
- assert.match(frame,/lg:overflow-y-auto/);
- assert.match(frame,/object-fill/);
- assert.match(frame,/bma-signup-logo\.svg/);
- assert.doesNotMatch(frame,/bma-signup-logo\.jpg/);
- for(const asset of ["bma-signup-hero-v2.jpg","bma-login-hero-v2.jpg"]){
-  assert.ok(frame.includes(asset));
-  assert.ok(existsSync(new URL("../public/brand/"+asset,import.meta.url)));
- }
+ assert.match(wrapper,/BmaAuthFrame mode=\{mode\}/);
+ assert.match(frame,/BrandLogo/);
+ assert.match(frame,/bma-auth-form-wrap/);
+ assert.match(frame,/object-cover/);
+ assert.doesNotMatch(frame,/object-fill/);
+ assert.ok(existsSync(new URL("../public/images/blinkmyad/fleet.webp",import.meta.url)));
+ const css=read("src/components/landing/homepage.css");
+ assert.match(css,/min-height:100dvh/);
+ assert.match(css,/max-width:420px/);
+
 });
 test("sign-in keeps live login, MFA, reset notices and safe redirects",()=>{
  const page=read("src/app/(auth)/login/page.tsx");

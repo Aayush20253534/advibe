@@ -21,7 +21,9 @@ export default function Page() {
   return (
     <>
       <PageHero
-        title="Your next local campaign, on the move in Prayagraj"
+        title="Make your next move visible."
+        eyebrow="For advertisers"
+        image={{ src: "/images/blinkmyad/fleet.webp", alt: "BlinkMyAd vehicle advertising concept" }}
         description="Plan locally relevant advertising using digital screens on bikes, autos and cars in Prayagraj. Choose a format and schedule, then submit your creative for review. Availability is confirmed before booking."
         actions={[
           { label: "Create an advertiser account", href: "/signup?role=advertiser" },

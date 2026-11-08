@@ -15,7 +15,7 @@ Card.displayName = "Card";
 
 export const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("flex flex-col gap-1 p-5", className)} {...props} />
+    <div ref={ref} className={cn("flex flex-col gap-1 p-4", className)} {...props} />
   ),
 );
 CardHeader.displayName = "CardHeader";
@@ -26,7 +26,7 @@ export const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("font-heading text-lg font-semibold text-ink", className)}
+    className={cn("font-heading text-base font-semibold text-ink", className)}
     {...props}
   />
 ));
@@ -42,7 +42,7 @@ CardDescription.displayName = "CardDescription";
 
 export const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("px-5 pb-5", className)} {...props} />
+    <div ref={ref} className={cn("px-4 pb-4", className)} {...props} />
   ),
 );
 CardContent.displayName = "CardContent";
@@ -51,7 +51,7 @@ export const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("flex flex-wrap items-center gap-3 border-t border-line px-5 py-4", className)}
+      className={cn("flex flex-wrap items-center gap-3 border-t border-line px-4 py-3", className)}
       {...props}
     />
   ),

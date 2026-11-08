@@ -1,33 +1,22 @@
 @import "tailwindcss";
 
-/*
- * AdVibe design tokens (M2). Defined once here and consumed through Tailwind
- * utilities such as bg-signal, text-ink-muted, border-line and bg-success-bg.
- * Every text pair below meets WCAG 2.2 AA (4.5:1); control borders meet 3:1.
- *
- * ink     #041B3D  text, sidebar, dark surfaces
- * night   #03152C  hero and footer only
- * signal  #0866FF  the only action and selection colour in every portal
- * beacon  #FF6A00  primary marketing CTA and live state; always with ink text
- * paper   #F7F9FC  app background
- * line    #DCE4F0  borders and dividers
- */
+/* BlinkMyAd: cobalt actions, charcoal type, white surfaces. */
 :root {
   color-scheme: light;
-  --ink: #041b3d;
-  --ink-muted: #4a5b78;
-  --ink-subtle: #5d6d88;
-  --night: #03152c;
-  --signal: #0866ff;
-  --signal-hover: #0052d6;
-  --signal-soft: #e8f0fe;
-  --beacon: #ff6a00;
-  --beacon-hover: #ff8527;
-  --paper: #f7f9fc;
+  --ink: #171a20;
+  --ink-muted: #555e6c;
+  --ink-subtle: #626c7a;
+  --night: #15181e;
+  --signal: #1958f5;
+  --signal-hover: #1247cb;
+  --signal-soft: #edf2ff;
+  --beacon: #1958f5;
+  --beacon-hover: #1247cb;
+  --paper: #f6f7f9;
   --surface: #ffffff;
-  --surface-sunken: #eef2f8;
-  --line: #dce4f0;
-  --line-strong: #7a8aa5;
+  --surface-sunken: #f0f2f5;
+  --line: #e0e3e9;
+  --line-strong: #7c8594;
 
   --success-bg: #e8f6ee;
   --success-fg: #0b6b3a;
@@ -39,7 +28,7 @@
   --danger-fg: #b42318;
   --danger-border: #f3aaa3;
   --danger-solid: #c8281c;
-  --info-bg: #e8f0fe;
+  --info-bg: #edf2ff;
   --info-fg: #0750c4;
   --info-border: #a9c4f5;
 
@@ -55,13 +44,13 @@
   --muted-foreground: var(--ink-muted);
   --border: var(--line);
   --ring: var(--signal);
-  /* Body and app text use the platform UI font. Headings use Overpass (see layout.tsx). */
+  /* Body and app text use the platform UI font. Headings use Manrope (see layout.tsx). */
   --font-facebook-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-heading-stack: var(--font-overpass), var(--font-facebook-ui);
+  --font-heading-stack: var(--font-manrope), var(--font-facebook-ui);
   /* One accent for every portal. Admin is distinguished by density and a role label. */
   --portal-accent: var(--signal);
   --portal-accent-hover: var(--signal-hover);
-  --radius-card: 1rem;
+  --radius-card: 0.5rem;
   --shadow-card: 0 1px 2px rgba(4, 27, 61, 0.06);
 }
 
@@ -128,12 +117,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 button, input, select, textarea { font: inherit; }
-/* Shared Facebook-style native UI typography across public and all portal routes. */
+/* Native body text remains fast and legible across every workspace. */
 :where(body, body button, body input, body select, body textarea, body svg text) {
   font-family: var(--font-facebook-ui);
 }
 button:not(:disabled) { cursor: pointer; }
-/* Headings and display text use Overpass; body text stays on the platform UI font. */
+/* Headings and display text use Manrope; body text stays on the platform UI font. */
 :where(h1, h2, h3) {
   font-family: var(--font-heading-stack);
   letter-spacing: -0.01em;
@@ -244,7 +233,7 @@ button:not(:disabled) { cursor: pointer; }
 }
 .advibe-hero-shade {
   background:
-    linear-gradient(180deg, #03152c 0%, #03152cfb 32%, #03152ce8 56%, #03152c80 77%, #03152c11 100%);
+    linear-gradient(180deg, #15181e 0%, #15181efb 32%, #15181ee8 56%, #15181e80 77%, #15181e11 100%);
 }
 .advibe-scene-city {
   animation: advibe-sky-cycle 9.6s ease-in-out infinite;
@@ -313,8 +302,8 @@ button:not(:disabled) { cursor: pointer; }
   .advibe-hero-sky { top: 0; bottom: auto; height: 100%; }
   .advibe-hero-shade {
     background:
-      linear-gradient(90deg, #03152cfa 0%, #03152cf2 26%, #03152cb0 47%, #03152c18 82%),
-      linear-gradient(0deg, #03152c99 0%, transparent 34%);
+      linear-gradient(90deg, #15181efa 0%, #15181ef2 26%, #15181eb0 47%, #15181e18 82%),
+      linear-gradient(0deg, #15181e99 0%, transparent 34%);
   }
 }
 @media (max-width: 389px) {

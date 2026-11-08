@@ -9,7 +9,9 @@ export default function Page() {
   return (
     <>
       <PageHero
-        title="About BlinkMyAd"
+        title="Built for brands. Made for the move."
+        eyebrow="About BlinkMyAd"
+        image={{ src: "/images/blinkmyad/interior.webp", alt: "BlinkMyAd vehicle advertising concept" }}
         description="BlinkMyAd puts advertising on screens carried by everyday vehicles, so local businesses can reach people on the move and drivers can earn from the routes they already drive."
       />
       <Section labelledBy="why">
