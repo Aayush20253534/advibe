@@ -153,8 +153,12 @@
   .bma-ref-hero-eyebrow { font-size: 11px; gap: 10px; }.bma-ref-hero h1 { font-size: clamp(38px, 12vw, 79px); line-height: .91; margin-top: 18px; letter-spacing: -.045em; }
   .bma-ref-intro { font-size: 14px; max-width: 420px; line-height: 1.5; margin-top: 17px; }.bma-ref-hero-actions { gap: 18px; margin-top: 18px; }
   .bma-ref-button { min-height: 44px; font-size: 13px; padding: 10px 15px; }.bma-ref-hero-actions .bma-ref-button { padding-inline: 14px; }.bma-ref-text-link { min-height: 44px; font-size: 13px; }
-  .bma-ref-hero .bma-ref-hero-art { position: relative !important; width: 100% !important; height: auto !important; aspect-ratio: 1.7; object-fit: cover; object-position: right 65%; z-index: 0; }
-  .bma-ref-hero-caption { bottom: 8px; right: 12px; font-size: 10px; }
+  /* Reserve exactly one media slot on phones: copy first, video second. */
+  .bma-ref-hero .bma-ref-hero-art { position: absolute !important; inset: auto 0 0 !important; width: 100% !important; height: auto !important; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; z-index: 0; }
+  .bma-ref-hero-video { position: relative; inset: auto; order: 0; z-index: 1; display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center; }
+  /* With video hidden for reduced motion, the still image must provide the media height. */
+  @media (prefers-reduced-motion: reduce) { .bma-ref-hero .bma-ref-hero-art { position: relative !important; inset: auto !important; } }
+  .bma-ref-hero-caption { z-index: 2; bottom: 8px; right: 12px; font-size: 10px; }
   .bma-ref-proof { grid-template-columns: 1fr 1fr; min-height: 0; padding-block: 9px; gap: 0; font-size: 11px; }.bma-ref-proof>* { padding: 7px 0; }.bma-ref-proof strong { font-size: 12px; }.bma-ref-proof>span:nth-child(3) { text-align: left; border-left: 0; }
   .bma-ref-formats { padding-block: 28px 18px; }.bma-ref-section-heading { display: block; margin-bottom: 20px; }.bma-ref-eyebrow { font-size: 11px; }.bma-ref-section-heading h2 { margin-top: 9px; font-size: clamp(28px, 7vw, 40px); line-height: 1.08; }.bma-ref-section-heading>p { max-width: none; margin-top: 12px; padding: 0; font-size: 14px; }
   .bma-ref-format-grid { grid-template-columns: 1fr; gap: 24px; }.bma-ref-format-photo { aspect-ratio: 1.5; }.bma-ref-format h3 { font-size: 17px; gap: 10px; }.bma-ref-format-info { padding-top: 9px; }.bma-ref-format-info p { font-size: 12px; }.bma-ref-round-link { flex-basis: 38px; width: 38px; height: 38px; }.bma-ref-all-formats { margin-top: 16px; }
