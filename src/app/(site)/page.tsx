@@ -16,6 +16,19 @@ export default function HomePage() {
   return <div className="bma-reference-home">
     <section className="bma-ref-hero" aria-labelledby="hero-title">
       <Image className="bma-ref-hero-art" src="/images/blinkmyad/homepage/01-hero-fleet.webp" alt="Illustrative concept of BlinkMyAd advertising on a white electric rickshaw and sedan" fill priority fetchPriority="high" sizes="100vw" unoptimized />
+      <video
+        className="bma-ref-hero-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/images/blinkmyad/homepage/01-hero-fleet.webp"
+        aria-hidden="true"
+        tabIndex={-1}
+      >
+        <source src="/images/blinkmyad/homepage/01-hero-fleet.mp4" type="video/mp4" />
+      </video>
       <div className="bma-ref-wrap bma-ref-hero-inner"><div className="bma-ref-hero-copy">
         <p className="bma-ref-eyebrow bma-ref-hero-eyebrow"><span aria-hidden="true" />Outdoor advertising. In motion.</p>
         <h1 id="hero-title"><span>Turn heads.</span><span>Own the</span><span>streets.</span></h1>
