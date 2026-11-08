@@ -1,4 +1,5 @@
 import { HttpError } from "../../lib/http-error.js";
+import { loadCashfreeConfig } from "../../config/integrations.js";
 
 export type CashfreeVerifiedPayment={
   providerOrderId:string;providerPaymentId:string;status:"SUCCESS"|"FAILED"|"PENDING"|"USER_DROPPED";
@@ -26,15 +27,7 @@ const amount=(v:bigint):number=>{
  return Number(v)/100;
 };
 export function createCashfreeGateway(env:NodeJS.ProcessEnv=process.env):CashfreeGateway {
- const sandbox=env.CASHFREE_ENV==="sandbox";
- if(!sandbox&&env.CASHFREE_ENV!=="production")
-  throw new Error("Cashfree environment is not configured");
- const id=env.CASHFREE_CLIENT_ID,secret=env.CASHFREE_CLIENT_SECRET;
- if(!id||!secret)throw new Error("Cashfree server credentials not configured");
- const base=sandbox?"https://sandbox.cashfree.com/pg":"https://api.cashfree.com/pg";
- const notify=env.CASHFREE_NOTIFY_URL;
- if(!notify||!/^https:\/\/[^\s]+\/api\/v1\/webhooks\/cashfree\/payments$/.test(notify))
-  throw new Error("A controlled HTTPS Cashfree notify URL is required");
+ const {id,secret,base,notify}=loadCashfreeConfig(env);
  const request=async(method:"POST"|"GET",path:string,body?:unknown,key?:string):Promise<unknown>=>{
   let res:Response;
   try{

@@ -1,3 +1,4 @@
+import { requireIntegration } from "../../config/integrations.js";
 import { randomUUID } from "node:crypto";
 import { type Creative, type MediaAsset, type ScreenPlacement } from "@prisma/client";
 import { Router, type NextFunction, type Request, type Response } from "express";
@@ -61,6 +62,7 @@ export function createCreativeRouter(config:AppConfig,auth:AuthDependencies,
   };
   router.post("/creatives/upload-intents",validateBody(uploadInput),handler(async(req,res)=>{
     const p=await advertiser(req);mutation(req,config,p,settings.secret);
+    requireIntegration(config.integrations,"cloudStorage");
     const input=uploadInput.parse(req.body);
     await requireBusinessMembership(db,p,input.businessId,["OWNER","MANAGER"]);
     const business=await db.business.findFirst({where:{id:input.businessId,archivedAt:null}});
@@ -90,6 +92,7 @@ export function createCreativeRouter(config:AppConfig,auth:AuthDependencies,
   }));
   router.post("/creatives/assets/:assetId/complete",handler(async(req,res)=>{
     const p=await advertiser(req);mutation(req,config,p,settings.secret);
+    requireIntegration(config.integrations,"cloudStorage");
     const assetId=id(req,"assetId");
     const a=await db.mediaAsset.findUnique({where:{id:assetId}});
     if(!a)throw new HttpError(404,"NOT_FOUND","Asset not found");
@@ -177,6 +180,7 @@ export function createCreativeRouter(config:AppConfig,auth:AuthDependencies,
   }));
   router.get("/admin/creatives/:creativeId/preview-url",handler(async(req,res)=>{
     const p=await admin(req);const creativeId=id(req,"creativeId");
+    requireIntegration(config.integrations,"cloudStorage");
     const c=await db.creative.findUnique({where:{id:creativeId},include:{asset:true}});
     if(!c||c.asset.state!=="READY"||!c.asset.processedKey||!c.asset.processedVersionId)
       throw new HttpError(404,"NOT_FOUND","Processed creative unavailable");

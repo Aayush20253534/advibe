@@ -1,4 +1,7 @@
 import type { NextConfig } from "next";
+import { validateMapsConfig } from "./src/services/maps-embed.mjs";
+
+validateMapsConfig(process.env);
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

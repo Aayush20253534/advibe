@@ -21,8 +21,8 @@ export function signPlaylist(key:KeyObject,screenId:string,version:number,expire
 export async function issuePlaylist(tx:Tx,cred:DeviceCredential,config:AppConfig,
  storage:Pick<PrivateCreativeStorage,"signedGet">=createCreativeStorage()){
  const signer=getManifestSigner(),now=new Date();
- const enabled=config.nodeEnv!=="production"||
-  (process.env.DEVICE_PLAYBACK_ENABLED==="true"&&process.env.DEVICE_FLEET_APPROVED==="true");
+ const enabled=config.integrations.cloudStorage&&(config.nodeEnv!=="production"||
+  (process.env.DEVICE_PLAYBACK_ENABLED==="true"&&process.env.DEVICE_FLEET_APPROVED==="true"));
  const windows=enabled?await tx.deliveryWindow.findMany({where:{
   screenId:cred.screenId,startsAt:{lte:now},endsAt:{gt:now},plan:{state:"ACTIVE"}},
   include:{plan:{include:{campaign:{include:{creative:{include:{asset:true}}}}}}},

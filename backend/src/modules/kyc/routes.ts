@@ -1,3 +1,4 @@
+import { requireIntegration } from "../../config/integrations.js";
 import { createHmac, randomUUID } from "node:crypto";
 import type { DriverDocument } from "@prisma/client";
 import { Router, type Request, type Response, type NextFunction } from "express";
@@ -93,6 +94,7 @@ export function createKycRouter(config: AppConfig, auth: AuthDependencies,
   };
   router.post("/drivers/documents/upload-intents", validateBody(uploadInput), safe(async (req,res) => {
     const p = await driver(req); csrf(req,config,p,settings);
+    requireIntegration(config.integrations,"cloudStorage");
     const selected = uploadInput.parse(req.body);
     const pol = policy(); // Refuse uploads until legal retention and scan provider policy exist.
     const key = req.get("idempotency-key");
@@ -130,6 +132,7 @@ export function createKycRouter(config: AppConfig, auth: AuthDependencies,
 
   router.post("/drivers/documents/:documentId/complete", safe(async (req,res) => {
     const p = await driver(req);csrf(req,config,p,settings);
+    requireIntegration(config.integrations,"cloudStorage");
     const id = idParam(req,"documentId");
     const doc = await db.driverDocument.findFirst({where:{id,driverUserId:p.userId}});
     if (!doc) throw new HttpError(404,"NOT_FOUND","Document not found");
@@ -198,6 +201,7 @@ export function createKycRouter(config: AppConfig, auth: AuthDependencies,
   }));
 
   router.post("/webhooks/kyc/document-scan",validateBody(scanInput),safe(async(req,res)=>{
+    requireIntegration(config.integrations,"cloudStorage");
     const pol=policy();
     const input=scanInput.parse(req.body);
     if(Math.abs(Date.now()-input.timestamp)>300_000)throw new HttpError(401,"INVALID_SIGNATURE","Expired scan notification");
@@ -253,6 +257,7 @@ export function createKycRouter(config: AppConfig, auth: AuthDependencies,
 
   router.get("/admin/driver-documents/:documentId/download-url",safe(async(req,res)=>{
     const p=await admin(req);const id=idParam(req,"documentId");
+    requireIntegration(config.integrations,"cloudStorage");
     const doc=await db.driverDocument.findUnique({where:{id}});
     if(!doc || !doc.storageVersionId || doc.status==="PENDING_UPLOAD" ||
        doc.retentionUntil<=new Date())throw new HttpError(404,"NOT_FOUND","Document unavailable");
@@ -272,6 +277,7 @@ export function createKycRouter(config: AppConfig, auth: AuthDependencies,
     if(input.decision==="verified"){
       if(doc.status!=="SCAN_CLEAN" || doc.uploadExpiresAt>new Date())
         throw new HttpError(409,"DOCUMENT_NOT_READY","Clean scan and completed upload window required");
+      requireIntegration(config.integrations,"cloudStorage");
       const head=await storage.head(doc.storageKey);
       if(head.versionId!==doc.storageVersionId || head.sizeBytes!==doc.sizeBytes ||
          head.contentType!==doc.contentType)

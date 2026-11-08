@@ -3,6 +3,7 @@ import express, { type Express } from "express";
 import helmet from "helmet";
 import type { Logger } from "pino";
 import type { AppConfig } from "./config/env.js";
+import { requireIntegration } from "./config/integrations.js";
 import { HttpError } from "./lib/http-error.js";
 import { errorHandler, notFound } from "./middleware/error-handler.js";
 import { requestContext } from "./middleware/request-context.js";
@@ -55,17 +56,20 @@ export function createApp(
   const paymentRoutes=auth?createPaymentRoutes(config,auth,payment):undefined;
   const earningsRoutes=auth?createEarningsRoutes(config,auth,earnings):undefined;
   if(paymentRoutes)app.use("/api/v1/webhooks/cashfree/payments",
+    (_req, _res, next) => { requireIntegration(config.integrations, "cashfree"); next(); },
     express.raw({type:"application/json",limit:"64kb"}),paymentRoutes.webhooks);
   if(earningsRoutes)app.use("/api/v1/webhooks/cashfree/payouts",
+    (_req, _res, next) => { requireIntegration(config.integrations, "cashfree"); next(); },
     express.raw({type:"application/json",limit:"32kb"}),earningsRoutes.webhooks);
   app.use(express.json({ limit: "64kb", strict: true }));
   app.get("/api/v1/integrations/status", (_req, res) => {
     const mode = externalMode();
     res.set("Cache-Control","no-store").json({data:{
       mode,
+      enabled: config.integrations,
       externalProviders:mode==="mock"?"SIMULATED_OR_DISABLED":"PROVIDER_CONFIG_DEPENDENT",
-      paymentSettlement:mode==="mock"?"DISABLED":"REQUIRES_PROVIDER_VERIFICATION",
-      identityVerification:mode==="mock"?"DISABLED":"REQUIRES_SECURE_STORAGE_AND_REVIEW",
+      paymentSettlement:!config.integrations.cashfree||mode==="mock"?"DISABLED":"REQUIRES_PROVIDER_VERIFICATION",
+      identityVerification:!config.integrations.cloudStorage||mode==="mock"?"DISABLED":"REQUIRES_SECURE_STORAGE_AND_REVIEW",
     }});
   });
   // Root: confirms the API is running and points to the health checks. No version,

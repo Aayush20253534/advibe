@@ -24,7 +24,7 @@ if(!["localhost","127.0.0.1","::1"].includes(database.hostname)||
 
 test("B14 Cashfree orders, verified webhooks, duplicate and expired-hold protection",async()=>{
  const db=new PrismaClient();
- const config=loadConfig({NODE_ENV:"test",LOG_LEVEL:"silent"});
+ const config=loadConfig({NODE_ENV:"test",LOG_LEVEL:"silent",CASHFREE_ENABLED:"true"});
  const settings=loadAuthSettings({AUTH_SECRET:"ci_only_dev_test_auth_secret_32_characters_long_value",
   MFA_ENCRYPTION_KEY:"3f4e8bb1976542ac8ef51b03d9607a2acb8970645a1ed3c0b7d14982f63a0e57"},config);
  await db.$connect();

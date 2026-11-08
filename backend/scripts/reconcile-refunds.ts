@@ -1,3 +1,4 @@
+import { loadIntegrationFlags, requireIntegration } from "../src/config/integrations.js";
 import { PrismaClient } from "@prisma/client";
 import { externalMode } from "../src/integrations/mock-mode.js";
 import { loadDatabaseConfig } from "../src/db/config.js";
@@ -5,6 +6,7 @@ import { createRefundGateway } from "../src/modules/finance/provider.js";
 import { reconcileRefunds } from "../src/modules/finance/worker.js";
 import { HttpError } from "../src/lib/http-error.js";
 // Run as a separately approved trusted scheduler. No cron is deployed by B19.
+requireIntegration(loadIntegrationFlags(),"cashfree");
 if(process.env.B19_REFUNDS_WORKER_ENABLED!=="true"||
  process.env.B19_FINANCE_APPROVED!=="true"||
  process.env.B19_REFUNDS_ENABLED!=="true"||

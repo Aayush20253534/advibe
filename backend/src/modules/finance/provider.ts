@@ -1,4 +1,5 @@
 import { HttpError } from "../../lib/http-error.js";
+import { loadCashfreeConfig } from "../../config/integrations.js";
 import { decimalPaise } from "../payments/provider.js";
 export interface RefundObservation {
  orderId:string;refundId:string;amountPaise:bigint;currency:string;
@@ -25,17 +26,13 @@ export function verifyRefund(r:RefundObservation,orderId:string,refundId:string,
  * Never trust create response to mark money refunded.
  */
 export function createRefundGateway(env:NodeJS.ProcessEnv=process.env):RefundGateway {
- if(!["sandbox","production"].includes(env.CASHFREE_ENV??""))
-  throw new HttpError(503,"REFUND_GATEWAY_UNAVAILABLE","Cashfree environment missing");
- if(!env.CASHFREE_CLIENT_ID||!env.CASHFREE_CLIENT_SECRET)
-  throw new HttpError(503,"REFUND_GATEWAY_UNAVAILABLE","Cashfree credentials missing");
- const base=env.CASHFREE_ENV==="sandbox"?"https://sandbox.cashfree.com/pg":"https://api.cashfree.com/pg";
+ const {base,id,secret}=loadCashfreeConfig(env);
  const api=async(path:string,method:"GET"|"POST"="GET",body?:object,key?:string):Promise<unknown>=>{
   let response:Response;
   try{
    response=await fetch(base+path,{method,signal:AbortSignal.timeout(8000),
     headers:{"Content-Type":"application/json","x-api-version":"2025-01-01",
-     "x-client-id":env.CASHFREE_CLIENT_ID!,"x-client-secret":env.CASHFREE_CLIENT_SECRET!,
+     "x-client-id":id,"x-client-secret":secret,
      ...(key?{"x-idempotency-key":key}:{})},
     ...(body?{body:JSON.stringify(body)}:{})});
   }catch{throw new HttpError(503,"REFUND_GATEWAY_UNAVAILABLE","Cashfree request unavailable");}

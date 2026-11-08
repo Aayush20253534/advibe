@@ -1,8 +1,10 @@
+import { loadIntegrationFlags, requireIntegration } from "../src/config/integrations.js";
 import { PrismaClient } from "@prisma/client";
 import { externalMode } from "../src/integrations/mock-mode.js";
 import { loadDatabaseConfig } from "../src/db/config.js";
 import { configuredPayoutGateway,financePolicy } from "../src/modules/earnings/provider.js";
 import { reconcilePayouts } from "../src/modules/earnings/worker.js";
+requireIntegration(loadIntegrationFlags(),"cashfree");
 if(process.env.B18_PAYOUT_WORKER_ENABLED!=="true")throw new Error("Payout worker is not enabled");
 financePolicy(process.env,process.env.NODE_ENV==="production");
 if(externalMode()==="mock")

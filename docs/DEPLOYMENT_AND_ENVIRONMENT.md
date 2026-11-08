@@ -14,13 +14,14 @@ Runtime: Node 22.19+ (CI 22.23.4); committed lockfiles; Next 16.4.2, React 19.3.
 | --- | --- | --- |
 | Frontend public build | `NEXT_PUBLIC_APP_URL` | Exact approved HTTPS origin; no credentials/path/query. Rebuild to change public values. |
 | Frontend server | `ADVIBE_BACKEND_ORIGIN`, `SITE_INDEXING_ENABLED=false` | Exact owned HTTPS API origin. Never expose API/server secrets as public values. |
-| Optional browser integrations | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY` | Public keys restricted to exact staging domains/APIs; Maps loads on request. |
+| Optional browser integrations | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `NEXT_PUBLIC_GOOGLE_MAPS_ENABLED=false`, `NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY` | Maps key is only required/used when the Maps switch is true; visitor opt-in still applies. Public keys restricted to exact staging domains/APIs. |
+| Optional backend providers | `CLOUD_STORAGE_ENABLED=false`, `CASHFREE_ENABLED=false` | No S3/Cashfree credentials required while false. Enable independently; restart API/workers. See [optional integrations](OPTIONAL_INTEGRATIONS.md). |
 | API process | `NODE_ENV=production`, `HOST`, `PORT`, `CORS_ORIGINS`, `AUTH_WEB_ORIGIN`, `TRUST_PROXY` | Exact allowed frontend origin; validate hosting proxy hops. Do not trust arbitrary forwarded IP headers. |
 | Database | `DATABASE_URL`, `DIRECT_URL` | Runtime pooled URL; direct migration URL; TLS required on hosted databases; separate least-privilege roles. |
 | Session/MFA | `AUTH_SECRET`, `MFA_ENCRYPTION_KEY` | Independent generated secrets; MFA key 64 hex chars. Store only in provider secret manager. Enroll authorized admin using documented operator flow. |
 | Email/enquiries | `RESEND_API_KEY`, `AUTH_EMAIL_FROM`, `ENQUIRY_TURNSTILE_SECRET`, `ENQUIRY_TURNSTILE_HOSTNAME` | Production mode requires verified configuration. Bare sender address; actual test delivery/challenge verification needed. |
-| Private storage/agreements | `KYC_S3_*`, `CREATIVE_S3_*`, IAM, `KYC_SCAN_SECRET`, retention, agreement/privacy version/hash | Configure only after privacy/legal approval. Private encrypted versioned buckets; signed operations and scanner evidence. |
-| Provider finance | `CASHFREE_ENV`, `CASHFREE_CLIENT_ID`, `CASHFREE_CLIENT_SECRET`, notification URL and policy flags | Sandbox only until separate financial authorization; secret/backend scope only. |
+| Private storage/agreements | `KYC_S3_*`, `CREATIVE_S3_*`, IAM, `KYC_SCAN_SECRET`, retention, agreement/privacy version/hash | Storage configuration is required only when `CLOUD_STORAGE_ENABLED=true`. KYC retains its separate scan/legal gates. Private encrypted versioned buckets; signed operations and scanner evidence. |
+| Provider finance | `CASHFREE_ENV`, `CASHFREE_CLIENT_ID`, `CASHFREE_CLIENT_SECRET`, `CASHFREE_NOTIFY_URL` and policy flags | Credentials required only when `CASHFREE_ENABLED=true`. Sandbox only until separate financial authorization; secret/backend scope only. |
 | B23 admission | `B23_RELEASE_STAGE`, staging/production approvals and matching SHA fields | Real reviewed evidence and named operator signoffs. This session sets none true. |
 
 Authoritative templates: `.env.example`, `backend/.env.example`, `render.yaml`. Development alone may use `ADVIBE_EXTERNAL_MODE=mock`; production mode rejects mock providers. Do not point production settings at local mock mail or use public KYC URLs.

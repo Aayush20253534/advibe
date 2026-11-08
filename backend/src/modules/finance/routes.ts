@@ -1,3 +1,4 @@
+import { requireIntegration } from "../../config/integrations.js";
 import {createHash,randomUUID} from "node:crypto";
 import {Router,type Request,type Response,type NextFunction} from "express";
 import {z} from "zod";
@@ -67,7 +68,10 @@ export function createFinanceRouter(config:AppConfig,auth:AuthDependencies,
  deps:FinanceDependencies={}):Router{
  const {db,settings}=auth,router=Router();
  let vendor=deps.gateway;
- const gateway=()=>vendor??(vendor=createRefundGateway());
+ const gateway=()=>{
+  requireIntegration(config.integrations,"cashfree");
+  return vendor??(vendor=createRefundGateway());
+ };
  const admin=async(req:Request)=>{
   const p=await resolvePrincipal(req,db,settings);requireRole(p,"ADMIN");return p;
  };
@@ -149,6 +153,7 @@ export function createFinanceRouter(config:AppConfig,auth:AuthDependencies,
  }));
  router.post("/admin/refunds",validateBody(refundInput),safe(async(req,res)=>{
   const p=await admin(req);mutation(req,config,p,settings.secret);
+  requireIntegration(config.integrations,"cashfree");
   approved(config,"refund");
   gateway(); // Verify server-side Cashfree credentials before creating a refund instruction.
   const input=refundInput.parse(req.body);
@@ -196,6 +201,7 @@ export function createFinanceRouter(config:AppConfig,auth:AuthDependencies,
  }));
  router.post("/admin/finance/reconcile/:orderId",validateBody(empty),safe(async(req,res)=>{
   const p=await admin(req);mutation(req,config,p,settings.secret);
+  requireIntegration(config.integrations,"cashfree");
   const orderId=pathId(req,"orderId");
   const order=await db.paymentOrder.findUnique({where:{id:orderId},
    include:{payments:true,refunds:true}});

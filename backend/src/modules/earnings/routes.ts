@@ -1,3 +1,4 @@
+import { requireIntegration } from "../../config/integrations.js";
 import { createHash,createHmac,randomUUID,timingSafeEqual } from "node:crypto";
 import { Router,type Request,type Response,type NextFunction } from "express";
 import { z } from "zod";
@@ -184,6 +185,7 @@ export function createEarningsRoutes(config:AppConfig,auth:AuthDependencies,
  }));
  api.post("/drivers/me/beneficiaries",validateBody(beneficiaryInput),safe(async(req,res)=>{
   const p=await driver(req);mutation(req,config,p,settings.secret);
+  requireIntegration(config.integrations,"cashfree");
   financePolicy(process.env,config.nodeEnv==="production");
   const input=beneficiaryInput.parse(req.body);
   const gateway=client(deps.gateway);
@@ -207,6 +209,7 @@ export function createEarningsRoutes(config:AppConfig,auth:AuthDependencies,
  }));
  api.post("/admin/payouts",validateBody(payoutInput),safe(async(req,res)=>{
   const p=await admin(req);mutation(req,config,p,settings.secret);
+  requireIntegration(config.integrations,"cashfree");
   financePolicy(process.env,config.nodeEnv==="production");
   client(deps.gateway); // Fail closed if no provider integration.
   const input=payoutInput.parse(req.body);

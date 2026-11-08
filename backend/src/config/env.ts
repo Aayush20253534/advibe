@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { loadIntegrationFlags, type IntegrationFlags } from "./integrations.js";
 
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -16,6 +17,7 @@ export interface AppConfig {
   corsOrigins: string[];
   logLevel: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent";
   trustProxy: boolean;
+  integrations: IntegrationFlags;
 }
 
 function parseOrigin(value: string, production: boolean): string {
@@ -59,5 +61,6 @@ export function loadConfig(input: NodeJS.ProcessEnv = process.env): AppConfig {
     corsOrigins,
     logLevel: env.LOG_LEVEL,
     trustProxy: env.TRUST_PROXY === "true",
+    integrations: loadIntegrationFlags(input),
   };
 }

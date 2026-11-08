@@ -1,3 +1,4 @@
+import { requireIntegration } from "../../config/integrations.js";
 import { randomUUID } from "node:crypto";
 import { Router,type Request,type Response,type NextFunction } from "express";
 import type { AppConfig } from "../../config/env.js";
@@ -18,6 +19,7 @@ export interface PaymentDependencies{gateway?:CashfreeGateway;webhookSecret?:str
 const safe=(f:(q:Request,s:Response)=>Promise<void>)=>
  (q:Request,s:Response,n:NextFunction):void=>{void f(q,s).catch(n);};
 const supported=(config:AppConfig)=>{
+ requireIntegration(config.integrations,"cashfree");
  if(config.nodeEnv==="production"&&
    (process.env.PAYMENTS_ENABLED!=="true"||
     process.env.BOOKING_HOLDS_ENABLED!=="true"||
@@ -30,11 +32,15 @@ export function createPaymentRoutes(config:AppConfig,auth:AuthDependencies,
  const {db,settings}=auth;
  // Lazy resolution: unconfigured vendor secrets must never break unrelated API modules.
  let cached:CashfreeGateway|undefined=injected.gateway;
- const provider=()=>cached??(cached=createCashfreeGateway());
+ const provider=()=>{
+  requireIntegration(config.integrations,"cashfree");
+  return cached??(cached=createCashfreeGateway());
+ };
  const api=Router();
  api.post("/payments/orders",validateBody(orderInput),safe(async(req,res)=>{
   const p=await resolvePrincipal(req,db,settings);requireRole(p,"ADVERTISER");
   mutation(req,config,p,settings.secret);supported(config);
+  provider(); // Validate enabled provider configuration before creating an order.
   const input=orderInput.parse(req.body);
   const h=await db.reservationHold.findUnique({where:{id:input.reservationHoldId}});
   if(!h||h.campaignId!==input.campaignId||h.quoteId!==input.quoteId)
