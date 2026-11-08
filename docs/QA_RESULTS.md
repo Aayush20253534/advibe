@@ -1,6 +1,6 @@
 # Current quality assurance results
 
-Date: 7 November 2026. Machine-readable evidence: [`qa/verification.json`](qa/verification.json), [`qa/restore-drill.json`](qa/restore-drill.json), [`qa/build-size.json`](qa/build-size.json). The final report distinguishes local results from unavailable staging/browser checks.
+Handoff updated: 8 November 2026. Test artifacts retain their recorded execution timestamps. Machine-readable evidence: [`qa/verification.json`](qa/verification.json), [`qa/ci-verification.json`](qa/ci-verification.json), [`qa/restore-drill.json`](qa/restore-drill.json), [`qa/build-size.json`](qa/build-size.json), [`qa/lighthouse-summary.json`](qa/lighthouse-summary.json). Local, synthetic CI, lab performance and unavailable provider/staging evidence are distinguished below.
 
 | Verification | Actual result |
 | --- | --- |
@@ -11,8 +11,9 @@ Date: 7 November 2026. Machine-readable evidence: [`qa/verification.json`](qa/ve
 | `npm audit` | Frontend 0 / backend 0 known advisories after scoped fixes |
 | Source secret check | 915 tracked files scanned at security checkpoint; no high-confidence private-key/provider-key patterns; not full-history assurance |
 | Encrypted PostgreSQL restore | Pass on synthetic full-suite database: 70 tables, 80 users, 20 migration records and 143 audit records match; nonempty restore rejected |
-| Browser/visual/axe checks | Not executed locally: managed preview startup blocked. CI scripts configured for Chromium, Firefox, WebKit; no remote green result implied. |
-| Lighthouse/Core Web Vitals | Not measured; build byte counts are not performance scores |
+| Browser/visual/axe checks | Chromium, Firefox and WebKit CI pass: role/auth flows, 18 portal-shell scenarios per engine, responsive public pages; 45 screenshots and 45 axe reports with no reported violations |
+| Lighthouse | Three mobile samples each for home/login, environment and unmet goals recorded in the performance report; not field Core Web Vitals |
+| Remote release-evidence validation | Pass with release approvals still false/null; validates rejection behavior, not permission to launch |
 | Actual provider sandbox | Not executed; injected adapters/mock mail do not verify external providers |
 | Live staging/deployment/alerts | Not verified; account access, credentials and approvals required |
 
@@ -29,15 +30,19 @@ Legacy tests remain. Two stale source assertions were reconciled with current bl
 
 ## Reproduce local checks
 
-Use a supported Node 22+ runtime. Install root and backend using `npm ci`. Run root `npm run check`. For database verification, create a dedicated disposable PostgreSQL 16 database, set `NODE_ENV=test`, `DB_TEST_ALLOWED=true`, synthetic auth/MFA keys and matching `DATABASE_URL` / `DIRECT_URL`, then execute the backend commands above. Never point these suites at customer databases. The existing CI service setup contains a concrete synthetic configuration.
+Use a supported Node 22.19+ runtime (CI 22.23.4). Install root and backend using `npm ci`. Run root `npm run check`. For database verification, create a dedicated disposable PostgreSQL 16 database, set `NODE_ENV=test`, `DB_TEST_ALLOWED=true`, synthetic auth/MFA keys and matching `DATABASE_URL` / `DIRECT_URL`, then execute the backend commands above. Never point these suites at customer databases. The existing CI service setup contains a concrete synthetic configuration.
 
 `npm run test:all` discovers every frontend `.test.mjs` and `.test.tsx` file through a cross-platform Node runner. `test:client` selects runtime regressions. CI runs the full frontend suite rather than only a subset of historical contracts.
 
 For browser execution on an approved test environment, use `BASE_URL` and `PLAYWRIGHT_BROWSER=chromium|firefox|webkit` with `test:live-browser`, `test:auth-browser`, `test:portal-shell` and `test:public-browser`. These intercept synthetic contract data; they are frontend E2E checks, not real provider E2E. Public checks cover 390, 768 and 1440 px, keyboard menu dismissal, unavailable coverage, uncaught errors, axe serious/critical violations and screenshots. The visual-baseline script remains available; old image baselines must be reviewed on the same rendering platform, not automatically accepted.
 
-## Browser evidence gap
+## Browser and performance evidence
 
-No screenshots are included because no browser rendered this branch in the available managed preview. Its launcher passes Vite flags to `next dev`. Repair the launcher or execute the committed CI/staging checks and inspect the artifacts before claiming visual acceptance. The CI matrix is configuration awaiting execution, not evidence of cross-browser success.
+The complete seven-job Actions runs on `fe0bac7` and `f4d973e` passed; exact later results are recorded in `qa/ci-verification.json`. Each browser artifact contains nine public captures (home, locations, login at 390/768/1440 px) and six portal gate/home captures, with axe JSON beside each image. The [visual review](BROWSER_VISUAL_QA.md) records the screenshots actually inspected, resolved contrast/image-capture defects and remaining scope. The evidence archive contains synthetic names and records only.
+
+Lighthouse 13.6.0 runs in Chromium against the already-running local production build, with fresh browser storage and default simulated mobile throttling. Three samples per page are saved as HTML/JSON plus their median summary. Measurement errors fail CI; scores below release-review goals remain visible in the summary. A successful job does not imply every numerical performance goal passed. INP is not measured by this navigation-only run.
+
+The local managed preview adapter still passes unsupported Vite flags to Next. CI provided independent browser execution; no alternate local browser workaround or application-script disguise was used. Manual screen-reader, 200% zoom, representative device/network, hosted cookie/TLS and real provider checks remain outstanding.
 
 ## Recovery measurement limits
 

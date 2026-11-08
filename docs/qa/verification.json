@@ -4,7 +4,7 @@
     "node": "24.22.1",
     "platform": "Linux x64",
     "postgresql": "16.15 disposable local instance",
-    "ciNode": "22; remote execution unverified"
+    "ciNode": "22.23.4; remote execution passed; see ci-verification.json"
   },
   "backend": {
     "command": "npm run db:validate && npm run db:migrate:deploy && npm run check && npm run db:migrate:deploy",
@@ -211,8 +211,22 @@
     }
   },
   "browser": {
-    "status": "not executed",
-    "reason": "Managed preview injects unsupported Next dev CLI flags; remote CI pending"
+    "status": "passed in GitHub Actions",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "publicWidths": [
+      390,
+      768,
+      1440
+    ],
+    "screenshotsPerMatrix": 45,
+    "axeReportsPerMatrix": 45,
+    "reportedAxeViolations": 0,
+    "evidence": "ci-verification.json",
+    "limits": "Synthetic intercepted API data; not real provider E2E or full manual accessibility acceptance"
   },
   "providerSandbox": "not executed",
   "sourceSecretScan": {
@@ -227,6 +241,7 @@
     "pass": 154,
     "fail": 0,
     "skipped": 0,
-    "logSha256": "0b7adfc9e7189fdce9d18afccdb5a721cc11cefb9d7c72fa660c31ba71d23fa1"
+    "logSha256": "91b22b506cb81be3e3ae588d9fc1527c814173e13b343a9926535e889e24e4b9",
+    "checkpointCommit": "eaf2211b8a5bed47f42593e0bcd1708e7f58b3cc"
   }
 }

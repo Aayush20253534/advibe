@@ -2,12 +2,14 @@
 
 **Verdict: Not ready for a real-user controlled testing launch.**
 
-The current source uses authenticated backend-only portals. Historical statements that a browser demo is enabled by default are obsolete. Local checks pass; provider mocks and synthetic database tests do not prove staging or commercial readiness.
+The current source uses authenticated backend-only portals. Historical statements that a browser demo is enabled by default are obsolete. Local checks and three-engine browser CI pass; provider mocks, synthetic database tests and local-browser measurements do not prove staging or commercial readiness.
 
 Use these current records:
 
 - [Engineering and feature report](ENGINEERING_READINESS_REPORT.md)
 - [QA results and evidence](QA_RESULTS.md)
+- [Browser screenshots and visual review](BROWSER_VISUAL_QA.md)
+- [Performance and accessibility measurements](PERFORMANCE_AND_ACCESSIBILITY.md)
 - [Launch checklist](TESTING_LAUNCH_CHECKLIST.md)
 - [Owner actions and blockers](KNOWN_BLOCKERS.md)
 - [Security review](SECURITY_REVIEW.md)

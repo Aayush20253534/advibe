@@ -1,16 +1,16 @@
 # Testing launch checklist
 
-Verdict at this handoff: **Not ready** for a real-user controlled testing launch. Local engineering checks pass; account-owned staging, provider/legal gates and browser acceptance remain unresolved.
+Verdict at this handoff: **Not ready** for a real-user controlled testing launch. Local engineering checks and synthetic browser CI pass; account-owned staging, provider/legal/hardware gates, wider acceptance and some advanced workflows remain unresolved.
 
 | Gate | Status | Required evidence / owner action |
 | --- | --- | --- |
 | Dedicated branch and logical phase commits | Complete | Review PR diff and reports; do not merge without approval |
-| Source/build/database verification | Complete locally | 154 frontend / 222 backend tests, lint/types/build, migrations; remote CI separate |
+| Source/build/database verification | Pass locally and in CI | 154 frontend / 222 backend tests, lint/types/build and migrations; exact checkpoint in QA records |
 | Dependency audit | Complete locally | 0 known advisories in both current lockfiles; repeat before deployment |
 | Backup tooling drill | Complete on synthetic data | Hosted restore/key-custody/retention evidence still required |
-| Remote CI | Unverified | Repository owner enables/authorizes Actions and reviews the exact PR SHA |
-| Browser/mobile/visual/accessibility | Blocked | Repair managed preview or execute CI/staging matrix; review screenshots and keyboard/axe findings |
-| Performance targets | Unmeasured | Record Lighthouse/Core Web Vitals on representative mobile device/network |
+| Remote CI | Pass at recorded checkpoints | Complete seven-job runs; review the exact PR SHA before merge/deployment |
+| Browser/mobile/visual/accessibility | Scoped synthetic checks pass | Three engines, 390/768/1440 px public checks, 45 screenshots/axe reports; real hosted and manual assistive-technology acceptance remains |
+| Performance targets | Lab measured; wider acceptance pending | Three mobile samples each for home/login; explicit unmet goals in performance report; field INP and representative hosted/device/network measurements remain |
 | Branding | Pending owner decision | Resolve approved BlinkMyAd logo/legacy artwork and helmet format conflict |
 | Legal/privacy/agreement | Pending authorized reviewers | Approved terms, privacy, retention and versioned agreement/hash before collecting real data |
 | Commercial hosting budget | Pending owner decision | Approve compliant plans; free-only constraint conflicts with Vercel commercial use and always-on workers |

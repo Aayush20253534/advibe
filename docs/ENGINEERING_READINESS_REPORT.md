@@ -1,10 +1,12 @@
 # BlinkMyAd engineering and readiness report
 
-Date: 7 November 2026. Repository: `Aayush20253534/advibe`. Development branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3d7777784509cffdcd3aa763d6de138920`.
+Handoff updated: 8 November 2026. Test artifacts retain their recorded execution timestamps. Repository: `Aayush20253534/advibe`. Development branch: `work/blinkmyad-production-readiness`. Baseline: `d2ac1f3d7777784509cffdcd3aa763d6de138920`.
 
 ## Verdict: Not ready
 
-The source improvements and locally executable verification are complete for this readiness pass. **A real-user controlled testing launch is not approved.** Browser acceptance, account-owned staging, legal documents, verified email, private storage/processing and provider/hardware evidence remain unresolved. Some advanced financial/map/device UI remains partial. No production deployment, merge, paid plan, real payment/refund/payout, customer identity collection or device activation was performed.
+The source improvements, local verification and synthetic three-browser CI are complete for this readiness pass. **A real-user controlled testing launch is not approved.** Account-owned staging, legal documents, verified email, private storage/processing and provider/hardware evidence remain unresolved. Some advanced financial/map/device UI remains partial. Performance and accessibility evidence is scoped to the measured pages and environments. No production deployment, merge, paid plan, real payment/refund/payout, customer identity collection or device activation was performed.
+
+Review [draft PR #10](https://github.com/Aayush20253534/advibe/pull/10). Exact verified commits, Actions runs and artifact hashes are in [CI evidence](qa/ci-verification.json). Later documentation commits do not retroactively change the commit that produced an artifact.
 
 ## Architecture preserved
 
@@ -19,15 +21,15 @@ Current route inventory is generated in `contracts/api-routes.current.json`; it 
 | 0 Audit | Architecture/module inventory, baseline failures, source/docs/deployment review, master plan and blockers | Source availability does not prove deployed configuration |
 | 1 Foundation | Both lockfiles, reproducible installs, repaired escaped environment/ignore files, recovery-effect fix, timed API client, envelope validation, current route inventory | Provider/network failures remain visible to users |
 | 2 Design system | Central brand asset configuration, shared cursor controls, unused generic portal renderer removed while retaining tested models | Official artwork conflict unresolved; no invented replacement logo |
-| 3 Public/motion | BlinkMyAd copy, progressive readable reveals, timeline contrast, public error recovery, existing cinematic artwork/motion retained | Responsive visual inspection blocked |
+| 3 Public/motion | BlinkMyAd copy, readable reveals/timeline, public error recovery, existing cinematic artwork/motion retained; responsive CI screenshots reviewed | Review covers selected public routes and synthetic failure states; brand artwork remains unresolved |
 | 4 Authentication | Server-issued idle expiry clears all three portals; sign-out failure displayed; auth/security/ownership DB suites pass | Real email, MFA/operator and deployed cookie flows unverified |
 | 5 Advertiser | Final-page cursor navigation repaired; campaign/pricing/creative/booking/payment server tests pass | Actual storage/merchant sandbox and checkout acceptance incomplete |
 | 6 Driver | Pagination added for vehicles/payouts/maintenance/support/notifications; reviewed-earnings wording; legal/storage gates retained | Agreement, genuine KYC, installation and payout dependencies unresolved |
-| 7 Administration | Final-page navigation and keyboard row selection; durable support queue test repaired without removing retry/concurrency checks | Browser/admin acceptance and job scheduling unverified |
+| 7 Administration | Final-page navigation and keyboard row selection; durable support queue fixture repaired; MFA/status mutation and portal navigation pass browser CI | Real operator/admin acceptance and hosted job scheduling remain unverified |
 | 8 Integrations | Optional explicit-load Maps Embed from published catalogue, public pagination and backend format-cursor fix; provider status report | Multi-marker/route layer, real payout gateway and provider verification remain partial/blocked |
 | 9 Security | Streamed body limits, cancellation/timeouts, session-cookie isolation, request correlation, baseline headers, scoped dependency fixes, pinned Actions | Independent security review, deployed TLS/WAF/proxy controls and full script CSP remain |
-| 10 Performance/SEO/accessibility | Canonical/OG/WebSite metadata, strict indexing gate, responsive hero sources, production development-banner removal, measured build sizes | No Lighthouse, Web Vitals, visual or screen-reader acceptance claim |
-| 11 QA | Complete frontend test discovery/CI, fresh DB suite, runtime regressions, audits, synthetic encrypted restore; three-browser CI configuration | Browser/provider/staging checks still need actual execution evidence |
+| 10 Performance/SEO/accessibility | Canonical/OG/WebSite metadata, indexing gate, responsive hero sources, request reduction, three-sample mobile Lighthouse measurements and contrast repairs | Lab figures are not field Web Vitals; manual screen-reader/zoom and hosted acceptance remain |
+| 11 QA | Complete test discovery, fresh DB suite, audits, synthetic encrypted restore; passing Chromium/Firefox/WebKit CI with screenshots and axe evidence | Browser API data is intercepted; actual provider/staging checks still require execution |
 | 12 Release preparation | Cost/quota, environment/deployment, backup/recovery, launch checklist, blocker owners and review branch | No B23 approvals set; no live rollout |
 
 Each phase has a logical commit/checkpoint. `PHASE_PROGRESS.md` distinguishes implementation from blocked acceptance; historical docs are not evidence for this branch.
@@ -36,11 +38,11 @@ Each phase has a logical commit/checkpoint. `PHASE_PROGRESS.md` distinguishes im
 
 | Module | Classification now | What works / what remains |
 | --- | --- | --- |
-| Public website | Implemented, source/build verified | Existing pages, navigation/motion and honest rollout content; browser review pending |
-| Auth/accounts | Implemented, local DB verified | Register/verify/login/MFA/reset/revocation/roles; sender and hosted-origin acceptance blocked |
+| Public website | Implemented, scoped browser verified | Existing pages, navigation/motion and honest rollout content; home/locations/login checked at 390/768/1440 px |
+| Auth/accounts | Implemented, DB and synthetic browser verified | Register/verify/login/MFA/reset/revocation/roles; sender and hosted-origin acceptance blocked |
 | Advertiser platform | Partially implemented end-to-end | Business/campaign/creative lifecycle, quotes, records, support/reports; provider checkout and storage acceptance remain |
 | Driver platform | Partially implemented end-to-end | Profile, vehicles, submissions, review states, reviewed earnings records, support; legal/KYC/hardware and some activity screens remain gated |
-| Admin platform | Implemented, local boundaries verified | Catalog, user/review, pricing/campaign, financial/audit/support controls; no unrestricted financial override |
+| Admin platform | Implemented, DB and scoped browser verified | Catalog, user/review, pricing/campaign, financial/audit/support controls; no unrestricted financial override |
 | Location/format discovery | Implemented, partial maps | Published catalogue/cursors, optional area map; no multi-marker bookable inventory or live route visualization |
 | Booking/payment/refund/invoice backend | Implemented, synthetic adapters verified | Transactional holds, payment/reconciliation and finance authority; provider/merchant/tax and frontend checkout acceptance incomplete |
 | Creative/KYC storage | Blocked external dependency | Private versioned signed-access paths and scan gates; no verified deployed buckets/worker |
@@ -56,7 +58,9 @@ Each phase has a logical commit/checkpoint. `PHASE_PROGRESS.md` distinguishes im
 - Frontend/backend lint, TypeScript, production builds, HTTP smoke, schema validation, migration deploy and reapply passed.
 - Initial dependency audit: 8 moderate frontend, 7 moderate + 4 high backend. Scoped tooling fixes reduced both final reports to **zero known advisories** without upgrading the application frameworks or Prisma major.
 - Synthetic encrypted restore passed: **70 tables**, matching users/migrations/audit counts; nonempty target refused. No real-user backup was handled.
-- The managed preview could not start because it supplies unsupported Next CLI flags. **No browser screenshots, visual acceptance, Lighthouse scores or field performance results exist for this pass.** CI is configured for Chromium/Firefox/WebKit, but configuration is not a passing run.
+- Complete seven-job GitHub Actions runs pass frontend/backend, encrypted restore, all three browser engines and release-evidence validation. Each engine passes role flows, auth recovery, 18 portal-shell scenarios and responsive public checks. **45 screenshots and 45 axe reports** were saved per complete browser matrix; the inspected reports contain no axe violations.
+- Three mobile Lighthouse samples each for home/login record actual scores and LCP/CLS/TBT. Read [performance results](PERFORMANCE_AND_ACCESSIBILITY.md) for measured values and any unmet target; no field INP or hosted performance is claimed.
+- The local managed preview still rejects injected Next CLI flags. Remote CI provided the browser evidence; the application launch script was not changed to hide that infrastructure problem.
 
 Details and exact machine-readable evidence: [QA results](QA_RESULTS.md), [performance/accessibility](PERFORMANCE_AND_ACCESSIBILITY.md), [security review](SECURITY_REVIEW.md).
 
@@ -73,12 +77,12 @@ No real provider sandbox was reached. Mocks and injected test gateways prove app
 | Architecture/module history | `docs/README.md`, `docs/system/*`, `FEATURE_AUDIT.md` |
 | Execution checkpoints | `EXECUTION_MASTER_PLAN.md`, `PHASE_PROGRESS.md`, `TESTING_BASELINE.md` |
 | Security/threat/remediation | `SECURITY_REVIEW.md` |
-| Test/restore evidence | `QA_RESULTS.md`, `qa/verification.json`, `qa/restore-drill.json` |
-| Performance and browser gap | `PERFORMANCE_AND_ACCESSIBILITY.md`, `qa/build-size.json` |
+| Test/restore/CI evidence | `QA_RESULTS.md`, `qa/verification.json`, `qa/ci-verification.json`, `qa/restore-drill.json` |
+| Performance and browser evidence | `PERFORMANCE_AND_ACCESSIBILITY.md`, `BROWSER_VISUAL_QA.md`, `qa/build-size.json`, `qa/lighthouse-summary.json` |
 | Integrations | `PROVIDER_INTEGRATION_STATUS.md` |
 | Cost/quota plan | `COST_AND_QUOTA_PLAN.md` |
 | Deployment/environment | `DEPLOYMENT_AND_ENVIRONMENT.md` |
 | Recovery | `BACKUP_AND_RECOVERY_RUNBOOK.md` |
 | Launch admission / remaining actions | `TESTING_LAUNCH_CHECKLIST.md`, `KNOWN_BLOCKERS.md` |
 
-The next release decision belongs to the designated reviewers after those gates have evidence. Local green checks alone do not authorize real customers, financial processing or hardware operation.
+The next release decision belongs to the designated reviewers after those gates have evidence. Green synthetic checks do not authorize real customers, financial processing or hardware operation.

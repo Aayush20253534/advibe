@@ -4,7 +4,7 @@ BlinkMyAd is the product name for the repository originally built as AdVibe. Leg
 
 ## Current readiness pass
 
-Start with the [engineering report](ENGINEERING_READINESS_REPORT.md), [QA evidence](QA_RESULTS.md), [launch checklist](TESTING_LAUNCH_CHECKLIST.md), [security review](SECURITY_REVIEW.md), [cost plan](COST_AND_QUOTA_PLAN.md) and [deployment guide](DEPLOYMENT_AND_ENVIRONMENT.md). These supersede stale readiness claims in historical milestone documents.
+Start with the [engineering report](ENGINEERING_READINESS_REPORT.md), [QA evidence](QA_RESULTS.md), [launch checklist](TESTING_LAUNCH_CHECKLIST.md), [security review](SECURITY_REVIEW.md), [cost plan](COST_AND_QUOTA_PLAN.md) and [deployment guide](DEPLOYMENT_AND_ENVIRONMENT.md). These supersede stale readiness claims in historical milestone documents. Browser artifacts and review scope are recorded in [visual QA](BROWSER_VISUAL_QA.md); lab results are in [performance/accessibility](PERFORMANCE_AND_ACCESSIBILITY.md).
 
 ## Current system documentation
 

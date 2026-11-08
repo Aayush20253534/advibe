@@ -4,11 +4,11 @@ BlinkMyAd is a vehicle-screen advertising platform for an initial Prayagraj roll
 
 Next.js 16.4.2 / React 19 frontend, Express 5 / Prisma 6.19 / PostgreSQL backend. Dedicated advertiser, driver and administrator portals use server-authenticated API records through a same-origin relay. No runtime demo account or fictional production record is substituted when the backend is unavailable. Explicit development provider mocks do not replace the real database.
 
-**Launch verdict: Not ready.** Source/build/database checks pass locally; browser acceptance, verified staging, legal/provider/storage/hardware gates and some advanced integrations remain unresolved. Read the [engineering report](docs/ENGINEERING_READINESS_REPORT.md), [current QA evidence](docs/QA_RESULTS.md) and [owner actions](docs/KNOWN_BLOCKERS.md).
+**Launch verdict: Not ready.** Source/build/database checks and synthetic Chromium, Firefox and WebKit CI pass. Verified staging, legal/provider/storage/hardware gates and some advanced integrations remain unresolved. Read the [engineering report](docs/ENGINEERING_READINESS_REPORT.md), [current QA evidence](docs/QA_RESULTS.md) and [owner actions](docs/KNOWN_BLOCKERS.md).
 
 ## Development
 
-Use Node 22+ and a disposable PostgreSQL 16 database. Configure `backend/.env` and root `.env.local` from their templates. Keep real credentials out of Git; backend CORS/auth origins must match the frontend. Follow [environment setup](docs/DEPLOYMENT_AND_ENVIRONMENT.md).
+Use Node 22.19+ and a disposable PostgreSQL 16 database (CI verified Node 22.23.4). Configure `backend/.env` and root `.env.local` from their templates. Keep real credentials out of Git; backend CORS/auth origins must match the frontend. Follow [environment setup](docs/DEPLOYMENT_AND_ENVIRONMENT.md).
 
 ```bash
 npm ci
@@ -29,6 +29,6 @@ npm run check
 npm --prefix backend run check
 ```
 
-The frontend check runs every unit/runtime/legacy contract test, type/lint checks, current route inventory and production build. Backend checks cover domain/security/database boundaries and HTTP smoke. Browser scripts intercept synthetic API data and are configured for Chromium, Firefox and WebKit in CI; actual provider sandbox and hosted staging acceptance remain separate.
+The frontend check runs every unit/runtime/legacy contract test, type/lint checks, current route inventory and production build. Backend checks cover domain/security/database boundaries and HTTP smoke. Browser scripts pass against intercepted synthetic API data in Chromium, Firefox and WebKit. See [browser evidence and limits](docs/BROWSER_VISUAL_QA.md) and [performance measurements](docs/PERFORMANCE_AND_ACCESSIBILITY.md); actual provider sandbox and hosted staging acceptance remain separate.
 
 See the [engineering handbook](docs/README.md), [current route inventory](contracts/api-routes.current.json), [security review](docs/SECURITY_REVIEW.md), [cost plan](docs/COST_AND_QUOTA_PLAN.md) and [launch checklist](docs/TESTING_LAUNCH_CHECKLIST.md). The B0 OpenAPI file is historical, not a complete current contract. Existing migrations and business logic are preserved.

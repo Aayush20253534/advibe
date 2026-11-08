@@ -6,7 +6,7 @@ No staging service was created or changed. Vercel project details returned team-
 
 Browser → HTTPS Next.js frontend → same-origin `/api/backend/*` relay → HTTPS Express API → pooled PostgreSQL. Only the API/isolated workers hold database/provider credentials. Use a separate Neon project/branch, private storage prefixes/buckets, mail sender and sandbox merchant environment for staging. Keep production data out of PR previews and CI.
 
-Runtime: Node 22+; committed lockfiles; Next 16.4.2, React 19.3.1, Express 5, Prisma 6.19.0. Frontend root: repository root, `npm ci`, `npm run build`. Backend root: `backend`, `npm ci`, `npm run build`, start `npm run start`. `render.yaml` keeps automatic deployments off and commercial flags false. Its predeploy migration step requires a supported paid service; on an approved test host without predeploy support, a designated operator runs migrations once from a secured job before deployment.
+Runtime: Node 22.19+ (CI 22.23.4); committed lockfiles; Next 16.4.2, React 19.3.1, Express 5, Prisma 6.19.0. Frontend root: repository root, `npm ci`, `npm run build`. Backend root: `backend`, `npm ci`, `npm run build`, start `npm run start`. `render.yaml` keeps automatic deployments off and commercial flags false. Its predeploy migration step requires a supported paid service; on an approved test host without predeploy support, a designated operator runs migrations once from a secured job before deployment.
 
 ## Environment ownership
 
