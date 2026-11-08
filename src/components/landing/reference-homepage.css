@@ -28,6 +28,8 @@
 .bma-ref-text-link:hover { color: var(--home-blue); }
 .bma-ref-hero { isolation: isolate; position: relative; width: 100%; aspect-ratio: 2.64; max-height: 650px; min-height: 360px; overflow: hidden; background: #fafbfc; }
 .bma-ref-hero-art { z-index: -1; object-fit: cover; object-position: center 65%; }
+.bma-ref-hero-video { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .bma-ref-hero-video { display: none; } }
 .bma-ref-hero-inner { height: 100%; padding-top: clamp(24px, 2.2vw, 36px); }
 .bma-ref-hero-copy { width: 42%; }
 .bma-ref-hero-eyebrow { display: flex; align-items: center; gap: 13px; color: var(--home-ink); white-space: nowrap; }
