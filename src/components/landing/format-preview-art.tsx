@@ -5,27 +5,27 @@ import type { Placement } from "@/types/domain";
 // placement could look; they are not photographs of real BlinkMyAd installations, and are labelled.
 const photos: Partial<Record<Placement, { src: string; alt: string }>> = {
   auto_rear: {
-    src: "/images/formats/auto-rear.webp",
+    src: "/images/blinkmyad/auto.webp",
     alt: "Illustration of a digital ad screen on the back of an auto rickshaw in city traffic",
   },
   bike_rear: {
-    src: "/images/formats/bike-rear.webp",
+    src: "/images/blinkmyad/bike.webp",
     alt: "Illustration of a digital ad screen on a delivery box behind a scooter rider",
   },
   helmet: {
-    src: "/images/formats/helmet.webp",
-    alt: "Illustration of an advertising display on the back of a rider's helmet",
+    src: "/images/blinkmyad/helmet.webp",
+    alt: "3D illustration of a printed advertising wrap on a helmet",
   },
   auto_side: {
-    src: "/images/formats/auto-side.webp",
+    src: "/images/blinkmyad/auto-side.webp",
     alt: "Illustration of a digital ad screen on the side of an auto rickshaw",
   },
   car_rear: {
-    src: "/images/formats/car-rear.webp",
+    src: "/images/blinkmyad/car-rear.webp",
     alt: "Illustration of a digital ad screen in the rear window of a car",
   },
   car_interior: {
-    src: "/images/formats/car-interior.webp",
+    src: "/images/blinkmyad/interior.webp",
     alt: "Illustration of a seat-back ad screen seen by a passenger inside a car",
   },
 };
@@ -56,7 +56,7 @@ export function FormatPreviewArt({ type }: { type: Placement }) {
           alt={photo.alt}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover"
+          className={type === "bike_rear" ? "object-contain" : "object-cover"}
         />
         <span className="absolute right-2 bottom-2 rounded bg-ink/80 px-2 py-0.5 text-xs text-white">
           Illustration

@@ -530,7 +530,7 @@ function CampaignFlow({
             <Field
               label="Campaign name"
               htmlFor="campaign-title"
-              description="Only you and AdVibe admins see this name."
+              description="Only you and BlinkMyAd admins see this name."
               error={dErr.title}
               required
             >
@@ -877,7 +877,7 @@ export function CampaignDetail({ id }: { id: string }) {
         idempotencyKey: newIdempotencyKey(),
       });
       setNotice(
-        "Submitted for review. An AdVibe admin will check it before anything is scheduled.",
+        "Submitted for review. An BlinkMyAd admin will check it before anything is scheduled.",
       );
       setRevision((v) => v + 1);
     } catch (e) {
@@ -922,7 +922,7 @@ export function CampaignDetail({ id }: { id: string }) {
               <p className="text-sm text-ink-muted">
                 {dirty
                   ? "You have unsaved changes. Save them before submitting."
-                  : "Submitting sends the campaign to an AdVibe admin. You can't edit it while it is in review."}
+                  : "Submitting sends the campaign to an BlinkMyAd admin. You can't edit it while it is in review."}
               </p>
               {error ? <Notice kind="error">{error}</Notice> : null}
             </>

@@ -6,8 +6,8 @@ import {ArrowLeft,Eye,EyeOff,Mail,ShieldCheck} from "lucide-react";
 import {api,ApiError} from "@/services/api-client";
 
 type Mode="forgot"|"reset";
-const inputClass="mt-1.5 block h-[45px] w-full rounded-[10px] border border-[#a4b4d1] bg-white px-3.5 text-sm font-medium text-[#071a38] outline-none transition focus:border-[#2465ef] focus:ring-[3px] focus:ring-[#2465ef]/15 disabled:opacity-60";
-const labelClass="block text-[13.5px] font-semibold text-[#0d1c3a]";
+const inputClass="bma-auth-input";
+const labelClass="bma-auth-label";
 
 /** Reset tokens arrive only in URL fragments and are removed from the address bar immediately. */
 export function BmaRecoveryForm({mode}:{mode:Mode}){
@@ -64,14 +64,14 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
   }finally{setLoading(false);}
  }
 
- return <section aria-labelledby="bma-recovery-title" className="w-full rounded-[18px] border border-[#dce5f2] bg-white px-6 py-7 shadow-[0_16px_42px_rgba(35,69,131,.12)] sm:px-8">
+ return <section aria-labelledby="bma-recovery-title" className="bma-auth-card">
   <div aria-hidden="true" className="mb-4 flex size-10 items-center justify-center rounded-xl bg-[#eaf2ff] text-[#125eea]">
    {mode==="forgot"?<Mail className="size-5"/>:<ShieldCheck className="size-5"/>}
   </div>
   <h1 id="bma-recovery-title" className="font-heading text-[clamp(1.8rem,2.1vw,2.2rem)] font-bold leading-tight tracking-[-.025em] text-[#091b3c]">
    {mode==="forgot"?"Forgot your password?":"Create a new password"}
   </h1>
-  <p className="mb-5 mt-2 text-[14px] leading-relaxed text-[#536584]">
+  <p className="mb-5 mt-2 text-[14px] leading-relaxed text-ink-muted">
    {mode==="forgot"?"Enter your registered email and we’ll send instructions to reset your password.":"Choose a strong password to secure your BlinkMyAd account."}
   </p>
   <form onSubmit={submit} className="space-y-4">
@@ -82,7 +82,7 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
       placeholder="you@example.com"/>
     </label>:
     <>
-     {!tokenLoaded&&<p role="status" className="text-sm text-[#546684]">Checking recovery link…</p>}
+     {!tokenLoaded&&<p role="status" className="text-sm text-ink-muted">Checking recovery link…</p>}
      {tokenLoaded&&!token&&<p role="alert" className="rounded-lg border border-[#eed0a1] bg-[#fff8ed] px-3 py-2 text-sm text-[#86501a]">
       No valid recovery link is available. Request a new password reset email.
      </p>}
@@ -99,7 +99,7 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
         {showPassword?<EyeOff aria-hidden="true" className="size-5"/>:<Eye aria-hidden="true" className="size-5"/>}
        </button>
       </div>
-      <p id="bma-new-password-policy" className={"mt-1 text-[11px] "+(password.length>0?(validPassword?"text-[#177c52]":"text-[#a52424]"):"text-[#647591]")}>
+      <p id="bma-new-password-policy" className={"mt-1 text-xs "+(password.length>0?(validPassword?"text-[#177c52]":"text-[#a52424]"):"text-ink-muted")}>
        12+ characters · uppercase · lowercase · symbol
       </p>
      </div>
@@ -114,12 +114,12 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
    {error&&<p role="alert" className="rounded-lg border border-[#f1c2c2] bg-[#fff1f1] px-3 py-2 text-sm text-[#a32424]">{error}</p>}
    {notice&&<p role="status" className="rounded-lg border border-[#bcdccb] bg-[#f0faf3] px-3 py-3 text-sm text-[#245a3c]">{notice}</p>}
    <button type="submit" disabled={loading||(mode==="reset"&&(!token||!tokenLoaded))}
-    className="flex h-[46px] w-full items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1559d6] via-[#075dcc] to-[#0064c8] text-[15px] font-semibold text-white shadow-[0_8px_20px_rgba(18,90,235,.18)] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1859ed] disabled:cursor-not-allowed disabled:opacity-60">
+    className="bma-auth-submit">
     {loading?"Submitting…":mode==="forgot"?"Send reset link":"Reset password"}
    </button>
   </form>
-  <div className="mt-5 border-t border-[#dde5ef] pt-4 text-center text-sm text-[#526381]">
-   <Link href={mode==="forgot"?"/login":"/forgot-password"} className="inline-flex items-center gap-1.5 font-semibold text-[#0756df] hover:underline">
+  <div className="mt-5 border-t border-[#dde5ef] pt-4 text-center text-sm text-ink-muted">
+   <Link href={mode==="forgot"?"/login":"/forgot-password"} className="inline-flex items-center gap-1.5 font-semibold text-signal hover:underline">
     <ArrowLeft aria-hidden="true" className="size-4"/>
     {mode==="forgot"?"Back to sign in":"Request a new reset link"}
    </Link>
@@ -127,7 +127,7 @@ export function BmaRecoveryForm({mode}:{mode:Mode}){
  </section>;
 }
 export function BmaRecoveryFallback({mode}:{mode:Mode}){
- return <section aria-busy="true" className="grid min-h-[360px] w-full place-items-center rounded-[18px] border border-[#dce5f2] bg-white shadow-sm">
-  <p role="status" className="text-sm text-[#526381]">{mode==="forgot"?"Loading password recovery…":"Checking recovery link…"}</p>
+ return <section aria-busy="true" className="grid min-h-[360px] w-full place-items-center rounded-md border border-[#dce5f2] bg-white shadow-sm">
+  <p role="status" className="text-sm text-ink-muted">{mode==="forgot"?"Loading password recovery…":"Checking recovery link…"}</p>
  </section>;
 }

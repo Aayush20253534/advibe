@@ -46,7 +46,7 @@ try{
  await page.getByRole("button",{name:"Register"}).click();
  await page.waitForURL("**/verify?challengeId="+id);
  await page.reload();
- assert.equal(await page.getByLabel("Challenge ID").inputValue(),id);
+ assert.equal(await page.getByLabel("Challenge ID").count(),0,"Verification identifiers stay out of the user form");
  await page.getByLabel("Email code").fill("123456");
  await page.getByRole("button",{name:"Verify",exact:true}).click();
  await page.waitForURL("**/login?verified=1");

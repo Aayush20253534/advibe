@@ -53,7 +53,7 @@ export function Notice({children,kind="info"}:{children:React.ReactNode;kind?:"i
 }
 /** A titled section of a page. */
 export function Panel({title,children,action,description}:{title:string;children:React.ReactNode;action?:React.ReactNode;description?:React.ReactNode}){
- return <section className="rounded-lg border border-line bg-surface p-5 sm:p-6">
+ return <section className="rounded-lg border border-line bg-surface p-4">
   <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
    <div className="min-w-0"><h2 className="font-heading text-lg font-semibold text-ink">{title}</h2>
     {description?<p className="mt-1 text-sm text-ink-muted">{description}</p>:null}</div>

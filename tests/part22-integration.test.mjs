@@ -9,13 +9,13 @@ const light=hex=>{
 };
 const contrast=(a,b)=>{const l=light(a),r=light(b);return (Math.max(l,r)+.05)/(Math.min(l,r)+.05)};
 test("marketing CTA colors meet 4.5:1 normal-text contrast",()=>{
- assert.ok(contrast("#041b3d","#ff6a00")>=4.5);
- assert.ok(contrast("#ffffff","#ff6a00")<4.5);
- assert.match(read("src/components/ui/button.tsx"),/bg-brand-orange text-brand-navy/);
- assert.ok(contrast("#ffffff","#0866ff")>=4.5);
- assert.match(read("src/components/layout/public-shell.tsx"),/bg-\[#0866FF\] px-5 text-sm font-semibold text-white/);
- assert.match(read("src/app/(site)/page.tsx"),/av-button-blue/);
- assert.match(read("src/components/public/marketing-blocks.tsx"),/bg-\[#ff6a00\].*text-\[#041b3d\]/);
+ assert.ok(contrast("#ffffff","#1958f5")>=4.5);
+ assert.ok(contrast("#171a20","#ffffff")>=4.5);
+ assert.match(read("src/app/globals.css"),/--signal: #1958f5/);
+ assert.match(read("src/components/ui/button.tsx"),/bg-signal text-white/);
+ assert.match(read("src/components/layout/public-shell.tsx"),/bg-signal.*text-white/);
+ assert.match(read("src/components/public/marketing-blocks.tsx"),/bg-\[#1958f5\].*text-white/);
+
 });
 test("public nav links resolve to implemented site pages",()=>{
  const config=read("src/config/navigation.ts");
@@ -39,7 +39,7 @@ test("all sidebar destinations are dedicated pages, not placeholders",()=>{
  }
 });
 test("all three page families have accessible skip links and target landmarks",()=>{
- const pages=[["src/components/auth/auth-frame.tsx","auth-main"],["src/components/layout/public-shell.tsx","public-main"],["src/components/layout/portal-shell.tsx","portal-main"]];
+ const pages=[["src/components/auth/bma-auth-frame.tsx","auth-main"],["src/components/layout/public-shell.tsx","public-main"],["src/components/portal/portal-shell.tsx","portal-content"]];
  for(const [file,id] of pages){const v=read(file);assert.ok(v.includes('href="#'+id+'"'));assert.ok(v.includes('id="'+id+'"'));}
 });
 test("choice controls use pressed-button group, not orphaned tab roles",()=>{

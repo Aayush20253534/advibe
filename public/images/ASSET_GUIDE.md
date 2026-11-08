@@ -1,27 +1,19 @@
-# AdVibe homepage asset pack
+# BlinkMyAd artwork
 
-Generated visual assets for the proposed spacious, scrollable homepage. These files are **not yet wired into the homepage**.
+Original logo and 3D illustrations generated for the owner-authorized November 2026 redesign. The scene family uses white/charcoal vehicles, cobalt geometric screen artwork, pale studio surfaces and occasional violet accents. Artwork is illustrative, not evidence of installed screens or available inventory.
 
-## Hero artwork
-- `hero/hero-city.webp` — cinematic dark-background road scene (1920 × 1080)
-- `hero/hero-bike.png`, `hero/hero-auto.png`, `hero/hero-car.png` — alpha-masked vehicle cutouts, for optional CSS/GSAP entrance animation
-- `hero/hero-static.webp` — composed fallback for reduced motion, low-powered devices, and initial loading
+| Asset | Use |
+|---|---|
+| `/brand/blinkmyad-logo.png` | Shared logo; transparent, 1000 × 179 |
+| `/icon.png` | Crop of the same B symbol |
+| `blinkmyad/fleet.webp` | Homepage/auth hero; 1536 × 1024 |
+| `blinkmyad/auto.webp` | Rear auto placement; crop of fleet scene |
+| `blinkmyad/bike.webp` | Scooter rear placement; crop of fleet scene |
+| `blinkmyad/interior.webp` | Passenger-facing seat-back display |
+| `blinkmyad/helmet.webp` | Printed helmet wrap, never a digital screen |
+| `blinkmyad/car-rear.webp` | Rear-window screen concept |
+| `blinkmyad/auto-side.webp` | Side-body screen concept |
 
-## Feature sections
-- `audience/advertisers.webp` — advertiser feature photography
-- `audience/drivers.webp` — driver-partner feature photography
-- `coverage/india-map.svg` — geographic outline of India with the initial Prayagraj launch marker (Natural Earth boundary)
-- `cta/closing-road.webp` — dark cinematic closing call-to-action background
+Each scene was generated using the built-in image generator. Cropping, resizing and WebP conversion were the only post-generation operations. The generated masters remain in the creation workspace; committed files are web derivatives, quality 82–83. Hero artwork is about 122KB, with explicit dimensions/reserved layout space and responsive Next Image delivery. Images below the fold are lazy-loaded.
 
-## Existing assets retained
-The six files in `formats/` and the existing brand logo in `/brand/` are preserved.
-
-## Implementation guidance
-- Use `next/image` with the WebP files and set widths/heights. Reserve full transparency for PNG vehicle layers.
-- Layer the three isolated vehicle PNGs over the hero-city background; use gentle translateX/opacity animations and an SVG orange trail, not autoplay video.
-- Render `hero-static.webp` when `prefers-reduced-motion: reduce` is active.
-- Keep the headline and CTA as real HTML rather than baked-in image text.
-- Animate only transforms and opacity; never animate heavy full-size CSS filters.
-- The illustration indicates an initial Prayagraj launch. It does not establish national inventory.
-- These files are AI-generated conceptual artwork, not photos of deployed AdVibe hardware. Screen mounts and logos require real-world/hardware verification before marketing or production use.
-- Some cutouts originated from a labeled concept sheet and contain reconstruction/edge artifacts; review them on desktop and mobile before publishing.
+Keep labels such as “Illustrative concept” near placement artwork. Exact hardware, sizes, installation and availability must be confirmed for each campaign. HTML supplies all headings, labels and buttons; text is not baked into the pictures. Do not reintroduce former asset-pack imagery into the new design. Legacy folders are retained for provenance and older demo components.

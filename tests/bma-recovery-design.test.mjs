@@ -6,11 +6,11 @@ const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 test("forgot and reset use the same compact BMA frame as sign-in",()=>{
  const frame=read("src/components/auth/auth-frame.tsx");
  const art=read("src/components/auth/bma-auth-frame.tsx");
- assert.match(frame,/pathname==="\/forgot-password"/);
- assert.match(frame,/pathname==="\/reset-password"/);
- assert.match(art,/mode==="login"/);
- assert.match(art,/bma-login-hero-v2\.jpg/);
- assert.match(art,/bma-signup-logo\.svg/);
+ assert.match(frame,/pathname\s*===\s*"\/forgot-password"/);
+ assert.match(frame,/pathname\s*===\s*"\/reset-password"/);
+ assert.match(art,/BrandLogo/);
+ assert.match(art,/bma-auth-form-wrap/);
+ assert.match(art,/\/images\/blinkmyad\/fleet\.webp/);
  assert.match(read("src/app/(auth)/forgot-password/page.tsx"),/BmaRecoveryForm mode="forgot"/);
  assert.match(read("src/app/(auth)/reset-password/page.tsx"),/BmaRecoveryForm mode="reset"/);
 });

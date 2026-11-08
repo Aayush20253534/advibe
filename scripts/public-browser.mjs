@@ -24,7 +24,8 @@ try{
     await context.route("**/api/backend/**",route=>route.fulfill({status:503,contentType:"application/json",body:JSON.stringify({error:{code:"TEST_UNAVAILABLE",message:"Temporary service interruption"}})}));
     const page=await context.newPage();
     const errors=[];page.on("pageerror",error=>errors.push(error.message));
-    for(const path of ["/","/locations","/login"]){
+    const paths=width===768?["/","/locations","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
+    for(const path of paths){
       await page.goto(base+path,{waitUntil:"networkidle"});
       await page.evaluate(()=>document.fonts.ready);
       await preparePublicPage(page);
@@ -36,6 +37,11 @@ try{
       if(path==="/locations")await page.getByRole("heading",{name:"Coverage data is unavailable"}).waitFor();
     }
     await page.goto(base+"/",{waitUntil:"networkidle"});
+    await page.getByRole("button",{name:"Bike & scooter",exact:false}).click();
+    assert.equal(await page.getByRole("button",{name:"Bike & scooter",exact:false}).getAttribute("aria-pressed"),"true");
+    assert.match(await page.locator("#format-stage img").getAttribute("alt"),/scooter/);
+    await page.getByRole("button",{name:"Ready for review",exact:false}).click();
+    assert.match(await page.locator("#campaign-explanation").innerText(),/Submitted for review/);
     if(width<1280){
       const open=page.getByRole("button",{name:"Open public navigation"});await open.click();
       await page.getByRole("dialog",{name:"Public navigation menu"}).waitFor();

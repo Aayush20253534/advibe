@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Reveal } from "@/components/landing/brand-experience";
 import {
   BadgeCheck,
   BarChart3,
@@ -22,15 +24,14 @@ import { FormatPreviewArt } from "@/components/landing/format-preview-art";
 import { cn } from "@/lib/utils";
 import type { Placement } from "@/types/domain";
 
-// Beacon orange with ink text (5.95:1). Kept as literal values: the contrast test
-// (tests/part22-integration.test.mjs) checks this exact pairing.
+// Cobalt with white text: used consistently for the primary action.
 export const primaryButton =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-[#ff6a00] px-6 text-base font-semibold text-[#041b3d] transition-colors hover:bg-beacon-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#1958f5] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-signal-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal";
 export const secondaryButton =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/60 px-6 text-base font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-white/60 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 /** Secondary action on light backgrounds. */
 export const outlineButton =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-6 text-base font-semibold text-ink transition-colors hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-line-strong bg-surface px-5 text-sm font-semibold text-ink transition-colors hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal";
 /** Inline text link with a visible underline. */
 export const textLink =
   "font-semibold text-signal underline underline-offset-4 hover:text-signal-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal";
@@ -77,40 +78,20 @@ export const formatCards: {
   },
 ];
 
-/** Page introduction on night. One h1, plain words, no coloured accent. */
-export function PageHero({
-  title,
-  description,
-  actions,
-  note,
-}: {
-  title: string;
-  description: string;
+/** Editorial public-page introduction, with optional format artwork. */
+export function PageHero({ title, description, actions, note, eyebrow = "BlinkMyAd", image }: {
+  title: string; description: string;
   actions?: { label: string; href: string; secondary?: boolean }[];
-  note?: string;
+  note?: string; eyebrow?: string; image?: { src: string; alt: string };
 }) {
-  return (
-    <section className="bg-night text-white">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
-        <h1 className="max-w-3xl font-heading text-4xl font-bold sm:text-5xl">{title}</h1>
-        <p className="mt-5 max-w-2xl text-lg text-[#c3d0e4]">{description}</p>
-        {actions?.length ? (
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            {actions.map((action) => (
-              <Link
-                key={action.label}
-                href={action.href}
-                className={action.secondary ? secondaryButton : primaryButton}
-              >
-                {action.label}
-              </Link>
-            ))}
-          </div>
-        ) : null}
-        {note ? <p className="mt-6 max-w-2xl text-sm text-[#9fb0cc]">{note}</p> : null}
-      </div>
-    </section>
-  );
+  return <section className="bma-page-hero"><div className="bma-container bma-page-hero-inner">
+    <div><span className="bma-eyebrow"><span className="bma-small-square" />{eyebrow}</span>
+      <h1>{title}</h1><p>{description}</p>
+      {actions?.length ? <div className="mt-7 flex flex-wrap gap-3">{actions.map(action => <Link key={action.label} href={action.href} className={action.secondary ? outlineButton : primaryButton}>{action.label}</Link>)}</div> : null}
+      {note ? <p className="bma-hero-note">{note}</p> : null}
+    </div>
+    {image ? <div className="bma-page-hero-art"><Image src={image.src} alt={image.alt} fill priority sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" /><span className="bma-art-label">Illustrative concept</span></div> : null}
+  </div></section>;
 }
 
 export function Heading({
@@ -127,7 +108,7 @@ export function Heading({
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
       <div className="max-w-2xl">
-        <h2 id={id} className="font-heading text-2xl font-bold text-ink sm:text-3xl">
+        <h2 id={id} className="font-heading text-3xl font-bold tracking-[-.04em] text-ink sm:text-4xl">
           {title}
         </h2>
         {description ? <p className="mt-2 text-base text-ink-muted">{description}</p> : null}
@@ -158,7 +139,7 @@ export function Section({
       aria-labelledby={labelledBy}
       className={cn("scroll-mt-24 py-14 sm:py-20", muted ? "bg-paper" : "bg-surface")}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">{children}</div>
+      <div className="bma-container"><Reveal>{children}</Reveal></div>
     </section>
   );
 }
@@ -170,13 +151,13 @@ export function Benefits({
   items: { title: string; text: string; icon: LucideIcon; color?: string }[];
 }) {
   return (
-    <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+    <ul className="grid gap-x-12 gap-y-0 sm:grid-cols-2">
       {items.map(({ title, text, icon: Icon }) => (
-        <li key={title} className="flex gap-4">
+        <li key={title} className="flex gap-4 border-t border-line py-6">
           <Icon className="mt-1 size-6 shrink-0 text-signal" aria-hidden />
           <div>
-            <h3 className="font-heading text-lg font-semibold text-ink">{title}</h3>
-            <p className="mt-1 text-base text-ink-muted">{text}</p>
+            <h3 className="font-heading text-base font-semibold text-ink">{title}</h3>
+            <p className="mt-2 text-sm leading-7 text-ink-muted">{text}</p>
           </div>
         </li>
       ))}
@@ -196,7 +177,7 @@ export function FormatsGrid({ short = false }: { short?: boolean }) {
             <div className="aspect-[1.75] overflow-hidden rounded-lg border border-line">
               <FormatPreviewArt type={f.type} />
             </div>
-            <h3 className="mt-4 font-heading text-lg font-semibold text-ink group-hover:text-signal">
+            <h3 className="mt-4 font-heading text-base font-semibold text-ink group-hover:text-signal">
               {f.title}
             </h3>
             <p className="mt-1 text-sm text-ink-muted">{f.description}</p>
@@ -210,13 +191,13 @@ export function FormatsGrid({ short = false }: { short?: boolean }) {
 /** Numbered steps. */
 export function Steps({ items }: { items: { title: string; text: string; icon: LucideIcon }[] }) {
   return (
-    <ol className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+    <ol className="grid gap-px overflow-hidden border-y border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {items.map(({ title, text }, i) => (
-        <li key={title} className="bg-surface p-6">
+        <li key={title} className="bg-surface p-5">
           <span className="font-heading text-sm font-bold text-signal tabular-nums">
             Step {i + 1}
           </span>
-          <h3 className="mt-2 font-heading text-lg font-semibold text-ink">{title}</h3>
+          <h3 className="mt-2 font-heading text-base font-semibold text-ink">{title}</h3>
           <p className="mt-1 text-sm text-ink-muted">{text}</p>
         </li>
       ))}
@@ -268,7 +249,7 @@ export const advertiserBenefits = [
   },
   {
     title: "Reviewed before it runs",
-    text: "Every creative and every campaign is checked by an BlinkMyAd admin before it is scheduled.",
+    text: "Every creative and every campaign is checked by a BlinkMyAd admin before it is scheduled.",
     icon: BadgeCheck,
   },
 ];
@@ -312,7 +293,7 @@ export const advertiserSteps = [
   },
   {
     title: "Submit for review",
-    text: "An BlinkMyAd admin approves the campaign before anything is scheduled.",
+    text: "A BlinkMyAd admin approves the campaign before anything is scheduled.",
     icon: BarChart3,
   },
 ];

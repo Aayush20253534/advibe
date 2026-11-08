@@ -105,16 +105,11 @@ export function ContactEnquiry() {
       return;
     }
 
-    setFeedback("Your email app is opening. Send the message from there; this website has not sent it.");
-    window.location.href =
-      "mailto:support@advibe.in?subject=" +
-      encodeURIComponent("[BlinkMyAd Prayagraj] " + subject) +
-      "&body=" +
-      encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n" + body);
+    setError("Public enquiries are not available yet. Existing members can use account support.");
   }
   return (
     <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-      <form
+      {siteKey ? <form
         id="enquiry"
         onSubmit={handleSubmit}
         noValidate
@@ -125,7 +120,7 @@ export function ContactEnquiry() {
           Write to us
         </h2>
         <p className="mt-1 text-base text-ink-muted">
-          {siteKey ? "Send an enquiry directly to our team after the verification check." : "This form prepares an email in your email app; you send it from there."}
+          Send an enquiry directly to our team after the verification check.
         </p>
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           <Field label="Full name" htmlFor="contact-name" required>
@@ -202,20 +197,20 @@ export function ContactEnquiry() {
           </Alert>
         ) : null}
         <Button type="submit" size="lg" loading={sending} className="mt-6 w-full sm:w-auto">
-          {siteKey ? "Send enquiry" : "Open in my email app"}
+          Send enquiry
         </Button>
-      </form>
+      </form> : <section className="border-t-2 border-signal bg-paper p-6 sm:p-8" aria-labelledby="enquiry-title">
+        <span className="bma-eyebrow">Prayagraj pilot</span>
+        <h2 id="enquiry-title" className="mt-4 font-heading text-3xl font-bold tracking-tight">Start with your workspace.</h2>
+        <p className="mt-4 max-w-md text-sm leading-7 text-ink-muted">Public enquiries are not open yet. Create an advertiser account to start a campaign draft, or explore the driver partner application.</p>
+        <div className="mt-6 flex flex-wrap gap-3"><Link href="/signup?role=advertiser" className="inline-flex min-h-11 items-center rounded-md bg-signal px-4 text-sm font-semibold text-white">Create an advertiser account</Link><Link href="/for-drivers" className={textLink + " inline-flex min-h-11 items-center"}>For driver partners</Link></div>
+      </section>}
 
       <div className="space-y-8">
         <div>
-          <h2 className="font-heading text-xl font-semibold text-ink">Other ways to reach us</h2>
+          <h2 className="font-heading text-xl font-semibold text-ink">Account support</h2>
           <ul className="mt-4 space-y-4 text-base">
-            <li>
-              <p className="text-ink-muted">Email</p>
-              <a href="mailto:support@advibe.in" className={textLink}>
-                support@advibe.in
-              </a>
-            </li>
+
             <li>
               <p className="text-ink-muted">Already have an account?</p>
               <p className="text-ink">

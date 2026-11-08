@@ -80,7 +80,7 @@ function NavList({
         return (
           <div key={group}>
             {heading ? (
-              <p className="mb-1.5 px-3 text-xs font-semibold text-[#9fb0cc]">{heading}</p>
+              <p className="mb-1.5 px-3 text-xs font-semibold text-[#a9b0be]">{heading}</p>
             ) : null}
             <ul className="space-y-0.5">
               {items.map((item) => {
@@ -97,7 +97,7 @@ function NavList({
                         dense ? "min-h-9" : "min-h-11",
                         current
                           ? "bg-signal text-white"
-                          : "text-[#c3d0e4] hover:bg-white/10 hover:text-white",
+                          : "text-[#bdc4d1] hover:bg-white/10 hover:text-white",
                       )}
                     >
                       <Icon className="size-4 shrink-0" aria-hidden />
@@ -126,9 +126,9 @@ function SidebarContent({
   return (
     <>
       <div className="px-5 pt-5 pb-4">
-        <BrandLogo href={"/" + role} width={132} />
+        <BrandLogo href={"/" + role} width={154} inverse />
         <p className="mt-3 text-sm font-semibold text-white">{portalLabel[role]}</p>
-        <p className="mt-1 text-xs text-[#c3d0e4]">Prayagraj launch workspace</p>
+        <p className="mt-1 text-xs text-[#bdc4d1]">Prayagraj · Pilot workspace</p>
       </div>
       <nav aria-label={portalLabel[role]} className="flex-1 overflow-y-auto px-2 pb-6">
         <NavList role={role} pathname={pathname} dense={role === "admin"} onNavigate={onNavigate} />
@@ -179,7 +179,7 @@ export function PortalShell({
       </a>
 
       {/* The ink column stretches to the full page height; the menu inside it stays in view. */}
-      <aside className="hidden w-64 shrink-0 bg-ink lg:block">
+      <aside className="hidden w-60 shrink-0 bg-ink lg:block">
         <div className="sticky top-0 flex h-dvh flex-col">
           <SidebarContent role={role} pathname={pathname} onNavigate={navigate} />
         </div>
@@ -187,7 +187,7 @@ export function PortalShell({
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-30 border-b border-line bg-surface">
-          <div className="flex min-h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
+          <div className="flex min-h-[60px] items-center gap-3 px-4 sm:px-6 lg:px-8">
             <RadixDialog.Root open={menuOpen} onOpenChange={setMenuOpen}>
               <RadixDialog.Trigger asChild>
                 <Button variant="outline" className="lg:hidden" aria-label="Open menu">
@@ -206,7 +206,7 @@ export function PortalShell({
                   </RadixDialog.Title>
                   <RadixDialog.Close
                     aria-label="Close menu"
-                    className="absolute top-4 right-3 grid size-10 place-items-center rounded-md text-[#c3d0e4] hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white"
+                    className="absolute top-4 right-3 grid size-10 place-items-center rounded-md text-[#bdc4d1] hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white"
                   >
                     <X className="size-5" aria-hidden />
                   </RadixDialog.Close>
@@ -262,8 +262,8 @@ export function PortalShell({
           id="portal-content"
           tabIndex={-1}
           className={cn(
-            "mx-auto w-full max-w-7xl flex-1 px-4 focus:outline-none sm:px-6 lg:px-8",
-            dense ? "space-y-5 py-5" : "space-y-6 py-6 lg:py-8",
+            "mx-auto w-full max-w-[1440px] flex-1 px-4 focus:outline-none sm:px-6 lg:px-8",
+            dense ? "space-y-5 py-5" : "space-y-5 py-5 lg:py-6",
           )}
         >
           <PageHeader

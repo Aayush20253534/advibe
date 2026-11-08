@@ -1,47 +1,46 @@
-# AdVibe design system
+# BlinkMyAd design system
 
-Live reference: `/design-system` (internal, `noindex`, disallowed in `robots.ts`, not linked from the public navigation or footer).
+The public site, authentication screens and all three API portals share this identity. `/design-system` is an internal, noindex component reference.
 
 ## Direction
 
-Transit wayfinding and road signage: quiet, precise and disciplined. Boldness is spent in one place, the "route line" motif (homepage hero, campaign step rail, driver "today" status line). Everything else stays calm.
-
-Avoid gradient washes, glassmorphism, glows, identical shadowed card grids, decorative entrance animations, "→" on every link, all-caps eyebrow labels above every heading, single coloured words in headlines and meta strings joined with middle dots.
+A confident outdoor advertising company: strong Manrope headlines, editorial image-led sections, compact actions, purposeful blue accents and selected charcoal sections. Public pages introduce the format and campaign journey; portal pages prioritize dense, readable working data. Avoid glow, gradients, excessive rounding, invented metrics and repetitive oversized cards.
 
 ## Colour tokens
 
-Defined once in `src/app/globals.css` and used through Tailwind utilities (`bg-signal`, `text-ink-muted`, `border-line`, `bg-success-bg` …). Do not add hard-coded hex values in components.
+Defined in `src/app/globals.css`.
 
 | Token | Hex | Use |
 |---|---|---|
-| `ink` | #041B3D | Text, sidebar, dark surfaces |
-| `ink-muted` | #4A5B78 | Secondary text (6.9:1 on white) |
-| `ink-subtle` | #5D6D88 | Tertiary text (5.2:1 on white) |
-| `night` | #03152C | Hero and footer only |
-| `signal` | #0866FF | The only action and selection colour, in every portal (white text 4.8:1) |
-| `beacon` | #FF6A00 | Main marketing call to action and live state only; always ink text (5.95:1), never white |
-| `paper` | #F7F9FC | App background |
-| `surface` | #FFFFFF | Cards, tables, inputs |
-| `line` | #DCE4F0 | Borders and dividers |
-| `line-strong` | #7A8AA5 | Form control borders (3.5:1, meets WCAG 1.4.11) |
+| ink | #171A20 | Primary text and sidebar |
+| ink-muted | #555E6C | Supporting text |
+| ink-subtle | #626C7A | Secondary metadata |
+| night | #15181E | Dark public sections and footer |
+| signal | #1958F5 | Primary actions and active states, with white text |
+| signal-hover | #1247CB | Hovered primary actions |
+| paper | #F6F7F9 | Workspace background |
+| surface | #FFFFFF | Forms, cards and tables |
+| line | #E0E3E9 | Dividers |
+| line-strong | #7C8594 | Discernible form borders |
 
-Status sets, each with `-bg`, `-fg` and `-border` (all fg/bg pairs ≥ 5.7:1): `success`, `warning`, `danger`, `info`, plus `danger-solid` for destructive buttons.
+Semantic success, warning and danger colours remain independent of branding. Legacy `beacon` and `brand-orange` aliases resolve to signal; controls on them must use white text. Purple is limited to small accents in the artwork.
 
-There are no per-portal accent colours. Admin is distinguished by density and a role label. The old names (`brand-navy`, `brand-blue`, `brand-orange`, `muted-foreground`, `--portal-accent`) remain as aliases until every screen is migrated.
+## Typography and density
 
-## Typography
+Manrope headings are served by `next/font`; body and controls use the native UI stack. Public display headings scale from 36–82px. Portal headings are 24–28px; body copy 14–16px; compact auxiliary public labels 10–12px. Form inputs keep 16px text on mobile to avoid browser zoom. Primary inputs/actions are at least 44px high. Cards use 6–8px corners and 16px padding, with restrained borders rather than heavy shadows.
 
-- Body and app text: the platform UI font stack (`--font-facebook-ui`).
-- Headings and display text only: **Overpass**, loaded with `next/font/google` (downloaded at build time and served from this site). `h1`–`h3` use it automatically; use the `font-heading` utility elsewhere.
-- Scale: Tailwind's default steps, 12, 14, 16, 18, 20, 24, 30, 36 and 48px. Nothing below 12px (`text-xs`).
-- Money and metrics use tabular numerals (`tabular-nums`, or `data-numeric` on table cells).
-- Sentence case everywhere.
+## Composition
+
+- Public: white navigation, large original vehicle renders, interactive format explorer, charcoal campaign explainer, clearly labelled Prayagraj route illustration and blue closing CTA.
+- Authentication: charcoal artwork panel and uncluttered white form; no fixed-height form clipping or stretched images. Verification identifiers are carried by the link instead of exposed as a user-entered field.
+- Live portals: `src/components/portal/portal-shell.tsx`, 240px charcoal navigation, compact header, neutral content and shared controls. The similarly named layout shell is legacy demo UI.
+- Contact: a protected enquiry form when configured; otherwise honest availability and account/help links. No public contact address or telephone is invented.
 
 ## Components (`src/components/ui`)
 
 | Component | Notes |
 |---|---|
-| `Button` | `primary` (signal), `brand` (beacon, marketing only), `secondary`, `outline`, `ghost`, `destructive`, `link`; sizes `sm`, `md` (44px), `lg`, `icon`; `loading` |
+| `Button` | `primary` (signal), `brand` (signal), `secondary`, `outline`, `ghost`, `destructive`, `link`; sizes `sm`, `md` (44px), `lg`, `icon`; `loading` |
 | `Input`, `DateInput`, `Textarea`, `Select`, `Checkbox`, `Switch` | 44px controls, 3:1 borders, visible focus, error state via `aria-invalid` |
 | `Field` | Label, hint and error. Wires `id`, `aria-describedby`, `aria-invalid` and `required` onto its child automatically |
 | `Badge`, `StatusBadge` | Status is always a text label plus colour, never colour alone. Tones: neutral, info, success, warning, danger, live |
@@ -58,7 +57,7 @@ There are no per-portal accent colours. Admin is distinguished by density and a 
 
 ## Motion
 
-Motion responds to user actions only (overlay open, press, hover), plus one orchestrated hero moment. All animation is wrapped in `motion-safe:` or disabled under `prefers-reduced-motion: reduce`.
+Public pages use a one-time image reveal, short scroll entrances and user-controlled format/campaign explanations. Content remains available without JavaScript and reduced-motion visitors see the static composition. Portals use only short control/overlay transitions; there is no autoplay dashboard motion.
 
 ## Copy
 

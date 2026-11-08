@@ -74,7 +74,7 @@ function Choice({
 
 /**
  * Driver application on the live API: start, steps 1–3, and an honest locked state for
- * the partner agreement (step 4), final check (step 5) and submission until AdVibe
+ * the partner agreement (step 4), final check (step 5) and submission until BlinkMyAd
  * publishes the agreement.
  */
 export function DriverOnboarding() {
@@ -217,12 +217,12 @@ export function DriverOnboarding() {
         <Block title="Your application" action={<DriverStatus value={app.state} />}>
           <p className="text-base text-ink">
             {app.state === "approved"
-              ? "Your application is approved. AdVibe will contact you to arrange the screen installation."
+              ? "Your application is approved. BlinkMyAd will contact you to arrange the screen installation."
               : app.state === "rejected"
                 ? "Your application wasn't approved. Contact support if you'd like to know more."
                 : app.state === "changes_requested"
-                  ? "AdVibe asked for changes. Check your notifications for what to update, or contact support."
-                  : "Your application has been sent. An AdVibe admin will review it and let you know."}
+                  ? "BlinkMyAd asked for changes. Check your notifications for what to update, or contact support."
+                  : "Your application has been sent. An BlinkMyAd admin will review it and let you know."}
           </p>
           <p className="mt-2 text-sm text-ink-muted">Submitted {shortDate(app.submittedAt)}</p>
           <Link
@@ -309,7 +309,7 @@ export function DriverOnboarding() {
                   {locked ? (
                     <p className="mt-1 text-sm text-ink-muted">
                       {step === 4
-                        ? "AdVibe hasn't published the partner agreement yet. We'll notify you when you can read and accept it."
+                        ? "BlinkMyAd hasn't published the partner agreement yet. We'll notify you when you can read and accept it."
                         : "Available after the partner agreement. Then you can check everything and submit."}
                     </p>
                   ) : null}
@@ -448,7 +448,7 @@ export function DriverOnboarding() {
                         ) : null}
                       </fieldset>
                       <p className="text-sm text-ink-muted">
-                        The exact screen is confirmed when AdVibe arranges installation.
+                        The exact screen is confirmed when BlinkMyAd arranges installation.
                       </p>
                       <Button
                         size="lg"
