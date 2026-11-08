@@ -116,6 +116,8 @@
 .bma-ref-button-outline:hover { background: #edf2ff; }
 .bma-ref-city-figure { position: absolute; inset: 0 calc(-1 * var(--home-gutter)) 0 31%; }
 .bma-ref-city-figure>img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.bma-ref-city-video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .bma-ref-city-video { display: none; } }
 .bma-ref-city-figure::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 7%; background: linear-gradient(90deg, white, #fff0); }
 .bma-ref-city-figure figcaption { position: absolute; right: 20px; bottom: 12px; font-size: clamp(10px, 1vw, 14px); font-style: italic; color: #101114; background: #ffffffdf; padding: 1px 3px; }
 .bma-ref-closing { color: #fff; background: var(--home-blue); overflow: hidden; }
