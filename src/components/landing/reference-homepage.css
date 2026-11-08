@@ -1,4 +1,4 @@
-/* Approved homepage composition. All rules are scoped away from other public pages and portals. */
+/* Homepage visual system. Public header rules are shared across all pre-login pages; other composition rules remain scoped to the homepage. */
 [data-homepage="true"] {
   --home-blue: #073dfb;
   --home-ink: #101114;
@@ -10,14 +10,21 @@
   color: var(--home-ink);
 }
 .bma-ref-wrap { width: calc(100% - var(--home-gutter) * 2); max-width: 1480px; margin-inline: auto; }
-[data-homepage="true"] .bma-ref-header-row { width: calc(100% - var(--home-gutter) * 2); max-width: 1480px; padding: 0; min-height: clamp(54px, 4.88vw, 78px); gap: clamp(12px, 2vw, 30px); }
+/* Keep the pre-login header identical on every public route. */
+[data-portal="public"] > header { --home-blue: #073dfb; --home-ink: #101114; --home-gutter: clamp(24px, 3.55vw, 64px); }
+[data-portal="public"] .bma-ref-header-row { width: calc(100% - var(--home-gutter) * 2); max-width: 1480px; padding: 0; min-height: clamp(54px, 4.88vw, 78px); gap: clamp(12px, 2vw, 30px); }
 .bma-ref-header-logo { width: clamp(168px, 16.8vw, 242px); }
-.bma-ref-nav { display: flex; flex: 1; justify-content: center; align-items: center; gap: clamp(20px, 3vw, 44px); }
-.bma-ref-nav a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; font-size: clamp(13px, 1.32vw, 18px); font-weight: 650; }
-.bma-ref-nav a:hover, .bma-ref-header-actions>a:first-child:hover { color: var(--home-blue); }
+.bma-ref-nav { display: flex; flex: 1; justify-content: center; align-items: center; gap: clamp(14px, 1.8vw, 30px); }
+.bma-ref-nav a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; font-size: clamp(13px, 1.15vw, 17px); font-weight: 650; color: var(--home-ink); }
+.bma-ref-nav a:hover, .bma-ref-nav a[aria-current="page"], .bma-ref-header-actions>a:first-child:hover { color: var(--home-blue); }
+.bma-ref-nav a:focus-visible, .bma-ref-header-actions a:focus-visible, .bma-ref-menu-button:focus-visible { outline: 2px solid var(--home-blue); outline-offset: 3px; }
 .bma-ref-header-actions { gap: clamp(10px, 1.7vw, 24px); }
 .bma-ref-header-actions>a:first-child { padding: 0; font-size: clamp(13px, 1.3vw, 17px); white-space: nowrap; }
-[data-homepage="true"] .bma-ref-menu-button { display: none; }
+[data-portal="public"] .bma-ref-menu-button { display: none; }
+@media (max-width: 1150px) {
+  [data-portal="public"] .bma-ref-nav { display: none; }
+  [data-portal="public"] .bma-ref-menu-button { display: inline-flex; }
+}
 .bma-reference-home h1, .bma-reference-home h2, .bma-reference-home h3 { color: inherit; margin: 0; }
 .bma-ref-eyebrow { color: var(--home-blue); text-transform: uppercase; font-size: clamp(12px, 1.23vw, 17px); line-height: 1.4; font-weight: 750; letter-spacing: .025em; }
 .bma-ref-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: clamp(34px, 3.15vw, 46px); padding: 7px clamp(12px, 1.3vw, 20px); border: 1px solid transparent; border-radius: 3px; background: var(--home-blue); color: #fff; font-size: clamp(12px, 1.25vw, 17px); font-weight: 700; white-space: nowrap; transition: background .2s, transform .2s; }
@@ -144,10 +151,11 @@
 @keyframes bma-ref-route-flow { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @media (min-width: 1600px) { .bma-ref-hero-inner { padding-top: 48px; }.bma-ref-hero-art { object-position: center 70%; } }
 @media (max-width: 1000px) { .bma-ref-nav { gap: 20px; }.bma-ref-header-logo { width: 160px; }.bma-ref-header-actions { gap: 14px; }.bma-ref-hero { aspect-ratio: 2.5; }.bma-ref-hero-copy { width: 45%; }.bma-ref-hero h1 { font-size: 5.7vw; }.bma-ref-dashboard-sidebar { padding-inline: 5px; }.bma-ref-dashboard-sidebar>a { gap: 3px; padding-inline: 3px; }.bma-ref-creative-description { display: none; }.bma-ref-footer-top { gap: 6%; } }
-@media (max-width: 899px) { .bma-ref-nav { display: none; }[data-homepage="true"] .bma-ref-menu-button { display: inline-flex; }.bma-ref-header-actions { margin-left: auto; }.bma-ref-hero-eyebrow { font-size: 10px; gap: 8px; }.bma-ref-hero-actions { gap: 9px; }.bma-ref-hero-actions .bma-ref-button { padding-inline: 9px; }.bma-ref-hero-copy { width: 47%; }.bma-ref-intro { font-size: 12px; max-width: 310px; }.bma-ref-desktop-break { display: none; }.bma-ref-section-heading>p { max-width: 210px; }.bma-ref-process-top { gap: 16px; }.bma-ref-process h2 { font-size: 29px; }.bma-ref-steps { gap: 15px; }.bma-ref-steps li+li { padding-left: 15px; }.bma-ref-steps li { gap: 9px; }.bma-ref-format h3 { gap: 7px; }.bma-ref-city-copy { width: 39%; }.bma-ref-city-figure { left: 35%; }.bma-ref-closing-inner { gap: 20px; }.bma-ref-closing h2 { width: 52%; font-size: 3.7vw; }.bma-ref-closing-action { padding-left: 20px; }.bma-ref-footer-brand p { white-space: normal; } }
+@media (max-width: 899px) { .bma-ref-nav { display: none; }[data-portal="public"] .bma-ref-menu-button { display: inline-flex; }.bma-ref-header-actions { margin-left: auto; }.bma-ref-hero-eyebrow { font-size: 10px; gap: 8px; }.bma-ref-hero-actions { gap: 9px; }.bma-ref-hero-actions .bma-ref-button { padding-inline: 9px; }.bma-ref-hero-copy { width: 47%; }.bma-ref-intro { font-size: 12px; max-width: 310px; }.bma-ref-desktop-break { display: none; }.bma-ref-section-heading>p { max-width: 210px; }.bma-ref-process-top { gap: 16px; }.bma-ref-process h2 { font-size: 29px; }.bma-ref-steps { gap: 15px; }.bma-ref-steps li+li { padding-left: 15px; }.bma-ref-steps li { gap: 9px; }.bma-ref-format h3 { gap: 7px; }.bma-ref-city-copy { width: 39%; }.bma-ref-city-figure { left: 35%; }.bma-ref-closing-inner { gap: 20px; }.bma-ref-closing h2 { width: 52%; font-size: 3.7vw; }.bma-ref-closing-action { padding-left: 20px; }.bma-ref-footer-brand p { white-space: normal; } }
 @media (max-width: 700px) {
   [data-homepage="true"] { --home-gutter: 20px; }
-  [data-homepage="true"] .bma-ref-header-row { min-height: 64px; }.bma-ref-header-logo { width: 170px; }.bma-ref-header-actions { display: none; }
+  [data-portal="public"] > header { --home-gutter: 20px; }
+  [data-portal="public"] .bma-ref-header-row { min-height: 64px; }.bma-ref-header-logo { width: 170px; }.bma-ref-header-actions { display: none; }
   .bma-ref-hero { display: flex; flex-direction: column; aspect-ratio: auto; min-height: 0; max-height: none; background: #fff; }
   .bma-ref-hero-inner { order: -1; padding-block: 25px 23px; height: auto; }.bma-ref-hero-copy { width: 100%; }
   .bma-ref-hero-eyebrow { font-size: 11px; gap: 10px; }.bma-ref-hero h1 { font-size: clamp(38px, 12vw, 79px); line-height: .91; margin-top: 18px; letter-spacing: -.045em; }
