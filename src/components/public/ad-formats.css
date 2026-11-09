@@ -603,52 +603,6 @@
   text-decoration-thickness: 2px;
   text-underline-offset: 18px;
 }
-[data-page="ad-formats"] > footer {
-  background: #061222;
-}
-[data-page="ad-formats"] > footer > div:first-child {
-  max-width: 1400px;
-  width: calc(100% - var(--formats-gutter) * 2);
-  padding: 22px 0 16px;
-  gap: 36px;
-}
-[data-page="ad-formats"] > footer > div:first-child > div:first-child > a {
-  width: 174px;
-}
-[data-page="ad-formats"] > footer > div:first-child > div:first-child p {
-  margin-top: 14px;
-  max-width: 270px;
-  font-size: 13px;
-  line-height: 1.5;
-}
-[data-page="ad-formats"] > footer h2 {
-  margin-bottom: 9px;
-  font-size: 14px;
-}
-[data-page="ad-formats"] > footer ul {
-  display: grid;
-  gap: 1px;
-}
-[data-page="ad-formats"] > footer ul > li {
-  margin: 0;
-}
-[data-page="ad-formats"] > footer > div:first-child > div:first-child > a {
-  margin-block: 0;
-}
-[data-page="ad-formats"] > footer ul a {
-  font-size: 12px;
-  min-height: 20px;
-  line-height: 1.5;
-}
-[data-page="ad-formats"] > footer > div:last-child {
-  width: calc(100% - var(--formats-gutter) * 2);
-  max-width: 1400px;
-  margin-inline: auto;
-}
-[data-page="ad-formats"] > footer > div:last-child > div {
-  padding: 12px 0 16px;
-  font-size: 11px;
-}
 @media (min-width: 1600px) {
   .bma-formats-hero-inner {
     padding-top: 65px;
@@ -813,14 +767,7 @@
     align-items: flex-start;
     padding: 24px 28px;
   }
-  [data-page="ad-formats"] > footer > div:first-child {
-    padding-block: 32px;
-  }
-  [data-page="ad-formats"] > footer ul a {
-    min-height: 32px;
-    font-size: 14px;
-  }
-}
+    }
 @media (max-width: 699px) {
   [data-page="ad-formats"] {
     --formats-gutter: 20px;
@@ -1001,17 +948,7 @@
   .bma-formats-closing p {
     font-size: 15px;
   }
-  [data-page="ad-formats"] > footer > div:first-child {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 26px;
-  }
-  [data-page="ad-formats"] > footer > div:first-child > div:first-child {
-    grid-column: 1/-1;
-  }
-  [data-page="ad-formats"] > footer > div:first-child > div:first-child p {
-    max-width: 280px;
-  }
-}
+      }
 @media (max-width: 479px) {
   .bma-format-grid {
     grid-template-columns: 1fr;
