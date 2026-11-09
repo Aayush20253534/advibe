@@ -211,7 +211,7 @@ export function createAuthRouter(
       throw new HttpError(403, "ACCOUNT_ROLE_MISMATCH",
         "This account does not match the selected account type.");
     }
-    if (user.role === "ADMIN") {
+    if (user.role === "ADMIN" && settings.adminMfaRequired !== false) {
       const enrolled = await db.adminMfaCredential.findUnique({ where: { userId: user.id } });
       if (!enrolled?.enabledAt || !settings.mfaEncryptionKey) {
         throw new HttpError(403, "ADMIN_MFA_REQUIRED", "Admin authenticator enrollment required");
@@ -242,9 +242,11 @@ export function createAuthRouter(
       });
       await tx.session.create({ data: {
         userId: user.id, tokenHash: hashToken(token), expiresAt,
+        ...(user.role === "ADMIN" ? { adminPasswordVerifiedAt: new Date() } : {}),
       } });
       await tx.auditEvent.create({ data: {
-        actorUserId: user.id, action: "auth.login", resourceType: "session", resourceId: user.id,
+        actorUserId: user.id, action: user.role === "ADMIN" ? "auth.admin_password_login" : "auth.login",
+        resourceType: "session", resourceId: user.id,
       } });
     });
     setSessionCookie(res, token, settings, remember !== false);
@@ -324,7 +326,8 @@ export function createAuthRouter(
   router.get("/admin-security", asyncRoute(async (req, res) => {
     const principal = await resolvePrincipal(req, db, settings);
     requireRole(principal, "ADMIN");
-    res.json({ data: { userId: principal.userId, mfaVerified: true } });
+    res.json({ data: { userId: principal.userId, mfaVerified: Boolean(principal.mfaVerifiedAt),
+      mfaRequired: settings.adminMfaRequired !== false } });
   }));
 
   router.get("/session", asyncRoute(async (req, res) => {
