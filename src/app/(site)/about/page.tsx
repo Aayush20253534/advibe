@@ -114,7 +114,7 @@ export default function AboutPage() {
             <div className="bma-about-hero-process" aria-label="How a campaign takes shape">
               <div className="bma-about-hero-process-head">
                 <p>From idea to screen</p>
-                <Link href="/#how-it-works">
+                <Link href="/how-it-works">
                   Explore the process <ArrowRight aria-hidden="true" />
                 </Link>
               </div>
