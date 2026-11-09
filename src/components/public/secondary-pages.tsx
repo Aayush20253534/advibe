@@ -59,10 +59,10 @@ export function DetailSection({
   aside?: ReactNode;
   className?: string;
 }) {
-  return <section id={id} className={"bma-detail-section bma-detail-section-" + tone + " " + className} aria-labelledby={title && id ? id : undefined}>
+  return <section id={id} className={"bma-detail-section bma-detail-section-" + tone + " " + className} aria-labelledby={title && id ? id + "-title" : undefined}>
     <div className="bma-detail-container">
       {(title || aside) && <div className="bma-detail-section-header">
-        <div>{title && <h2 id={id}>{title}</h2>}{description && <p>{description}</p>}</div>
+        <div>{title && <h2 id={id ? id + "-title" : undefined}>{title}</h2>}{description && <p>{description}</p>}</div>
         {aside}
       </div>}
       {children}
