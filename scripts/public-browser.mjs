@@ -32,6 +32,21 @@ try{
       await preparePublicPage(page);
       assert.equal(await page.locator("h1").count(),1,`${path}: one primary heading`);
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path}: no overflow at ${width}`);
+      if(width===1440 && (path==="/login"||path==="/signup")){
+        const fit=await page.evaluate(()=>{
+          const form=document.querySelector(".bma-reference-auth .bma-auth-form-wrap");
+          const panel=document.querySelector(".bma-reference-auth");
+          const backdrop=document.querySelector(".bma-reference-auth-backdrop");
+          return {
+            documentFits: document.documentElement.scrollHeight<=window.innerHeight+2,
+            formFits: !!form && form.scrollHeight<=form.clientHeight+2,
+            backgroundLoaded: !!backdrop && backdrop.complete && backdrop.naturalWidth>0,
+            panelFits: !!panel && panel.getBoundingClientRect().bottom<=window.innerHeight+2
+          };
+        });
+        assert.ok(fit.documentFits && fit.formFits && fit.backgroundLoaded && fit.panelFits,
+          `${path}: desktop auth must fit viewport with the uploaded background: ${JSON.stringify(fit)}`);
+      }
       const result=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
       await saveBrowserEvidence(page,`${path.slice(1)||"home"}-${width}`,{violations:result.violations});
       assert.deepEqual(result.violations.filter(x=>["serious","critical"].includes(x.impact)).map(x=>x.id),[],`${path}: accessibility at ${width}`);
