@@ -868,3 +868,9 @@
   }
   .bma-auth-minimal-shell .bma-auth-form-wrap { margin: 0 auto; width: 100%; max-height: none; overflow: visible; }
 }
+
+/* Keep validation feedback visually separate from the sign-in action.
+   Apply only when a message is displayed so the default form remains compact. */
+.bma-reference-auth .bma-reference-login-card :is([role="alert"], [role="status"]) + .bma-auth-submit {
+  margin-top: clamp(11px, 1.5vh, 16px);
+}
