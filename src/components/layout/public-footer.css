@@ -6,10 +6,8 @@
   overflow: hidden;
   color: #fff;
   border-top: 1px solid rgba(158, 199, 255, .21);
-  background:
-    radial-gradient(ellipse 66% 105% at 72% -27%, rgba(61, 137, 255, .52), transparent 72%),
-    radial-gradient(ellipse 55% 82% at 8% 120%, rgba(34, 79, 171, .34), transparent 75%),
-    linear-gradient(117deg, #061126 0%, #0b2755 29%, #133a78 48%, #0c2754 66%, #06152d 100%);
+  background-color: #07162d;
+  background-image: linear-gradient(115deg, #061126 0%, #0b2858 27%, #164488 48%, #0c2b5e 69%, #06152d 100%);
 }
 .bma-public-footer::before {
   content: "";
