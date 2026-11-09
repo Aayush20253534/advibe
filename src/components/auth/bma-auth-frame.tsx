@@ -46,14 +46,15 @@ export function BmaAuthFrame({ mode, children }: { mode: Mode; children: ReactNo
       <PublicShell hideFooter authMode={mode}>
         <div data-bma-auth={mode} className="bma-reference-auth">
           <aside className="bma-reference-auth-story" aria-label="About BlinkMyAd">
-            <div className="bma-reference-auth-monogram" aria-hidden="true" />
-            <div className="bma-reference-auth-city" aria-hidden="true" />
-            <div className="bma-reference-auth-art">
-              <Image src="/images/blinkmyad/fleet.webp"
-                alt="Illustrative BlinkMyAd advertising screens on a scooter and auto-rickshaw"
-                fill priority sizes="(min-width:1024px) 50vw, 100vw"
-                className="bma-reference-auth-fleet object-cover" />
-            </div>
+            <Image
+              src="/images/hero/signin.png"
+              alt=""
+              aria-hidden="true"
+              fill
+              priority
+              sizes="(min-width: 901px) 50vw, 0px"
+              className="bma-reference-auth-backdrop"
+            />
             <div className="bma-reference-auth-story-copy">
               <div className="bma-reference-auth-eyebrow">
                 <span>{view.eyebrow}</span><i aria-hidden="true" />
