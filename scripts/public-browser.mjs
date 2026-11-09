@@ -35,7 +35,11 @@ try{
         const footer=page.locator("footer.bma-public-footer");
         assert.equal(await footer.count(),1,`${path}: shared public footer appears once`);
         assert.equal(await footer.locator(".bma-public-footer-column").count(),4,`${path}: shared footer columns`);
-        assert.ok(await footer.evaluate(el=>getComputedStyle(el).backgroundImage.includes("gradient")),`${path}: metallic-blue gradient footer`);
+        const footerBackground=await footer.evaluate(el=>({
+          base:getComputedStyle(el).backgroundImage,
+          reflection:getComputedStyle(el,"::before").backgroundImage,
+        }));
+        assert.ok(footerBackground.base.includes("gradient"),`${path}: metallic-blue gradient footer: ${JSON.stringify(footerBackground)}`);
       }
       if(path==="/login"||path==="/signup"){
         assert.equal(await page.locator(".bma-ref-nav").count(),0,`${path}: marketing navbar is absent`);
