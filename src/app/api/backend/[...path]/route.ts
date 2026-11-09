@@ -43,6 +43,11 @@ async function proxy(req:NextRequest,{params}:Params){
   headers.set("Origin",req.nextUrl.origin);
   if(req.headers.has("x-csrf-token"))headers.set("X-CSRF-Token",req.headers.get("x-csrf-token")!);
   if(req.headers.has("idempotency-key"))headers.set("Idempotency-Key",req.headers.get("idempotency-key")!);
+  // Only this vetted hint may cross the relay; all other client headers stay stripped.
+  if(path.join("/")==="auth/login"){
+   const loginRole=req.headers.get("x-login-role");
+   if(loginRole==="advertiser"||loginRole==="driver")headers.set("X-Login-Role",loginRole);
+  }
  }
  const cookie=sessionCookies(req.headers.get("cookie"));
  if(cookie)headers.set("Cookie",cookie);

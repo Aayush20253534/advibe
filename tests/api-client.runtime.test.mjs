@@ -55,3 +55,16 @@ test("caller aborts remain aborts, not user-visible network errors", async () =>
   globalThis.fetch = async (_url, init) => { init.signal.throwIfAborted(); };
   await assert.rejects(() => apiPage("/campaigns", controller.signal), e => e.name === "AbortError");
 });
+
+
+test("role-scoped login sends the selected account type without adding a body property", async () => {
+  globalThis.fetch = async (url, init) => {
+    assert.equal(url, "/api/backend/auth/login");
+    assert.equal(init.headers["X-Login-Role"], "driver");
+    assert.equal(init.body, '{"email":"driver@example.invalid","password":"SecurePass"}');
+    return Response.json({ data: { userId: "id", role: "driver" } }, { status: 201 });
+  };
+  const user = await api("/auth/login", { method: "POST", loginRole: "driver",
+    body: { email: "driver@example.invalid", password: "SecurePass" } });
+  assert.equal(user.role, "driver");
+});

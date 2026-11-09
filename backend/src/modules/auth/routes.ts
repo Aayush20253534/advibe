@@ -203,6 +203,14 @@ export function createAuthRouter(
     const validPassword = await argon2.verify(user?.passwordHash || dummyHash, password);
     if (!user || !user.passwordHash || !validPassword || user.status !== "ACTIVE" ||
         !user.emailVerifiedAt) throw invalid();
+    // A chosen sign-in role must match before any session or MFA challenge is issued.
+    // Older clients without the header retain the existing login contract.
+    const loginRole = req.get("x-login-role");
+    if (loginRole && (loginRole !== "advertiser" && loginRole !== "driver" ||
+        user.role.toLowerCase() !== loginRole)) {
+      throw new HttpError(403, "ACCOUNT_ROLE_MISMATCH",
+        "This account does not match the selected account type.");
+    }
     if (user.role === "ADMIN") {
       const enrolled = await db.adminMfaCredential.findUnique({ where: { userId: user.id } });
       if (!enrolled?.enabledAt || !settings.mfaEncryptionKey) {

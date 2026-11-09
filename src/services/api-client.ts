@@ -36,7 +36,7 @@ async function envelope<T>(response:Response):Promise<Envelope<T>>{
  return payload as Envelope<T>;
 }
 export async function api<T=unknown>(path:string,options:{
- method?:"GET"|"POST"|"PATCH"|"PUT"|"DELETE";body?:unknown;csrfToken?:string;
+ method?:"GET"|"POST"|"PATCH"|"PUT"|"DELETE";body?:unknown;csrfToken?:string;loginRole?:"advertiser"|"driver";
  idempotencyKey?:string;signal?:AbortSignal;
 }={}):Promise<T>{
  const method=options.method??"GET";
@@ -44,6 +44,7 @@ export async function api<T=unknown>(path:string,options:{
  if(method!=="GET"){
   headers["Content-Type"]="application/json";
   if(options.csrfToken)headers["X-CSRF-Token"]=options.csrfToken;
+  if(method==="POST"&&path==="/auth/login"&&options.loginRole)headers["X-Login-Role"]=options.loginRole;
   if(options.idempotencyKey)headers["Idempotency-Key"]=options.idempotencyKey;
  }
  const response=await request(path,{method,headers,

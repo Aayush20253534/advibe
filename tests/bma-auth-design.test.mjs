@@ -24,6 +24,9 @@ test("sign-in keeps live login, MFA, reset notices and safe redirects",()=>{
  assert.match(form,/result\.challengeId&&result\.ticket/);
  assert.match(form,/!remember \? \{ remember: false \} : \{\}/,"Normal sign-in omits optional persistence override");
  assert.match(form,/status=params\.get\("verified"\)/);
+ assert.match(form,/loginRole: role/,"Selected account role is sent with login");
+ assert.match(form,/session\.role !== role/,"Legacy backend role mismatches are rejected in browser");
+ assert.match(form,/ACCOUNT_ROLE_MISMATCH/);
  assert.doesNotMatch(form,/localStorage|sessionStorage|mockLogin/);
  assert.match(read("src/app/(auth)/signin/page.tsx"),/redirect\("\/login"\)/);
 });

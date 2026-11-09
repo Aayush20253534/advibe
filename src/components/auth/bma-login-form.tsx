@@ -37,7 +37,7 @@ export function BmaLoginForm() {
           ...(!remember ? { remember: false } : {}),
         };
         const result = await api<{ challengeId?: string; ticket?: string }>("/auth/login", {
-          method: "POST", body,
+          method: "POST", body, loginRole: role,
         });
         if (result.challengeId&&result.ticket) {
           setChallengeId(result.challengeId); setTicket(result.ticket); setPassword("");
@@ -46,6 +46,18 @@ export function BmaLoginForm() {
         }
       }
       const session = await liveSession();
+      if (session.role !== role) {
+        // An older backend might ignore X-Login-Role. Fail closed on the client,
+        // revoke the newly issued session and never route into the other portal.
+        let revoked = false;
+        try {
+          await api("/auth/logout", { method: "POST", csrfToken: session.csrfToken });
+          revoked = true;
+        } catch { /* The portal still enforces its own server-issued role. */ }
+        throw new ApiError(403, "ACCOUNT_ROLE_MISMATCH", revoked
+          ? "This account does not match the selected account type. Choose the correct tab to sign in."
+          : "Account type mismatch. Sign out of your current session before trying again.");
+      }
       router.replace(safeAuthNext(params.get("next"), session.role));
       router.refresh();
     } catch (err) {

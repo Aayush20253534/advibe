@@ -50,7 +50,7 @@ export function createApp(
       return callback(new HttpError(403, "ORIGIN_FORBIDDEN", "Origin is not allowed"));
     },
     methods: ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "X-CSRF-Token", "Idempotency-Key", "X-Request-ID", "X-Device-ID", "X-Device-Timestamp", "X-Device-Nonce", "X-Device-Signature"],
+    allowedHeaders: ["Content-Type", "X-CSRF-Token", "Idempotency-Key", "X-Login-Role", "X-Request-ID", "X-Device-ID", "X-Device-Timestamp", "X-Device-Nonce", "X-Device-Signature"],
     maxAge: 600,
   }));
   const paymentRoutes=auth?createPaymentRoutes(config,auth,payment):undefined;

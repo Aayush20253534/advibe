@@ -71,6 +71,17 @@ test("B3 register, verification, session, reset, logout and security tests", asy
     assert.equal((await post("verify", { challengeId: code[2], code: code[1] })).status, 201);
     assert.equal((await post("verify", { challengeId: code[2], code: code[1] })).status, 401);
     assert.equal((await post("login", { email, password: "AnotherIncorrectPassword!" })).status, 401);
+    const mismatched = await fetch("http://127.0.0.1:" +
+      (server.address() as AddressInfo).port + "/api/v1/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Origin": "http://localhost:3000",
+        "X-Login-Role": "driver" },
+      body: JSON.stringify({ email, password: pwd }),
+    });
+    assert.equal(mismatched.status, 403);
+    assert.equal((await mismatched.json() as { error: { code: string } }).error.code, "ACCOUNT_ROLE_MISMATCH");
+    assert.equal(await db.session.count({ where: { userId: user.id } }), 0,
+      "Wrong role must not create an authenticated session");
     const login = await post("login", { email, password: pwd });
     assert.equal(login.status, 201);
     const cookieHeader = login.headers.get("set-cookie") || "";
