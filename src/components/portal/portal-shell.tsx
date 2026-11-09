@@ -26,7 +26,7 @@ const roleName: Record<PortalRole, string> = {
 const groupHeading: Record<PortalRole, Record<NonNullable<NavItem["group"]>, string | null>> = {
   advertiser: { main: null, management: "Billing and reports", account: "Account" },
   driver: { main: null, management: "Earnings and activity", account: "Account" },
-  admin: { main: null, management: "Finance and governance", account: "Account" },
+  admin: { main: "Operations", management: "Finance and governance", account: "Account" },
 };
 
 /** The nav item for the current path: exact match, or the longest section prefix. */
@@ -144,6 +144,11 @@ function SidebarContent({
         <strong>Your routes. Your next steps.</strong>
         <span className="bma-driver-sidebar-promo-link">View onboarding <ArrowUpRight aria-hidden="true" /></span>
       </Link>}
+      {role === "admin" && <Link href={ADMIN_ROOT + "/approvals"} onClick={() => onNavigate(ADMIN_ROOT + "/approvals")} className="bma-admin-sidebar-promo">
+        <span className="bma-admin-sidebar-eyebrow">CONTROL CENTER</span>
+        <strong>Keep every review and decision in view.</strong>
+        <span className="bma-admin-sidebar-link">Open approvals <ArrowUpRight aria-hidden="true" /></span>
+      </Link>}
     </>
   );
 }
@@ -181,7 +186,7 @@ export function PortalShell({
   const dense = role === "admin";
 
   return (
-    <div data-portal={role} data-portal-page={pathname} className={cn("min-h-dvh bg-paper text-ink lg:flex",role==="advertiser"&&"bma-advertiser-portal",role==="driver"&&"bma-driver-portal")}>
+    <div data-portal={role} data-portal-page={pathname} className={cn("min-h-dvh bg-paper text-ink lg:flex",role==="advertiser"&&"bma-advertiser-portal",role==="driver"&&"bma-driver-portal",role==="admin"&&"bma-admin-portal")}>
       <a
         href="#portal-content"
         className="sr-only z-50 rounded-md bg-surface px-4 py-2 font-semibold text-ink focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:outline-2 focus:outline-signal"
@@ -210,7 +215,7 @@ export function PortalShell({
                 <RadixDialog.Overlay className="fixed inset-0 z-50 bg-ink/60 lg:hidden" />
                 <RadixDialog.Content
                   aria-describedby={undefined}
-                  className={cn("fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100vw-3rem))] flex-col bg-ink shadow-overlay focus-visible:outline-none motion-safe:data-[state=open]:animate-[advibe-fade-in_150ms_ease-out] lg:hidden",role==="advertiser"&&"bma-adv-sidebar-mobile",role==="driver"&&"bma-driver-sidebar-mobile")}
+                  className={cn("fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100vw-3rem))] flex-col bg-ink shadow-overlay focus-visible:outline-none motion-safe:data-[state=open]:animate-[advibe-fade-in_150ms_ease-out] lg:hidden",role==="advertiser"&&"bma-adv-sidebar-mobile",role==="driver"&&"bma-driver-sidebar-mobile",role==="admin"&&"bma-admin-sidebar-mobile")}
                 >
                   <RadixDialog.Title className="sr-only">
                     {portalLabel[role]} menu
@@ -236,7 +241,7 @@ export function PortalShell({
               {role === "admin" ? (
                 <span className="hidden items-center gap-1.5 text-sm text-ink-muted xl:inline-flex">
                   <ShieldCheck className="size-4 text-success-fg" aria-hidden />
-                  MFA-protected session
+                  Admin access active
                 </span>
               ) : null}
               <Tooltip content="Notifications">
@@ -276,10 +281,11 @@ export function PortalShell({
             "mx-auto w-full max-w-[1440px] flex-1 px-4 focus:outline-none sm:px-6 lg:px-8",
             dense ? "space-y-5 py-5" : "space-y-5 py-5 lg:py-6",
             role==="advertiser"&&"bma-adv-main",
+            role==="admin"&&"bma-admin-main",
           )}
         >
           <PageHeader
-            className={role==="advertiser"?"bma-adv-page-header":role==="driver"?"bma-driver-page-header":undefined}
+            className={role==="advertiser"?"bma-adv-page-header":role==="driver"?"bma-driver-page-header":role==="admin"?"bma-admin-page-header":undefined}
             breadcrumbs={crumbs}
             title={pageTitle}
             description={description}
