@@ -10,7 +10,7 @@ export const registerSchema = z.strictObject({
   role: z.enum(["advertiser", "driver"]),
 });
 export const loginSchema = z.strictObject({
-  email, password: z.string().min(1).max(256),
+  email, password: z.string().min(1).max(256), remember: z.boolean().optional(),
 });
 export const verifySchema = z.strictObject({
   challengeId: z.uuid(), code: z.string().regex(/^\d{6}$/),
