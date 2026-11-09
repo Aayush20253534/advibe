@@ -4,7 +4,7 @@ import { brand } from "@/config/brand";
 
 export function HomepageFooter() {
   const columns = [
-    { title: "Explore", links: [["Ad formats", "/ad-formats"], ["How it works", "/#how-it-works"], ["Locations", "/locations"]] },
+    { title: "Explore", links: [["Ad formats", "/ad-formats"], ["How it works", "/how-it-works"], ["Locations", "/locations"]] },
     { title: "Get started", links: [["For advertisers", "/for-advertisers"], ["For drivers", "/for-drivers"], ["Sign in", "/login"]] },
     { title: "Company", links: [["About", "/about"], ["Help centre", "/help-center"]] },
   ];
