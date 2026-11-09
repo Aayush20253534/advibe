@@ -1,4 +1,4 @@
-import { BadgeCheck, Compass, MapPin, Route, Search } from "lucide-react";
+import { BadgeCheck, MapPin, Route } from "lucide-react";
 import { publicMetadata } from "@/config/public-metadata";
 import { LocationSearch } from "@/components/public/location-search";
 import { DetailPage, DetailHero, DetailSection, DetailCards, DetailRibbon, DetailCTA } from "@/components/public/secondary-pages";
