@@ -462,3 +462,180 @@
 @media (prefers-reduced-motion: reduce) {
   .bma-reference-auth * { scroll-behavior: auto; }
 }
+
+/* Asset-backed, viewport-fitted login and signup (November 2026 reference).
+   Preserve the public header, real auth fields and readable fallback on small screens. */
+@media (min-width: 901px) {
+  [data-auth-mode="login"],
+  [data-auth-mode="signup"] {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+  [data-auth-mode="login"] > header,
+  [data-auth-mode="signup"] > header { flex: 0 0 auto; }
+  [data-auth-mode="login"] > main,
+  [data-auth-mode="signup"] > main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .bma-reference-auth {
+    flex: 1 1 auto;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .bma-reference-auth-story {
+    min-height: 0;
+    height: 100%;
+  }
+  .bma-reference-auth-main {
+    height: 100%;
+    min-height: 0;
+    padding: clamp(12px, 2.25vh, 25px) clamp(22px, 3.1vw, 62px);
+    overflow: hidden;
+  }
+  .bma-reference-auth .bma-auth-form-wrap {
+    max-width: 630px;
+    max-height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #cdd9ec transparent;
+  }
+  .bma-reference-auth .bma-auth-card {
+    padding: clamp(20px, 2.65vh, 32px) clamp(25px, 2.7vw, 40px);
+    border-radius: 25px;
+  }
+  .bma-reference-auth .bma-auth-card h1 {
+    font-size: clamp(32px, 2.55vw, 44px) !important;
+    line-height: 1.09;
+  }
+  .bma-reference-auth .bma-reference-auth-intro {
+    margin: 6px 0 clamp(14px, 1.8vh, 20px);
+    font-size: clamp(13px, 1.08vw, 16px);
+    line-height: 1.35;
+  }
+  .bma-reference-auth .bma-reference-role-tabs,
+  .bma-reference-auth .bma-reference-signup-card .bma-reference-role-tabs {
+    margin-bottom: clamp(14px, 1.85vh, 21px);
+  }
+  .bma-reference-auth .bma-reference-role-tabs button {
+    min-height: clamp(46px, 5.6vh, 53px);
+    padding: 8px 10px;
+    font-size: clamp(13px, 1.07vw, 16px);
+    gap: 10px;
+  }
+  .bma-reference-auth .bma-reference-role-tabs svg { width: 22px; height: 22px; }
+  .bma-reference-auth .bma-reference-role-tabs small { font-size: clamp(11px, .88vw, 13px); }
+  .bma-reference-auth .bma-reference-form-fields,
+  .bma-reference-auth .bma-reference-signup-card .bma-reference-form-fields {
+    gap: clamp(11px, 1.45vh, 16px);
+  }
+  .bma-reference-auth .bma-auth-label {
+    margin-bottom: 5px;
+    font-size: clamp(12px, 1vw, 14px);
+  }
+  .bma-reference-auth .bma-auth-input {
+    min-height: clamp(44px, 5.4vh, 51px);
+    padding: 9px 14px 9px 51px;
+    font-size: 14px;
+  }
+  .bma-reference-auth .bma-reference-field-icon { left: 16px; width: 21px; height: 21px; }
+  .bma-reference-auth .bma-reference-login-options {
+    margin: clamp(12px, 1.55vh, 18px) 0 clamp(14px, 1.85vh, 21px);
+    font-size: 13px;
+  }
+  .bma-reference-auth .bma-auth-submit { min-height: clamp(45px, 5.45vh, 51px); font-size: 15px; }
+  .bma-reference-auth .bma-reference-social-divider {
+    margin: clamp(17px, 2.1vh, 24px) 0 clamp(14px, 1.65vh, 18px);
+    font-size: 13px;
+  }
+  .bma-reference-auth .bma-reference-social-buttons button { min-height: 45px; font-size: clamp(12px, .96vw, 14px); }
+  .bma-reference-auth .bma-reference-auth-bottom,
+  .bma-reference-auth .bma-reference-signup-card .bma-reference-auth-bottom {
+    margin-top: clamp(16px, 2.25vh, 24px);
+    font-size: clamp(13px, 1vw, 15px);
+  }
+  .bma-reference-auth .bma-reference-signup-card .bma-reference-auth-intro { margin-bottom: clamp(12px, 1.8vh, 20px); }
+  .bma-reference-auth .bma-reference-password-rules {
+    margin: clamp(10px, 1.45vh, 16px) 0 clamp(12px, 1.75vh, 18px);
+    gap: 6px;
+  }
+  .bma-reference-auth .bma-reference-password-rules li { font-size: clamp(10px, .83vw, 12px); }
+  .bma-reference-auth .bma-reference-password-rules svg { width: 15px; height: 15px; }
+  .bma-reference-auth .bma-reference-signup-card .bma-auth-submit { margin-top: 2px; }
+  .bma-reference-auth-story-copy {
+    padding: clamp(32px, 6vh, 63px) clamp(32px, 4.7vw, 74px) 0;
+    max-width: 760px;
+  }
+  .bma-reference-auth-eyebrow {
+    margin-bottom: clamp(16px, 2.6vh, 27px);
+    font-size: clamp(12px, .98vw, 15px);
+  }
+  .bma-reference-auth-story h2 { font-size: clamp(34px, 3.15vw, 52px); line-height: 1.12; }
+  .bma-reference-auth-story-copy > p {
+    margin-top: clamp(12px, 1.65vh, 17px);
+    font-size: clamp(14px, 1.18vw, 18px);
+    line-height: 1.49;
+  }
+  .bma-reference-auth-features {
+    margin-top: clamp(23px, 3.4vh, 34px);
+    gap: clamp(11px, 1.7vh, 17px);
+  }
+  .bma-reference-auth-feature-icon { width: clamp(42px, 5.5vh, 55px); height: clamp(42px, 5.5vh, 55px); }
+  .bma-reference-auth-feature-icon svg { width: 25px; height: 25px; }
+  .bma-reference-auth-features strong { font-size: clamp(13px, 1.05vw, 16px); }
+  .bma-reference-auth-features small { font-size: clamp(12px, .91vw, 14px); }
+}
+.bma-reference-auth-story { background-color: #073b9c; }
+.bma-reference-auth-backdrop {
+  z-index: 0;
+  object-fit: cover;
+  object-position: center 53%;
+  pointer-events: none;
+}
+.bma-reference-auth-story::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(2, 31, 104, .13), rgba(1, 22, 89, .02) 60%, transparent),
+              linear-gradient(90deg, rgba(0, 23, 83, .12), transparent 90%);
+}
+@media (min-width: 901px) and (max-height: 760px) {
+  .bma-reference-auth-story-copy { padding-top: 24px; }
+  .bma-reference-auth-eyebrow { margin-bottom: 13px; }
+  .bma-reference-auth-story h2 { font-size: clamp(30px, 3vw, 44px); }
+  .bma-reference-auth-story-copy > p { margin-top: 10px; font-size: 14px; }
+  .bma-reference-auth-features { margin-top: 17px; gap: 9px; }
+  .bma-reference-auth-feature-icon { width: 40px; height: 40px; }
+  .bma-reference-auth-feature-icon svg { width: 22px; height: 22px; }
+  .bma-reference-auth-main { padding-block: 8px; }
+  .bma-reference-auth .bma-auth-card { padding-block: 15px; }
+  .bma-reference-auth .bma-reference-auth-intro { margin-bottom: 10px; }
+  .bma-reference-auth .bma-reference-role-tabs { margin-bottom: 10px; }
+  .bma-reference-auth .bma-reference-form-fields,
+  .bma-reference-auth .bma-reference-signup-card .bma-reference-form-fields { gap: 9px; }
+  .bma-reference-auth .bma-reference-login-options { margin: 10px 0 12px; }
+  .bma-reference-auth .bma-reference-social-divider { margin: 13px 0 10px; }
+  .bma-reference-auth .bma-reference-auth-bottom { margin-top: 12px; }
+  .bma-reference-auth .bma-reference-password-rules { margin: 8px 0 10px; }
+}
+/* At phone / narrow-tablet sizes, allow natural scrolling rather than clipping
+   input fields or legal accessibility states. Desktop is viewport-fitted. */
+@media (max-width: 900px) {
+  [data-auth-mode="login"], [data-auth-mode="signup"] {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+  .bma-reference-auth { height: auto; min-height: calc(100dvh - 72px); }
+  .bma-reference-auth-main { height: auto; min-height: calc(100dvh - 72px); overflow: visible; }
+  .bma-reference-auth .bma-auth-form-wrap { max-height: none; overflow: visible; }
+}
