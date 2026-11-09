@@ -20,7 +20,7 @@ export default function PrivacyPage() {
     <DetailSection id="privacy-status" title="Privacy Notice" description="A clear statement of what this page can confirm and what remains under legal review.">
       <div className="bma-detail-legal-layout">
         <article className="bma-detail-legal-panel">
-          <DetailRibbon warning><strong>Legal approval pending.</strong> This is a preview, not BlinkMyAd's final privacy policy. Verified production practices and legal review are required before this page can serve as an approved notice.</DetailRibbon>
+          <DetailRibbon warning><strong>Legal approval pending.</strong> This is a preview, not BlinkMyAd&apos;s final privacy policy. Verified production practices and legal review are required before this page can serve as an approved notice.</DetailRibbon>
           <h2 className="mt-7">What the platform currently describes</h2>
           <p>Account records may include a name, email address and account role. Driver-partner applications can also contain details entered for onboarding. Sign-in uses a secure session cookie.</p>
           <p>When the verified public enquiry form is available, the submitted contact information and message are sent to the BlinkMyAd server. Public contact details have not been published. Other integrations are available only when configured and enabled.</p>
