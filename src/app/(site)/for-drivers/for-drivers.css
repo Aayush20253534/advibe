@@ -1,0 +1,425 @@
+/* For Drivers: reference-led marketing page. All styles scoped to this route. */
+.bma-drivers {
+  --driver-blue: #064bfa;
+  --driver-ink: #0b1123;
+  --driver-muted: #445470;
+  --driver-line: #dce5f5;
+  background: #fff;
+  color: var(--driver-ink);
+  font-family: var(--font-facebook-ui);
+  overflow: clip;
+}
+.bma-drivers *, .bma-drivers *::before, .bma-drivers *::after { box-sizing: border-box; }
+.bma-drivers h1, .bma-drivers h2, .bma-drivers h3, .bma-drivers p { margin: 0; }
+.bma-drivers h1, .bma-drivers h2, .bma-drivers h3 {
+  font-family: var(--font-heading-stack);
+  color: var(--driver-ink);
+  letter-spacing: -.048em;
+}
+.bma-driver-shell { width: calc(100% - 88px); max-width: 1400px; margin-inline: auto; }
+.bma-driver-section { padding-block: clamp(28px, 3.6vw, 51px); }
+.bma-driver-section h2,
+.bma-driver-vehicle-section h2,
+.bma-driver-practical h2 {
+  font-size: clamp(25px, 2.5vw, 37px);
+  font-weight: 830;
+  line-height: 1.16;
+}
+.bma-driver-heading { margin-bottom: 21px; }
+.bma-driver-heading p { margin-top: 6px; color: var(--driver-muted); font-size: clamp(13px, 1.06vw, 16px); line-height: 1.5; }
+
+/* A single continuous hero, with the vehicle composed into the right side. */
+.bma-driver-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(410px, 34vw, 515px);
+  background:
+    radial-gradient(ellipse at 62% 38%, rgba(173, 209, 255, .54), transparent 60%),
+    linear-gradient(105deg, #fff 0%, #f8fbff 44%, #dfeaff 78%, #bcd6ff 100%);
+  overflow: hidden;
+}
+.bma-driver-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -4%;
+  top: -30%;
+  width: 32%;
+  height: 135%;
+  transform: skewX(-31deg);
+  background: linear-gradient(124deg, rgba(1, 89, 255, .91), #0641e6 42%, rgba(15, 104, 255, .76));
+  border-left: 42px solid rgba(106, 168, 255, .67);
+  pointer-events: none;
+}
+.bma-driver-hero-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0 0 0 auto;
+  width: 61%;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.45) 12%, #000 34%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.45) 12%, #000 34%);
+}
+.bma-driver-hero-art img { object-fit: cover; object-position: 53% 50%; }
+.bma-driver-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,.97) 25%, rgba(255,255,255,.72) 39%, rgba(255,255,255,.12) 60%, transparent 75%);
+  pointer-events: none;
+}
+.bma-driver-hero-inner { position: relative; z-index: 2; display: flex; align-items: center; min-height: inherit; }
+.bma-driver-hero-copy { width: min(48%, 610px); padding-block: 40px; }
+.bma-driver-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: #19233d;
+  font-size: clamp(12px, .95vw, 14px);
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.bma-driver-eyebrow i { width: 8px; height: 8px; flex-shrink: 0; background: #0b4bf7; }
+.bma-driver-hero h1 { margin-top: 22px; font-size: clamp(42px, 4vw, 61px); line-height: 1.09; font-weight: 860; }
+.bma-driver-hero h1 span { color: #0848ef; }
+.bma-driver-hero-copy > p {
+  max-width: 540px;
+  margin-top: 19px;
+  color: #394b69;
+  font-size: clamp(14px, 1.18vw, 18px);
+  line-height: 1.52;
+}
+.bma-driver-hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 13px; margin-top: 25px; }
+.bma-driver-button {
+  display: inline-flex;
+  min-height: 50px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 11px clamp(16px, 1.55vw, 24px);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: clamp(12px, 1vw, 15px);
+  font-weight: 750;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.bma-driver-button svg { width: 17px; height: 17px; }
+.bma-driver-button:hover { transform: translateY(-1px); }
+.bma-driver-button:focus-visible { outline: 3px solid #85afff; outline-offset: 3px; }
+.bma-driver-button-primary { color: #fff; background: #064bf4; box-shadow: 0 5px 14px rgba(14, 68, 179, .12); }
+.bma-driver-button-primary:hover { background: #003bd6; }
+.bma-driver-button-outline { color: #101b33; background: rgba(255,255,255,.93); border-color: #9aa7be; }
+.bma-driver-button-outline:hover { background: #f3f7ff; border-color: #0a50e8; }
+
+/* The reference has four airy, two-column cards rather than a wall of paragraphs. */
+.bma-driver-benefits { padding-bottom: clamp(30px, 3.6vw, 52px); }
+.bma-driver-benefits h2 { margin-bottom: 23px; }
+.bma-driver-benefit-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 17px 24px; }
+.bma-driver-benefit-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 19px;
+  min-height: 106px;
+  padding: 19px 21px;
+  border: 1px solid #e4eaf5;
+  border-radius: 16px;
+  background: linear-gradient(140deg, #fff, #fbfcff);
+  box-shadow: 0 8px 19px rgba(33,66,135,.09);
+}
+.bma-driver-icon-box {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: #eef4ff;
+}
+.bma-driver-icon-box svg { color:#064af9; width: 30px; height: 30px; stroke-width: 1.8; }
+.bma-driver-benefit-card h3 { font-size: clamp(16px, 1.2vw, 19px); font-weight: 800; line-height: 1.26; }
+.bma-driver-benefit-card p { margin-top: 5px; color: #41516e; font-size: clamp(12px, 1.0vw, 15px); line-height: 1.46; }
+
+/* Light blue panoramic section with interactive vehicle selector and navy earnings card. */
+.bma-driver-vehicle-section {
+  padding-block: clamp(30px, 3.3vw, 46px);
+  border-radius: 18px;
+  background: linear-gradient(125deg, #f0f5ff 0%, #f8faff 53%, #eff4ff 100%);
+}
+.bma-driver-vehicle-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1.46fr) minmax(300px,.77fr);
+  align-items: end;
+  gap: clamp(23px, 4vw, 60px);
+}
+.bma-driver-vehicle-choice { min-width: 0; }
+.bma-driver-vehicle-tabs { display: flex; align-items: center; flex-wrap: wrap; gap: 11px; margin-bottom: 21px; }
+.bma-driver-vehicle-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 47px;
+  padding: 10px clamp(15px, 1.25vw, 21px);
+  border-radius: 11px;
+  border: 1px solid #e4eaf5;
+  background: #fff;
+  color: #161f35;
+  font-size: clamp(12px, .94vw, 15px);
+  font-weight: 760;
+  box-shadow: 0 4px 10px rgba(22,58,129,.045);
+  transition: background-color .16s ease, color .16s ease, box-shadow .16s ease;
+}
+.bma-driver-vehicle-tab svg { width: 20px; height: 20px; stroke-width: 1.8; }
+.bma-driver-vehicle-tab[aria-pressed="true"] { color: #fff; background: #064afb; border-color: #064afb; box-shadow: 0 5px 14px rgba(10,68,193,.15); }
+.bma-driver-vehicle-tab:hover:not([aria-pressed="true"]) { color: #0446de; background: #f5f8ff; }
+.bma-driver-vehicle-tab:focus-visible { outline: 3px solid #87aaff; outline-offset: 3px; }
+.bma-driver-vehicle-preview {
+  display: grid;
+  grid-template-columns: minmax(180px, .9fr) minmax(0,1fr);
+  align-items: center;
+  gap: clamp(18px, 2vw, 28px);
+}
+.bma-driver-vehicle-photo {
+  position: relative;
+  width: 100%;
+  min-height: 310px;
+  overflow: hidden;
+  border-radius: 13px;
+  border: 1px solid #dbe5f3;
+  background: #d9e7fa;
+  box-shadow: 0 7px 16px rgba(33,64,118,.09);
+}
+.bma-driver-vehicle-photo img { object-fit: cover; object-position: center; }
+.bma-driver-vehicle-photo > span {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 4px 7px;
+  border-radius: 5px;
+  color: #fff;
+  background: rgba(14, 31, 64, .83);
+  font-size: 11px;
+}
+.bma-driver-vehicle-description h3 { font-size: clamp(22px, 1.7vw, 27px); font-weight: 800; }
+.bma-driver-vehicle-description > p { margin-top: 5px; color: #455570; font-size: clamp(13px, 1.06vw, 16px); line-height: 1.46; }
+.bma-driver-vehicle-description ul { display: grid; gap: 16px; list-style: none; padding: 0; margin: 22px 0 0; }
+.bma-driver-vehicle-description li { display: flex; align-items: flex-start; gap: 11px; color: #263249; font-size: clamp(12px, .99vw, 15px); line-height: 1.4; }
+.bma-driver-vehicle-description li svg { width: 20px; height: 20px; flex-shrink: 0; color: #0d9b55; stroke-width: 2.2; }
+.bma-driver-earn-card {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(23px, 2.8vw, 39px);
+  border: 1px solid rgba(94,148,228,.32);
+  border-radius: 15px;
+  color: #fff;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(69,112,195,.24), transparent 62%),
+    linear-gradient(145deg, #13233d 0%, #0b1931 57%, #071124 100%);
+  box-shadow: 0 8px 18px rgba(20,43,79,.12);
+}
+.bma-driver-earn-card h3 { color: #fff; font-size: clamp(23px, 1.8vw, 29px); font-weight: 790; }
+.bma-driver-earn-card > p { margin-top: 12px; color: #d6e3f9; font-size: clamp(13px,1.03vw,16px); line-height: 1.5; }
+.bma-driver-earn-note { display: flex; align-items: flex-start; gap: 11px; margin-top: 24px; padding: 14px; border: 1px solid #889bb9; border-radius: 9px; color: #e6efff; font-size: clamp(11px,.9vw,14px); line-height: 1.45; }
+.bma-driver-earn-note svg { width: 21px; height: 21px; flex: 0 0 auto; color: #7cb6ff; }
+.bma-driver-earn-button { display: inline-flex; align-items: center; justify-content: center; min-height: 49px; padding: 11px 13px; margin-top: 23px; color:#fff; background:#064af8; border-radius:9px; font-size:clamp(12px,.99vw,15px);font-weight:780;text-decoration:none; }
+.bma-driver-earn-button:hover { background:#0038d1; }
+.bma-driver-earn-button:focus-visible { outline:3px solid #8cb5ff;outline-offset:4px; }
+
+/* Four numbered onboarding stages. */
+.bma-driver-process { padding-top: clamp(32px, 3.5vw, 52px); }
+.bma-driver-process-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(30px, 3.7vw, 55px); margin:0; padding:0; list-style:none; }
+.bma-driver-process-card { position:relative;min-width:0;min-height:192px;padding:19px;border:1px solid #dfe7f4;border-radius:13px;background:linear-gradient(160deg,#fff,#fbfcff);box-shadow:0 8px 17px rgba(31,65,121,.069); }
+.bma-driver-process-card:not(:last-child)::after { content:"➜";position:absolute;left:calc(100% + clamp(9px,1.8vw,28px));top:50%;transform:translate(-50%,-50%);font-size:19px;color:#344261; }
+.bma-driver-step-number { display:grid;place-items:center;width:33px;height:33px;border-radius:50%;background:#dbe7ff;color:#074af2;font-size:18px;font-weight:850; }
+.bma-driver-step-icon { display:block;width:32px;height:32px;margin-top:8px;color:#074cfb;stroke-width:1.8; }
+.bma-driver-process-card h3 { margin-top:7px;font-size:clamp(14px,1.06vw,17px);font-weight:810;line-height:1.25; }
+.bma-driver-process-card p { margin-top:7px;color:#44536f;font-size:clamp(12px,.96vw,14px);line-height:1.45; }
+
+/* Left eligibility checklist; right native, keyboard-accessible disclosures. */
+.bma-driver-practical { padding-top: clamp(26px, 2.9vw, 42px); }
+.bma-driver-practical-grid { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1.04fr); gap:clamp(30px,4vw,64px); }
+.bma-driver-requirements { min-width:0; }
+.bma-driver-requirements > h2 { margin-bottom:27px; }
+.bma-driver-requirements > ul { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 21px; padding:0;margin:0;list-style:none; }
+.bma-driver-requirements li { display:flex;align-items:flex-start;gap:11px;color:#273449;font-size:clamp(12px,.98vw,15px);line-height:1.4; }
+.bma-driver-requirements li svg { width:19px;height:19px;flex:0 0 auto;color:#0f9957;stroke-width:2.3; }
+.bma-driver-requirements-note { display:flex;align-items:flex-start;gap:10px;margin-top:30px!important;padding:15px 16px;border-radius:11px;background:#e9f1ff;color:#344662;font-size:clamp(12px,.9vw,14px);line-height:1.45; }
+.bma-driver-requirements-note svg {flex-shrink:0;width:21px;height:21px;color:#0749ee; }
+.bma-driver-questions { min-width:0;padding-left:clamp(24px,2.7vw,40px);border-left:1px solid #d7e0f0; }
+.bma-driver-faq-heading { display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin-bottom:18px; }
+.bma-driver-faq-heading a {display:inline-flex;align-items:center;gap:6px;color:#064af8;font-size:13px;font-weight:790;white-space:nowrap;text-decoration:none;}
+.bma-driver-faq-heading a svg {width:16px;height:16px;}
+.bma-driver-faq-heading a:hover {text-decoration:underline;text-underline-offset:4px;}
+.bma-driver-faq-heading a:focus-visible {outline:2px solid #064af8;outline-offset:3px;}
+.bma-driver-faq-list {border:1px solid #e0e8f5;border-radius:11px;overflow:hidden;box-shadow:0 6px 13px rgba(32,72,142,.045);}
+.bma-driver-faq-list details {background:#fff;}
+.bma-driver-faq-list details+details {border-top:1px solid #dfe5f0;}
+.bma-driver-faq-list details[open] {background:#eaf1ff;}
+.bma-driver-faq-list summary {display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:49px;padding:12px 17px;list-style:none;cursor:pointer;color:#101b32;font-size:clamp(12px,.95vw,14px);font-weight:790;line-height:1.4;}
+.bma-driver-faq-list summary::-webkit-details-marker {display:none;}
+.bma-driver-faq-list summary::marker {content:"";}
+.bma-driver-faq-list summary svg {width:18px;height:18px;flex-shrink:0;color:#324f84;transition:transform .18s ease;}
+.bma-driver-faq-list details[open] summary svg {transform:rotate(180deg);color:#034bf4;}
+.bma-driver-faq-list summary:focus-visible {outline:2px solid #0750ec;outline-offset:-3px;}
+.bma-driver-faq-list details>p {padding:0 42px 16px 17px;color:#394b69;font-size:clamp(12px,.94vw,14px);line-height:1.5;}
+
+/* Safety & privacy cards. */
+.bma-driver-trust {padding-top:clamp(23px,2.6vw,37px);padding-bottom:clamp(27px,3.3vw,46px);background:linear-gradient(180deg,#fff,#fcfdff);}
+.bma-driver-trust h2 {margin-bottom:20px;}
+.bma-driver-trust-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;}
+.bma-driver-trust-card {min-width:0;min-height:153px;padding:19px;border:1px solid #e1e8f4;border-radius:13px;background:#fff;box-shadow:0 7px 15px rgba(35,73,139,.07);}
+.bma-driver-trust-card>svg {width:29px;height:29px;color:#064af7;stroke-width:1.8;}
+.bma-driver-trust-card h3 {margin-top:10px;font-size:clamp(13px,1.0vw,16px);font-weight:820;line-height:1.3;}
+.bma-driver-trust-card p {margin-top:7px;color:#475672;font-size:clamp(11px,.9vw,14px);line-height:1.4;}
+
+/* Same sleek navy/cobalt wave banner as About and Ad Formats. No solid blue block. */
+.bma-driver-closing {
+  display:flex;
+  position:relative;
+  isolation:isolate;
+  align-items:center;
+  justify-content:space-between;
+  gap:35px;
+  width:calc(100% - 48px);
+  max-width:1480px;
+  min-height:150px;
+  margin:10px auto 16px;
+  padding:26px clamp(28px,3vw,50px);
+  overflow:hidden;
+  border-radius:22px;
+  border:1px solid rgba(128,185,255,.26);
+  background-color:#06183e;
+  background-image:url("/images/blinkmyad/ad-formats/cta-wave.webp");
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  box-shadow:0 10px 24px rgba(16,65,150,.12);
+}
+.bma-driver-closing::before {content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,rgba(2,9,40,.22),transparent 45%,rgba(56,127,247,.12) 76%,rgba(3,22,66,.14));pointer-events:none;}
+.bma-driver-closing-copy {max-width:680px;}
+.bma-driver-closing h2 {color:#fff;font-size:clamp(29px,2.8vw,42px);font-weight:840;line-height:1.12;}
+.bma-driver-closing p {margin-top:9px;max-width:660px;color:#e0ecff;font-size:clamp(13px,1.13vw,17px);line-height:1.43;}
+.bma-driver-closing-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  gap:12px;
+  min-height:57px;
+  padding:15px clamp(22px,2.5vw,34px);
+  border:1px solid #d8e5ff;
+  border-radius:13px;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(2,20,64,.13);
+  color:#0746e8;
+  font-size:clamp(13px,1.06vw,16px);
+  font-weight:780;
+  white-space:nowrap;
+  text-decoration:none;
+}
+.bma-driver-closing-button svg {width:19px;height:19px;}
+.bma-driver-closing-button:hover {background:#eff4ff;}
+.bma-driver-closing-button:focus-visible {outline:3px solid #9bd1ff;outline-offset:4px;}
+
+@media (max-width:1150px) {
+  .bma-driver-shell {width:calc(100% - 64px);}
+  .bma-driver-hero-copy {width:50%;}
+  .bma-driver-hero h1 {font-size:clamp(38px,4.1vw,53px);}
+  .bma-driver-vehicle-layout {grid-template-columns:minmax(0,1.15fr) minmax(270px,.85fr);gap:26px;}
+  .bma-driver-vehicle-preview {grid-template-columns:43% 1fr;gap:17px;}
+  .bma-driver-vehicle-photo {min-height:280px;}
+  .bma-driver-vehicle-description ul {gap:12px;}
+  .bma-driver-process-grid {gap:29px;}
+  .bma-driver-process-card:not(:last-child)::after {left:calc(100% + 15px);}
+}
+@media (max-width:900px) {
+  .bma-driver-shell {width:calc(100% - 44px);}
+  .bma-driver-hero {min-height:425px;}
+  .bma-driver-hero-copy {width:56%;}
+  .bma-driver-hero-art {width:66%;}
+  .bma-driver-hero h1 {font-size:clamp(34px,4.5vw,45px);}
+  .bma-driver-hero-copy>p {font-size:13px;}
+  .bma-driver-benefit-card {gap:12px;padding:16px;min-height:120px;}
+  .bma-driver-icon-box {width:45px;height:45px;}
+  .bma-driver-icon-box svg {width:25px;height:25px;}
+  .bma-driver-vehicle-layout {grid-template-columns:1fr;gap:25px;}
+  .bma-driver-vehicle-preview {grid-template-columns:38% 1fr;}
+  .bma-driver-vehicle-photo {min-height:270px;}
+  .bma-driver-earn-card {max-width:none;}
+  .bma-driver-process-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;}
+  .bma-driver-process-card:not(:last-child)::after {display:none;}
+  .bma-driver-practical-grid {grid-template-columns:1fr;gap:29px;}
+  .bma-driver-questions {padding-left:0;border-left:0;padding-top:26px;border-top:1px solid #dae3f3;}
+  .bma-driver-trust-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+  .bma-driver-closing {align-items:flex-start;flex-direction:column;gap:20px;}
+}
+@media (max-width:620px) {
+  .bma-driver-shell {width:calc(100% - 34px);}
+  .bma-driver-section {padding-block:29px;}
+  .bma-driver-section h2,.bma-driver-vehicle-section h2,.bma-driver-practical h2 {font-size:26px;}
+  .bma-driver-hero {min-height:0;}
+  .bma-driver-hero-inner {min-height:0;align-items:flex-start;}
+  .bma-driver-hero-copy {width:100%;padding:34px 0 clamp(205px,59vw,280px);}
+  .bma-driver-eyebrow {font-size:11px;}
+  .bma-driver-hero h1 {margin-top:14px;font-size:clamp(35px,8.5vw,45px);}
+  .bma-driver-hero-copy>p {max-width:440px;font-size:13px;margin-top:12px;}
+  .bma-driver-hero-actions {margin-top:21px;gap:9px;}
+  .bma-driver-button {min-height:44px;font-size:12px;padding-inline:13px;}
+  .bma-driver-hero-art {inset:auto -3% 0 -3%;width:106%;height:clamp(230px,67vw,315px);-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 22%);mask-image:linear-gradient(180deg,transparent 0%,#000 22%);}
+  .bma-driver-hero-art img {object-position:55% 56%;}
+  .bma-driver-hero::before {width:65%;height:38%;top:auto;right:0;bottom:0;}
+  .bma-driver-hero::after {background:linear-gradient(180deg,#fff 0%,rgba(255,255,255,.93) 43%,rgba(255,255,255,.4) 65%,transparent 86%);}
+  .bma-driver-benefits h2 {margin-bottom:16px;}
+  .bma-driver-benefit-grid {grid-template-columns:1fr;gap:12px;}
+  .bma-driver-benefit-card {min-height:0;}
+  .bma-driver-vehicle-section {padding-block:28px;border-radius:12px;}
+  .bma-driver-vehicle-tabs {gap:8px;margin-bottom:17px;}
+  .bma-driver-vehicle-tab {min-height:43px;padding:9px 11px;gap:7px;font-size:12px;}
+  .bma-driver-vehicle-tab svg {width:17px;height:17px;}
+  .bma-driver-vehicle-preview {grid-template-columns:1fr;gap:15px;}
+  .bma-driver-vehicle-photo {min-height:0;aspect-ratio: 1.42;}
+  .bma-driver-vehicle-description h3 {font-size:23px;}
+  .bma-driver-vehicle-description ul {margin-top:16px;gap:10px;}
+  .bma-driver-earn-card {padding:23px;}
+  .bma-driver-earn-note {margin-top:17px;}
+  .bma-driver-process-grid {grid-template-columns:1fr 1fr;gap:11px;}
+  .bma-driver-process-card {min-height:185px;padding:14px;}
+  .bma-driver-process-card h3 {font-size:14px;}
+  .bma-driver-process-card p {font-size:11px;}
+  .bma-driver-practical-grid {gap:22px;}
+  .bma-driver-requirements > h2 {margin-bottom:17px;}
+  .bma-driver-requirements > ul {gap:12px;grid-template-columns:1fr 1fr;}
+  .bma-driver-requirements li {font-size:11px;gap:7px;}
+  .bma-driver-requirements li svg {width:16px;height:16px;}
+  .bma-driver-requirements-note {margin-top:18px!important;}
+  .bma-driver-faq-heading {align-items:flex-start;gap:8px;}
+  .bma-driver-faq-heading a {font-size:11px;}
+  .bma-driver-faq-list summary {font-size:12px;min-height:46px;padding:11px 12px;}
+  .bma-driver-faq-list details>p {font-size:12px;padding:0 27px 14px 12px;}
+  .bma-driver-trust-grid {grid-template-columns:1fr 1fr;gap:10px;}
+  .bma-driver-trust-card {min-height:140px;padding:14px;}
+  .bma-driver-trust-card>svg {width:25px;height:25px;}
+  .bma-driver-trust-card h3 {font-size:13px;}
+  .bma-driver-trust-card p {font-size:11px;}
+  .bma-driver-closing {width:calc(100% - 24px);margin-bottom:13px;border-radius:18px;padding:25px 22px;}
+  .bma-driver-closing h2 {font-size:29px;}
+  .bma-driver-closing p {font-size:13px;}
+  .bma-driver-closing-button {width:100%;min-height:52px;font-size:13px;padding-inline:15px;}
+}
+@media (max-width:360px) {
+  .bma-driver-hero-actions {align-items:stretch;flex-direction:column;}
+  .bma-driver-hero-actions a {width:100%;}
+  .bma-driver-requirements > ul {grid-template-columns:1fr;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .bma-driver-button,.bma-driver-vehicle-tab,.bma-driver-faq-list summary svg {transition:none;}
+}
