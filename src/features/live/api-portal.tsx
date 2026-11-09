@@ -1,5 +1,7 @@
 "use client";
 import * as React from "react";
+import Link from "next/link";
+import {ArrowUpRight} from "lucide-react";
 import {usePathname,useRouter} from "next/navigation";
 import {type PortalRole} from "@/config/navigation";
 import {PortalShell} from "@/components/portal/portal-shell";
@@ -62,12 +64,34 @@ export function ApiPortal({role,children}:{role:PortalRole;children:React.ReactN
   catch(err){setError(err instanceof Error?err.message:"Could not sign out");}
   finally{setBusy(false);}
  }
+ const driverDescriptions:Record<string,string>={
+  home:"Follow your application, verification, assignments and earnings in one place.",
+  onboarding:"Complete the available onboarding stages and follow the partner agreement status.",
+  verification:"Track vehicle and document checks before any approved installation.",
+  vehicle:"Manage registered vehicles and see your screen setup information.",
+  "assigned-ads":"Check verified screen assignments and their current availability.",
+  campaigns:"See campaigns confirmed for your vehicle or screen.",
+  earnings:"Review recorded earnings without implied or guaranteed payouts.",
+  payouts:"See settlement and payout records confirmed by the platform.",
+  delivery:"See confirmed campaign and screen activity when connected.",
+  trips:"Understand trip tracking availability and recorded route information.",
+  maintenance:"Raise issues and monitor maintenance cases for assigned devices.",
+  notifications:"Review important application, vehicle and account notices.",
+  support:"Get help and track your submitted support requests.",
+  profile:"Review your account and document information."
+ };
+ const driverSection=pathname.split("/")[2]??"home";
+ const driverActions=role==="driver"&&driverSection!=="onboarding"
+  ?<Link className="bma-driver-header-action" href="/driver/onboarding">View onboarding <ArrowUpRight aria-hidden="true" /></Link>
+  :undefined;
  if(authError||(!loading&&!session))return <PortalAccessRequired title="Live session required"
   message={authError||"Sign in with a verified account."}
   signInHref={"/login?next="+encodeURIComponent(pathname)} signInLabel="Secure sign in"/>;
  if(!session||!context)return <PortalLoading message="Verifying authenticated session…"/>;
  return <ApiPortalContext.Provider value={context}>
-  <PortalShell role={role} pathname={pathname} signingOut={busy} onSignOut={()=>void signOut()}>
+  <PortalShell role={role} pathname={pathname} signingOut={busy}
+   description={role==="driver"?(driverDescriptions[driverSection]??driverDescriptions.home):undefined}
+   actions={driverActions} onSignOut={()=>void signOut()}>
    {error&&<div role="alert" className="rounded-md border border-danger-border bg-danger-bg p-4 text-sm text-danger-fg">{error}</div>}
    {children}
   </PortalShell>

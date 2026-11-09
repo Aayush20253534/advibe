@@ -138,6 +138,11 @@ function SidebarContent({
         <span>YOUR NEXT MOVE</span><strong>Make your brand move with the city.</strong>
         <span className="bma-adv-sidebar-promo-link">Create campaign <ArrowUpRight aria-hidden="true" /></span>
       </Link>}
+      {role === "driver" && <Link href="/driver/onboarding" onClick={() => onNavigate("/driver/onboarding")} className="bma-driver-sidebar-promo">
+        <span>PARTNER WORKSPACE</span>
+        <strong>Your routes. Your next steps.</strong>
+        <span className="bma-driver-sidebar-promo-link">View onboarding <ArrowUpRight aria-hidden="true" /></span>
+      </Link>}
     </>
   );
 }
@@ -175,7 +180,7 @@ export function PortalShell({
   const dense = role === "admin";
 
   return (
-    <div data-portal={role} data-portal-page={pathname} className={cn("min-h-dvh bg-paper text-ink lg:flex",role==="advertiser"&&"bma-advertiser-portal")}>
+    <div data-portal={role} data-portal-page={pathname} className={cn("min-h-dvh bg-paper text-ink lg:flex",role==="advertiser"&&"bma-advertiser-portal",role==="driver"&&"bma-driver-portal")}>
       <a
         href="#portal-content"
         className="sr-only z-50 rounded-md bg-surface px-4 py-2 font-semibold text-ink focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:outline-2 focus:outline-signal"
@@ -204,7 +209,7 @@ export function PortalShell({
                 <RadixDialog.Overlay className="fixed inset-0 z-50 bg-ink/60 lg:hidden" />
                 <RadixDialog.Content
                   aria-describedby={undefined}
-                  className={cn("fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100vw-3rem))] flex-col bg-ink shadow-overlay focus-visible:outline-none motion-safe:data-[state=open]:animate-[advibe-fade-in_150ms_ease-out] lg:hidden",role==="advertiser"&&"bma-adv-sidebar-mobile")}
+                  className={cn("fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100vw-3rem))] flex-col bg-ink shadow-overlay focus-visible:outline-none motion-safe:data-[state=open]:animate-[advibe-fade-in_150ms_ease-out] lg:hidden",role==="advertiser"&&"bma-adv-sidebar-mobile",role==="driver"&&"bma-driver-sidebar-mobile")}
                 >
                   <RadixDialog.Title className="sr-only">
                     {portalLabel[role]} menu

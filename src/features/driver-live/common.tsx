@@ -197,7 +197,7 @@ export function Block({
   action?: React.ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-line bg-surface p-4">
+    <section className="bma-driver-panel rounded-lg border border-line bg-surface p-4">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <h2 className="font-heading text-lg font-semibold text-ink">{title}</h2>
         {action}

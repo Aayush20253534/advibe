@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Check, Clock3 } from "lucide-react";
+import { ArrowUpRight, BadgeCheck, Check, Clock3, MapPin, ShieldCheck } from "lucide-react";
 import { api, newIdempotencyKey } from "@/services/api-client";
 import { useApiPortal } from "@/features/live/api-portal";
 import {
@@ -126,9 +127,29 @@ export function DriverToday() {
         }
       : { href: "/driver/verification", label: "See verification details" };
   return (
-    <div className="max-w-3xl space-y-4">
+    <div className="bma-driver-dashboard space-y-5">
+      <section className="bma-driver-dashboard-hero" aria-label="Driver partner overview">
+        <div className="bma-driver-dashboard-art" aria-hidden="true">
+          <Image src="/images/hero/234.png" alt="" fill priority unoptimized
+           sizes="(max-width:700px) 100vw, 60vw" />
+        </div>
+        <div className="bma-driver-dashboard-copy">
+          <p className="bma-driver-eyebrow"><span aria-hidden="true" /> DRIVER PARTNER WORKSPACE</p>
+          <h2>Drive your routes.<br /><span>Stay on track.</span></h2>
+          <p>Manage your application, verification and vehicle details. See confirmed assignments and recorded earnings as they become available.</p>
+          <div className="bma-driver-dashboard-actions">
+            <Link href={nextAction.href} className="bma-driver-dashboard-primary">{nextAction.label} <ArrowUpRight aria-hidden="true" /></Link>
+            <Link href="/driver/vehicle" className="bma-driver-dashboard-secondary">My vehicles</Link>
+          </div>
+          <div className="bma-driver-dashboard-proof">
+            <span><MapPin aria-hidden="true" /> Prayagraj pilot</span>
+            <span><BadgeCheck aria-hidden="true" /> Verified partners</span>
+            <span><ShieldCheck aria-hidden="true" /> Reviewed assignments</span>
+          </div>
+        </div>
+      </section>
       {me.error || apps.error ? <Alert tone="danger">{me.error || apps.error}</Alert> : null}
-      <p className="text-lg text-ink">
+      <p className="bma-driver-greeting text-lg text-ink">
         Hello{me.data?.displayName ? `, ${me.data.displayName}` : ""}.
       </p>
       <Block title="Your status">
