@@ -411,39 +411,72 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: clamp(24px, 3vw, 46px);
+  width: calc(100% - 48px);
+  max-width: 1480px;
+  min-height: 145px;
+  margin: 13px auto 16px;
+  padding: 24px clamp(28px, 3vw, 50px);
   overflow: hidden;
-  min-height: 165px;
-  width: calc(100% - clamp(24px,4vw,64px));
-  max-width: 1540px;
-  margin: 0 auto 16px;
-  padding: 25px clamp(27px,3vw,48px);
-  border-radius: 19px;
-  background: #0540ed url("/images/blinkmyad/ad-formats/cta-wave.webp") center / cover no-repeat;
+  border-radius: 22px;
+  border: 1px solid rgba(132, 178, 255, .18);
+  background: #06163d url("/images/blinkmyad/ad-formats/cta-wave.webp") center / cover no-repeat;
+  box-shadow: 0 10px 26px rgba(16, 64, 146, .12);
+  color: #fff;
 }
-.bma-how-final::before { content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(120deg,#0034d9 0%,rgba(0,66,249,.75) 55%,rgba(3,68,239,.2) 100%); }
-.bma-how-final-copy { position:relative;z-index:2;max-width:480px; }
-.bma-how-final h2 { color:#fff; font-size:clamp(25px,2.4vw,36px);line-height:1.13;font-weight:830; }
-.bma-how-final p { margin-top:11px;color:#edf4ff;font-size:clamp(12px,1.0vw,15px);line-height:1.48; }
-.bma-how-final-buttons { display:flex;gap:13px;align-items:center;position:relative;z-index:3;margin-right:clamp(170px,23vw,360px); }
-.bma-how-button-white { background:#fff;color:#0b2f90;box-shadow:0 4px 10px rgba(0,20,90,.13); }
-.bma-how-button-white:hover { background:#ebf2ff; }
-.bma-how-button-ghost { background:rgba(8,56,201,.32);border-color:rgba(255,255,255,.65);color:#fff; }
-.bma-how-button-ghost:hover { background:rgba(255,255,255,.16); }
-.bma-how-final-art {
-  position:absolute;
-  z-index:1;
-  top:-33%;
-  bottom:-26%;
-  right:0;
-  width:clamp(230px,26vw,420px);
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 34%);
-  mask-image:linear-gradient(90deg,transparent 0%,#000 34%);
+.bma-how-final::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(110deg, rgba(2, 10, 32, .16), transparent 40%, rgba(74, 151, 255, .12) 72%, rgba(4, 19, 59, .2));
 }
-.bma-how-final-art img { object-fit:cover;object-position:52% 48%; }
-[data-page="how-it-works"] > footer { background: #0c1526; }
-[data-page="how-it-works"] > footer > div:first-child { padding-top: clamp(31px,3.6vw,50px);padding-bottom: clamp(27px,3vw,43px); }
+.bma-how-final-copy { position: relative; z-index: 1; max-width: 600px; }
+.bma-how-final h2 {
+  color: #fff;
+  font-size: clamp(29px, 2.7vw, 41px);
+  font-weight: 820;
+  letter-spacing: -.045em;
+  line-height: 1.12;
+}
+.bma-how-final p {
+  max-width: 550px;
+  margin-top: 8px;
+  color: #e5efff;
+  font-size: clamp(13px, 1.1vw, 17px);
+  line-height: 1.43;
+}
+.bma-how-final-buttons {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 13px;
+  margin: 0;
+}
+.bma-how-final .bma-how-button {
+  min-height: 53px;
+  padding: 13px clamp(17px, 1.6vw, 26px);
+  border-radius: 13px;
+  font-size: clamp(12px, .95vw, 15px);
+}
+.bma-how-button-white {
+  border-color: #c8d5ff;
+  background: #fff;
+  color: #0744ec;
+  box-shadow: 0 7px 16px rgba(0, 17, 55, .13);
+}
+.bma-how-button-white:hover { background: #edf3ff; }
+.bma-how-button-ghost {
+  border-color: rgba(208, 227, 255, .84);
+  background: rgba(255, 255, 255, .065);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+.bma-how-button-ghost:hover { background: rgba(255, 255, 255, .16); }
 @media (max-width: 1170px) {
   .bma-how-shell { width: calc(100% - 70px); }
   .bma-how-hero-copy { width: min(49%, 520px); }
@@ -458,7 +491,7 @@
   .bma-how-timeline li { padding-left: 16px; }
   .bma-how-trust { grid-template-columns: 1fr; }
   .bma-how-trust > h2 br { display:none; }
-  .bma-how-final-buttons { margin-right: 220px; }
+  .bma-how-final-buttons { flex-wrap: wrap; }
 }
 @media (max-width: 900px) {
   .bma-how-shell { width:calc(100% - 48px); }
@@ -483,10 +516,9 @@
   .bma-how-trust-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .bma-how-benefits-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .bma-how-faq { grid-template-columns:175px 1fr;gap:23px; }
-  .bma-how-final { display:block;min-height:180px; }
-  .bma-how-final-copy { max-width:53%; }
-  .bma-how-final-buttons { margin:16px 160px 0 0; }
-  .bma-how-final-art { width:34%; }
+  .bma-how-final { display: block; min-height: 0; }
+  .bma-how-final-copy { max-width: none; }
+  .bma-how-final-buttons { justify-content: flex-start; margin-top: 20px; }
 }
 @media (max-width: 620px) {
   .bma-how-shell { width:calc(100% - 34px); }
@@ -545,12 +577,11 @@
   .bma-how-faq-heading h2 br { display:none; }
   .bma-how-faq-heading p { max-width:none;margin-top:6px; }
   .bma-how-faq-list summary { min-height:51px; }
-  .bma-how-final { width:calc(100% - 20px);margin-bottom:10px;border-radius:15px;padding:24px 20px 110px; }
-  .bma-how-final-copy { max-width:none; }
-  .bma-how-final h2 { font-size:25px; }
-  .bma-how-final p { max-width:360px;font-size:12px; }
-  .bma-how-final-buttons { flex-wrap:wrap;margin:18px 0 0;gap:9px; }
-  .bma-how-final-art { top:auto;bottom:-43%;height:62%;right:-12%;width:61%;opacity:.6; }
+  .bma-how-final { width:calc(100% - 24px);margin-bottom:14px;border-radius:18px;padding:26px 22px; }
+  .bma-how-final h2 { font-size:29px; }
+  .bma-how-final p { max-width:420px;font-size:14px; }
+  .bma-how-final-buttons { width:100%;flex-wrap:wrap;margin:20px 0 0;gap:10px; }
+  .bma-how-final .bma-how-button { min-height:50px; flex:1 1 180px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .bma-how-button,.bma-how-faq-list summary svg { transition:none; }
