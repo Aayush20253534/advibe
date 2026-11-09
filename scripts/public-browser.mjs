@@ -54,7 +54,11 @@ try{
         assert.equal(await page.locator(".bma-advertisers-step").count(),4,"Four campaign stages");
         assert.equal(await page.locator(".bma-advertisers-format").count(),3,"Three vehicle formats");
         assert.equal(await page.locator(".bma-advertisers-faq-list details").count(),5,"Five advertiser FAQs");
-        assert.equal(await page.locator(".bma-advertisers-hero-art img").count(),1,"Vehicle fleet hero visible");
+        const advertiserHero=page.locator(".bma-advertisers-hero-art img");
+        assert.equal(await advertiserHero.count(),1,"Single advertiser hero artwork");
+        assert.equal(await advertiserHero.getAttribute("src"),"/images/hero/009.png","Uploaded advertiser hero 009.png");
+        assert.ok(await advertiserHero.evaluate(img=>img.complete&&img.naturalWidth>0),"Advertiser PNG loads");
+        assert.equal(await page.locator(".bma-advertisers-hero-car").count(),0,"No duplicate car panel over uploaded artwork");
         const advFAQ=page.locator(".bma-advertisers-faq-list details").first();
         await advFAQ.locator("summary").click();
         assert.ok(await advFAQ.evaluate(el=>el.open),"Advertiser FAQ expands");
@@ -71,6 +75,10 @@ try{
         const driverHero=page.locator(".bma-driver-hero-art img");
         assert.equal(await driverHero.getAttribute("src"),"/images/hero/234.png","Use uploaded driver hero 234.png");
         assert.ok(await driverHero.evaluate(img=>img.complete&&img.naturalWidth>0),"Uploaded driver hero loads");
+        const heroGuide=page.locator(".bma-driver-hero-guide");
+        assert.equal(await heroGuide.count(),1,"Driver guide bridges the hero text and artwork");
+        assert.equal(await heroGuide.locator("li").count(),3,"Driver guide describes three verified stages");
+        if(width>1360)assert.ok(await heroGuide.isVisible(),"Driver journey card visible on wide desktop");
         assert.equal(await page.locator(".bma-driver-benefit-card").count(),4,"Four driver benefit cards");
         assert.equal(await page.locator(".bma-driver-process-card").count(),4,"Four driver onboarding steps");
         assert.equal(await page.locator(".bma-driver-trust-card").count(),4,"Four safety and trust cards");
