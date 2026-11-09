@@ -157,3 +157,32 @@
 @media(prefers-reduced-motion:reduce) {
  .bma-adv-nav-link,.bma-adv-dashboard-actions a {transition:none!important;}
 }
+
+
+/* Consistent, image-forward format comparison inside the advertiser workspace. */
+.bma-advertiser-portal .bma-adv-format-gallery {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;
+  align-items:start;
+}
+.bma-advertiser-portal .bma-adv-format-gallery-item {
+  min-width:0;overflow:hidden;
+  border:1px solid #d9e4f4;border-radius:16px;
+  background:linear-gradient(145deg,#fff,#f9fbff);
+  box-shadow:0 8px 19px rgba(23,65,132,.078);
+}
+.bma-advertiser-portal .bma-adv-format-gallery-image {position:relative;aspect-ratio:1.67;overflow:hidden;background:#e9f2ff;}
+.bma-advertiser-portal .bma-adv-format-gallery-image img {object-fit:cover;object-position:center;}
+.bma-advertiser-portal .bma-adv-format-gallery-item h2 {padding:14px 18px 17px;font-size:16px;font-weight:800;color:#12213d;}
+.bma-advertiser-portal .bma-adv-format-gallery-link {
+  grid-column:1/-1;justify-self:end;margin-top:-4px;
+  font-size:13px;font-weight:770;color:#064cf2;text-decoration:underline;text-underline-offset:4px;
+}
+@media(max-width:680px){
+ .bma-advertiser-portal .bma-adv-format-gallery {gap:10px;}
+ .bma-advertiser-portal .bma-adv-format-gallery-item h2 {padding:12px;font-size:13px;}
+}
+@media(max-width:460px){
+ .bma-advertiser-portal .bma-adv-format-gallery {grid-template-columns:1fr;}
+ .bma-advertiser-portal .bma-adv-format-gallery-image {aspect-ratio:1.95;}
+ .bma-advertiser-portal .bma-adv-format-gallery-item h2 {font-size:15px;}
+}
