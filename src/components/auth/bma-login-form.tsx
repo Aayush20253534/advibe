@@ -27,8 +27,17 @@ export function BmaLoginForm() {
       if (isMfa) {
         await api("/auth/mfa/verify", { method: "POST", body: { challengeId, ticket, code } });
       } else {
+        // The base login contract accepts email and password. Some deployed
+        // backends reject additional properties rather than ignoring them.
+        // Send the optional persistence override only when explicitly unchecked;
+        // the normal login remains compatible with both schema versions.
+        const body = {
+          email: email.trim().toLowerCase(),
+          password,
+          ...(!remember ? { remember: false } : {}),
+        };
         const result = await api<{ challengeId?: string; ticket?: string }>("/auth/login", {
-          method: "POST", body: { email: email.trim().toLowerCase(), password, remember },
+          method: "POST", body,
         });
         if (result.challengeId&&result.ticket) {
           setChallengeId(result.challengeId); setTicket(result.ticket); setPassword("");
@@ -40,7 +49,7 @@ export function BmaLoginForm() {
       router.replace(safeAuthNext(params.get("next"), session.role));
       router.refresh();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Unable to sign in. Please try again.");
+      setError(err instanceof ApiError && err.code === "VALIDATION_ERROR" ? "Check your email and password format, then try again." : err instanceof ApiError ? err.message : "Unable to sign in. Please try again.");
     } finally {
       setLoading(false);
     }
