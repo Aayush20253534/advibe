@@ -481,10 +481,6 @@
   height: 20px;
   stroke-width: 2;
 }
-[data-page="about"] > footer { background: #0d1b32; }
-[data-page="about"] > footer > div:first-child { padding-top: clamp(36px, 4vw, 61px); padding-bottom: clamp(24px, 2.5vw, 37px); }
-[data-page="about"] > footer > div:last-child { border-color: rgba(255,255,255,.19); }
-[data-page="about"] > footer > div:last-child > div { padding-top: 14px; padding-bottom: 18px; }
 [data-page="about"] > header .bma-ref-nav a[aria-current="page"] {
   position: relative;
 }
