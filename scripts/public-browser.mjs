@@ -24,7 +24,7 @@ try{
     await context.route("**/api/backend/**",route=>route.fulfill({status:503,contentType:"application/json",body:JSON.stringify({error:{code:"TEST_UNAVAILABLE",message:"Temporary service interruption"}})}));
     const page=await context.newPage();
     const errors=[];page.on("pageerror",error=>errors.push(error.message));
-    const paths=width===768?["/","/locations","/how-it-works","/for-drivers","/for-advertisers","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/how-it-works","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
+    const paths=width===768?["/","/locations","/pricing","/terms","/privacy","/contact","/help-center","/how-it-works","/for-drivers","/for-advertisers","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/how-it-works","/pricing","/locations","/about","/contact","/help-center","/terms","/privacy","/login","/signup","/forgot-password","/reset-password","/verify"];
     for(const path of paths){
       await page.goto(base+path,{waitUntil:"domcontentloaded",timeout:45000});
       await page.locator("h1").waitFor({state:"visible",timeout:45000});
@@ -40,6 +40,37 @@ try{
           reflection:getComputedStyle(el,"::before").backgroundImage,
         }));
         assert.ok(footerBackground.base.includes("gradient"),`${path}: metallic-blue gradient footer: ${JSON.stringify(footerBackground)}`);
+      }
+      if(["/pricing","/terms","/privacy","/contact","/help-center","/locations"].includes(path)){
+        assert.equal(await page.locator(".bma-detail").count(),1,path+": unified secondary page surface");
+        assert.equal(await page.locator(".bma-detail-hero").count(),1,path+": image-led editorial hero");
+        assert.equal(await page.locator(".bma-detail-cta").count(),1,path+": one metallic wave closing CTA");
+        assert.ok(await page.locator(".bma-detail-cta").evaluate(el=>getComputedStyle(el).backgroundImage.includes("cta-wave.webp")),path+": consistent wave background");
+        assert.ok(await page.locator(".bma-detail-section").count()>=2,path+": multiple structured sections");
+      }
+      if(path==="/pricing"){
+        assert.equal(await page.locator("#estimate").count(),1,"Calculator CTA scroll anchor resolves");
+        assert.ok(await page.locator('input[type="range"]').count()>=4,"Pricing sliders retained");
+        assert.match(await page.locator("#estimate").innerText(),/illustrative|example|estimate/i,"Calculator keeps illustrative disclaimer");
+      }
+      if(path==="/terms"||path==="/privacy"){
+        assert.ok((await page.locator(".bma-detail-ribbon-warning").innerText()).includes("Legal approval pending"),path+": legal disclaimer visible");
+        assert.ok((await page.locator(".bma-detail-legal-panel").innerText()).toLowerCase().includes("not"),path+": non-operative notice preserved");
+      }
+      if(path==="/contact"){
+        assert.equal(await page.locator("#get-in-touch").count(),1,"Contact anchor targets a section");
+        assert.equal(await page.locator("#enquiry-title").count(),1,"Live or gated enquiry workflow remains");
+      }
+      if(path==="/help-center"){
+        const help=page.getByRole("searchbox",{name:"Search questions"});
+        assert.equal(await help.count(),1,"FAQ keyword search retained");
+        await help.fill("pricing");
+        assert.match(await page.locator("#help-questions").innerText(),/pricing/i,"Help search filters by keyword");
+        await help.fill("");
+      }
+      if(path==="/locations"){
+        assert.equal(await page.locator("#coverage-explorer").count(),1,"Coverage explorer anchor resolves");
+        assert.equal(await page.getByRole("searchbox",{name:/Search areas on this page/}).count(),1,"Published area search preserved");
       }
       if(path==="/login"||path==="/signup"){
         assert.equal(await page.locator(".bma-ref-nav").count(),0,`${path}: marketing navbar is absent`);
