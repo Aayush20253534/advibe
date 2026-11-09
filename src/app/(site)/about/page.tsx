@@ -113,7 +113,7 @@ export default function AboutPage() {
             </ul>
           </div>
 
-          <div className="bma-about-visual" aria-label="Examples of BlinkMyAd advertising placements">
+          <div className="bma-about-visual">
             <div className="bma-about-main-photo">
               <Image
                 src="/images/blinkmyad/interior.webp"
