@@ -24,7 +24,7 @@ try{
     await context.route("**/api/backend/**",route=>route.fulfill({status:503,contentType:"application/json",body:JSON.stringify({error:{code:"TEST_UNAVAILABLE",message:"Temporary service interruption"}})}));
     const page=await context.newPage();
     const errors=[];page.on("pageerror",error=>errors.push(error.message));
-    const paths=width===768?["/","/locations","/how-it-works","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/how-it-works","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
+    const paths=width===768?["/","/locations","/how-it-works","/for-drivers","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/how-it-works","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
     for(const path of paths){
       await page.goto(base+path,{waitUntil:"domcontentloaded",timeout:45000});
       await page.locator("h1").waitFor({state:"visible",timeout:45000});
@@ -47,6 +47,28 @@ try{
         const homeLogo=page.locator(width>900?".bma-reference-auth-home a[href='/']":".bma-reference-auth-mobile-home a[href='/']");
         assert.equal(await homeLogo.count(),1,`${path}: one home-linked BlinkMyAd logo`);
         assert.ok(await homeLogo.isVisible(),`${path}: home logo is visible`);
+      }
+      if(path==="/for-drivers"){
+        assert.equal(await page.getByRole("heading",{name:/Drive your routes/}).count(),1,"Dedicated driver hero exists");
+        assert.equal(await page.locator(".bma-driver-benefit-card").count(),4,"Four driver benefit cards");
+        assert.equal(await page.locator(".bma-driver-process-card").count(),4,"Four driver onboarding steps");
+        assert.equal(await page.locator(".bma-driver-trust-card").count(),4,"Four safety and trust cards");
+        const selector=page.getByRole("group",{name:"Vehicle type"});
+        assert.equal(await selector.getByRole("button").count(),3,"Bike, auto and car selection available");
+        await selector.getByRole("button",{name:"Auto rickshaw"}).click();
+        assert.equal(await page.locator(".bma-driver-vehicle-description h3").innerText(),"Auto rickshaw");
+        await selector.getByRole("button",{name:"Car",exact:true}).click();
+        assert.equal(await page.locator(".bma-driver-vehicle-description h3").innerText(),"Car");
+        await selector.getByRole("button",{name:"Bike"}).click();
+        assert.equal(await page.locator(".bma-driver-vehicle-description h3").innerText(),"Bike");
+        assert.equal(await page.locator(".bma-driver-faq-list details").count(),5,"Five driver questions");
+        const faq=page.locator(".bma-driver-faq-list details").first();
+        assert.ok(await faq.evaluate(el=>el.open),"First driver answer expanded by default");
+        await faq.locator("summary").click();
+        assert.ok(!await faq.evaluate(el=>el.open),"Driver FAQ closes on click");
+        const closing=page.locator(".bma-driver-closing");
+        assert.ok(await closing.evaluate(el=>getComputedStyle(el).backgroundImage.includes("cta-wave.webp")),"Driver CTA has matching metallic-blue wave");
+        assert.equal(await closing.getByRole("link",{name:"Apply as a driver partner"}).getAttribute("href"),"/signup?role=driver");
       }
       if(path==="/how-it-works"){
         assert.equal(await page.getByRole("heading",{name:"How BlinkMyAd works"}).count(),1,"Dedicated workflow hero exists");
