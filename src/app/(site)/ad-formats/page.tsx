@@ -70,7 +70,7 @@ export default function Page() {
               <a href="#format-explorer" className="bma-formats-button">
                 Explore ad formats <ArrowRight aria-hidden="true" />
               </a>
-              <Link href="/#how-it-works" className="bma-formats-button bma-formats-button-outline">
+              <Link href="/how-it-works" className="bma-formats-button bma-formats-button-outline">
                 <Play aria-hidden="true" /> How it works
               </Link>
             </div>
