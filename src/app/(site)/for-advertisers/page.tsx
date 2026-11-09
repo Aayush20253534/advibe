@@ -86,10 +86,14 @@ export default function ForAdvertisersPage() {
     <div className="bma-advertisers">
       <section className="bma-advertisers-hero" aria-labelledby="advertisers-title">
         <div className="bma-advertisers-hero-art" aria-hidden="true">
-          <Image src="/images/blinkmyad/fleet.webp" alt="" fill priority sizes="(max-width: 680px) 100vw, 66vw" />
-        </div>
-        <div className="bma-advertisers-hero-car" aria-hidden="true">
-          <Image src="/images/blinkmyad/ad-formats/car-interior.webp" alt="" fill sizes="(max-width: 680px) 0px, 20vw" />
+          <Image
+            src="/images/hero/009.png"
+            alt=""
+            fill
+            priority
+            unoptimized
+            sizes="(max-width: 680px) 100vw, (max-width: 1024px) 80vw, 76vw"
+          />
         </div>
         <div className="bma-advertisers-shell bma-advertisers-hero-inner">
           <div className="bma-advertisers-hero-copy">
