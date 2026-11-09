@@ -1,6 +1,7 @@
 import {NextRequest,NextResponse} from "next/server";
 import {allowedApiPath,backendOrigin} from "@/services/api-route-policy.mjs";
 import {BodyLimitError,readBoundedBody,sessionCookies,isSessionSetCookie} from "@/services/relay-boundaries.mjs";
+import {matchesRequestedLoginRole} from "@/services/login-role-guard.mjs";
 export const dynamic="force-dynamic";
 export const runtime="nodejs";
 const NO_STORE="no-store, max-age=0";
@@ -70,6 +71,14 @@ async function proxy(req:NextRequest,{params}:Params){
     return NextResponse.json({error:{code:"UPSTREAM_RESPONSE_TOO_LARGE"}},{status:502,headers:{"Cache-Control":NO_STORE}});
    throw error;
   }
+  // A legacy backend can ignore X-Login-Role. Reject a mismatched login before
+  // forwarding its session cookie, rather than relying on a client redirect.
+  const requestedLoginRole=method==="POST"&&path.join("/")==="auth/login"
+   ?req.headers.get("x-login-role"):null;
+  if(!matchesRequestedLoginRole(requestedLoginRole,upstream.status,bytes))
+   return NextResponse.json({error:{code:"ACCOUNT_ROLE_MISMATCH",
+    message:"This account does not match the selected account type. Choose the correct sign-in tab."}},
+    {status:403,headers:{"Cache-Control":NO_STORE}});
   const response=new NextResponse(bytes,{status:upstream.status,headers:{
    "Content-Type":type,"Cache-Control":NO_STORE,"X-Content-Type-Options":"nosniff",
    ...(upstream.headers.get("content-disposition")?
