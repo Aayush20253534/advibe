@@ -194,7 +194,7 @@ export function createAuthRouter(
   }));
 
   router.post("/login", guard, validateBody(loginSchema), asyncRoute(async (req, res) => {
-    const { email, password } = loginSchema.parse(req.body);
+    const { email, password, remember } = loginSchema.parse(req.body);
     await takeAuthRateSlot(db, settings, "login-ip", requestIp(req), 30, 900);
     await takeAuthRateSlot(db, settings, "login-email", email, 8, 900);
     const user = await db.user.findUnique({ where: { email } });
@@ -239,7 +239,7 @@ export function createAuthRouter(
         actorUserId: user.id, action: "auth.login", resourceType: "session", resourceId: user.id,
       } });
     });
-    setSessionCookie(res, token, settings);
+    setSessionCookie(res, token, settings, remember !== false);
     res.status(201).json({ data: safeUser(user, expiresAt, mac(settings, "csrf", hashToken(token))) });
   }));
 
