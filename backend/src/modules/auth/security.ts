@@ -24,9 +24,10 @@ export function readSessionCookie(req: Request, settings: AuthSettings): string 
   const token = matches[0]?.slice(name.length + 1);
   return token && /^[A-Za-z0-9_-]{43}$/.test(token) ? token : null;
 }
-export function setSessionCookie(res: Response, token: string, settings: AuthSettings): void {
+export function setSessionCookie(res: Response, token: string, settings: AuthSettings, persistent = true): void {
+  // Keep all cookies HttpOnly/Secure/SameSite. Only persistence changes: unchecked = browser-session cookie.
   res.cookie(cookieName(settings), token, { httpOnly: true, secure: settings.secureCookies,
-    sameSite: "lax", path: "/", maxAge: SESSION_LIFETIME_MS });
+    sameSite: "lax", path: "/", ...(persistent ? { maxAge: SESSION_LIFETIME_MS } : {}) });
 }
 export function clearSessionCookie(res: Response, settings: AuthSettings): void {
   res.clearCookie(cookieName(settings), { httpOnly: true, secure: settings.secureCookies,
