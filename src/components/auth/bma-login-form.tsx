@@ -30,7 +30,7 @@ export function BmaLoginForm() {
         const result = await api<{ challengeId?: string; ticket?: string }>("/auth/login", {
           method: "POST", body: { email: email.trim().toLowerCase(), password, remember },
         });
-        if (result.challengeId && result.ticket) {
+        if (result.challengeId&&result.ticket) {
           setChallengeId(result.challengeId); setTicket(result.ticket); setPassword("");
           setNotice("Enter the 6-digit code from your authenticator app.");
           return;
@@ -46,7 +46,7 @@ export function BmaLoginForm() {
     }
   }
 
-  const status = params.get("verified") === "1" ? "Email verified. Sign in to continue." :
+  const status=params.get("verified") === "1" ? "Email verified. Sign in to continue." :
     params.get("reset") === "1" ? "Password changed. Sign in again." : "";
 
   return (
