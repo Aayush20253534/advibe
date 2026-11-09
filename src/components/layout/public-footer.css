@@ -1,6 +1,7 @@
 /* One shared footer for all public pages, including the homepage.
    Reflective metallic-blue gradients retain contrast and avoid flat solid fills. */
-.bma-public-footer {
+.bma-public-footer,
+[data-homepage="true"] > footer.bma-public-footer {
   position: relative;
   isolation: isolate;
   overflow: hidden;
