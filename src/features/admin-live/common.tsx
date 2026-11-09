@@ -17,10 +17,10 @@ export type Reports={period:{from:string;to:string;timezone:string};definition:s
 export type AdminContext={session:LiveSession};
 export const AdminContext=React.createContext<AdminContext|null>(null);
 export function useAdmin(){const ctx=React.useContext(AdminContext);if(!ctx)throw Error("Admin session required");return ctx;}
-export const line=cn(controlClass,"mt-1.5 block min-h-11 py-1.5 sm:min-h-10");
-export const label="block text-sm font-semibold text-ink";
-export const primary=buttonVariants({variant:"primary",size:"sm"})+" min-h-11 sm:min-h-10";
-export const secondary=buttonVariants({variant:"outline",size:"sm"})+" min-h-11 sm:min-h-10";
+export const line=cn(controlClass,"bma-admin-field mt-2 block min-h-11 py-2 sm:min-h-10");
+export const label="block text-sm font-semibold leading-6 text-ink";
+export const primary=buttonVariants({variant:"primary",size:"sm"})+" bma-admin-primary min-h-11 px-4 sm:min-h-10";
+export const secondary=buttonVariants({variant:"outline",size:"sm"})+" bma-admin-secondary min-h-11 px-4 sm:min-h-10";
 const alertTone={info:"info",error:"danger",warning:"warning",success:"success"} as const;
 /** Inline message on the design-system Alert. */
 export function Alert({children,type="info"}:{children:React.ReactNode;type?:"info"|"error"|"warning"|"success"}){
@@ -28,9 +28,12 @@ export function Alert({children,type="info"}:{children:React.ReactNode;type?:"in
 }
 /** A titled section of an admin page. */
 export function Card({title,children,tools}:{title:string;children:React.ReactNode;tools?:React.ReactNode}){
- return <section className="rounded-lg border border-line bg-surface p-4">
-  <div className="mb-3 flex flex-wrap items-center justify-between gap-2"><h2 className="font-heading text-base font-semibold text-ink">{title}</h2>{tools}</div>
-  <div className="space-y-3">{children}</div>
+ return <section className="bma-admin-card">
+  <header className="bma-admin-card-heading">
+   <div className="bma-admin-card-title"><span className="bma-admin-card-marker" aria-hidden="true"/><h2>{title}</h2></div>
+   {tools?<div className="bma-admin-card-tools">{tools}</div>:null}
+  </header>
+  <div className="bma-admin-card-body">{children}</div>
  </section>;
 }
 const tones:Record<string,{label:string;tone:StatusTone}>={
@@ -59,8 +62,8 @@ export function humanize(key:string){
 export type Col<T>={key:string;header:string;cell:(row:T)=>React.ReactNode;numeric?:boolean;className?:string};
 export function Table<T>({caption,rows,cols,rowKey,activeKey,onRowFocus}:{caption:string;rows:T[];cols:Col<T>[];rowKey:(r:T)=>string;activeKey?:string|null;onRowFocus?:(r:T)=>void}){
  if(!rows.length)return null;
- return <div role="region" aria-label={caption} tabIndex={0} className="overflow-x-auto rounded-md border border-line focus-visible:outline-2 focus-visible:outline-signal">
-  <table className="w-full border-collapse text-left text-sm">
+ return <div role="region" aria-label={caption} tabIndex={0} className="bma-admin-table overflow-x-auto focus-visible:outline-2 focus-visible:outline-signal">
+  <table className="w-full text-left text-sm">
    <caption className="sr-only">{caption}</caption>
    <thead className="bg-paper text-ink-muted"><tr>{cols.map(c=><th key={c.key} scope="col" className={cn("border-b border-line px-3 py-2 font-semibold whitespace-nowrap",c.numeric&&"text-right",c.className)}>{c.header}</th>)}</tr></thead>
    <tbody>{rows.map(r=>{const k=rowKey(r);const active=activeKey===k;return <tr key={k} aria-selected={activeKey!==undefined?active:undefined} onClick={onRowFocus?()=>onRowFocus(r):undefined} tabIndex={onRowFocus?0:undefined}
@@ -109,7 +112,7 @@ export function Pager({state}:{state:{next:string|null;loading:boolean;hasPrevio
 export function FetchState({state,empty="No matching records."}:{state:{loading:boolean;error:string;rows:unknown[]};empty?:string}){
  return <>{state.loading&&<SkeletonList rows={2} label="Loading"/>}
   {state.error&&<Alert type="error">{state.error}</Alert>}
-  {!state.loading&&!state.error&&!state.rows.length&&<p className="rounded-md border border-dashed border-line bg-paper p-4 text-sm text-ink-muted">{empty}</p>}</>;
+  {!state.loading&&!state.error&&!state.rows.length&&<p className="bma-admin-empty text-sm text-ink-muted">{empty}</p>}</>;
 }
 export function useAction(){
  const {session}=useAdmin();
