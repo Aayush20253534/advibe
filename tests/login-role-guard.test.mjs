@@ -7,6 +7,8 @@ const encoded = role => new TextEncoder().encode(JSON.stringify({data:{userId:"a
 
 test("advertiser cannot authenticate through Driver Partner selection",()=>{
  assert.equal(matchesRequestedLoginRole("driver",201,encoded("advertiser")),false);
+ assert.equal(matchesRequestedLoginRole("driver",200,encoded("advertiser")),false);
+ assert.equal(matchesRequestedLoginRole("driver",202,encoded("admin")),false);
  assert.equal(matchesRequestedLoginRole("advertiser",201,encoded("driver")),false);
 });
 test("matching driver and advertiser roles pass; Admin MFA remains compatible",()=>{
