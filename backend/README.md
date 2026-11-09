@@ -62,3 +62,15 @@ B21 implements MFA-protected operational and confirmed-cashflow reporting, pagin
 ## B23 release engineering and operational handover
 
 See [B23 implementation](../docs/backend/B23_IMPLEMENTATION.md). Render staging deployment blueprint (auto-deploy off), production admission gate, dependency readiness, encrypted age backup and disposable restore-drill scripts, read-only 6-hour staging monitor and evidence-bound approval tools are implemented. None has created a live production service, issued legal signoff, backed up a real customer DB or paid a driver; external account-owned infrastructure and signoffs are required.
+
+## Temporary Admin MFA requirement flag
+
+Backend-only environment variable: `ADMIN_MFA_REQUIRED=true` (default if omitted).
+
+For a temporary password-only Admin login, explicitly set `ADMIN_MFA_REQUIRED=false` on the **backend service** and restart/redeploy it. This affects **all** Admin accounts; it is unsafe for a public production launch. Advertiser and driver role checks, account status, verified email, Argon2id passwords, session cookies and CSRF protections remain enforced.
+
+**Database migration required before deploying this code:** `npm --prefix backend run db:migrate:deploy` (Prisma migration `20261109213000_admin_password_only_session`). For Neon SQL Editor, the equivalent single statement is `ALTER TABLE "Session" ADD COLUMN "adminPasswordVerifiedAt" TIMESTAMPTZ(6);` and you must reconcile Prisma migration history using your normal migration workflow. Prefer `prisma migrate deploy`.
+
+On a password-only Admin login, the backend marks the new session with `adminPasswordVerifiedAt` but leaves `mfaVerifiedAt` null. Former Advertiser/Driver sessions cannot be reused after an Admin promotion, and a demoted Admin session is denied. Set `ADMIN_MFA_REQUIRED=true` after completing authenticator enrollment to **immediately deny all password-only Admin sessions**; those Admins must log in again with TOTP. When MFA is required, production still requires a valid `MFA_ENCRYPTION_KEY`.
+
+Never add this flag to Next.js `NEXT_PUBLIC_*` variables; it is exclusively a backend setting. Admin password reset remains operator-controlled regardless of this flag.
