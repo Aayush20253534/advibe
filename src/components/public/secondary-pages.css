@@ -1,0 +1,220 @@
+/* Consistent secondary marketing pages for BlinkMyAd.
+   Reference system: bright canvases, cobalt symbols, cinematic vehicle panels,
+   compact Manrope headings, metallic navy-blue wave CTAs, shared public footer. */
+.bma-detail {
+  --detail-blue:#0848f3;
+  --detail-ink:#0c1325;
+  --detail-muted:#435371;
+  --detail-line:#dae5f6;
+  background:#fff;
+  color:var(--detail-ink);
+  overflow:clip;
+  font-family:var(--font-facebook-ui);
+}
+.bma-detail *, .bma-detail *::before,.bma-detail *::after {box-sizing:border-box;}
+.bma-detail h1,.bma-detail h2,.bma-detail h3,.bma-detail p {margin:0;}
+.bma-detail h1,.bma-detail h2,.bma-detail h3 {font-family:var(--font-heading-stack);letter-spacing:-.044em;color:var(--detail-ink);}
+.bma-detail-container {width:calc(100% - clamp(36px,7.7vw,116px));max-width:1400px;margin-inline:auto;}
+.bma-detail-hero {
+  isolation:isolate;
+  position:relative;
+  display:flex;
+  align-items:center;
+  min-height:clamp(360px,29vw,460px);
+  overflow:hidden;
+  background:linear-gradient(106deg,#fff 0%,#f8fbff 43%,#dceaff 100%);
+}
+.bma-detail-hero::after {
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.97) 22%,rgba(255,255,255,.86) 34%,rgba(255,255,255,.13) 58%,transparent 72%);
+}
+.bma-detail-hero-art {
+  position:absolute;
+  z-index:0;
+  inset:0 0 0 auto;
+  width:68%;
+  overflow:hidden;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.4) 14%,#000 36%);
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.4) 14%,#000 36%);
+}
+.bma-detail-hero-art img {object-fit:cover;object-position:55% center;}
+.bma-detail-hero-inner {position:relative;z-index:2;padding-block:38px;}
+.bma-detail-hero-copy {max-width:610px;width:47%;}
+.bma-detail-eyebrow {display:inline-flex;align-items:center;gap:10px;font-size:clamp(11px,.86vw,13px);font-weight:830;text-transform:uppercase;letter-spacing:.105em;color:#16243d;}
+.bma-detail-eyebrow>span {width:8px;height:8px;background:var(--detail-blue);flex-shrink:0;}
+.bma-detail-hero h1 {margin-top:18px;font-size:clamp(37px,3.65vw,56px);line-height:1.09;font-weight:850;}
+.bma-detail-hero h1 em {font-style:normal;color:var(--detail-blue);}
+.bma-detail-hero-description {max-width:545px;margin-top:17px!important;color:#394c6c;font-size:clamp(14px,1.12vw,17px);line-height:1.54;}
+.bma-detail-hero-actions {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:23px;}
+.bma-detail-button {
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:46px;padding:12px 19px;border-radius:9px;
+  font-size:clamp(12px,.96vw,14px);font-weight:760;line-height:1.2;
+  text-decoration:none;transition:transform .17s ease,background-color .17s ease;
+}
+.bma-detail-button svg {width:17px;height:17px;}
+.bma-detail-button:hover {transform:translateY(-1px);}
+.bma-detail-button-primary {background:#0846ee;color:#fff;border:1px solid #0846ee;box-shadow:0 6px 14px rgba(5,54,168,.14);}
+.bma-detail-button-primary:hover {background:#0037cf;}
+.bma-detail-button-secondary {background:rgba(255,255,255,.93);color:#11192c;border:1px solid #91a2bd;}
+.bma-detail-button-secondary:hover {background:#f2f7ff;border-color:#0848ed;}
+.bma-detail-hero-facts {display:flex;gap:clamp(12px,1.8vw,26px);flex-wrap:wrap;list-style:none;padding:0;margin:25px 0 0;}
+.bma-detail-hero-facts li {display:flex;gap:8px;align-items:center;color:#253454;font-size:clamp(11px,.92vw,14px);font-weight:720;}
+.bma-detail-hero-facts svg {height:19px;width:19px;color:#084ef5;flex-shrink:0;}
+.bma-detail-hero-note {display:flex;align-items:flex-start;gap:9px;max-width:530px;margin-top:19px!important;color:#3f5677;font-size:12px;line-height:1.48;}
+.bma-detail-hero-note svg {height:18px;width:18px;flex-shrink:0;color:#0c50db;}
+/* Legal heroes are deliberately quieter, without photographic marketing claims. */
+.bma-detail-hero-legal {min-height:345px;background:linear-gradient(112deg,#fff 0%,#f5f8ff 60%,#e4efff 100%);}
+.bma-detail-hero-legal::after {background:linear-gradient(90deg,#fff,rgba(255,255,255,.52) 58%,transparent 100%);}
+.bma-detail-hero-legal .bma-detail-hero-copy {width:65%;max-width:780px;}
+.bma-detail-hero-abstract {position:absolute;right:4%;top:0;bottom:0;width:38%;display:grid;place-items:center;pointer-events:none;}
+.bma-detail-abstract-ring {position:absolute;width:clamp(290px,34vw,520px);aspect-ratio:1;border-radius:50%;border:1px solid #acd0ff;box-shadow:0 0 0 25px rgba(27,105,236,.04),0 0 0 72px rgba(27,105,236,.04),0 0 0 137px rgba(27,105,236,.035);}
+.bma-detail-abstract-panel {position:relative;z-index:1;display:grid;place-items:center;width:clamp(125px,15vw,215px);aspect-ratio:1;border-radius:38px;background:linear-gradient(140deg,#eaf3ff,#fff);border:1px solid #b8d0f9;box-shadow:0 18px 56px rgba(20,75,159,.14);}
+.bma-detail-abstract-panel svg {height:42%;width:42%;color:#0a55ef;stroke-width:1.4;}
+.bma-detail-section {padding-block:clamp(33px,3.6vw,56px);scroll-margin-top:85px;}
+.bma-detail-section-blue {background:linear-gradient(118deg,#edf4ff 0%,#fafcff 62%,#edf3ff 100%);}
+.bma-detail-section-header {display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px;}
+.bma-detail-section-header h2 {font-size:clamp(26px,2.5vw,37px);font-weight:835;line-height:1.18;}
+.bma-detail-section-header p {max-width:780px;margin-top:7px;color:var(--detail-muted);font-size:clamp(13px,1.08vw,16px);line-height:1.55;}
+.bma-detail-section-header a {display:inline-flex;align-items:center;gap:7px;flex-shrink:0;font-size:13px;font-weight:750;color:#064af0;text-underline-offset:4px;text-decoration:underline;}
+.bma-detail-cards {display:grid;gap:clamp(14px,2vw,25px);}
+.bma-detail-cards-2 {grid-template-columns:repeat(2,minmax(0,1fr));}
+.bma-detail-cards-3 {grid-template-columns:repeat(3,minmax(0,1fr));}
+.bma-detail-cards-4 {grid-template-columns:repeat(4,minmax(0,1fr));}
+.bma-detail-card {display:block;min-width:0;min-height:165px;padding:23px;border:1px solid #e1e8f4;border-radius:15px;background:linear-gradient(155deg,#fff,#fcfdff);box-shadow:0 7px 19px rgba(32,64,125,.075);text-decoration:none;color:inherit;}
+.bma-detail-card-icon {display:grid;place-items:center;width:48px;height:48px;border-radius:12px;background:#ebf2ff;}
+.bma-detail-card-icon svg {height:28px;width:28px;color:#064af4;stroke-width:1.85;}
+.bma-detail-card h3 {margin-top:13px;font-size:clamp(15px,1.15vw,19px);line-height:1.24;font-weight:800;}
+.bma-detail-card p {margin-top:7px;font-size:clamp(12px,.99vw,15px);line-height:1.52;color:#475670;}
+.bma-detail-card-link {transition:transform .18s ease,box-shadow .18s ease;}
+.bma-detail-card-link:hover {transform:translateY(-2px);box-shadow:0 13px 27px rgba(20,56,131,.12);}
+.bma-detail-card-arrow {display:inline-flex;align-items:center;gap:5px;margin-top:13px;color:#0848f1;font-weight:750;font-size:12px;}
+.bma-detail-card-arrow svg {width:16px;height:16px;}
+.bma-detail-ribbon {display:flex;align-items:flex-start;gap:13px;padding:14px 18px;margin:0;border:1px solid #b0caff;background:#eaf2ff;border-radius:11px;color:#263d63;font-size:clamp(12px,.99vw,15px);line-height:1.49;}
+.bma-detail-ribbon-warning {border-color:#ead9ba;background:#fffaed;color:#694a20;}
+.bma-detail-ribbon>svg {height:20px;width:20px;flex:0 0 auto;color:#1150e6;}
+.bma-detail-ribbon-warning>svg {color:#a87315;}
+.bma-detail-cta {
+  position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:30px;
+  width:calc(100% - 48px);max-width:1480px;min-height:150px;margin:8px auto 16px;
+  padding:25px clamp(28px,3vw,52px);border:1px solid rgba(151,202,255,.22);
+  border-radius:20px;overflow:hidden;
+  background:#07183b url("/images/blinkmyad/ad-formats/cta-wave.webp") center/cover no-repeat;
+  box-shadow:0 11px 26px rgba(12,56,131,.13);
+}
+.bma-detail-cta::before {content:"";z-index:-1;position:absolute;inset:0;background:linear-gradient(114deg,rgba(0,10,34,.2),transparent 47%,rgba(38,116,248,.13) 78%,rgba(0,16,42,.12));}
+.bma-detail-cta-copy {max-width:650px;}
+.bma-detail-cta h2 {color:#fff;font-size:clamp(28px,2.65vw,41px);line-height:1.14;font-weight:825;}
+.bma-detail-cta p {margin-top:9px;color:#dfebff;font-size:clamp(13px,1.08vw,17px);line-height:1.48;}
+.bma-detail-cta-actions {display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:12px;}
+.bma-detail-cta-primary,.bma-detail-cta-secondary {display:inline-flex;justify-content:center;align-items:center;gap:9px;min-height:54px;padding:12px 21px;border-radius:12px;font-size:clamp(13px,1vw,16px);font-weight:770;line-height:1.2;text-decoration:none;white-space:nowrap;}
+.bma-detail-cta-primary {background:#fff;border:1px solid #d5e1fc;color:#0846e7;box-shadow:0 6px 16px rgba(0,12,46,.13);}
+.bma-detail-cta-primary:hover {background:#f0f5ff;}
+.bma-detail-cta-secondary {border:1px solid rgba(234,242,255,.86);color:#fff;background:rgba(255,255,255,.07);}
+.bma-detail-cta-secondary:hover {background:rgba(255,255,255,.16);}
+.bma-detail-cta-actions svg {width:18px;height:18px;}
+/* Rich but clearly non-operative legal previews. */
+.bma-detail-legal-layout {display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.75fr);gap:24px;align-items:start;}
+.bma-detail-legal-panel {padding:clamp(24px,3vw,43px);border:1px solid #dfebf7;border-radius:17px;box-shadow:0 8px 23px rgba(23,62,126,.07);background:#fff;}
+.bma-detail-legal-panel h2 {font-size:clamp(24px,2vw,32px);font-weight:820;line-height:1.25;}
+.bma-detail-legal-panel p {color:#485977;line-height:1.7;font-size:clamp(13px,1vw,15px);margin-top:14px;}
+.bma-detail-legal-panel .bma-detail-ribbon {margin-top:21px;}
+.bma-detail-legal-side {padding:27px;border:1px solid #d5e3fa;border-radius:17px;background:linear-gradient(140deg,#eef5ff,#f9fbff);box-shadow:0 6px 18px rgba(31,75,147,.05);}
+.bma-detail-legal-side h3 {font-size:20px;font-weight:800;}
+.bma-detail-legal-side p {margin-top:11px;font-size:14px;line-height:1.65;color:#405372;}
+.bma-detail-legal-side a {display:inline-flex;align-items:center;gap:7px;margin-top:19px;color:#064af2;font-weight:780;font-size:13px;text-decoration:underline;text-underline-offset:4px;}
+.bma-detail-legal-side a svg {width:17px;height:17px;}
+/* Preserve existing client flows while styling their containing surfaces. */
+.bma-detail-workspace > div {min-width:0;}
+.bma-detail-workspace .bma-detail-tool {min-width:0;}
+.bma-detail-tool > div {min-width:0;}
+.bma-detail-tool form,
+.bma-detail-tool > div > div:first-child:not(.bma-detail-legal-panel) {min-width:0;}
+.bma-detail-tool :is(input,select,textarea):focus-visible {outline-color:#0848f1;}
+.bma-detail-tool details {border-color:#e0e8f5;}
+.bma-detail-tool details summary {color:#111b31;}
+.bma-detail-tool details[open] {background:#f4f8ff;border-radius:8px;}
+.bma-detail-tool details p {line-height:1.58;}
+.bma-detail-pricing .bma-detail-tool > .grid > :first-child,
+.bma-detail-contact .bma-detail-tool > .grid > :first-child,
+.bma-detail-locations .bma-detail-tool > .grid > :first-child,
+.bma-detail-help-center .bma-detail-tool > .grid > :first-child {
+  border-radius:18px;
+  border:1px solid #dfe7f4;
+  background:linear-gradient(150deg,#fff,#fcfdff);
+  box-shadow:0 9px 24px rgba(26,64,128,.075);
+}
+.bma-detail-pricing .bma-detail-tool > .grid > :last-child {border-radius:18px;background:linear-gradient(146deg,#13294b,#07152d);box-shadow:0 12px 22px rgba(18,56,108,.13);}
+.bma-detail-contact .bma-detail-tool > .grid > :first-child,
+.bma-detail-help-center .bma-detail-tool > .grid > :first-child {padding:clamp(21px,3vw,38px);}
+.bma-detail-contact .bma-detail-tool > .grid > :last-child,
+.bma-detail-help-center .bma-detail-tool > .grid > :last-child {border:1px solid #e1e9f5;border-radius:18px;background:linear-gradient(145deg,#f1f6ff,#fff);padding:25px;box-shadow:0 7px 18px rgba(31,65,134,.065);}
+.bma-detail-locations .bma-detail-tool > .grid > :last-child aside {background:linear-gradient(145deg,#eaf2ff,#fff);border-color:#cfdff7;border-radius:16px;}
+.bma-detail-locations .bma-detail-tool > .grid > :first-child {overflow:hidden;}
+/* Shared accordion polish for question lists */
+.bma-detail .bma-detail-faq > div > details {padding:0 17px;}
+.bma-detail .bma-detail-faq > div > details summary {min-height:52px;font-size:14px;font-weight:740;}
+/* Complementary three-step explainer for locations and pricing. */
+.bma-detail-stages {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px;margin-top:21px;}
+.bma-detail-stage {display:flex;align-items:flex-start;gap:14px;padding:20px;border:1px solid #dce6f5;border-radius:13px;background:#fff;box-shadow:0 5px 13px rgba(28,68,139,.06);}
+.bma-detail-stage strong {display:grid;place-items:center;flex:0 0 35px;height:35px;border-radius:10px;background:#e3edff;color:#064af0;font-size:14px;}
+.bma-detail-stage h3 {font-size:16px;font-weight:790;}
+.bma-detail-stage p {margin-top:5px;font-size:13px;color:#485874;line-height:1.5;}
+@media (max-width:1050px) {
+  .bma-detail-hero-copy {width:54%;}
+  .bma-detail-hero-art {width:75%;}
+  .bma-detail-cards-4 {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .bma-detail-cta {align-items:flex-start;flex-direction:column;gap:20px;}
+  .bma-detail-cta-actions {justify-content:flex-start;}
+}
+@media (max-width:760px) {
+  .bma-detail-container {width:calc(100% - 40px);}
+  .bma-detail-hero {display:block;min-height:0;}
+  .bma-detail-hero-inner {padding:32px 0 clamp(210px,53vw,350px);}
+  .bma-detail-hero-copy {width:100%;max-width:none;}
+  .bma-detail-hero h1 {font-size:clamp(33px,6.6vw,46px);margin-top:14px;}
+  .bma-detail-hero-description {font-size:14px;margin-top:13px!important;max-width:590px;}
+  .bma-detail-hero-art {inset:auto -6% 0 -6%;width:112%;height:clamp(210px,60vw,350px);-webkit-mask-image:linear-gradient(180deg,transparent,#000 24%);mask-image:linear-gradient(180deg,transparent,#000 24%);}
+  .bma-detail-hero-art img {object-position:60% center;}
+  .bma-detail-hero::after {background:linear-gradient(180deg,#fff 0%,rgba(255,255,255,.95) 32%,rgba(255,255,255,.6) 58%,transparent 91%);}
+  .bma-detail-hero-legal .bma-detail-hero-inner {padding-bottom:36px;}
+  .bma-detail-hero-legal .bma-detail-hero-copy {width:100%;}
+  .bma-detail-hero-legal::after {background:linear-gradient(90deg,#fff,rgba(255,255,255,.77));}
+  .bma-detail-hero-abstract {opacity:.26;width:75%;right:-35%;}
+  .bma-detail-legal-layout {grid-template-columns:1fr;}
+  .bma-detail-cards-3,.bma-detail-cards-2 {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .bma-detail-stages {grid-template-columns:1fr;}
+}
+@media (max-width:540px) {
+  .bma-detail-container {width:calc(100% - 34px);}
+  .bma-detail-hero-inner {padding:30px 0 clamp(190px,56vw,280px);}
+  .bma-detail-hero h1 {font-size:clamp(31px,8.2vw,42px);}
+  .bma-detail-hero-facts {gap:10px 15px;margin-top:21px;}
+  .bma-detail-hero-facts li {font-size:11px;}
+  .bma-detail-section {padding-block:30px;}
+  .bma-detail-section-header {align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:17px;}
+  .bma-detail-section-header h2 {font-size:25px;}
+  .bma-detail-cards-3,.bma-detail-cards-2 {grid-template-columns:1fr;}
+  .bma-detail-cards-4 {gap:10px;}
+  .bma-detail-card {padding:15px;min-height:150px;}
+  .bma-detail-card-icon {width:40px;height:40px;}
+  .bma-detail-card-icon svg {width:24px;height:24px;}
+  .bma-detail-card h3 {font-size:14px;margin-top:10px;}
+  .bma-detail-card p {font-size:12px;}
+  .bma-detail-cta {width:calc(100% - 24px);padding:25px 21px;margin-bottom:13px;border-radius:17px;}
+  .bma-detail-cta h2 {font-size:28px;}
+  .bma-detail-cta p {font-size:13px;}
+  .bma-detail-cta-actions {width:100%;}
+  .bma-detail-cta-actions a {min-height:49px;flex:1 1 165px;font-size:12px;padding:10px 12px;}
+  .bma-detail-legal-panel,.bma-detail-legal-side {padding:20px;}
+  .bma-detail-contact .bma-detail-tool > .grid > :last-child,
+  .bma-detail-help-center .bma-detail-tool > .grid > :last-child {padding:19px;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .bma-detail-button,.bma-detail-card-link {transition:none;}
+}
