@@ -1,0 +1,262 @@
+/* BlinkMyAd Admin workspace: shares the advertiser/driver cobalt, navy and white design language.
+   Scoped under Admin only: no public, advertiser or driver styles are altered. */
+.bma-admin-portal {
+  --ink:#10203e;
+  --ink-muted:#536580;
+  --ink-subtle:#64748b;
+  --signal:#0b50ef;
+  --signal-hover:#0641cc;
+  --signal-soft:#eaf2ff;
+  --paper:#f3f7fd;
+  --background:#f3f7fd;
+  --surface:#fff;
+  --surface-sunken:#edf4ff;
+  --line:#dde7f5;
+  --line-strong:#b0c3df;
+  min-height:100dvh;
+  background:radial-gradient(ellipse at 83% 2%,rgba(182,213,255,.35),transparent 42%),
+    radial-gradient(ellipse at 1% 99%,rgba(217,231,255,.43),transparent 42%),
+    linear-gradient(180deg,#f7faff,#f1f6fe 62%,#f7faff);
+}
+.bma-admin-portal :where(h1,h2,h3) {font-family:var(--font-heading-stack);letter-spacing:-.04em;}
+.bma-admin-portal .bma-adv-sidebar,.bma-admin-sidebar-mobile {
+  color:#fff;
+  background:radial-gradient(ellipse at 115% 8%,rgba(33,103,240,.33),transparent 44%),
+    radial-gradient(ellipse at -25% 94%,rgba(35,104,233,.2),transparent 42%),
+    linear-gradient(155deg,#061127 0%,#0b2c58 55%,#06142b 100%);
+}
+.bma-admin-portal .bma-adv-sidebar {border-right:1px solid #24446e;width:258px;}
+.bma-admin-portal .bma-adv-sidebar-brand,.bma-admin-sidebar-mobile .bma-adv-sidebar-brand {
+  position:relative;margin-bottom:13px;border-bottom:1px solid rgba(170,204,247,.17);
+}
+.bma-admin-portal .bma-adv-sidebar-brand::after,.bma-admin-sidebar-mobile .bma-adv-sidebar-brand::after {
+  content:"";position:absolute;bottom:-1px;left:20px;height:2px;width:59px;border-radius:3px;
+  background:linear-gradient(90deg,#1770ff,#99e3ff);
+}
+.bma-admin-portal .bma-adv-nav,.bma-admin-sidebar-mobile .bma-adv-nav {padding-inline:12px;}
+.bma-admin-portal .bma-adv-nav-link,.bma-admin-sidebar-mobile .bma-adv-nav-link {
+  position:relative;min-height:43px;margin-bottom:2px;border:1px solid transparent;border-radius:11px;
+  padding-inline:13px;font-size:13px;transition:background-color .16s,border-color .16s,color .16s;
+}
+.bma-admin-portal .bma-adv-nav-link:not([data-active="true"]),.bma-admin-sidebar-mobile .bma-adv-nav-link:not([data-active="true"]){color:#c4d4ed;}
+.bma-admin-portal .bma-adv-nav-link:not([data-active="true"]):hover,.bma-admin-sidebar-mobile .bma-adv-nav-link:not([data-active="true"]):hover {
+  background:rgba(83,151,255,.13);border-color:rgba(176,212,255,.18);color:#fff;
+}
+.bma-admin-portal .bma-adv-nav-link[data-active="true"],.bma-admin-sidebar-mobile .bma-adv-nav-link[data-active="true"]{
+  color:#fff;background:linear-gradient(110deg,#093ce2,#1263ff 90%);
+  border-color:rgba(159,203,255,.29);box-shadow:0 8px 18px rgba(0,30,125,.28),inset 0 1px rgba(255,255,255,.14);
+}
+.bma-admin-portal .bma-adv-nav-link[data-active="true"]::before,.bma-admin-sidebar-mobile .bma-adv-nav-link[data-active="true"]::before {
+  content:"";position:absolute;left:0;top:20%;height:60%;width:3px;border-radius:3px;background:#b6e8ff;
+}
+.bma-admin-portal .bma-adv-nav-link svg,.bma-admin-sidebar-mobile .bma-adv-nav-link svg {height:17px;width:17px;}
+.bma-admin-sidebar-promo {
+  display:block;flex-shrink:0;margin:11px 12px 15px;padding:17px;border-radius:16px;
+  border:1px solid rgba(154,204,255,.3);text-decoration:none;color:white;
+  background:radial-gradient(ellipse at 100% 0%,rgba(60,147,255,.3),transparent 67%),
+    linear-gradient(136deg,#143f85,#09224a 80%);
+  box-shadow:0 11px 24px rgba(0,9,35,.19);
+}
+.bma-admin-sidebar-promo .bma-admin-sidebar-eyebrow {display:block;color:#afd7ff;font-size:10px;font-weight:820;letter-spacing:.14em;}
+.bma-admin-sidebar-promo strong {display:block;margin-top:9px;color:white;font-size:16px;line-height:1.35;letter-spacing:-.03em;}
+.bma-admin-sidebar-promo .bma-admin-sidebar-link {display:flex;align-items:center;gap:8px;margin-top:16px;color:#e0edff;font-size:12px;font-weight:750;}
+.bma-admin-sidebar-promo svg {width:15px;height:15px;}
+.bma-admin-sidebar-promo:hover {border-color:#a4dbff;filter:brightness(1.06);}
+.bma-admin-sidebar-promo:focus-visible {outline:2px solid #c3e2ff;outline-offset:3px;}
+.bma-admin-portal .bma-adv-topbar {
+  border-color:#dce7f7;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);box-shadow:0 3px 19px rgba(29,64,132,.05);
+}
+.bma-admin-portal .bma-adv-topbar :is(button,a) {border-radius:11px;}
+.bma-admin-portal .bma-admin-main {
+  max-width:1580px;min-width:0;padding:26px clamp(16px,2.4vw,38px) 52px;
+}
+.bma-admin-portal .bma-admin-page-header {
+  position:relative;isolation:isolate;overflow:hidden;
+  padding:24px clamp(22px,2.5vw,38px) 27px;border:1px solid #d7e4f7;border-radius:21px;
+  background:radial-gradient(ellipse at 100% 0%,rgba(138,191,255,.3),transparent 45%),
+    linear-gradient(116deg,#fff,#fcfdff 63%,#eff6ff);
+  box-shadow:0 10px 26px rgba(26,65,132,.062);
+}
+.bma-admin-portal .bma-admin-page-header::before {
+  content:"BLINKMYAD  /  PLATFORM OPERATIONS";display:block;margin-bottom:6px;
+  color:#0b50e7;font-size:10px;font-weight:850;letter-spacing:.135em;line-height:1.4;
+}
+.bma-admin-portal .bma-admin-page-header::after {
+  content:"";position:absolute;z-index:-1;right:-66px;top:-124px;width:280px;height:280px;
+  border:30px solid rgba(46,115,235,.07);border-radius:74px;transform:rotate(24deg) skewX(-18deg);
+  pointer-events:none;
+}
+.bma-admin-portal .bma-admin-page-header h1 {
+  color:#0d1b38;font-weight:850;font-size:clamp(27px,2.35vw,36px);line-height:1.17;
+}
+.bma-admin-portal .bma-admin-page-header nav {margin-top:5px;}
+.bma-admin-portal .bma-admin-page-header [class*="text-ink-muted"] {color:#536785;}
+.bma-admin-header-action {
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  min-height:44px;padding:10px 17px;border:1px solid #1559e6;border-radius:12px;
+  color:#fff;text-decoration:none;font-size:13px;font-weight:780;white-space:nowrap;
+  background:linear-gradient(120deg,#0645e4,#1269ff);box-shadow:0 7px 17px rgba(15,81,211,.18);
+}
+.bma-admin-header-action svg {width:17px;height:17px;}
+.bma-admin-header-action:hover {filter:brightness(1.065);}
+.bma-admin-header-action:focus-visible {outline:3px solid #a0c6ff;outline-offset:3px;}
+/* Shared administrative cards, tables, forms and all review/finance/operations routes. */
+.bma-admin-card {
+  min-width:0;overflow:hidden;padding:clamp(19px,1.9vw,28px);
+  border:1px solid #dce7f6;border-radius:19px;
+  background:linear-gradient(155deg,#fff,#fff 72%,#fbfdff);
+  box-shadow:0 8px 23px rgba(31,67,128,.063);
+}
+.bma-admin-card-heading {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:13px;margin-bottom:20px;}
+.bma-admin-card-title {display:flex;align-items:center;gap:12px;min-width:0;}
+.bma-admin-card-marker {display:block;flex-shrink:0;width:5px;height:26px;border-radius:4px;
+  background:linear-gradient(180deg,#0d52f5,#6cb7ff);box-shadow:0 3px 9px rgba(10,91,235,.18);}
+.bma-admin-card-heading h2 {font-size:clamp(17px,1.4vw,21px);font-weight:800;line-height:1.28;color:#152543;}
+.bma-admin-card-tools {display:flex;align-items:center;flex-wrap:wrap;gap:9px;}
+.bma-admin-card-body {display:grid;gap:17px;}
+.bma-admin-portal #portal-content :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) {
+  border-radius:11px;border-color:#cddcf0;background:#fff;color:#142a49;
+  box-shadow:inset 0 1px 2px rgba(25,62,115,.025);
+  transition:border-color .16s,box-shadow .16s;
+}
+.bma-admin-portal #portal-content :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea):focus-visible {
+  outline:2px solid #74a7ff;outline-offset:1px;border-color:#115bea;
+}
+.bma-admin-portal #portal-content :is(input,select,textarea)::placeholder {color:#8796aa;}
+.bma-admin-portal #portal-content label {color:#293e5d;}
+.bma-admin-portal #portal-content .bma-admin-primary {
+  border-radius:11px;background:linear-gradient(115deg,#0645e8,#1469ff);
+  box-shadow:0 6px 14px rgba(12,82,207,.17);font-weight:770;
+}
+.bma-admin-portal #portal-content .bma-admin-primary:hover:not(:disabled) {filter:brightness(1.07);}
+.bma-admin-portal #portal-content .bma-admin-secondary {border-radius:11px;background:#fff;border-color:#d4e0f1;color:#21385d;font-weight:700;}
+.bma-admin-portal #portal-content .bma-admin-secondary:hover:not(:disabled) {background:#ecf4ff;border-color:#a8c6f2;}
+.bma-admin-portal #portal-content :is(button,a):focus-visible {outline-offset:3px;}
+.bma-admin-table {overflow-x:auto;border:1px solid #dce6f4;border-radius:14px;background:#fff;}
+.bma-admin-table table {width:100%;border-collapse:separate;border-spacing:0;}
+.bma-admin-table thead {color:#3b5477;background:#eff5ff;}
+.bma-admin-table th {padding:14px 16px;border-bottom:1px solid #dce6f4;font-size:12px;font-weight:800;letter-spacing:.01em;white-space:nowrap;}
+.bma-admin-table td {padding:15px 16px;border-bottom:1px solid #e7eef8;vertical-align:middle;line-height:1.5;overflow-wrap:anywhere;}
+.bma-admin-table tbody tr:last-child td {border-bottom:0;}
+.bma-admin-table tbody tr {transition:background .16s;}
+.bma-admin-table tbody tr:hover {background:#f5f9ff;}
+.bma-admin-table tbody tr[aria-selected="true"] {background:#eaf2ff;}
+.bma-admin-portal #portal-content .border-dashed {border-color:#b9cdea;}
+.bma-admin-portal #portal-content [role="alert"],.bma-admin-portal #portal-content [role="status"] {border-radius:12px;}
+.bma-admin-portal #portal-content :is(.rounded-lg.border.border-line.bg-surface,.rounded-lg.border.border-line.p-4) {
+  border-color:#dce7f6;border-radius:16px;box-shadow:0 5px 16px rgba(22,57,122,.05);
+}
+.bma-admin-portal #portal-content [class*="bg-paper"] {--paper:#f3f7fe;}
+.bma-admin-portal #portal-content :is([role="tablist"],[role="radiogroup"]) {border-color:#d5e2f5;}
+.bma-admin-portal #portal-content [class*="text-ink-muted"] {color:#526783;}
+/* The main admin dashboard is intentionally visually richer than CRUD sections. */
+.bma-admin-dashboard {display:grid;gap:22px;}
+.bma-admin-dashboard-hero {
+  position:relative;isolation:isolate;overflow:hidden;
+  display:grid;grid-template-columns:minmax(0,1.35fr) minmax(240px,.65fr);
+  min-height:268px;border:1px solid #23549c;border-radius:22px;color:#fff;
+  background:radial-gradient(ellipse at 95% 11%,rgba(43,149,255,.48),transparent 42%),
+    radial-gradient(ellipse at 40% 100%,rgba(14,93,228,.58),transparent 55%),
+    linear-gradient(110deg,#061530,#0b3574 56%,#0957bd);
+  box-shadow:0 18px 34px rgba(10,52,119,.15);
+}
+.bma-admin-dashboard-hero::before {
+  content:"";position:absolute;z-index:-1;top:-95px;right:-95px;width:435px;height:435px;border-radius:100%;
+  border:65px solid rgba(141,205,255,.07);box-shadow:0 0 0 35px rgba(141,205,255,.035);
+}
+.bma-admin-dashboard-hero::after {
+  content:"";position:absolute;inset:0;z-index:-1;opacity:.15;
+  background-image:linear-gradient(rgba(188,220,255,.28) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(188,220,255,.28) 1px,transparent 1px);
+  background-size:37px 37px;mask-image:linear-gradient(90deg,transparent,#000 65%);
+  pointer-events:none;
+}
+.bma-admin-dashboard-copy {padding:clamp(26px,3.1vw,48px);position:relative;z-index:1;}
+.bma-admin-dashboard-eyebrow {display:flex;align-items:center;gap:9px;color:#b5d9ff;font-size:11px;font-weight:820;letter-spacing:.13em;}
+.bma-admin-dashboard-eyebrow span {height:8px;width:8px;border-radius:100%;background:#76d6ff;box-shadow:0 0 0 4px rgba(118,214,255,.14);}
+.bma-admin-dashboard-copy h2 {margin-top:17px;max-width:630px;color:#fff;font-weight:860;font-size:clamp(29px,2.8vw,43px);line-height:1.11;letter-spacing:-.055em;}
+.bma-admin-dashboard-copy p {max-width:600px;margin-top:13px;color:#c7dcf7;font-size:14px;line-height:1.7;}
+.bma-admin-dashboard-actions {display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:24px;}
+.bma-admin-dashboard-hero-primary,.bma-admin-dashboard-hero-secondary {
+  display:inline-flex;min-height:43px;align-items:center;justify-content:center;gap:9px;
+  padding:9px 17px;border-radius:11px;font-size:13px;font-weight:780;text-decoration:none;
+}
+.bma-admin-dashboard-hero-primary {color:#10376d;background:#fff;box-shadow:0 7px 19px rgba(0,10,30,.16);}
+.bma-admin-dashboard-hero-secondary {color:#fff;border:1px solid rgba(202,225,255,.36);background:rgba(255,255,255,.1);}
+.bma-admin-dashboard-actions a:hover {filter:brightness(1.09);}
+.bma-admin-dashboard-actions svg {width:16px;height:16px;}
+.bma-admin-dashboard-art {display:grid;align-content:center;justify-items:center;padding:24px 34px 24px 0;position:relative;}
+.bma-admin-dashboard-orbit {position:relative;display:grid;place-items:center;width:min(21vw,240px);height:min(21vw,240px);min-width:175px;min-height:175px;
+  border:1px solid rgba(194,222,255,.32);border-radius:100%;
+  box-shadow:0 0 0 22px rgba(135,193,255,.06),0 0 0 44px rgba(135,193,255,.035),inset 0 0 48px rgba(45,128,249,.24);
+  background:radial-gradient(circle,rgba(33,126,255,.25),rgba(10,38,97,.12) 65%,transparent);
+}
+.bma-admin-dashboard-orbit::before,.bma-admin-dashboard-orbit::after {content:"";position:absolute;border-radius:100%;background:#8bcaff;box-shadow:0 0 0 6px rgba(116,193,255,.11);}
+.bma-admin-dashboard-orbit::before {height:11px;width:11px;top:13%;right:12%;}
+.bma-admin-dashboard-orbit::after {height:8px;width:8px;left:3%;bottom:25%;}
+.bma-admin-dashboard-orbit svg {height:64px;width:64px;color:#d5e9ff;filter:drop-shadow(0 0 17px rgba(104,197,255,.43));}
+.bma-admin-dashboard-art-label {position:absolute;bottom:18px;display:flex;align-items:center;gap:8px;font-size:10px;font-weight:820;letter-spacing:.12em;color:#c8ddff;}
+.bma-admin-dashboard-art-label span {height:6px;width:6px;border-radius:50%;background:#70e3b5;}
+.bma-admin-dashboard-metrics {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;}
+.bma-admin-metric {
+  position:relative;min-width:0;overflow:hidden;padding:22px 21px;border:1px solid #dce6f5;border-radius:17px;
+  background:linear-gradient(145deg,#fff,#f8fbff);box-shadow:0 7px 20px rgba(19,66,133,.06);
+}
+.bma-admin-metric::after {content:"";position:absolute;top:-25px;right:-23px;width:100px;height:100px;
+  border-radius:22px;border:20px solid rgba(19,94,239,.055);transform:rotate(20deg);pointer-events:none;}
+.bma-admin-metric-label {color:#586b86;font-size:12px;font-weight:690;line-height:1.4;}
+.bma-admin-metric-value {margin-top:13px;color:#102344;font-size:clamp(25px,2.2vw,36px);font-weight:850;letter-spacing:-.06em;line-height:1.2;overflow-wrap:anywhere;}
+.bma-admin-metric-meta {margin-top:12px;color:#6b7b91;font-size:11px;}
+.bma-admin-dashboard-subheading {display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.bma-admin-dashboard-subheading h2 {color:#132341;font-size:21px;font-weight:820;}
+.bma-admin-dashboard-subheading p {color:#64758e;font-size:12px;}
+.bma-admin-shortcuts {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;}
+.bma-admin-shortcut {display:flex;flex-direction:column;min-width:0;min-height:164px;gap:13px;padding:20px;
+  text-decoration:none;border:1px solid #dbe7f7;border-radius:17px;color:#173153;
+  background:linear-gradient(145deg,#fff,#f8fbff);box-shadow:0 7px 19px rgba(19,62,132,.055);
+  transition:transform .17s,border-color .17s,box-shadow .17s;
+}
+.bma-admin-shortcut:hover {transform:translateY(-2px);border-color:#abc9f7;box-shadow:0 12px 23px rgba(19,62,132,.1);}
+.bma-admin-shortcut-icon {display:grid;place-items:center;width:39px;height:39px;border:1px solid #cddfff;border-radius:12px;
+  color:#0d50e4;background:#eaf3ff;}
+.bma-admin-shortcut-icon svg {width:19px;height:19px;}
+.bma-admin-shortcut strong {display:flex;align-items:center;justify-content:space-between;gap:9px;font-size:14px;font-weight:790;}
+.bma-admin-shortcut strong svg {height:16px;width:16px;flex-shrink:0;color:#0c55e6;}
+.bma-admin-shortcut>span:last-child {font-size:12px;line-height:1.6;color:#62748c;}
+.bma-admin-dashboard-details {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(285px,.8fr);gap:18px;align-items:start;}
+.bma-admin-period {color:#5b6c83;font-size:12px;font-weight:650;font-variant-numeric:tabular-nums;}
+.bma-admin-empty {padding:17px;border:1px dashed #c4d5ec;border-radius:13px;background:#f8fbff;color:#687993;font-size:13px;}
+@media(max-width:1200px) {
+ .bma-admin-dashboard-metrics,.bma-admin-shortcuts {grid-template-columns:repeat(2,minmax(0,1fr));}
+ .bma-admin-dashboard-details {grid-template-columns:1fr;}
+}
+@media(max-width:850px) {
+ .bma-admin-dashboard-hero {grid-template-columns:1fr;}
+ .bma-admin-dashboard-art {display:none;}
+}
+@media(max-width:750px) {
+ .bma-admin-portal .bma-admin-main {padding:19px 15px 40px;}
+ .bma-admin-portal .bma-admin-page-header {padding:21px;}
+ .bma-admin-portal .bma-admin-page-header h1 {font-size:29px;}
+ .bma-admin-card {padding:19px;}
+ .bma-admin-dashboard-hero {min-height:unset;}
+ .bma-admin-dashboard-copy {padding:29px 23px;}
+ .bma-admin-dashboard-copy h2 {font-size:clamp(30px,7.2vw,40px);}
+ .bma-admin-dashboard-hero::after {background-size:28px 28px;}
+ .bma-admin-metric {padding:19px;}
+ .bma-admin-table th,.bma-admin-table td {padding:12px;}
+}
+@media(max-width:480px) {
+ .bma-admin-portal .bma-admin-main {padding-inline:13px;}
+ .bma-admin-portal .bma-admin-page-header {padding:18px;}
+ .bma-admin-portal .bma-admin-page-header h1 {font-size:26px;}
+ .bma-admin-dashboard-metrics,.bma-admin-shortcuts {grid-template-columns:1fr;}
+ .bma-admin-card-heading {align-items:flex-start;}
+ .bma-admin-card-tools {width:100%;}
+ .bma-admin-dashboard-hero-primary,.bma-admin-dashboard-hero-secondary {width:100%;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .bma-admin-portal .bma-adv-nav-link,.bma-admin-shortcut {transition:none;}
+ .bma-admin-shortcut:hover {transform:none;}
+}
