@@ -14,7 +14,7 @@ import "@/components/landing/reference-homepage.css";
 const primaryNavigation = [
   { label: "Ad formats", href: "/ad-formats" },
   { label: "About", href: "/about" },
-  { label: "How it works", href: "/#how-it-works" },
+  { label: "How it works", href: "/how-it-works" },
   { label: "For drivers", href: "/for-drivers" },
   { label: "For advertisers", href: "/for-advertisers" },
 ] as const;
@@ -76,7 +76,7 @@ export function PublicShell({ children, hideFooter = false, authMode }: { childr
   }, [mobileOpen]);
 
   return (
-    <div data-portal="public" data-homepage={isHome || undefined} data-auth-mode={authMode} data-page={pathname === "/ad-formats" ? "ad-formats" : pathname === "/about" ? "about" : undefined} className="min-h-screen bg-background">
+    <div data-portal="public" data-homepage={isHome || undefined} data-auth-mode={authMode} data-page={pathname === "/ad-formats" ? "ad-formats" : pathname === "/about" ? "about" : pathname === "/how-it-works" ? "how-it-works" : undefined} className="min-h-screen bg-background">
       <a href="#public-main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3">Skip to main content</a>
       <header inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className={cn(
         "sticky top-0 z-50 border-b border-line bg-white text-ink transition-[background-color,box-shadow] duration-300",
