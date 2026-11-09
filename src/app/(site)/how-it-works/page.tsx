@@ -150,17 +150,6 @@ export default function HowItWorksPage() {
   return (
     <div className="bma-how">
       <section className="bma-how-hero" aria-labelledby="how-title">
-        <div className="bma-how-hero-visual">
-          <Image
-            src="/images/hero/img.png"
-            alt="BlinkMyAd campaign workflow with advertising screens on a scooter, auto-rickshaw and car, set against a city roadway and campaign dashboards"
-            fill
-            priority
-            unoptimized
-            sizes="(max-width: 620px) 100vw, (max-width: 900px) 72vw, 68vw"
-            className="bma-how-hero-image"
-          />
-        </div>
         <div className="bma-how-shell bma-how-hero-inner">
           <div className="bma-how-hero-copy">
             <h1 id="how-title">How BlinkMyAd works</h1>
@@ -179,6 +168,17 @@ export default function HowItWorksPage() {
               <li><BarChart3 aria-hidden="true" /><span>Transparent<br />reporting</span></li>
             </ul>
           </div>
+          <div className="bma-how-hero-visual">
+                    <Image
+                      src="/images/hero/img.png"
+                      alt="BlinkMyAd campaign workflow with advertising screens on a scooter, auto-rickshaw and car, set against a city roadway and campaign dashboards"
+                      fill
+                      priority
+                      unoptimized
+                      sizes="(max-width: 620px) 100vw, (max-width: 900px) 72vw, 68vw"
+                      className="bma-how-hero-image"
+                    />
+                  </div>
         </div>
       </section>
 
