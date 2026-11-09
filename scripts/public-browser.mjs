@@ -31,6 +31,12 @@ try{
       await page.evaluate(()=>document.fonts.ready);
       await preparePublicPage(page);
       assert.equal(await page.locator("h1").count(),1,`${path}: one primary heading`);
+      if(!["/login","/signup","/forgot-password","/reset-password","/verify"].includes(path)){
+        const footer=page.locator("footer.bma-public-footer");
+        assert.equal(await footer.count(),1,`${path}: shared public footer appears once`);
+        assert.equal(await footer.locator(".bma-public-footer-column").count(),4,`${path}: shared footer columns`);
+        assert.ok(await footer.evaluate(el=>getComputedStyle(el).backgroundImage.includes("gradient")),`${path}: metallic-blue gradient footer`);
+      }
       if(path==="/login"||path==="/signup"){
         assert.equal(await page.locator(".bma-ref-nav").count(),0,`${path}: marketing navbar is absent`);
         assert.equal(await page.locator(".bma-auth-minimal-shell > header").count(),0,`${path}: no separate header band`);
@@ -50,6 +56,10 @@ try{
         assert.equal(await page.locator(".bma-how-journey").count(),2,"Both advertiser and driver journeys");
         assert.equal(await page.locator(".bma-how-detail-card").count(),6,"Six detailed workflow stages");
         assert.equal(await page.locator(".bma-how-faq details").count(),5,"Five workflow FAQs");
+        const closing=page.locator(".bma-how-final");
+        assert.equal(await closing.count(),1,"Closing CTA appears once");
+        assert.ok(await closing.evaluate(el=>getComputedStyle(el).backgroundImage.includes("cta-wave.webp")),"How It Works uses shared metallic wave CTA art");
+        assert.equal(await page.locator(".bma-how-final-art").count(),0,"Closing CTA is clean without oversized vehicle crop");
         const faq=page.locator(".bma-how-faq details").first();
         await faq.locator("summary").click();
         assert.ok(await faq.evaluate(node=>node.open),"FAQ disclosure opens");
