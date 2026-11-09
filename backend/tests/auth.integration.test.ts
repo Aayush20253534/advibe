@@ -215,3 +215,76 @@ test("BMA pending signup resumes after provider email outage without creating a 
     await db.$disconnect();
   }
 });
+
+test("BMA temporary Admin MFA opt-out only allows fresh Admin sign-ins and fails closed when re-enabled", async () => {
+  const db = new PrismaClient();
+  const toggleSettings = loadAuthSettings({
+    AUTH_SECRET: "bma_admin_mfa_toggle_test_secret_over_32_chars",
+    ADMIN_MFA_REQUIRED: "false",
+  }, config);
+  const prefix = randomUUID().slice(0, 12);
+  const password = "AdminTemporarySecurePass!2026";
+  const passwordHash = await argon2.hash(password, { type: argon2.argon2id });
+  await db.$connect();
+  const [admin, advertiser] = await Promise.all([
+    db.user.create({ data: { email: "toggle-admin-" + prefix + "@example.invalid",
+      displayName: "Temporary Admin", role: "ADMIN", status: "ACTIVE",
+      emailVerifiedAt: new Date(), passwordHash } }),
+    db.user.create({ data: { email: "toggle-advertiser-" + prefix + "@example.invalid",
+      displayName: "Temporary Advertiser", role: "ADVERTISER", status: "ACTIVE",
+      emailVerifiedAt: new Date(), passwordHash } }),
+  ]);
+  const app = createApp(config, createLogger(config), async () => {}, {
+    db, settings: toggleSettings, sender: async () => {},
+  });
+  const server = app.listen(0, "127.0.0.1");
+  try {
+    await once(server, "listening");
+    const base = "http://127.0.0.1:" + (server.address() as AddressInfo).port + "/api/v1/auth";
+    const postLogin = (email: string, loginRole?: string) => fetch(base + "/login", {
+      method: "POST", headers: { "Content-Type": "application/json",
+        Origin: "http://localhost:3000", ...(loginRole ? { "X-Login-Role": loginRole } : {}) },
+      body: JSON.stringify({ email, password }),
+    });
+    const get = (path: string, cookie: string) => fetch(base + path, { headers: { Cookie: cookie } });
+
+    const mismatch = await postLogin(admin.email, "advertiser");
+    assert.equal(mismatch.status, 403, "Role switching cannot bypass the selected sign-in portal");
+    const adminLogin = await postLogin(admin.email);
+    assert.equal(adminLogin.status, 201, "Admin login succeeds without MFA only when opted out");
+    const adminCookie = (adminLogin.headers.get("set-cookie") || "").split(";")[0]!;
+    assert.ok(adminCookie);
+    const adminSecurity = await get("/admin-security", adminCookie);
+    assert.equal(adminSecurity.status, 200);
+    const securityBody = await adminSecurity.json() as { data: { mfaVerified: boolean; mfaRequired: boolean } };
+    assert.deepEqual({ verified: securityBody.data.mfaVerified, required: securityBody.data.mfaRequired },
+      { verified: false, required: false });
+    const passwordSession = await db.session.findFirstOrThrow({
+      where: { userId: admin.id, revokedAt: null }, orderBy: { createdAt: "desc" },
+    });
+    assert.ok(passwordSession.adminPasswordVerifiedAt, "Password-only Admin sessions need dedicated provenance");
+    assert.equal(passwordSession.mfaVerifiedAt, null, "Password login must never be mislabeled as MFA");
+
+    const advertiserLogin = await postLogin(advertiser.email, "advertiser");
+    assert.equal(advertiserLogin.status, 201);
+    const advertiserCookie = (advertiserLogin.headers.get("set-cookie") || "").split(";")[0]!;
+    await db.user.update({ where: { id: advertiser.id }, data: { role: "ADMIN" } });
+    assert.equal((await get("/admin-security", advertiserCookie)).status, 401,
+      "Promotion cannot reuse a lower-role session even with MFA temporarily off");
+
+    await db.user.update({ where: { id: admin.id }, data: { role: "DRIVER" } });
+    assert.equal((await get("/session", adminCookie)).status, 401,
+      "Demotion invalidates password-only Admin sessions");
+    await db.user.update({ where: { id: admin.id }, data: { role: "ADMIN" } });
+
+    // Same settings object simulates a backend restart with MFA required again.
+    toggleSettings.adminMfaRequired = true;
+    assert.equal((await get("/admin-security", adminCookie)).status, 401,
+      "Re-enabling MFA immediately rejects sessions that bypassed MFA");
+    assert.equal((await postLogin(admin.email)).status, 403,
+      "Without authenticator enrollment an Admin cannot sign in after MFA is re-enabled");
+  } finally {
+    await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
+    await db.$disconnect();
+  }
+});
