@@ -48,50 +48,34 @@
     radial-gradient(ellipse at 65% 35%,rgba(203,219,255,.65),transparent 68%),
     linear-gradient(100deg,#fff 0%,#fafcff 42%,#edf5ff 100%);
 }
-.bma-advertisers-hero::before {
-  content:"";
-  position:absolute;
-  z-index:-1;
-  inset:-21% -10% auto auto;
-  width:35%;
-  height:113%;
-  transform:skewX(-24deg) rotate(-7deg);
-  background:linear-gradient(145deg,#0746ef 13%,#0069ff 65%,#3f9dff);
-  border-radius:18px;
-}
 .bma-advertisers-hero-art {
-  position:absolute;
-  z-index:-1;
-  inset:0 0 0 auto;
-  width:70%;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.43) 17%,#000 41%);
-  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.43) 17%,#000 41%);
+  position: absolute;
+  z-index: 0;
+  inset: 0 0 0 auto;
+  width: 76%;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.48) 14%, #000 34%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.48) 14%, #000 34%);
 }
-.bma-advertisers-hero-art img {object-fit:cover;object-position:52% center;}
-.bma-advertisers-hero-car {
-  position:absolute;
-  z-index:0;
-  bottom:-12%;
-  right:-4%;
-  width:23%;
-  height:72%;
-  overflow:hidden;
-  border-radius:35% 0 0 0;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 34%);
-  mask-image:linear-gradient(90deg,transparent,#000 34%);
-  box-shadow:-16px 0 38px rgba(24,59,128,.12);
-  pointer-events:none;
+.bma-advertisers-hero-art img {
+  object-fit: cover;
+  object-position: 54% 54%;
 }
-.bma-advertisers-hero-car img {object-fit:cover;object-position:50% center;}
 .bma-advertisers-hero::after {
-  content:"";
-  pointer-events:none;
-  position:absolute;
-  z-index:0;
-  inset:0;
-  background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,.94) 24%,rgba(255,255,255,.72) 37%,transparent 58%);
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(90deg,
+    #fff 0%,
+    rgba(255,255,255,.98) 23%,
+    rgba(255,255,255,.78) 36%,
+    rgba(255,255,255,.18) 51%,
+    transparent 68%);
 }
-.bma-advertisers-hero-inner {position:relative;z-index:1;min-height:inherit;display:flex;align-items:center;}
+.bma-advertisers-hero-inner {position:relative;z-index:2;min-height:inherit;display:flex;align-items:center;}
 .bma-advertisers-hero-copy {width:min(43%,560px);padding-block:38px;}
 .bma-advertisers-eyebrow {
   display:inline-flex;align-items:center;gap:11px;
@@ -272,7 +256,7 @@
   .bma-advertisers-shell {width:calc(100% - 66px);}
   .bma-advertisers-hero-copy {width:47%;}
   .bma-advertisers-hero h1 {font-size:clamp(38px,4.4vw,53px);}
-  .bma-advertisers-hero-art {width:68%;}
+  .bma-advertisers-hero-art {width:77%;}
   .bma-advertisers-advantages-grid {gap:17px;}
   .bma-advertisers-advantage {padding:16px;}
   .bma-advertisers-steps {gap:33px;}
@@ -285,8 +269,7 @@
   .bma-advertisers-hero-copy {width:55%;}
   .bma-advertisers-hero h1 {font-size:clamp(34px,4.5vw,45px);}
   .bma-advertisers-hero-copy>p {font-size:13px;}
-  .bma-advertisers-hero-art {width:76%;}
-  .bma-advertisers-hero-car {width:23%;height:60%;}
+  .bma-advertisers-hero-art {width:84%;}
   .bma-advertisers-advantages-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;}
   .bma-advertisers-advantage {min-height:150px;}
   .bma-advertisers-steps {grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;}
@@ -309,9 +292,7 @@
   .bma-advertisers-hero-actions {margin-top:20px;gap:9px;}
   .bma-advertisers-button {min-height:45px;padding:11px 13px;font-size:12px;}
   .bma-advertisers-hero-art {inset:auto -5% 0 -5%;width:110%;height:clamp(220px,65vw,325px);-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 24%);mask-image:linear-gradient(180deg,transparent 0%,#000 24%);}
-  .bma-advertisers-hero-art img {object-position:58% 55%;}
-  .bma-advertisers-hero-car {display:none;}
-  .bma-advertisers-hero::before {right:-26%;width:76%;height:42%;top:auto;bottom:-6%;}
+  .bma-advertisers-hero-art img {object-position:62% 52%;}
   .bma-advertisers-hero::after {background:linear-gradient(180deg,#fff 0%,rgba(255,255,255,.95) 39%,rgba(255,255,255,.48) 69%,transparent 88%);}
   .bma-advertisers-advantages h2 {margin-bottom:16px;}
   .bma-advertisers-advantages-grid {gap:11px;}
