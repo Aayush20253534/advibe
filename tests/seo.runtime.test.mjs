@@ -22,7 +22,8 @@ test("indexing stays gated; private and pending legal pages remain excluded", ()
     assert.equal(publicMetadata("/locations","Locations","Published areas").robots.index,false);
     assert.deepEqual(robots().rules,[{userAgent:"*",disallow:"/"}]);
     process.env.SITE_INDEXING_ENABLED="true";
-    assert.equal(sitemap().length,9);
+    assert.equal(sitemap().length,10);
+    assert.ok(sitemap().some(x=>new URL(x.url).pathname==="/how-it-works"));
     assert.equal(sitemap().some(x=>/admin|advertiser\/|driver\/|privacy|terms/.test(new URL(x.url).pathname)),false);
     assert.equal(publicMetadata("/locations","Locations","Published areas").alternates.canonical,"https://owned.example.invalid/locations");
     assert.equal(publicMetadata("/privacy","Privacy","Pending").robots.index,false);
