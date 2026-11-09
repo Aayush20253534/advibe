@@ -31,6 +31,12 @@ try{
       await page.evaluate(()=>document.fonts.ready);
       await preparePublicPage(page);
       assert.equal(await page.locator("h1").count(),1,`${path}: one primary heading`);
+      if(path==="/login"||path==="/signup"){
+        assert.equal(await page.locator(".bma-ref-nav").count(),0,`${path}: marketing navbar is absent`);
+        const homeLogo=page.locator(".bma-auth-minimal-header a[href='/']");
+        assert.equal(await homeLogo.count(),1,`${path}: one home-linked BlinkMyAd logo`);
+        assert.ok(await homeLogo.isVisible(),`${path}: home logo is visible`);
+      }
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path}: no overflow at ${width}`);
       if(width===1440 && (path==="/login"||path==="/signup")){
         const fit=await page.evaluate(()=>{
