@@ -164,6 +164,19 @@ try {
       assert.equal(await current.count(), 1);
       assert.equal(await current.getAttribute("href"), root);
       await page.getByRole("heading", { level: 1, name: expect.rootTitle }).waitFor();
+      if (role === "driver") {
+        const driverShell = page.locator(".bma-driver-portal");
+        assert.equal(await driverShell.count(), 1, "Driver theme attached to portal root");
+        const hero = page.locator(".bma-driver-dashboard-hero");
+        await hero.waitFor();
+        assert.equal(await hero.locator("img").getAttribute("src"), "/images/hero/234.png",
+          "Driver hero uses uploaded BlinkMyAd vehicle artwork");
+        assert.equal(await page.locator(".bma-driver-sidebar-promo").count(), 1,
+          "Driver sidebar includes an onboarding shortcut");
+        assert.ok(await page.locator(".bma-driver-panel").count() >= 2,
+          "Driver content uses redesigned shared panels");
+      }
+
       await page.getByRole("navigation", { name: "Breadcrumb" }).waitFor();
       assert.equal(
         await page
