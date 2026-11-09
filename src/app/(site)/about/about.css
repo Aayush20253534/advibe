@@ -341,69 +341,76 @@
 .bma-about-cta {
   position: relative;
   isolation: isolate;
+  display: flex;
+  align-items: center;
   overflow: hidden;
-  min-height: clamp(130px, 12.4vw, 175px);
-  margin-top: 9px;
-  border-radius: 19px 19px 0 0;
-  background:
-    radial-gradient(ellipse at 48% 155%, rgba(0,199,255,.5), transparent 60%),
-    linear-gradient(115deg, #06257a, #0446cb 50%, #0663f5 100%);
+  width: calc(100% - 48px);
+  max-width: 1480px;
+  min-height: 134px;
+  margin: 14px auto 16px;
+  padding: 0;
+  border-radius: 22px;
+  /* Use the exact same artwork as the Ad Formats closing call-to-action. */
+  background: #06163d url("/images/blinkmyad/ad-formats/cta-wave.webp") center / cover no-repeat;
   color: #fff;
-}
-.bma-about-cta::before, .bma-about-cta::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  pointer-events: none;
-  inset: 0;
-}
-.bma-about-cta::before {
-  background: linear-gradient(130deg, transparent 64%, rgba(95,157,255,.5) 64%, rgba(10,97,247,.55) 75%, transparent 75%);
-}
-.bma-about-cta::after {
-  background: linear-gradient(160deg, transparent 60%, rgba(0,151,255,.48) 60%, rgba(12,92,212,.15) 79%, transparent 79%);
 }
 .bma-about-cta-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
+  gap: 28px;
+  width: 100%;
+  max-width: none;
   min-height: inherit;
-  padding-block: 25px;
+  padding: 24px clamp(27px, 3vw, 50px);
 }
 .bma-about-cta h2 {
+  margin: 0;
   color: #fff;
-  font-size: clamp(32px, 3vw, 40px);
+  font-size: clamp(29px, 2.7vw, 41px);
   font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -.055em;
+  letter-spacing: -.045em;
+  line-height: 1.13;
 }
 .bma-about-cta p {
-  margin-top: 7px;
+  margin: 6px 0 0;
   color: #fff;
-  font-size: clamp(13px, 1.24vw, 16px);
+  font-size: clamp(14px, 1.15vw, 17px);
   line-height: 1.4;
 }
 .bma-about-contact {
   display: inline-flex;
-  min-height: 43px;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  flex: none;
-  padding: 10px 19px;
-  border: 1px solid #d9e7ff;
-  border-radius: 11px;
+  gap: 18px;
+  flex: 0 0 auto;
+  min-height: 58px;
+  padding: 13px clamp(21px, 2.4vw, 35px);
+  border: 1px solid #c8d5ff;
+  border-radius: 14px;
   background: #fff;
-  box-shadow: 0 9px 18px rgba(2,20,96,.16);
-  color: #0640e9;
-  font-size: clamp(13px, 1.27vw, 16px);
-  font-weight: 800;
+  box-shadow: 0 7px 15px rgba(0,12,42,.11);
+  color: #0644eb;
+  font-size: clamp(14px, 1.16vw, 17px);
+  font-weight: 750;
+  white-space: nowrap;
   text-decoration: none;
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
-.bma-about-contact:hover { transform: translateY(-2px); box-shadow: 0 13px 24px rgba(2,20,96,.21); }
-.bma-about-contact svg { width: 16px; height: 16px; }
+.bma-about-contact:hover {
+  background: #eef3ff;
+  box-shadow: 0 10px 20px rgba(0,12,42,.18);
+  transform: translateY(-1px);
+}
+.bma-about-contact:focus-visible {
+  outline: 3px solid #93b4ff;
+  outline-offset: 3px;
+}
+.bma-about-contact svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+}
 [data-page="about"] > footer { background: #0d1b32; }
 [data-page="about"] > footer > div:first-child { padding-top: clamp(36px, 4vw, 61px); padding-bottom: clamp(24px, 2.5vw, 37px); }
 [data-page="about"] > footer > div:last-child { border-color: rgba(255,255,255,.19); }
@@ -482,11 +489,22 @@
   .bma-about-principles { padding-block: 42px 46px; }
   .bma-about-principle-grid { grid-template-columns: 1fr; }
   .bma-about-principle-card { min-height: 100px; }
-  .bma-about-cta { border-radius: 15px 15px 0 0; }
-  .bma-about-cta-inner { flex-direction: column; align-items: flex-start; justify-content: center; gap: 18px; padding-block: 35px; }
-  .bma-about-cta h2 { font-size: 32px; }
+  .bma-about-cta {
+    width: calc(100% - 24px);
+    min-height: 0;
+    border-radius: 18px;
+    margin-bottom: 14px;
+  }
+  .bma-about-cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    padding: 25px 22px;
+  }
+  .bma-about-cta h2 { font-size: 30px; }
   .bma-about-cta p { font-size: 14px; }
-  .bma-about-contact { width: 100%; }
+  .bma-about-contact { width: 100%; min-height: 54px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bma-about-contact { transition: none; }
