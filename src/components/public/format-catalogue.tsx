@@ -139,8 +139,9 @@ export function FormatCatalogue() {
                   <div className="bma-format-card-image">
                     <PlacementPhoto item={item} />
                     {isSelected && (
-                      <span className="bma-format-selected-mark" aria-label="Selected format">
+                      <span className="bma-format-selected-mark">
                         <Check aria-hidden="true" />
+                        <span className="sr-only">Selected format</span>
                       </span>
                     )}
                   </div>
