@@ -35,7 +35,7 @@ const footerExplore = [
   { label: "Pricing", href: "/pricing" },
 ];
 
-export function PublicShell({ children }: { children: React.ReactNode }) {
+export function PublicShell({ children, hideFooter = false, authMode }: { children: React.ReactNode; hideFooter?: boolean; authMode?: "login" | "signup" }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -76,7 +76,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
   }, [mobileOpen]);
 
   return (
-    <div data-portal="public" data-homepage={isHome || undefined} data-page={pathname === "/ad-formats" ? "ad-formats" : pathname === "/about" ? "about" : undefined} className="min-h-screen bg-background">
+    <div data-portal="public" data-homepage={isHome || undefined} data-auth-mode={authMode} data-page={pathname === "/ad-formats" ? "ad-formats" : pathname === "/about" ? "about" : undefined} className="min-h-screen bg-background">
       <a href="#public-main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3">Skip to main content</a>
       <header inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className={cn(
         "sticky top-0 z-50 border-b border-line bg-white text-ink transition-[background-color,box-shadow] duration-300",
@@ -97,14 +97,14 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
           <div className="bma-ref-header-actions hidden shrink-0 items-center gap-2 sm:flex">
-            <Link prefetch={false} href="/login" className="inline-flex min-h-10 items-center justify-center rounded-md px-3 text-[13px] font-semibold text-ink transition-colors hover:bg-paper">Sign in</Link>
+            <Link prefetch={false} href="/login" aria-current={pathname === "/login" ? "page" : undefined} className="inline-flex min-h-10 items-center justify-center rounded-md px-3 text-[13px] font-semibold text-ink transition-colors hover:bg-paper">Sign in</Link>
             <Link prefetch={false} href="/signup?role=advertiser" className="bma-ref-button">Create a campaign <ArrowUpRight aria-hidden="true" /></Link>
           </div>
           <button ref={openButton} type="button" aria-expanded={mobileOpen} aria-controls="advibe-public-navigation" aria-label="Open public navigation" onClick={() => setMobileOpen(true)} className="bma-ref-menu-button inline-flex size-11 items-center justify-center rounded-md border border-line hover:bg-paper xl:hidden"><Menu className="size-6" aria-hidden="true" /></button>
         </div>
       </header>
       <main inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} id="public-main" tabIndex={-1} className="min-h-[55dvh] outline-none">{children}</main>
-      <footer inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className="border-t border-white/10 bg-night text-white">
+      {!hideFooter && <footer inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className="border-t border-white/10 bg-night text-white">
         {isHome ? <HomepageFooter /> : <><div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-16 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr] lg:gap-8 lg:py-20">
           <div className="space-y-5">
             <BrandLogo inverse width={200} className="w-[180px]" />
@@ -116,7 +116,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
           <FooterLinks title="Legal" links={[{ label: "Privacy policy", href: "/privacy" }, { label: "Terms and conditions", href: "/terms" }]} />
         </div>
         <div className="border-t border-white/10"><div className="mx-auto max-w-[1280px] px-5 py-6 text-xs text-[#bac1ce] sm:px-8">© 2026 {brand.legalName}. Prayagraj pilot launch.</div></div></>}
-      </footer>
+      </footer>}
 
       {mobileOpen && <div className="fixed inset-0 z-[90] xl:hidden">
         <button type="button" onClick={() => { setMobileOpen(false); window.requestAnimationFrame(() => openButton.current?.focus()); }} aria-label="Close navigation overlay" className="absolute inset-0 w-full bg-[#02152bcb]" />
