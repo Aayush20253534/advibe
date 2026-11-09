@@ -16,7 +16,7 @@
 }
 .bma-about-container {
   width: calc(100% - clamp(44px, 7%, 110px));
-  max-width: 1420px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 .bma-about-hero {
@@ -49,22 +49,22 @@
 }
 .bma-about-hero-inner {
   position: relative;
-  min-height: clamp(452px, 47vw, 675px);
+  min-height: clamp(410px, 41vw, 585px);
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
+  grid-template-columns: 1.07fr .93fr;
   align-items: center;
   gap: clamp(20px, 2vw, 38px);
 }
 .bma-about-hero-copy {
   position: relative;
   z-index: 2;
-  padding: 40px 0;
+  padding: 30px 0;
 }
 .bma-about-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 19px !important;
+  margin-bottom: 16px !important;
   color: #111827;
   font-size: clamp(11px, 1.15vw, 15px);
   line-height: 1.1;
@@ -82,7 +82,7 @@
 }
 .bma-about-hero h1 {
   max-width: 730px;
-  font-size: clamp(43px, 5.13vw, 75px);
+  font-size: clamp(38px, 4.55vw, 65px);
   line-height: 1.04;
   letter-spacing: -.067em;
   font-weight: 850;
@@ -92,16 +92,16 @@
   max-width: 630px;
   margin-top: 19px !important;
   color: var(--about-copy);
-  font-size: clamp(14px, 1.56vw, 21px);
+  font-size: clamp(14px, 1.35vw, 18px);
   line-height: 1.51;
   font-weight: 450;
 }
 .bma-about-highlights {
   display: flex;
   align-items: center;
-  gap: clamp(10px, 2vw, 29px);
+  gap: clamp(10px, 1.7vw, 22px);
   padding: 0;
-  margin: clamp(42px, 5vw, 76px) 0 0;
+  margin: clamp(30px, 3.6vw, 52px) 0 0;
   list-style: none;
 }
 .bma-about-highlights li {
@@ -110,7 +110,7 @@
   gap: 9px;
   min-width: 0;
   color: #081124;
-  font-size: clamp(11px, 1.1vw, 15px);
+  font-size: clamp(11px, 1vw, 14px);
   line-height: 1.45;
   font-weight: 750;
 }
@@ -124,16 +124,16 @@
   color: var(--about-blue);
 }
 .bma-about-highlights .bma-about-icon-tile {
-  width: clamp(35px, 3.8vw, 49px);
-  height: clamp(35px, 3.8vw, 49px);
+  width: clamp(35px, 3.3vw, 46px);
+  height: clamp(35px, 3.3vw, 46px);
 }
 .bma-about-highlights svg { width: 23px; height: 23px; stroke-width: 2.1; }
 .bma-about-visual {
   position: relative;
   align-self: center;
   width: 100%;
-  height: clamp(355px, 39vw, 536px);
-  filter: drop-shadow(0 21px 24px rgba(25,102,218,.17));
+  height: clamp(315px, 33vw, 462px);
+  filter: drop-shadow(0 16px 21px rgba(25,102,218,.13));
 }
 .bma-about-main-photo {
   position: absolute;
@@ -146,15 +146,17 @@
 .bma-about-main-photo::after {
   content: "";
   position: absolute;
+  z-index: 1;
   pointer-events: none;
   inset: 0;
   border-radius: inherit;
+  background: rgba(255,255,255,.055);
   box-shadow: inset 0 2px 0 rgba(255,255,255,.85), inset -2px 0 0 rgba(255,255,255,.8);
 }
-.bma-about-main-photo img {
+.bma-about-main-photo > img:first-child {
   object-fit: cover;
   object-position: 51% 55%;
-  transform: scale(1.015);
+  filter: contrast(.91) saturate(.84) brightness(1.05) blur(.3px);
 }
 .bma-about-photo-row {
   position: absolute;
@@ -176,9 +178,47 @@
   background: #dce8f7;
   box-shadow: 0 10px 22px rgba(16,86,184,.27);
 }
-.bma-about-photo-row img { object-fit: cover; object-position: center; }
+.bma-about-photo-row { padding: 0; margin: 0; }
+.bma-about-photo-row li > img:first-child {
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(.94) saturate(.87) brightness(1.03) blur(.16px);
+}
+/* The same real logo is positioned on the existing blue screens without replacing
+   or regenerating the source vehicle photographs. Decorative: empty alt in JSX. */
+.bma-about-screen-logo {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  height: auto !important;
+  object-fit: contain !important;
+  filter: brightness(0) invert(1);
+  opacity: .96;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+.bma-about-screen-main {
+  left: 64.5%;
+  top: 37%;
+  width: 16%;
+}
+.bma-about-screen-bike {
+  left: 78%;
+  top: 26%;
+  width: 22%;
+}
+.bma-about-screen-auto {
+  left: 70.5%;
+  top: 38%;
+  width: 23%;
+}
+.bma-about-screen-car {
+  left: 54%;
+  top: 34%;
+  width: 14%;
+}
 .bma-about-story {
-  padding-block: clamp(48px, 5.2vw, 76px) clamp(52px, 5.4vw, 82px);
+  padding-block: clamp(42px, 4.5vw, 62px) clamp(45px, 4.6vw, 67px);
   background: #fff;
 }
 .bma-about-story-grid {
@@ -192,7 +232,7 @@
 }
 .bma-about-story h2,
 .bma-about-principles h2 {
-  font-size: clamp(29px, 3.5vw, 47px);
+  font-size: clamp(29px, 3.1vw, 41px);
   font-weight: 830;
   letter-spacing: -.06em;
   line-height: 1.12;
@@ -201,7 +241,7 @@
   max-width: 590px;
   margin-top: 26px;
   color: #3b4965;
-  font-size: clamp(15px, 1.63vw, 21px);
+  font-size: clamp(15px, 1.42vw, 18px);
   line-height: 1.58;
 }
 .bma-about-story-copy p + p { margin-top: 17px; }
@@ -211,7 +251,7 @@
   display: grid;
   grid-template-columns: 55px minmax(110px, .78fr) minmax(0, 1.12fr);
   align-items: center;
-  min-height: clamp(63px, 6.6vw, 91px);
+  min-height: clamp(62px, 5.8vw, 82px);
   padding: 9px clamp(13px, 1.35vw, 21px);
   border: 1px solid #d9e3f7;
   border-radius: 14px;
@@ -222,7 +262,7 @@
 .bma-about-audience-card .bma-about-icon-tile svg { width: 27px; height: 27px; }
 .bma-about-audience-card h3 {
   padding: 0 clamp(10px, 1.2vw, 18px);
-  font-size: clamp(14px, 1.45vw, 19px);
+  font-size: clamp(14px, 1.3vw, 17px);
   font-weight: 780;
   letter-spacing: -.04em;
   line-height: 1.35;
@@ -231,13 +271,13 @@
   padding-left: clamp(13px, 1.65vw, 24px);
   border-left: 1px solid #d4def0;
   color: #33415d;
-  font-size: clamp(12px, 1.42vw, 18px);
+  font-size: clamp(12px, 1.25vw, 16px);
   line-height: 1.44;
 }
 .bma-about-principles {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(36px, 4.2vw, 61px) clamp(38px, 4.5vw, 66px);
+  padding-block: clamp(32px, 3.7vw, 52px) clamp(34px, 3.8vw, 54px);
   border-radius: clamp(20px, 2.5vw, 32px);
   background:
     radial-gradient(ellipse at 100% 20%, rgba(165,204,255,.32), transparent 42%),
@@ -265,7 +305,7 @@
   display: flex;
   align-items: flex-start;
   gap: clamp(18px, 2.2vw, 30px);
-  min-height: clamp(109px, 12.6vw, 160px);
+  min-height: clamp(105px, 10.6vw, 142px);
   padding: clamp(14px, 1.6vw, 24px) clamp(18px, 2.6vw, 34px);
   border: 1px solid #d9e2f2;
   border-radius: 15px;
@@ -284,7 +324,7 @@
 }
 .bma-about-principle-card h3 {
   margin: 4px 0 5px;
-  font-size: clamp(16px, 1.7vw, 22px);
+  font-size: clamp(16px, 1.5vw, 19px);
   font-weight: 800;
   line-height: 1.28;
   letter-spacing: -.037em;
@@ -292,14 +332,14 @@
 .bma-about-principle-card p {
   max-width: 470px;
   color: #31415f;
-  font-size: clamp(13px, 1.5vw, 19px);
+  font-size: clamp(13px, 1.32vw, 17px);
   line-height: 1.48;
 }
 .bma-about-cta {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  min-height: clamp(138px, 15vw, 196px);
+  min-height: clamp(130px, 12.4vw, 175px);
   margin-top: 9px;
   border-radius: 19px 19px 0 0;
   background:
@@ -330,7 +370,7 @@
 }
 .bma-about-cta h2 {
   color: #fff;
-  font-size: clamp(36px, 4vw, 53px);
+  font-size: clamp(34px, 3.5vw, 47px);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -.055em;
@@ -338,7 +378,7 @@
 .bma-about-cta p {
   margin-top: 7px;
   color: #fff;
-  font-size: clamp(14px, 1.63vw, 21px);
+  font-size: clamp(14px, 1.4vw, 18px);
   line-height: 1.4;
 }
 .bma-about-contact {
@@ -354,7 +394,7 @@
   background: #fff;
   box-shadow: 0 9px 18px rgba(2,20,96,.16);
   color: #0640e9;
-  font-size: clamp(13px, 1.45vw, 18px);
+  font-size: clamp(13px, 1.27vw, 16px);
   font-weight: 800;
   text-decoration: none;
   transition: transform 180ms ease, box-shadow 180ms ease;
@@ -400,11 +440,11 @@
     gap: 32px;
   }
   .bma-about-hero-copy { padding: 0; }
-  .bma-about-hero h1 { font-size: clamp(42px, 7.5vw, 65px); }
+  .bma-about-hero h1 { font-size: clamp(40px, 6.7vw, 58px); }
   .bma-about-hero-description { max-width: 630px; font-size: 16px; }
   .bma-about-highlights { margin-top: 30px; }
   .bma-about-highlights li { font-size: 13px; }
-  .bma-about-visual { max-width: 700px; height: clamp(320px, 56vw, 440px); margin-inline: auto; }
+  .bma-about-visual { max-width: 650px; height: clamp(310px, 52vw, 400px); margin-inline: auto; }
   .bma-about-story-grid { grid-template-columns: 1fr; gap: 36px; }
   .bma-about-story-copy { border-right: 0; padding: 0; }
   .bma-about-story h2, .bma-about-principles h2 { font-size: clamp(29px, 5vw, 42px); }
@@ -420,13 +460,13 @@
 @media (max-width: 600px) {
   .bma-about-container { width: calc(100% - 36px); }
   .bma-about-hero-inner { padding-block: 40px 30px; gap: 26px; }
-  .bma-about-hero h1 { font-size: clamp(36px, 10vw, 55px); }
+  .bma-about-hero h1 { font-size: clamp(35px, 9.3vw, 50px); }
   .bma-about-hero h1 span { white-space: normal; }
   .bma-about-hero-description { font-size: 15px; }
   .bma-about-highlights { flex-wrap: wrap; gap: 15px; }
   .bma-about-highlights li { font-size: 12px; }
   .bma-about-highlights .bma-about-icon-tile { width: 37px; height: 37px; }
-  .bma-about-visual { width: 100%; height: clamp(275px, 78vw, 400px); }
+  .bma-about-visual { width: 100%; height: clamp(275px, 74vw, 370px); }
   .bma-about-main-photo { inset: 0 0 9% -2%; }
   .bma-about-photo-row { left: 0; right: 0; gap: 5px; }
   .bma-about-photo-row li { border-radius: 12px; }
