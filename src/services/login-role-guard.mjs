@@ -4,7 +4,7 @@
  */
 export function matchesRequestedLoginRole(requestedRole, status, responseBytes) {
   if (requestedRole !== "advertiser" && requestedRole !== "driver") return true;
-  if (status !== 201) return true;
+  if (status < 200 || status >= 300) return true;
   try {
     const response = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(responseBytes));
     return response?.data?.role === requestedRole;
