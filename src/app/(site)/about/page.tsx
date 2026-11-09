@@ -31,14 +31,17 @@ const highlights = [
 const photoCards = [
   {
     src: "/images/blinkmyad/bike.webp",
+    screenClass: "bma-about-screen-bike",
     alt: "Scooter fitted with a rear advertising screen",
   },
   {
     src: "/images/blinkmyad/auto.webp",
+    screenClass: "bma-about-screen-auto",
     alt: "Auto-rickshaw with rear digital advertising display",
   },
   {
     src: "/images/blinkmyad/car-rear.webp",
+    screenClass: "bma-about-screen-car",
     alt: "Car fitted with rear-window digital advertising display",
   },
 ];
@@ -117,13 +120,29 @@ export default function AboutPage() {
                 alt="Car interior featuring a digital advertising screen behind the front seat"
                 fill
                 priority
-                sizes="(min-width: 1100px) 48vw, (min-width: 850px) 44vw, 94vw"
+                sizes="(min-width: 1100px) 45vw, (min-width: 850px) 42vw, 94vw"
+              />
+              <Image
+                src="/brand/blinkmyad-logo.png"
+                alt=""
+                aria-hidden="true"
+                width={200}
+                height={36}
+                className="bma-about-screen-logo bma-about-screen-main"
               />
             </div>
             <ul className="bma-about-photo-row">
               {photoCards.map((photo) => (
                 <li key={photo.src}>
-                  <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 850px) 14vw, 30vw" />
+                  <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 850px) 13vw, 30vw" />
+                  <Image
+                    src="/brand/blinkmyad-logo.png"
+                    alt=""
+                    aria-hidden="true"
+                    width={200}
+                    height={36}
+                    className={`bma-about-screen-logo ${photo.screenClass}`}
+                  />
                 </li>
               ))}
             </ul>
