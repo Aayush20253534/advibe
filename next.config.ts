@@ -6,6 +6,11 @@ validateMapsConfig(process.env);
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Existing admin bookmarks are canonicalized; the Admin route is still protected by MFA and RBAC.
+  async redirects(){ return [
+    {source:"/admin",destination:"/0000BMA0/admin",permanent:false},
+    {source:"/admin/:path*",destination:"/0000BMA0/admin/:path*",permanent:false},
+  ]; },
   async headers() {
     return [{ source: "/:path*", headers: [
       { key: "X-Content-Type-Options", value: "nosniff" },

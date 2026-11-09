@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import {ADMIN_ROOT} from "@/lib/admin-paths.mjs";
 import { BadgeCheck, Banknote, Bell, CalendarDays, CircleHelp, Clapperboard, ClipboardCheck,
   CreditCard, FileChartColumnIncreasing, House, LayoutGrid, MapPinned, Megaphone,
   Monitor, MonitorCheck, Paintbrush, ReceiptText, Settings, SlidersHorizontal,
@@ -15,24 +16,24 @@ export const portalPeople: Record<PortalRole,{name:string;subtitle:string;initia
 };
 export const portalNavigation: Record<PortalRole,NavItem[]> = {
   admin:[
-    {label:"Dashboard",href:"/admin",icon:House,description:"Platform activity and confirmed money"},
-    {label:"Campaigns",href:"/admin/campaigns",icon:Megaphone,description:"Campaign review queue"},
-    {label:"Advertisers",href:"/admin/advertisers",icon:Users,description:"Advertiser accounts"},
-    {label:"Driver partners",href:"/admin/drivers",icon:CarFront,description:"Driver applications and documents",keywords:["applications","kyc"]},
-    {label:"Screens and devices",href:"/admin/screens",icon:MonitorCheck,description:"Registered screens and their locations"},
-    {label:"Locations and zones",href:"/admin/locations",icon:MapPinned,description:"Cities, zones and locations"},
-    {label:"Ad formats and rules",href:"/admin/ad-formats",icon:Clapperboard,description:"Supported ad formats"},
-    {label:"Pricing",href:"/admin/pricing",icon:SlidersHorizontal,description:"Screen-day rates and tax policies"},
-    {label:"Approvals",href:"/admin/approvals",icon:ClipboardCheck,description:"Campaign, creative and driver review"},
-    {label:"Bookings and schedule",href:"/admin/bookings",icon:CalendarDays,description:"Bookings for approved campaigns"},
-    {label:"Payments and refunds",href:"/admin/payments",icon:CreditCard,description:"Payment attempts and reconciliation",group:"management"},
-    {label:"Driver settlements",href:"/admin/settlements",icon:Banknote,description:"Driver payouts (not switched on)",group:"management"},
-    {label:"Reports",href:"/admin/analytics",icon:ChartNoAxesCombined,description:"Activity report and CSV downloads",group:"management"},
-    {label:"Users and roles",href:"/admin/users",icon:UserRound,description:"Accounts and account status",group:"management"},
-    {label:"Audit history",href:"/admin/audit",icon:ReceiptText,description:"Audit log and CSV download",group:"management"},
-    {label:"Notifications",href:"/admin/notifications",icon:Bell,description:"Your notifications",group:"account"},
-    {label:"Support and disputes",href:"/admin/support",icon:CircleHelp,description:"Support tickets",group:"account"},
-    {label:"Settings",href:"/admin/settings",icon:Settings,description:"Security and integration status",group:"account"},
+    {label:"Dashboard",href:"/0000BMA0/admin",icon:House,description:"Platform activity and confirmed money"},
+    {label:"Campaigns",href:"/0000BMA0/admin/campaigns",icon:Megaphone,description:"Campaign review queue"},
+    {label:"Advertisers",href:"/0000BMA0/admin/advertisers",icon:Users,description:"Advertiser accounts"},
+    {label:"Driver partners",href:"/0000BMA0/admin/drivers",icon:CarFront,description:"Driver applications and documents",keywords:["applications","kyc"]},
+    {label:"Screens and devices",href:"/0000BMA0/admin/screens",icon:MonitorCheck,description:"Registered screens and their locations"},
+    {label:"Locations and zones",href:"/0000BMA0/admin/locations",icon:MapPinned,description:"Cities, zones and locations"},
+    {label:"Ad formats and rules",href:"/0000BMA0/admin/ad-formats",icon:Clapperboard,description:"Supported ad formats"},
+    {label:"Pricing",href:"/0000BMA0/admin/pricing",icon:SlidersHorizontal,description:"Screen-day rates and tax policies"},
+    {label:"Approvals",href:"/0000BMA0/admin/approvals",icon:ClipboardCheck,description:"Campaign, creative and driver review"},
+    {label:"Bookings and schedule",href:"/0000BMA0/admin/bookings",icon:CalendarDays,description:"Bookings for approved campaigns"},
+    {label:"Payments and refunds",href:"/0000BMA0/admin/payments",icon:CreditCard,description:"Payment attempts and reconciliation",group:"management"},
+    {label:"Driver settlements",href:"/0000BMA0/admin/settlements",icon:Banknote,description:"Driver payouts (not switched on)",group:"management"},
+    {label:"Reports",href:"/0000BMA0/admin/analytics",icon:ChartNoAxesCombined,description:"Activity report and CSV downloads",group:"management"},
+    {label:"Users and roles",href:"/0000BMA0/admin/users",icon:UserRound,description:"Accounts and account status",group:"management"},
+    {label:"Audit history",href:"/0000BMA0/admin/audit",icon:ReceiptText,description:"Audit log and CSV download",group:"management"},
+    {label:"Notifications",href:"/0000BMA0/admin/notifications",icon:Bell,description:"Your notifications",group:"account"},
+    {label:"Support and disputes",href:"/0000BMA0/admin/support",icon:CircleHelp,description:"Support tickets",group:"account"},
+    {label:"Settings",href:"/0000BMA0/admin/settings",icon:Settings,description:"Security and integration status",group:"account"},
   ],
   advertiser:[
     {label:"Dashboard",href:"/advertiser",icon:House,description:"Campaign and reach overview"},
@@ -90,5 +91,5 @@ export function activePortalItem(role:PortalRole,pathname:string) {
     .find(i=>pathname.startsWith(i.href+"/")) ?? items[0];
 }
 export function findPortalSection(role:PortalRole,slug:string) {
-  return portalNavigation[role].find(i=>i.href==="/"+role+"/"+slug);
+  return portalNavigation[role].find(i=>i.href===(role==="admin"?ADMIN_ROOT:"/"+role)+"/"+slug);
 }

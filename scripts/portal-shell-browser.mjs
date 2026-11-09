@@ -8,6 +8,7 @@ import assert from "node:assert/strict";
 import {launchBrowser} from "./browser-engine.mjs";
 import {saveBrowserEvidence} from "./browser-evidence.mjs";
 import { AxeBuilder } from "@axe-core/playwright";
+import {portalHome,ADMIN_LOGIN} from "../src/lib/admin-paths.mjs";
 
 const BASE = process.env.BASE_URL || "http://127.0.0.1:3101";
 const uid = "11111111-1111-4111-8111-111111111111";
@@ -39,7 +40,7 @@ const roles = {
     wrongRoleMessage: "This account has no Admin permission.",
     navCount: 18,
     rootTitle: "Dashboard",
-    next: { label: "Users and roles", href: "/admin/users" },
+    next: { label: "Users and roles", href: "/0000BMA0/admin/users" },
   },
 };
 
@@ -125,7 +126,7 @@ const pass = (msg) => {
 
 try {
   for (const [role, expect] of Object.entries(roles)) {
-    const root = "/" + role;
+    const root = portalHome(role);
 
     // 1. Signed out: gate, sign-in link with return path, no portal chrome.
     {
@@ -133,7 +134,7 @@ try {
       await page.goto(BASE + root);
       await page.getByRole("heading", { level: 1, name: expect.gateTitle }).waitFor();
       const link = page.getByRole("link", { name: expect.signIn });
-      assert.equal(await link.getAttribute("href"), "/login?next=" + encodeURIComponent(root));
+      assert.equal(await link.getAttribute("href"), (role==="admin"?ADMIN_LOGIN:"/login") + "?next=" + encodeURIComponent(root));
       assert.equal(await page.getByRole("navigation", { name: expect.portal }).count(), 0);
       assert.equal(await page.getByRole("button", { name: "Sign out" }).count(), 0);
       await axeClean(page, role + " gate");
@@ -211,7 +212,7 @@ try {
       const { context, page, state } = await portalContext(role);
       await page.goto(BASE + root);
       await page.getByRole("button", { name: "Sign out" }).click();
-      await page.waitForURL("**/login");
+      await page.waitForURL("**" + (role==="admin"?ADMIN_LOGIN:"/login"));
       assert.equal(state.logout?.csrf, csrf, "logout carries CSRF token");
       await context.close();
       pass(`${role}: sign out posts /auth/logout with CSRF and redirects to /login`);

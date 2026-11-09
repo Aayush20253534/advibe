@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import {launchBrowser} from "./browser-engine.mjs";
 import {saveBrowserFailure} from "./browser-evidence.mjs";
+import {ADMIN_ROOT,ADMIN_LOGIN,portalHome} from "../src/lib/admin-paths.mjs";
 const BASE=process.env.BASE_URL||"http://127.0.0.1:3101";
 const uid="11111111-1111-4111-8111-111111111111";
 const campaignId="22222222-2222-4222-8222-222222222222";
@@ -60,12 +61,12 @@ try{
    if(path==="/notifications")return json(200,[{id:uid,title:"Service updated",body:"There is a new update",kind:"support",readAt:null}]);
    return json(200,[]);
   });
-  await ensure(page,"/"+role);
+  await ensure(page,portalHome(role));
   if(role==="advertiser")await page.getByText("Secure advertiser access").waitFor();
    else if(role==="admin")await page.getByText("Secure Admin access").waitFor();
    else await page.getByText("Live session required").waitFor();
   assert.equal(await page.getByText("Continue as demo "+role).count(),0);
-  await ensure(page,"/login?next=%2F"+role);
+  await ensure(page,(role==="admin"?ADMIN_LOGIN:"/login")+"?next="+encodeURIComponent(portalHome(role)));
   await page.getByLabel("Email").fill("verified@example.invalid");
   await page.getByLabel("Password",{exact:true}).fill("valid-live-password");
   await page.getByRole("button",{name:"Sign in",exact:true}).click();
@@ -80,11 +81,11 @@ try{
   await page.getByRole("button",{name:"Sign out"}).waitFor();
   assert.equal(await page.getByText("DEMO DRIVER PORTAL").count(),0);
   if(role==="admin"){
-   await ensure(page,"/admin");
+   await ensure(page,ADMIN_ROOT);
    // M7 admin overview: readable labels with rupee amounts (37000 paise = Rs 370.00).
    await page.getByText("Confirmed bookings (gross)").waitFor();
    await page.getByText("₹370.00").waitFor();
-   await ensure(page,"/admin/users");
+   await ensure(page,ADMIN_ROOT+"/users");
    await page.getByText("Driver Example").waitFor();
    await page.getByRole("button",{name:"Manage"}).first().click();
    await page.getByLabel("Audit reason (minimum 20 characters)").fill("Reviewed suspension of test driver for verified policy violation.");

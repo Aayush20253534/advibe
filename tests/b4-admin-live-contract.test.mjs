@@ -4,7 +4,7 @@ import fs from "node:fs";
 import {allowedApiPath} from "../src/services/api-route-policy.mjs";
 const read=path=>fs.readFileSync(path,"utf8");
 test("Admin uses authenticated dedicated API portal with no demo fallback",()=>{
- const layout=read("src/app/(portals)/admin/layout.tsx");
+ const layout=read("src/app/(portals)/0000BMA0/admin/layout.tsx");
  // Routing proposal (docs/redesign/ROUTING_PROPOSAL.md): the layout wraps each live Admin page.
  assert.match(layout,/<AdminPortal>\{children\}<\/AdminPortal>/);
  assert.doesNotMatch(layout,/PortalGate|demo-auth|ApiPortal/);

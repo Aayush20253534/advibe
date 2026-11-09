@@ -8,6 +8,7 @@ import { BrandLogo } from "@/components/brand/brand-logo";
 import { Button, PageHeader, Tooltip, type Crumb } from "@/components/ui";
 import { portalNavigation, type NavItem, type PortalRole } from "@/config/navigation";
 import { cn } from "@/lib/utils";
+import {ADMIN_ROOT} from "@/lib/admin-paths.mjs";
 
 /** Plain-language names shown in the sidebar, breadcrumbs and header. */
 export const portalLabel: Record<PortalRole, string> = {
@@ -31,7 +32,7 @@ const groupHeading: Record<PortalRole, Record<NonNullable<NavItem["group"]>, str
 /** The nav item for the current path: exact match, or the longest section prefix. */
 export function activeNavItem(role: PortalRole, pathname: string): NavItem | undefined {
   const items = portalNavigation[role];
-  const root = "/" + role;
+  const root = role === "admin" ? ADMIN_ROOT : "/" + role;
   return (
     items.find((item) => item.href === pathname) ??
     items
@@ -127,7 +128,7 @@ function SidebarContent({
   return (
     <>
       <div className="bma-adv-sidebar-brand px-5 pt-5 pb-4">
-        <BrandLogo href={"/" + role} width={154} inverse />
+        <BrandLogo href={role === "admin" ? ADMIN_ROOT : "/" + role} width={154} inverse />
         <p className="mt-3 text-sm font-semibold text-white">{portalLabel[role]}</p>
         <p className="mt-1 text-xs text-[#bdc4d1]">Prayagraj · Pilot workspace</p>
       </div>
@@ -167,7 +168,7 @@ export function PortalShell({
   const [menuOpen, setMenuOpen] = React.useState(false);
   const active = activeNavItem(role, pathname);
   const pageTitle = title ?? active?.label ?? portalLabel[role];
-  const root = "/" + role;
+  const root = role === "admin" ? ADMIN_ROOT : "/" + role;
   const crumbs: Crumb[] = [{ label: portalLabel[role], href: root }];
   if (active && active.href !== root) {
     crumbs.push({ label: active.label, href: active.href });

@@ -1,16 +1,17 @@
 "use client";
 import * as React from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ArrowUpRight, Bike, Building2, Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 import { api, ApiError, liveSession } from "@/services/api-client";
 import { safeAuthNext } from "@/lib/auth-navigation.mjs";
+import {ADMIN_LOGIN,ADMIN_ROOT} from "@/lib/admin-paths.mjs";
 
 const field = "bma-auth-input";
 const label = "bma-auth-label";
 
 export function BmaLoginForm() {
-  const router = useRouter(), params = useSearchParams();
+  const router = useRouter(), params = useSearchParams(), pathname = usePathname();
   const [role, setRole] = React.useState<"advertiser" | "driver">((params.get("role") === "driver" || params.get("next") === "/driver" || params.get("next")?.startsWith("/driver/")) ? "driver" : "advertiser");
   const [email, setEmail] = React.useState(""), [password, setPassword] = React.useState("");
   const [remember, setRemember] = React.useState(true);
@@ -18,7 +19,7 @@ export function BmaLoginForm() {
   const [code, setCode] = React.useState(""), [challengeId, setChallengeId] = React.useState(""), [ticket, setTicket] = React.useState("");
   const [loading, setLoading] = React.useState(false), [error, setError] = React.useState(""), [notice, setNotice] = React.useState("");
   const isMfa = Boolean(challengeId && ticket);
-  const adminSignIn = params.get("next") === "/admin" || params.get("next")?.startsWith("/admin/") === true;
+  const adminSignIn = pathname === ADMIN_LOGIN;
   const intendedRole = adminSignIn ? "admin" : role;
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -60,7 +61,7 @@ export function BmaLoginForm() {
           ? "This account does not match the selected account type. Choose the correct tab to sign in."
           : "Account type mismatch. Sign out of your current session before trying again.");
       }
-      router.replace(safeAuthNext(params.get("next"), session.role));
+      router.replace(safeAuthNext(adminSignIn ? (params.get("next") || ADMIN_ROOT) : params.get("next"), session.role));
       router.refresh();
     } catch (err) {
       setError(err instanceof ApiError && err.code === "VALIDATION_ERROR" ? "Check your email and password format, then try again." : err instanceof ApiError ? err.message : "Unable to sign in. Please try again.");
@@ -76,7 +77,7 @@ export function BmaLoginForm() {
     <section aria-labelledby="bma-login-title" className="bma-auth-card bma-reference-login-card">
       <header>
         <h1 id="bma-login-title">{isMfa ? "Verify authenticator" : "Sign in"}</h1>
-        <p className="bma-reference-auth-intro">{isMfa ? "Complete your secure two-step sign-in." : "Access your advertiser or driver partner account."}</p>
+        <p className="bma-reference-auth-intro">{isMfa ? "Complete your secure two-step sign-in." : adminSignIn ? "Access the MFA-protected BlinkMyAd administration portal." : "Access your advertiser or driver partner account."}</p>
       </header>
 
       {adminSignIn && !isMfa && <p className="mb-4 text-sm font-semibold text-[#174ca8]">Secure admin sign-in · authenticator required</p>}
@@ -147,33 +148,12 @@ export function BmaLoginForm() {
         </button>}
       </form>
 
-      {!isMfa && <>
-        <p className="bma-reference-social-divider">or continue with</p>
-        <div className="bma-reference-social-buttons">
-          <button type="button" disabled title="Google sign-in is not available yet"
-            aria-label="Continue with Google (not available yet)">
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M21.35 12.24c0-.74-.06-1.28-.21-1.84H12v3.54h5.37a4.61 4.61 0 0 1-2 3.03v2.48h3.21c1.87-1.72 2.77-4.26 2.77-7.21Z"/>
-              <path fill="#34A853" d="M12 21.75c2.68 0 4.93-.88 6.58-2.3l-3.21-2.48c-.89.6-2.03.96-3.37.96-2.6 0-4.81-1.75-5.6-4.1H3.08v2.56A9.75 9.75 0 0 0 12 21.75Z"/>
-              <path fill="#FBBC05" d="M6.4 13.53A5.9 5.9 0 0 1 6.09 12c0-.53.11-1.04.3-1.53V7.91H3.08a9.75 9.75 0 0 0 0 8.18l3.32-2.56Z"/>
-              <path fill="#EA4335" d="M12 6.37c1.46 0 2.76.5 3.79 1.48l2.83-2.83A9.47 9.47 0 0 0 12 2.25a9.75 9.75 0 0 0-8.92 5.66l3.32 2.56c.79-2.35 3-4.1 5.6-4.1Z"/>
-            </svg>
-            Continue with Google
-          </button>
-          <button type="button" disabled title="Microsoft sign-in is not available yet"
-            aria-label="Continue with Microsoft (not available yet)">
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <path fill="#F25022" d="M2 2h9.4v9.4H2z"/><path fill="#7FBA00" d="M12.6 2H22v9.4h-9.4z"/>
-              <path fill="#00A4EF" d="M2 12.6h9.4V22H2z"/><path fill="#FFB900" d="M12.6 12.6H22V22h-9.4z"/>
-            </svg>
-            Continue with Microsoft
-          </button>
-        </div>
+      {!isMfa && !adminSignIn && <>
         <p className="bma-reference-auth-bottom">
           Don&apos;t have an account?{" "}
           <Link prefetch={false} href={"/signup?role=" + role}>Create a campaign <ArrowUpRight aria-hidden="true" className="inline-block size-4 align-[-2px]" /></Link>
         </p>
-      </>}
+      }
     </section>
   );
 }

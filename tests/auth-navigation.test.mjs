@@ -1,9 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {safeAuthNext} from "../src/lib/auth-navigation.mjs";
+import {portalHome,ADMIN_ROOT} from "../src/lib/admin-paths.mjs";
 test("redirect destinations must stay within the server-authenticated role",()=>{
  for(const role of ["admin","advertiser","driver"]){
-  const root="/"+role;
+  const root=portalHome(role);
   assert.equal(safeAuthNext(null,role),root);
   assert.equal(safeAuthNext(root+"/campaigns?tab=open",role),root+"/campaigns?tab=open");
   for(const invalid of ["https://evil.example","//evil.example",root+"/../admin",
@@ -13,4 +14,7 @@ test("redirect destinations must stay within the server-authenticated role",()=>
    assert.equal(safeAuthNext("/"+other,role),root);
  }
  assert.equal(safeAuthNext("/admin","not-a-role"),"/login");
+ assert.equal(safeAuthNext("/admin","admin"),ADMIN_ROOT);
+ assert.equal(safeAuthNext("/0000BMA0/admin/users","admin"),ADMIN_ROOT+"/users");
+ assert.equal(safeAuthNext("/0000BMA0/admin/users","advertiser"),"/advertiser");
 });

@@ -7,6 +7,7 @@ import {api,liveSession} from "@/services/api-client";
 import type {LiveSession} from "@/services/api-client";
 import {useSessionExpiry} from "@/services/use-session-expiry";
 import {AdminContext,explain,Alert} from "./common";
+import {ADMIN_ROOT,ADMIN_LOGIN} from "@/lib/admin-paths.mjs";
 /** Session and MFA-verified role check for every admin page (rendered by the layout). */
 export function AdminPortal({children}:{children:React.ReactNode}){
  const router=useRouter(),pathname=usePathname();
@@ -42,10 +43,10 @@ export function AdminPortal({children}:{children:React.ReactNode}){
   if(!session)return;
   try{
    await api("/auth/logout",{method:"POST",csrfToken:session.csrfToken,body:{}});
-   setSession(null);router.replace("/login");router.refresh();
+   setSession(null);router.replace(ADMIN_LOGIN);router.refresh();
   }catch(e){setError(explain(e));}
  }
- const path=pathname.split("/")[2]??"";
+ const path=pathname.slice(ADMIN_ROOT.length).split("/")[1]??"";
  const titles:Record<string,string>={
   "":"Dashboard",campaigns:"Campaigns",advertisers:"Advertisers",drivers:"Driver partners",
   screens:"Screens and devices",locations:"Locations and zones","ad-formats":"Ad formats and rules",
@@ -56,7 +57,7 @@ export function AdminPortal({children}:{children:React.ReactNode}){
  if(loading)return <PortalLoading message="Verifying Admin session and MFA…"/>;
  if(!session)return <PortalAccessRequired title="Secure Admin access"
   message={error||"A verified Admin session is required."}
-  signInHref={"/login?next="+encodeURIComponent(pathname)} signInLabel="Sign in with Admin MFA"
+  signInHref={ADMIN_LOGIN+"?next="+encodeURIComponent(pathname)} signInLabel="Sign in with Admin MFA"
   retryLabel="Retry secure session" onRetry={()=>{setLoading(true);setRetry(v=>v+1);}}/>;
  return <AdminContext.Provider value={{session}}>
   <PortalShell role="admin" pathname={pathname} title={titles[path]} onSignOut={()=>void signOut()}>
