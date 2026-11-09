@@ -1,7 +1,7 @@
 import type {MetadataRoute} from "next";
 import {siteOrigin} from "@/services/site-origin.mjs";
 
-const publicPaths=["/","/for-advertisers","/for-drivers","/ad-formats","/locations","/pricing","/about","/contact","/help-center"];
+const publicPaths=["/","/for-advertisers","/for-drivers","/ad-formats","/how-it-works","/locations","/pricing","/about","/contact","/help-center"];
 
 export default function sitemap():MetadataRoute.Sitemap{
  if(process.env.SITE_INDEXING_ENABLED!=="true")return [];
