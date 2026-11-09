@@ -26,7 +26,8 @@ try{
     const errors=[];page.on("pageerror",error=>errors.push(error.message));
     const paths=width===768?["/","/locations","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
     for(const path of paths){
-      await page.goto(base+path,{waitUntil:"networkidle"});
+      await page.goto(base+path,{waitUntil:"domcontentloaded",timeout:45000});
+      await page.locator("h1").waitFor({state:"visible",timeout:45000});
       await page.evaluate(()=>document.fonts.ready);
       await preparePublicPage(page);
       assert.equal(await page.locator("h1").count(),1,`${path}: one primary heading`);
@@ -36,7 +37,8 @@ try{
       assert.deepEqual(result.violations.filter(x=>["serious","critical"].includes(x.impact)).map(x=>x.id),[],`${path}: accessibility at ${width}`);
       if(path==="/locations")await page.getByRole("heading",{name:"Coverage data is unavailable"}).waitFor();
     }
-    await page.goto(base+"/",{waitUntil:"networkidle"});
+    await page.goto(base+"/",{waitUntil:"domcontentloaded",timeout:45000});
+    await page.locator("h1").waitFor({state:"visible",timeout:45000});
     assert.equal(await page.locator(".bma-ref-format-grid article").count(),3);
     await page.getByRole("combobox",{name:"Preview ad format"}).selectOption("In-car screens");
     assert.equal(await page.getByRole("combobox",{name:"Preview ad format"}).inputValue(),"In-car screens");
