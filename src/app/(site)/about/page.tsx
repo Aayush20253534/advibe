@@ -166,7 +166,7 @@ export default function AboutPage() {
           </div>
           <div className="bma-about-audience">
             <h2 id="audience-heading">Who it&apos;s for</h2>
-            <div className="bma-about-audience-list" aria-labelledby="audience-heading">
+            <div className="bma-about-audience-list">
               {audiences.map(({ title, text, icon: Icon }) => (
                 <article className="bma-about-audience-card" key={title}>
                   <span className="bma-about-icon-tile"><Icon aria-hidden="true" /></span>
