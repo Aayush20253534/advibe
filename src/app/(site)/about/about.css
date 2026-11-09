@@ -1,0 +1,450 @@
+/* About page: faithful implementation of the supplied BlinkMyAd reference. */
+.bma-about {
+  --about-ink: #0b1225;
+  --about-blue: #073ffd;
+  --about-copy: #34435f;
+  color: var(--about-ink);
+  background: #fff;
+}
+.bma-about * { box-sizing: border-box; }
+.bma-about h1, .bma-about h2, .bma-about h3, .bma-about p {
+  margin: 0;
+}
+.bma-about h1, .bma-about h2, .bma-about h3 {
+  color: #090c16;
+  font-family: var(--font-heading-stack);
+}
+.bma-about-container {
+  width: calc(100% - clamp(44px, 7%, 110px));
+  max-width: 1420px;
+  margin: 0 auto;
+}
+.bma-about-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 83% 57%, rgba(134,186,255,.70) 0%, rgba(205,225,253,.53) 30%, transparent 67%),
+    linear-gradient(112deg, #f9fbff 1%, #f1f7ff 43%, #deedff 80%, #c6deff 100%);
+}
+.bma-about-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -10% -22% 14% 40%;
+  border-radius: 50% 0 0 50%;
+  transform: rotate(-15deg);
+  background: linear-gradient(115deg, rgba(246,250,255,.45), rgba(96,165,250,.21), rgba(255,255,255,.18));
+}
+.bma-about-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto -6% 0 27%;
+  height: 29%;
+  background:
+    radial-gradient(ellipse at 51% 82%, rgba(2,92,255,.57), rgba(56,142,255,.30) 26%, transparent 60%),
+    linear-gradient(155deg, transparent 0 42%, rgba(160,204,255,.42) 42% 68%, rgba(68,148,255,.22) 68% 100%);
+  clip-path: polygon(28% 100%, 100% 0%, 100% 100%);
+}
+.bma-about-hero-inner {
+  position: relative;
+  min-height: clamp(452px, 47vw, 675px);
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: clamp(20px, 2vw, 38px);
+}
+.bma-about-hero-copy {
+  position: relative;
+  z-index: 2;
+  padding: 40px 0;
+}
+.bma-about-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 19px !important;
+  color: #111827;
+  font-size: clamp(11px, 1.15vw, 15px);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: .022em;
+  text-transform: uppercase;
+}
+.bma-about-eyebrow::before {
+  content: "";
+  display: block;
+  width: 9px;
+  height: 9px;
+  flex: none;
+  background: var(--about-blue);
+}
+.bma-about-hero h1 {
+  max-width: 730px;
+  font-size: clamp(43px, 5.13vw, 75px);
+  line-height: 1.04;
+  letter-spacing: -.067em;
+  font-weight: 850;
+}
+.bma-about-hero h1 span { display: block; white-space: nowrap; }
+.bma-about-hero-description {
+  max-width: 630px;
+  margin-top: 19px !important;
+  color: var(--about-copy);
+  font-size: clamp(14px, 1.56vw, 21px);
+  line-height: 1.51;
+  font-weight: 450;
+}
+.bma-about-highlights {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 29px);
+  padding: 0;
+  margin: clamp(42px, 5vw, 76px) 0 0;
+  list-style: none;
+}
+.bma-about-highlights li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  color: #081124;
+  font-size: clamp(11px, 1.1vw, 15px);
+  line-height: 1.45;
+  font-weight: 750;
+}
+.bma-about-icon-tile {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #f6f9ff, #e7effe);
+  box-shadow: 0 6px 16px rgba(29,82,165,.075);
+  color: var(--about-blue);
+}
+.bma-about-highlights .bma-about-icon-tile {
+  width: clamp(35px, 3.8vw, 49px);
+  height: clamp(35px, 3.8vw, 49px);
+}
+.bma-about-highlights svg { width: 23px; height: 23px; stroke-width: 2.1; }
+.bma-about-visual {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  height: clamp(355px, 39vw, 536px);
+  filter: drop-shadow(0 21px 24px rgba(25,102,218,.17));
+}
+.bma-about-main-photo {
+  position: absolute;
+  inset: 0 0 10% -3%;
+  overflow: hidden;
+  clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%);
+  border-radius: 29px 24px 20px 0;
+  background: #e0e9f4;
+}
+.bma-about-main-photo::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.85), inset -2px 0 0 rgba(255,255,255,.8);
+}
+.bma-about-main-photo img {
+  object-fit: cover;
+  object-position: 51% 55%;
+  transform: scale(1.015);
+}
+.bma-about-photo-row {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(7px, .9vw, 12px);
+  bottom: 0;
+  left: 4%;
+  right: 2%;
+}
+.bma-about-photo-row li {
+  position: relative;
+  aspect-ratio: 1.13;
+  overflow: hidden;
+  border: 2px solid #fff;
+  border-radius: 15px;
+  list-style: none;
+  background: #dce8f7;
+  box-shadow: 0 10px 22px rgba(16,86,184,.27);
+}
+.bma-about-photo-row img { object-fit: cover; object-position: center; }
+.bma-about-story {
+  padding-block: clamp(48px, 5.2vw, 76px) clamp(52px, 5.4vw, 82px);
+  background: #fff;
+}
+.bma-about-story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.12fr;
+  gap: clamp(27px, 3vw, 46px);
+}
+.bma-about-story-copy {
+  padding-right: clamp(16px, 3.5vw, 52px);
+  border-right: 1px solid #d9e1ef;
+}
+.bma-about-story h2,
+.bma-about-principles h2 {
+  font-size: clamp(29px, 3.5vw, 47px);
+  font-weight: 830;
+  letter-spacing: -.06em;
+  line-height: 1.12;
+}
+.bma-about-story-copy p {
+  max-width: 590px;
+  margin-top: 26px;
+  color: #3b4965;
+  font-size: clamp(15px, 1.63vw, 21px);
+  line-height: 1.58;
+}
+.bma-about-story-copy p + p { margin-top: 17px; }
+.bma-about-audience h2 { margin-bottom: 22px; }
+.bma-about-audience-list { display: grid; gap: 10px; }
+.bma-about-audience-card {
+  display: grid;
+  grid-template-columns: 55px minmax(110px, .78fr) minmax(0, 1.12fr);
+  align-items: center;
+  min-height: clamp(63px, 6.6vw, 91px);
+  padding: 9px clamp(13px, 1.35vw, 21px);
+  border: 1px solid #d9e3f7;
+  border-radius: 14px;
+  background: linear-gradient(115deg, #fbfcff 4%, #f6f9ff 100%);
+  box-shadow: 0 9px 22px rgba(44,84,156,.08);
+}
+.bma-about-audience-card .bma-about-icon-tile { width: 45px; height: 45px; }
+.bma-about-audience-card .bma-about-icon-tile svg { width: 27px; height: 27px; }
+.bma-about-audience-card h3 {
+  padding: 0 clamp(10px, 1.2vw, 18px);
+  font-size: clamp(14px, 1.45vw, 19px);
+  font-weight: 780;
+  letter-spacing: -.04em;
+  line-height: 1.35;
+}
+.bma-about-audience-card p {
+  padding-left: clamp(13px, 1.65vw, 24px);
+  border-left: 1px solid #d4def0;
+  color: #33415d;
+  font-size: clamp(12px, 1.42vw, 18px);
+  line-height: 1.44;
+}
+.bma-about-principles {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(36px, 4.2vw, 61px) clamp(38px, 4.5vw, 66px);
+  border-radius: clamp(20px, 2.5vw, 32px);
+  background:
+    radial-gradient(ellipse at 100% 20%, rgba(165,204,255,.32), transparent 42%),
+    linear-gradient(132deg, #e9f1ff 0%, #eff5ff 51%, #e1edff 100%);
+}
+.bma-about-principles::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: -30%;
+  right: -10%;
+  width: 36%;
+  height: 140%;
+  background: rgba(111,171,254,.15);
+  clip-path: polygon(100% 0,100% 100%,0 75%);
+}
+.bma-about-principles > .bma-about-container { position: relative; z-index: 1; }
+.bma-about-principles h2 { margin-bottom: clamp(21px, 2.4vw, 34px); }
+.bma-about-principle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 19px);
+}
+.bma-about-principle-card {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(18px, 2.2vw, 30px);
+  min-height: clamp(109px, 12.6vw, 160px);
+  padding: clamp(14px, 1.6vw, 24px) clamp(18px, 2.6vw, 34px);
+  border: 1px solid #d9e2f2;
+  border-radius: 15px;
+  background: rgba(255,255,255,.80);
+  box-shadow: 0 11px 26px rgba(36,77,147,.05);
+  backdrop-filter: blur(8px);
+}
+.bma-about-principle-card .bma-about-icon-tile {
+  width: clamp(51px, 5.55vw, 72px);
+  height: clamp(51px, 5.55vw, 72px);
+}
+.bma-about-principle-card .bma-about-icon-tile svg {
+  width: clamp(28px, 2.9vw, 39px);
+  height: clamp(28px, 2.9vw, 39px);
+  stroke-width: 1.85;
+}
+.bma-about-principle-card h3 {
+  margin: 4px 0 5px;
+  font-size: clamp(16px, 1.7vw, 22px);
+  font-weight: 800;
+  line-height: 1.28;
+  letter-spacing: -.037em;
+}
+.bma-about-principle-card p {
+  max-width: 470px;
+  color: #31415f;
+  font-size: clamp(13px, 1.5vw, 19px);
+  line-height: 1.48;
+}
+.bma-about-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(138px, 15vw, 196px);
+  margin-top: 9px;
+  border-radius: 19px 19px 0 0;
+  background:
+    radial-gradient(ellipse at 48% 155%, rgba(0,199,255,.5), transparent 60%),
+    linear-gradient(115deg, #06257a, #0446cb 50%, #0663f5 100%);
+  color: #fff;
+}
+.bma-about-cta::before, .bma-about-cta::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  inset: 0;
+}
+.bma-about-cta::before {
+  background: linear-gradient(130deg, transparent 64%, rgba(95,157,255,.5) 64%, rgba(10,97,247,.55) 75%, transparent 75%);
+}
+.bma-about-cta::after {
+  background: linear-gradient(160deg, transparent 60%, rgba(0,151,255,.48) 60%, rgba(12,92,212,.15) 79%, transparent 79%);
+}
+.bma-about-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  min-height: inherit;
+  padding-block: 25px;
+}
+.bma-about-cta h2 {
+  color: #fff;
+  font-size: clamp(36px, 4vw, 53px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.055em;
+}
+.bma-about-cta p {
+  margin-top: 7px;
+  color: #fff;
+  font-size: clamp(14px, 1.63vw, 21px);
+  line-height: 1.4;
+}
+.bma-about-contact {
+  display: inline-flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex: none;
+  padding: 10px 19px;
+  border: 1px solid #d9e7ff;
+  border-radius: 11px;
+  background: #fff;
+  box-shadow: 0 9px 18px rgba(2,20,96,.16);
+  color: #0640e9;
+  font-size: clamp(13px, 1.45vw, 18px);
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.bma-about-contact:hover { transform: translateY(-2px); box-shadow: 0 13px 24px rgba(2,20,96,.21); }
+.bma-about-contact svg { width: 16px; height: 16px; }
+[data-page="about"] > footer { background: #0d1b32; }
+[data-page="about"] > footer > div:first-child { padding-top: clamp(36px, 4vw, 61px); padding-bottom: clamp(24px, 2.5vw, 37px); }
+[data-page="about"] > footer > div:last-child { border-color: rgba(255,255,255,.19); }
+[data-page="about"] > footer > div:last-child > div { padding-top: 14px; padding-bottom: 18px; }
+[data-page="about"] > header .bma-ref-nav a[aria-current="page"] {
+  position: relative;
+}
+[data-page="about"] > header .bma-ref-nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 2px;
+  background: #0746ff;
+}
+@media (min-width: 900px) and (max-width: 1150px) {
+  [data-page="about"] > header .bma-ref-nav { display: flex; gap: 15px; }
+  [data-page="about"] > header .bma-ref-nav a { font-size: 12px; }
+  [data-page="about"] > header .bma-ref-menu-button { display: none; }
+  [data-page="about"] > header .bma-ref-header-logo { width: 155px; }
+  [data-page="about"] > header .bma-ref-header-actions > a { font-size: 12px; }
+  [data-page="about"] > header .bma-ref-header-row { gap: 15px; }
+}
+@media (max-width: 1050px) {
+  .bma-about-container { width: calc(100% - 64px); }
+  .bma-about-hero-inner { gap: 14px; }
+  .bma-about-highlights { gap: 12px; }
+  .bma-about-story-grid { grid-template-columns: 1fr 1.1fr; }
+}
+@media (max-width: 850px) {
+  .bma-about-container { width: calc(100% - 48px); }
+  .bma-about-hero-inner {
+    min-height: 0;
+    padding-block: 58px 42px;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .bma-about-hero-copy { padding: 0; }
+  .bma-about-hero h1 { font-size: clamp(42px, 7.5vw, 65px); }
+  .bma-about-hero-description { max-width: 630px; font-size: 16px; }
+  .bma-about-highlights { margin-top: 30px; }
+  .bma-about-highlights li { font-size: 13px; }
+  .bma-about-visual { max-width: 700px; height: clamp(320px, 56vw, 440px); margin-inline: auto; }
+  .bma-about-story-grid { grid-template-columns: 1fr; gap: 36px; }
+  .bma-about-story-copy { border-right: 0; padding: 0; }
+  .bma-about-story h2, .bma-about-principles h2 { font-size: clamp(29px, 5vw, 42px); }
+  .bma-about-story-copy p { font-size: 16px; }
+  .bma-about-audience-card { grid-template-columns: 58px minmax(130px,.7fr) minmax(0,1fr); }
+  .bma-about-audience-card h3 { font-size: 16px; }
+  .bma-about-audience-card p { font-size: 14px; }
+  .bma-about-principle-card { padding: 18px; gap: 14px; }
+  .bma-about-principle-card .bma-about-icon-tile { width: 50px; height: 50px; }
+  .bma-about-principle-card h3 { font-size: 16px; }
+  .bma-about-principle-card p { font-size: 14px; }
+}
+@media (max-width: 600px) {
+  .bma-about-container { width: calc(100% - 36px); }
+  .bma-about-hero-inner { padding-block: 40px 30px; gap: 26px; }
+  .bma-about-hero h1 { font-size: clamp(36px, 10vw, 55px); }
+  .bma-about-hero h1 span { white-space: normal; }
+  .bma-about-hero-description { font-size: 15px; }
+  .bma-about-highlights { flex-wrap: wrap; gap: 15px; }
+  .bma-about-highlights li { font-size: 12px; }
+  .bma-about-highlights .bma-about-icon-tile { width: 37px; height: 37px; }
+  .bma-about-visual { width: 100%; height: clamp(275px, 78vw, 400px); }
+  .bma-about-main-photo { inset: 0 0 9% -2%; }
+  .bma-about-photo-row { left: 0; right: 0; gap: 5px; }
+  .bma-about-photo-row li { border-radius: 12px; }
+  .bma-about-story { padding-block: 46px 52px; }
+  .bma-about-story-copy p { margin-top: 20px; }
+  .bma-about-audience-card { grid-template-columns: 44px minmax(95px,.8fr) minmax(0,1fr); padding: 9px; min-height: 82px; }
+  .bma-about-audience-card .bma-about-icon-tile { width: 39px; height: 39px; }
+  .bma-about-audience-card h3 { padding: 0 7px; font-size: 13px; }
+  .bma-about-audience-card p { padding-left: 10px; font-size: 12px; }
+  .bma-about-principles { padding-block: 42px 46px; }
+  .bma-about-principle-grid { grid-template-columns: 1fr; }
+  .bma-about-principle-card { min-height: 100px; }
+  .bma-about-cta { border-radius: 15px 15px 0 0; }
+  .bma-about-cta-inner { flex-direction: column; align-items: flex-start; justify-content: center; gap: 18px; padding-block: 35px; }
+  .bma-about-cta h2 { font-size: 36px; }
+  .bma-about-cta p { font-size: 14px; }
+  .bma-about-contact { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bma-about-contact { transition: none; }
+}
