@@ -423,3 +423,70 @@
 @media (prefers-reduced-motion:reduce) {
   .bma-driver-button,.bma-driver-vehicle-tab,.bma-driver-faq-list summary svg {transition:none;}
 }
+
+
+/* Small information bridge in the desktop hero's empty space. Do not block vehicles. */
+.bma-driver-hero-guide {
+  position: absolute;
+  z-index: 3;
+  top: 56%;
+  left: 51%;
+  width: min(242px, 20%);
+  padding: 17px 17px 15px;
+  transform: translateY(-50%);
+  border: 1px solid rgba(148, 179, 228, .55);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, .95), rgba(238, 246, 255, .9));
+  box-shadow: 0 14px 35px rgba(21, 62, 123, .14), inset 0 1px rgba(255, 255, 255, .9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.bma-driver-hero-guide-heading {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d9e5f7;
+  color: #1746a0;
+  font-size: 10px;
+  font-weight: 840;
+  line-height: 1.3;
+  letter-spacing: .085em;
+}
+.bma-driver-hero-guide-heading svg {
+  flex: 0 0 auto;
+  width: 19px;
+  height: 19px;
+  color: #0752f1;
+}
+.bma-driver-hero-guide ol { display: grid; gap: 14px; padding: 13px 0 0; margin: 0; list-style: none; }
+.bma-driver-hero-guide li { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.bma-driver-hero-guide li > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 27px;
+  height: 27px;
+  border-radius: 8px;
+  background: #dceaff;
+  color: #0647db;
+  font-size: 11px;
+  font-weight: 850;
+}
+.bma-driver-hero-guide li > div { min-width: 0; }
+.bma-driver-hero-guide strong {
+  display: block;
+  color: #101c36;
+  font-size: 12px;
+  line-height: 1.26;
+  letter-spacing: -.016em;
+}
+.bma-driver-hero-guide small {
+  display: block;
+  margin-top: 3px;
+  color: #445875;
+  font-size: 10px;
+  line-height: 1.4;
+}
+@media (max-width: 1360px) {
+  .bma-driver-hero-guide { display: none; }
+}
