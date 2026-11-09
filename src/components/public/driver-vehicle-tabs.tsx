@@ -1,24 +1,19 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Check } from "lucide-react";
-import { FormatPreviewArt } from "@/components/landing/format-preview-art";
-import { Tabs } from "@/components/ui";
-import type { Placement } from "@/types/domain";
-import { primaryButton } from "./marketing-blocks";
+import { Bike, BusFront, CarFront, Check, Info } from "lucide-react";
 
-const options: {
-  key: string;
-  name: string;
-  type: Placement;
-  description: string;
-  points: string[];
-}[] = [
+type VehicleKey = "bike" | "auto" | "car";
+
+const vehicles = [
   {
-    key: "bike",
+    key: "bike" as const,
     name: "Bike",
-    type: "bike_rear",
+    icon: Bike,
+    image: "/images/blinkmyad/ad-formats/bike-rear.webp",
+    alt: "Illustration of a scooter fitted with a rear BlinkMyAd advertising screen",
     description: "A compact screen mounted behind the rider.",
     points: [
       "Two-wheeler in good condition",
@@ -27,72 +22,86 @@ const options: {
     ],
   },
   {
-    key: "auto",
+    key: "auto" as const,
     name: "Auto rickshaw",
-    type: "auto_rear",
-    description: "A screen on the back or side of the auto.",
+    icon: BusFront,
+    image: "/images/blinkmyad/ad-formats/auto-rear.webp",
+    alt: "Illustration of an auto-rickshaw with a rear digital advertising screen",
+    description: "A rear or side screen for campaigns on your local routes.",
     points: [
-      "Rear or side placement",
-      "Local routes suit neighbourhood campaigns",
-      "Verified before any ad is assigned",
+      "Auto in good working condition",
+      "Approved rear or side placement",
+      "Verification required before assignments",
     ],
   },
   {
-    key: "car",
+    key: "car" as const,
     name: "Car",
-    type: "car_interior",
-    description: "A seat-back screen that passengers see.",
+    icon: CarFront,
+    image: "/images/blinkmyad/ad-formats/car-interior.webp",
+    alt: "Illustration of a passenger-facing in-car advertising screen",
+    description: "A screen seen by passengers during their journey.",
     points: [
-      "Passenger-facing screen",
-      "Suits ride-hailing and taxi cars",
-      "Installed after your application is approved",
+      "Eligible taxi or passenger vehicle",
+      "Approved screen placement and installation",
+      "Earnings linked to eligible campaigns",
     ],
   },
 ];
 
 export function DriverVehicleTabs() {
-  const [current, setCurrent] = React.useState("bike");
-  const selected = options.find((x) => x.key === current) ?? options[0]!;
+  const [current, setCurrent] = React.useState<VehicleKey>("bike");
+  const selected = vehicles.find(vehicle => vehicle.key === current) ?? vehicles[0]!;
+
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(280px,0.8fr)]">
-      <div>
-        <Tabs
-          label="Vehicle type"
-          tabs={options.map((o) => ({ value: o.key, label: o.name }))}
-          value={current}
-          onValueChange={setCurrent}
-        />
-        <div className="mt-6 grid gap-6 sm:grid-cols-[1.2fr_1fr]">
-          <div className="aspect-[1.75] overflow-hidden rounded-lg border border-line">
-            <FormatPreviewArt type={selected.type} />
+    <div className="bma-driver-vehicle-layout">
+      <div className="bma-driver-vehicle-choice">
+        <div className="bma-driver-vehicle-tabs" role="group" aria-label="Vehicle type">
+          {vehicles.map(({ key, name, icon: Icon }) => (
+            <button
+              key={key}
+              type="button"
+              aria-pressed={current === key}
+              onClick={() => setCurrent(key)}
+              className="bma-driver-vehicle-tab"
+            >
+              <Icon aria-hidden="true" />
+              {name}
+            </button>
+          ))}
+        </div>
+
+        <div className="bma-driver-vehicle-preview" aria-live="polite">
+          <div className="bma-driver-vehicle-photo">
+            <Image
+              key={selected.key}
+              src={selected.image}
+              alt={selected.alt}
+              fill
+              sizes="(max-width: 700px) 82vw, (max-width: 1100px) 40vw, 300px"
+            />
+            <span>Illustration</span>
           </div>
-          <div>
-            <h3 className="font-heading text-xl font-semibold text-ink">{selected.name}</h3>
-            <p className="mt-1 text-base text-ink-muted">{selected.description}</p>
-            <ul className="mt-4 space-y-2">
-              {selected.points.map((point) => (
-                <li key={point} className="flex items-start gap-2 text-base text-ink">
-                  <Check className="mt-1 size-4 shrink-0 text-success-fg" aria-hidden />
-                  {point}
-                </li>
+          <div className="bma-driver-vehicle-description">
+            <h3>{selected.name}</h3>
+            <p>{selected.description}</p>
+            <ul>
+              {selected.points.map(point => (
+                <li key={point}><Check aria-hidden="true" />{point}</li>
               ))}
             </ul>
           </div>
         </div>
       </div>
-      <aside className="rounded-lg bg-night p-6 text-white">
-        <h3 className="font-heading text-xl font-semibold">What you can earn</h3>
-        <p className="mt-3 text-base text-[#c3d0e4]">
-          Earnings depend on your vehicle, your routes in Prayagraj, the campaigns assigned to your screen, how
-          long the screen is online and your partner agreement.
-        </p>
-        <p className="mt-4 rounded-lg border border-white/25 p-4 text-sm">
-          BlinkMyAd does not publish a guaranteed monthly amount. You see the confirmed rate in your
-          agreement before you sign.
-        </p>
-        <Link href="/signup?role=driver" className={primaryButton + " mt-6 w-full"}>
-          Apply as a driver partner
-        </Link>
+
+      <aside className="bma-driver-earn-card" aria-labelledby="driver-earn-title">
+        <h3 id="driver-earn-title">What you can earn</h3>
+        <p>Earnings depend on your vehicle, your routes in Prayagraj, the campaigns assigned to your screen, how long the screen is online and your partner agreement.</p>
+        <div className="bma-driver-earn-note">
+          <Info aria-hidden="true" />
+          <span>BlinkMyAd does not publish a guaranteed monthly amount. You see the confirmed rate in your agreement before you sign.</span>
+        </div>
+        <Link href="/signup?role=driver" className="bma-driver-earn-button">Apply as a driver partner</Link>
       </aside>
     </div>
   );
