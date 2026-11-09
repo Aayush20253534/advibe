@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Cookie, Database, FileText, Info, KeyRound, ShieldCheck, UserRound } from "lucide-react";
+import { ArrowUpRight, Cookie, FileText, KeyRound, ShieldCheck, UserRound } from "lucide-react";
 import { publicMetadata } from "@/config/public-metadata";
 import { brand } from "@/config/brand";
 import { DetailPage, DetailHero, DetailSection, DetailCards, DetailRibbon, DetailCTA } from "@/components/public/secondary-pages";
