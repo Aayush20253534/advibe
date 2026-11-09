@@ -22,6 +22,7 @@ test("sign-in keeps live login, MFA, reset notices and safe redirects",()=>{
  assert.match(page,/BmaLoginForm/);
  for(const part of ['"/auth/login"','"/auth/mfa/verify"',"liveSession()","safeAuthNext","router.refresh()","/forgot-password","/signup","one-time-code","showPassword"]) assert.ok(form.includes(part),part);
  assert.match(form,/result\.challengeId&&result\.ticket/);
+ assert.match(form,/!remember \? \{ remember: false \} : \{\}/,"Normal sign-in omits optional persistence override");
  assert.match(form,/status=params\.get\("verified"\)/);
  assert.doesNotMatch(form,/localStorage|sessionStorage|mockLogin/);
  assert.match(read("src/app/(auth)/signin/page.tsx"),/redirect\("\/login"\)/);
