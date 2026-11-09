@@ -24,7 +24,7 @@ try{
     await context.route("**/api/backend/**",route=>route.fulfill({status:503,contentType:"application/json",body:JSON.stringify({error:{code:"TEST_UNAVAILABLE",message:"Temporary service interruption"}})}));
     const page=await context.newPage();
     const errors=[];page.on("pageerror",error=>errors.push(error.message));
-    const paths=width===768?["/","/locations","/how-it-works","/for-drivers","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/how-it-works","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
+    const paths=width===768?["/","/locations","/how-it-works","/for-drivers","/for-advertisers","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/how-it-works","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
     for(const path of paths){
       await page.goto(base+path,{waitUntil:"domcontentloaded",timeout:45000});
       await page.locator("h1").waitFor({state:"visible",timeout:45000});
@@ -48,8 +48,29 @@ try{
         assert.equal(await homeLogo.count(),1,`${path}: one home-linked BlinkMyAd logo`);
         assert.ok(await homeLogo.isVisible(),`${path}: home logo is visible`);
       }
+      if(path==="/for-advertisers"){
+        assert.equal(await page.getByRole("heading",{name:/Make your next.*move visible/s}).count(),1,"Advertiser headline matches reference");
+        assert.equal(await page.locator(".bma-advertisers-advantage").count(),4,"Four advertiser benefit cards");
+        assert.equal(await page.locator(".bma-advertisers-step").count(),4,"Four campaign stages");
+        assert.equal(await page.locator(".bma-advertisers-format").count(),3,"Three vehicle formats");
+        assert.equal(await page.locator(".bma-advertisers-faq-list details").count(),5,"Five advertiser FAQs");
+        assert.equal(await page.locator(".bma-advertisers-hero-art img").count(),1,"Vehicle fleet hero visible");
+        const advFAQ=page.locator(".bma-advertisers-faq-list details").first();
+        await advFAQ.locator("summary").click();
+        assert.ok(await advFAQ.evaluate(el=>el.open),"Advertiser FAQ expands");
+        await advFAQ.locator("summary").click();
+        assert.ok(!await advFAQ.evaluate(el=>el.open),"Advertiser FAQ closes");
+        const closing=page.locator(".bma-advertisers-closing");
+        assert.equal(await closing.count(),1,"Advertiser closing banner rendered once");
+        assert.ok(await closing.evaluate(el=>getComputedStyle(el).backgroundImage.includes("cta-wave.webp")),"Advertiser closing banner uses matching blue wave");
+        assert.equal(await closing.getByRole("link",{name:/Create an advertiser account/}).getAttribute("href"),"/signup?role=advertiser");
+        assert.equal(await page.getByRole("link",{name:"Estimate the cost"}).getAttribute("href"),"/pricing");
+      }
       if(path==="/for-drivers"){
         assert.equal(await page.getByRole("heading",{name:/Drive your routes/}).count(),1,"Dedicated driver hero exists");
+        const driverHero=page.locator(".bma-driver-hero-art img");
+        assert.equal(await driverHero.getAttribute("src"),"/images/hero/234.png","Use uploaded driver hero 234.png");
+        assert.ok(await driverHero.evaluate(img=>img.complete&&img.naturalWidth>0),"Uploaded driver hero loads");
         assert.equal(await page.locator(".bma-driver-benefit-card").count(),4,"Four driver benefit cards");
         assert.equal(await page.locator(".bma-driver-process-card").count(),4,"Four driver onboarding steps");
         assert.equal(await page.locator(".bma-driver-trust-card").count(),4,"Four safety and trust cards");
