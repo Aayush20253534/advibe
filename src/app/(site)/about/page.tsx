@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowUpRight,
+  ArrowRight,
   BadgeCheck,
   CarFront,
   Eye,
@@ -203,7 +203,7 @@ export default function AboutPage() {
             <p>Questions about advertising, partnering or working with BlinkMyAd?</p>
           </div>
           <Link className="bma-about-contact" href="/contact">
-            Contact BlinkMyAd <ArrowUpRight aria-hidden="true" />
+            Contact BlinkMyAd <ArrowRight aria-hidden="true" />
           </Link>
         </div>
       </section>
