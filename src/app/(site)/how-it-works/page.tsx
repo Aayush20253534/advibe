@@ -291,7 +291,7 @@ export default function HowItWorksPage() {
 
       <section className="bma-how-final" aria-labelledby="how-final-title">
         <div className="bma-how-final-art" aria-hidden="true">
-          <Image src="/images/blinkmyad/auto.webp" alt="" fill sizes="(max-width: 720px) 0px, 360px" />
+          <Image src="/images/blinkmyad/auto.webp" alt="" fill unoptimized sizes="(max-width: 720px) 0px, 360px" />
         </div>
         <div className="bma-how-final-copy">
           <h2 id="how-final-title">Ready to launch your first<br />moving campaign?</h2>
