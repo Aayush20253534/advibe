@@ -28,13 +28,17 @@ export async function resolvePrincipal(
       !session.user.passwordHash) {
     throw new HttpError(401, "UNAUTHENTICATED", "Authentication required");
   }
+  const mfaSessionValid = Boolean(session.mfaVerifiedAt && session.user.mfaCredential?.enabledAt &&
+    session.mfaVerifiedAt >= session.user.mfaCredential.enabledAt);
+  // Admin sessions must originate from a dedicated Admin login, never an existing
+  // Advertiser/Driver cookie whose user role was changed in the database.
   if (session.user.role === "ADMIN" &&
-      (!session.mfaVerifiedAt || !session.user.mfaCredential?.enabledAt ||
-       session.mfaVerifiedAt < session.user.mfaCredential.enabledAt)) {
+      (settings.adminMfaRequired !== false ? !mfaSessionValid
+        : !mfaSessionValid && !session.adminPasswordVerifiedAt)) {
     throw new HttpError(401, "MFA_REQUIRED", "Admin MFA verification required");
   }
-  if (session.user.role !== "ADMIN" && session.mfaVerifiedAt) {
-    // Demotion does not turn an Admin-scoped session into a lower-privilege session.
+  if (session.user.role !== "ADMIN" && (session.mfaVerifiedAt || session.adminPasswordVerifiedAt)) {
+    // Demotion invalidates both MFA and password-only Admin sessions.
     throw new HttpError(401, "SESSION_INVALIDATED", "Sign in again after a role change");
   }
   return {

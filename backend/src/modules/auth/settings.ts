@@ -6,6 +6,8 @@ export interface AuthSettings {
   resendApiKey?: string;
   mailFrom?: string;
   mfaEncryptionKey?: string;
+  /** Defaults to true. Only an explicit ADMIN_MFA_REQUIRED=false disables MFA. */
+  adminMfaRequired?: boolean;
 }
 export function loadAuthSettings(env: NodeJS.ProcessEnv, app: AppConfig): AuthSettings {
   const secret = env.AUTH_SECRET;
@@ -18,12 +20,17 @@ export function loadAuthSettings(env: NodeJS.ProcessEnv, app: AppConfig): AuthSe
   if (env.AUTH_EMAIL_FROM && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(env.AUTH_EMAIL_FROM)) {
     throw new Error("AUTH_EMAIL_FROM must be an email address");
   }
+  if (env.ADMIN_MFA_REQUIRED !== undefined && !["true", "false"].includes(env.ADMIN_MFA_REQUIRED)) {
+    throw new Error("ADMIN_MFA_REQUIRED must be true or false");
+  }
+  const adminMfaRequired = env.ADMIN_MFA_REQUIRED !== "false";
   if (env.MFA_ENCRYPTION_KEY && !/^[0-9a-f]{64}$/i.test(env.MFA_ENCRYPTION_KEY)) {
     throw new Error("MFA_ENCRYPTION_KEY must be 64 hexadecimal characters");
   }
-  if (app.nodeEnv === "production" && !env.MFA_ENCRYPTION_KEY) {
+  if (app.nodeEnv === "production" && adminMfaRequired && !env.MFA_ENCRYPTION_KEY) {
     throw new Error("Production Admin MFA requires MFA_ENCRYPTION_KEY");
   }
-  return { mfaEncryptionKey: env.MFA_ENCRYPTION_KEY, secret, secureCookies: app.nodeEnv === "production", webOrigin,
+  return { mfaEncryptionKey: env.MFA_ENCRYPTION_KEY, adminMfaRequired, secret,
+    secureCookies: app.nodeEnv === "production", webOrigin,
     resendApiKey: env.RESEND_API_KEY, mailFrom: env.AUTH_EMAIL_FROM };
 }

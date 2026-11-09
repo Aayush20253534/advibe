@@ -105,6 +105,7 @@ model Session {
   revokedAt  DateTime? @db.Timestamptz(6)
   user       User      @relation(fields: [userId], references: [id], onDelete: Restrict)
   mfaVerifiedAt DateTime? @db.Timestamptz(6)
+  adminPasswordVerifiedAt DateTime? @db.Timestamptz(6)
 
   @@index([userId, revokedAt, expiresAt])
   @@index([expiresAt])

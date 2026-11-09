@@ -43,3 +43,19 @@ test("B2 rejects non-TLS production database URLs", () => {
   const result = loadDatabaseConfig({ NODE_ENV: "production", DATABASE_URL: value, DIRECT_URL: value });
   assert.equal(result.runtimeUrl, value);
 });
+
+import { loadAuthSettings } from "../src/modules/auth/settings.js";
+
+test("Admin MFA defaults on, permits an explicit temporary opt-out, and rejects ambiguous values", () => {
+  const testConfig = loadConfig({ NODE_ENV: "test" });
+  const secret = "local_auth_secret_at_least_32_characters_long";
+  assert.equal(loadAuthSettings({ AUTH_SECRET: secret }, testConfig).adminMfaRequired, true);
+  assert.equal(loadAuthSettings({ AUTH_SECRET: secret, ADMIN_MFA_REQUIRED: "true" }, testConfig).adminMfaRequired, true);
+  assert.equal(loadAuthSettings({ AUTH_SECRET: secret, ADMIN_MFA_REQUIRED: "false" }, testConfig).adminMfaRequired, false);
+  assert.throws(() => loadAuthSettings({ AUTH_SECRET: secret, ADMIN_MFA_REQUIRED: "FALSE" }, testConfig), /ADMIN_MFA_REQUIRED/);
+
+  const prodConfig = loadConfig({ NODE_ENV: "production", CORS_ORIGINS: "https://blinkmyad.example" });
+  const prod = { AUTH_SECRET: secret, RESEND_API_KEY: "fake-test-key", AUTH_EMAIL_FROM: "auth@blinkmyad.example" };
+  assert.throws(() => loadAuthSettings(prod, prodConfig), /MFA_ENCRYPTION_KEY/);
+  assert.equal(loadAuthSettings({ ...prod, ADMIN_MFA_REQUIRED: "false" }, prodConfig).adminMfaRequired, false);
+});
