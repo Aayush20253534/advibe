@@ -1,5 +1,7 @@
 "use client";
 import * as React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {PublishedAreaMap} from "@/components/public/published-area-map";
 import {api,newIdempotencyKey} from "@/services/api-client";
 import {StatusTag,useAuth,useCollection,Panel,Notice,CollectionNotice,Pagination,field,label,primary,secondary,message,money,formatDate,
@@ -69,6 +71,17 @@ export function Directory({kind}:{kind:"locations"|"ad-formats"}){
  const inventory=useCollection<Inventory>("/inventory/screens?citySlug=prayagraj&limit=100");
  const [search,setSearch]=React.useState("");
  return <div className="space-y-5">
+  {kind==="ad-formats"&&<section className="bma-adv-format-gallery" aria-label="Illustrated screen formats">
+   {[
+    {title:"Bike screens",src:"/images/blinkmyad/ad-formats/bike-rear.webp",alt:"Bike-mounted display illustration"},
+    {title:"Auto screens",src:"/images/blinkmyad/ad-formats/auto-rear.webp",alt:"Auto-rickshaw digital display illustration"},
+    {title:"Car screens",src:"/images/blinkmyad/ad-formats/car-interior.webp",alt:"Passenger-facing interior display illustration"},
+   ].map(item=><article className="bma-adv-format-gallery-item" key={item.title}>
+    <div className="bma-adv-format-gallery-image"><Image src={item.src} alt={item.alt} fill sizes="(max-width:640px) 90vw,30vw" /></div>
+    <h2>{item.title}</h2>
+   </article>)}
+   <Link href="/ad-formats" className="bma-adv-format-gallery-link">View creative specifications and examples <span aria-hidden="true">↗</span></Link>
+  </section>}
   <Notice>A listed location or screen isn&apos;t a guarantee that it can be booked. Availability is confirmed when you request a quote in Billing and payments.</Notice>
   {kind==="locations"&&<Panel title="Locations">
    <label className={label}>Search areas on this page<input className={field+" max-w-lg"} value={search} onChange={e=>setSearch(e.target.value)}/></label>
