@@ -148,12 +148,12 @@ export function BmaLoginForm() {
         </button>}
       </form>
 
-      {!isMfa && !adminSignIn && <>
+      {!isMfa && !adminSignIn && (
         <p className="bma-reference-auth-bottom">
           Don&apos;t have an account?{" "}
           <Link prefetch={false} href={"/signup?role=" + role}>Create a campaign <ArrowUpRight aria-hidden="true" className="inline-block size-4 align-[-2px]" /></Link>
         </p>
-      }
+      )}
     </section>
   );
 }
