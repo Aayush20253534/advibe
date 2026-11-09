@@ -429,8 +429,8 @@
 [data-page="how-it-works"] > footer > div:first-child { padding-top: clamp(31px,3.6vw,50px);padding-bottom: clamp(27px,3vw,43px); }
 @media (max-width: 1170px) {
   .bma-how-shell { width: calc(100% - 70px); }
-  .bma-how-hero-copy { width: 50%; }
-  .bma-how-hero h1 { font-size:clamp(35px,3.45vw,49px); }
+  .bma-how-hero-copy { width: 100%; }
+  .bma-how-hero h1 { font-size:clamp(32px,3.2vw,46px); }
   .bma-how-overview-grid { gap: 30px; }
   .bma-how-overview-card:not(:last-child)::after { left: calc(100% + 15px); }
   .bma-how-journeys { gap: 16px; }
