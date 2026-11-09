@@ -36,7 +36,7 @@ const roles = {
   admin: {
     portal: "Admin portal",
     gateTitle: "Secure Admin access",
-    signIn: "Sign in with Admin MFA",
+    signIn: "Secure Admin sign in",
     wrongRoleMessage: "This account has no Admin permission.",
     navCount: 18,
     rootTitle: "Dashboard",
@@ -178,7 +178,16 @@ try {
           "Driver content uses redesigned shared panels");
       }
 
-      await page.getByRole("navigation", { name: "Breadcrumb" }).waitFor();
+      if (role === "admin") {
+         assert.equal(await page.locator(".bma-admin-portal").count(), 1, "Admin theme attached to the portal root");
+         await page.locator(".bma-admin-dashboard-hero").waitFor();
+         assert.equal(await page.locator(".bma-admin-sidebar-promo").count(), 1,
+           "Admin sidebar provides review queue access");
+         assert.ok(await page.locator(".bma-admin-shortcut").count() >= 4,
+           "Admin dashboard exposes operational quick links");
+       }
+
+       await page.getByRole("navigation", { name: "Breadcrumb" }).waitFor();
       assert.equal(
         await page
           .getByRole("link", { name: "Notifications", exact: true })

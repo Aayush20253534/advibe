@@ -53,3 +53,38 @@ test("Frontend bridge excludes device key and webhook mutations, permits sanitiz
  assert.equal(allowedApiPath(["webhooks","cashfree","payments"],"POST"),false);
  assert.equal(allowedApiPath(["admin","reports","export"],"GET"),true);
 });
+
+test("All Admin routes use the premium portal theme without changing role or API boundaries",()=>{
+ const layout=read("src/app/(portals)/0000BMA0/admin/layout.tsx");
+ const shell=read("src/components/portal/portal-shell.tsx");
+ const portal=read("src/features/admin-live/portal.tsx");
+ const shared=read("src/features/admin-live/common.tsx");
+ const dashboard=read("src/features/admin-live/operations.tsx");
+ const theme=read("src/features/admin-live/admin-theme.css");
+ const navigation=read("src/config/navigation.ts");
+ assert.match(layout,/admin-theme\.css/);
+ assert.match(shell,/bma-admin-portal/);
+ assert.match(shell,/bma-admin-sidebar-mobile/);
+ assert.match(shell,/bma-admin-page-header/);
+ assert.match(shell,/Admin access active/);
+ assert.doesNotMatch(shell,/MFA-protected session/);
+ assert.match(portal,/AdminContext\.Provider/);
+ assert.match(portal,/descriptions\[path\]/);
+ assert.match(portal,/ADMIN_LOGIN/);
+ for(const classname of ["bma-admin-card","bma-admin-table","bma-admin-field","bma-admin-primary","bma-admin-secondary"]){
+  assert.ok(shared.includes(classname), classname+" is missing from Admin's shared components");
+  assert.ok(theme.includes("."+classname),classname+" is missing from the Admin theme");
+ }
+ for(const classname of ["bma-admin-dashboard-hero","bma-admin-dashboard-metrics","bma-admin-shortcuts"]){
+  assert.ok(dashboard.includes(classname),classname+" missing in data-backed dashboard");
+  assert.ok(theme.includes("."+classname),classname+" missing from design system");
+ }
+ for(const route of ["campaigns","advertisers","drivers","screens","locations","ad-formats",
+  "pricing","approvals","bookings","payments","settlements","analytics","users","audit",
+  "notifications","support","settings"]){
+  assert.ok(navigation.includes('"/0000BMA0/admin/'+route+'"'),route+" route missing from Admin navigation");
+  assert.ok(portal.includes(route+':"')||portal.includes('"'+route+'":'),route+" missing from Admin page descriptions");
+ }
+ assert.match(dashboard,/api<Reports>\("\/admin\/reports"\)/);
+ assert.doesNotMatch(dashboard,/localStorage|sessionStorage|DEMO_USERS/);
+});

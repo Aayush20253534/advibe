@@ -2,8 +2,11 @@
 // Exact-text checks in tests/b4-admin-live-contract.test.mjs: keep the request bodies below
 // (expectedStatus:selected.status.toUpperCase(), expectedVersion:detail.version) compact.
 import * as React from "react";
+import Link from "next/link";
+import { ArrowUpRight, ChartNoAxesCombined, ClipboardCheck, Megaphone, MonitorCheck, Radar, RefreshCw, ShieldCheck } from "lucide-react";
+import { ADMIN_ROOT } from "@/lib/admin-paths.mjs";
 import {api,downloadApiCsv} from "@/services/api-client";
-import {Dialog,Metric} from "@/components/ui";
+import {Dialog} from "@/components/ui";
 import {Card,Alert,Tag,Table,FetchState,Pager,ActionResult,Confirm,useRows,useAction,humanize,line,label,primary,secondary,date,rupees,explain} from "./common";
 import type {User,Reports,Ticket,Campaign} from "./common";
 function useReport(){
@@ -22,25 +25,103 @@ const financeLabels:Record<string,string>={
  periodDifferencePaise:"Net for the period",paidUnallocatedGrossPaise:"Paid, not yet allocated (gross)",
  reviewedDriverEarningsPaise:"Reviewed driver earnings",confirmedDriverPayoutsPaise:"Confirmed driver payouts",
 };
+const adminShortcuts=[
+ {title:"Review approvals",description:"Resolve campaign, creative and partner decisions.",href:ADMIN_ROOT+"/approvals",icon:ClipboardCheck},
+ {title:"Campaign activity",description:"Inspect submitted campaigns and their review state.",href:ADMIN_ROOT+"/campaigns",icon:Megaphone},
+ {title:"Screens and devices",description:"Review device inventory and assigned locations.",href:ADMIN_ROOT+"/screens",icon:MonitorCheck},
+ {title:"Reports",description:"Explore recorded performance and supported exports.",href:ADMIN_ROOT+"/analytics",icon:ChartNoAxesCombined},
+];
+function AdminMetric({name,value}:{name:string;value:number}){
+ return <div className="bma-admin-metric">
+  <p className="bma-admin-metric-label">{humanize(name)}</p>
+  <p className="bma-admin-metric-value tabular-nums">{value.toLocaleString("en-IN")}</p>
+  <p className="bma-admin-metric-meta">Recorded platform total</p>
+ </div>;
+}
 export function Overview(){
  const report=useReport();
  const finance=report.value?Object.entries(report.value.financial):[];
- return <div className="space-y-4">
-  <Card title="Platform activity" tools={<button className={secondary} onClick={report.refresh}>Refresh</button>}>
-   {report.loading&&<p role="status" className="text-sm text-ink-muted">Loading…</p>}
+ const counts=report.value?Object.entries(report.value.counts):[];
+ return <div className="bma-admin-dashboard">
+  <section className="bma-admin-dashboard-hero" aria-labelledby="admin-hero-title">
+   <div className="bma-admin-dashboard-copy">
+    <div className="bma-admin-dashboard-eyebrow"><span aria-hidden="true"/>BLINKMYAD CONTROL CENTER</div>
+    <h2 id="admin-hero-title">One platform. Every operation in view.</h2>
+    <p>Review campaigns, coordinate partner operations and keep important decisions moving from a single secure workspace.</p>
+    <div className="bma-admin-dashboard-actions">
+     <Link href={ADMIN_ROOT+"/approvals"} className="bma-admin-dashboard-hero-primary">Review approvals <ArrowUpRight aria-hidden="true"/></Link>
+     <Link href={ADMIN_ROOT+"/analytics"} className="bma-admin-dashboard-hero-secondary">View reports <ArrowUpRight aria-hidden="true"/></Link>
+    </div>
+   </div>
+   <div className="bma-admin-dashboard-art" aria-hidden="true">
+    <div className="bma-admin-dashboard-orbit"><Radar/></div>
+    <div className="bma-admin-dashboard-art-label"><span/>PLATFORM OPERATIONS</div>
+   </div>
+  </section>
+  <section aria-labelledby="admin-snapshot-heading">
+   <div className="bma-admin-dashboard-subheading mb-4">
+    <div><h2 id="admin-snapshot-heading">Platform snapshot</h2>
+     <p className="mt-1">Recorded figures only. No simulated growth or projected reach.</p></div>
+    <button className={secondary} onClick={report.refresh} disabled={report.loading}>
+     <RefreshCw aria-hidden="true" className="size-4"/> Refresh data
+    </button>
+   </div>
+   {report.loading&&<div role="status" className="bma-admin-empty">Loading verified operational metrics…</div>}
    {report.error&&<Alert type="error">{report.error}</Alert>}
-   {report.value&&<><p className="text-sm text-ink-muted tabular-nums">{report.value.period.from} to {report.value.period.to} ({report.value.period.timezone})</p>
-    <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-     {Object.entries(report.value.counts).map(([key,value])=><Metric key={key} label={humanize(key)} value={value} className="p-3"/>)}
-    </div></>}
-  </Card>
-  <Card title="Confirmed money">
-   {report.value?<Table caption="Confirmed money for the period" rows={finance} rowKey={r=>r[0]} cols={[
-    {key:"m",header:"Measure",cell:r=>financeLabels[r[0]]??humanize(r[0])},
-    {key:"a",header:"Amount",numeric:true,cell:r=>rupees(r[1])},
-   ]}/>:<p className="text-sm text-ink-muted">Totals are unavailable until the report loads.</p>}
-   <p className="text-sm text-ink-muted">Counts and amounts come from recorded payments and reviews for the period. They are not projected reach, profit or verified impressions.</p>
-  </Card>
+   {report.value&&<>
+    <p className="bma-admin-period mb-3">{report.value.period.from} to {report.value.period.to} · {report.value.period.timezone}</p>
+    {counts.length?<div className="bma-admin-dashboard-metrics">
+     {counts.slice(0,4).map(([name,value])=><AdminMetric key={name} name={name} value={value}/>)}
+    </div>:<p className="bma-admin-empty">No platform activity totals were returned for this period.</p>}
+   </>}
+  </section>
+  <section aria-labelledby="admin-workspace-heading">
+   <div className="bma-admin-dashboard-subheading mb-4">
+    <div><h2 id="admin-workspace-heading">Manage your workspace</h2>
+     <p className="mt-1">Direct access to the workflows that need an administrator.</p></div>
+   </div>
+   <div className="bma-admin-shortcuts">
+    {adminShortcuts.map(item=><Link className="bma-admin-shortcut" key={item.href} href={item.href}>
+     <span className="bma-admin-shortcut-icon"><item.icon aria-hidden="true"/></span>
+     <strong>{item.title}<ArrowUpRight aria-hidden="true"/></strong>
+     <span>{item.description}</span>
+    </Link>)}
+   </div>
+  </section>
+  {counts.length>4&&<Card title="Detailed platform activity">
+   <div className="bma-admin-dashboard-metrics">
+    {counts.slice(4).map(([name,value])=><AdminMetric key={name} name={name} value={value}/>)}
+   </div>
+  </Card>}
+  <div className="bma-admin-dashboard-details">
+   <Card title="Confirmed financial activity">
+    {report.value?<Table caption="Confirmed money for the period" rows={finance} rowKey={r=>r[0]} cols={[
+     {key:"m",header:"Recorded measure",cell:r=>financeLabels[r[0]]??humanize(r[0])},
+     {key:"a",header:"Confirmed amount",numeric:true,cell:r=>rupees(r[1])},
+    ]}/>:<p className="bma-admin-empty">Confirmed financial totals appear after the report loads.</p>}
+    <p className="text-sm leading-6 text-ink-muted">Amounts reflect recorded payments and reviewed transactions. They are not business profit or independently verified impressions.</p>
+   </Card>
+   <Card title="Governance and controls">
+    <div className="space-y-4">
+     <div className="flex items-start gap-3">
+      <span className="bma-admin-shortcut-icon shrink-0"><ShieldCheck aria-hidden="true"/></span>
+      <div><h3 className="font-semibold text-ink">Permission-scoped access</h3>
+       <p className="mt-1 text-sm leading-6 text-ink-muted">Protected actions follow the Admin account role and server-side validation.</p></div>
+     </div>
+     <div className="flex items-start gap-3">
+      <span className="bma-admin-shortcut-icon shrink-0"><ClipboardCheck aria-hidden="true"/></span>
+      <div><h3 className="font-semibold text-ink">Reviewed decisions</h3>
+       <p className="mt-1 text-sm leading-6 text-ink-muted">Campaign and partner approvals require explicit review and recorded reasons.</p></div>
+     </div>
+     <div className="flex items-start gap-3">
+      <span className="bma-admin-shortcut-icon shrink-0"><ChartNoAxesCombined aria-hidden="true"/></span>
+      <div><h3 className="font-semibold text-ink">Auditable activity</h3>
+       <p className="mt-1 text-sm leading-6 text-ink-muted">Inspect the audit history before acting on operational or financial records.</p></div>
+     </div>
+     <Link href={ADMIN_ROOT+"/audit"} className="bma-admin-header-action mt-1">Open audit history <ArrowUpRight aria-hidden="true"/></Link>
+    </div>
+   </Card>
+  </div>
  </div>;
 }
 export function Users({onlyRole}:{onlyRole?:string}){
