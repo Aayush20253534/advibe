@@ -1,12 +1,11 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Monitor, Target } from "lucide-react";
-import { FormatPreviewArt } from "@/components/landing/format-preview-art";
-import { Tabs } from "@/components/ui";
+import { ArrowRight, Check, Info, Layers3, Monitor, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { formatCards, InfoNote, outlineButton, primaryButton } from "./marketing-blocks";
+import { formatCards } from "./marketing-blocks";
 
 const extras = [
   {
@@ -27,7 +26,6 @@ const extras = [
 const all = [...formatCards, ...extras];
 type CatalogItem = (typeof all)[number];
 type Filter = "all" | "bike" | "auto" | "car" | "other";
-
 const filters: { value: Filter; label: string }[] = [
   { value: "all", label: "All formats" },
   { value: "bike", label: "Bike" },
@@ -35,115 +33,195 @@ const filters: { value: Filter; label: string }[] = [
   { value: "car", label: "Car" },
   { value: "other", label: "Other" },
 ];
+const photos = {
+  bike_rear: {
+    file: "bike-rear",
+    alt: "Illustration of a compact rear-facing screen mounted behind a white scooter's seat",
+  },
+  auto_rear: {
+    file: "auto-rear",
+    alt: "Illustration of a blue advertising screen on the rear of a white auto rickshaw",
+  },
+  car_interior: {
+    file: "car-interior",
+    alt: "Illustration of a blue advertising screen on the back of a car headrest",
+  },
+  helmet: {
+    file: "helmet",
+    alt: "Illustration of a white helmet with a blue printed advertising wrap, not a digital screen",
+  },
+  auto_side: {
+    file: "auto-side",
+    alt: "Illustration of a screen on the passenger side of a white auto rickshaw",
+  },
+  car_rear: {
+    file: "car-rear",
+    alt: "Illustration of a blue advertising display in the rear window of a white car",
+  },
+};
+function matchesFilter(item: CatalogItem, filter: Filter) {
+  return (
+    filter === "all" ||
+    (filter === "bike" && item.type === "bike_rear") ||
+    (filter === "auto" && item.type.startsWith("auto")) ||
+    (filter === "car" && item.type.startsWith("car")) ||
+    (filter === "other" && item.type === "helmet")
+  );
+}
+function PlacementPhoto({ item, detail = false }: { item: CatalogItem; detail?: boolean }) {
+  const photo = photos[item.type];
+  return (
+    <Image
+      src={`/images/blinkmyad/ad-formats/${photo.file}.webp`}
+      alt={photo.alt}
+      fill
+      sizes={
+        detail
+          ? "(min-width: 1180px) 330px, (min-width: 700px) 50vw, 100vw"
+          : "(min-width: 1440px) 300px, (min-width: 1180px) 22vw, (min-width: 700px) 30vw, (min-width: 480px) 45vw, 100vw"
+      }
+      className="bma-format-photo"
+    />
+  );
+}
 
 export function FormatCatalogue() {
   const [filter, setFilter] = React.useState<Filter>("all");
   const [selected, setSelected] = React.useState<CatalogItem>(all[1]!);
-  const visible = all.filter(
-    (item) =>
-      filter === "all" ||
-      (filter === "bike" && item.type === "bike_rear") ||
-      (filter === "auto" && item.type.startsWith("auto")) ||
-      (filter === "car" && item.type.startsWith("car")) ||
-      (filter === "other" && item.type === "helmet"),
-  );
+  const detailsRef = React.useRef<HTMLElement>(null);
+  const visible = all.filter((item) => matchesFilter(item, filter));
+  function changeFilter(value: Filter) {
+    setFilter(value);
+    if (!matchesFilter(selected, value))
+      setSelected(all.find((item) => matchesFilter(item, value))!);
+  }
+  function showDetails(item: CatalogItem) {
+    setSelected(item);
+    // A stacked detail panel needs an explicit destination on mobile and tablet.
+    if (window.matchMedia("(max-width: 1179px)").matches) {
+      window.requestAnimationFrame(() => {
+        detailsRef.current?.focus({ preventScroll: true });
+        detailsRef.current?.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "instant"
+            : "smooth",
+          block: "start",
+        });
+      });
+    }
+  }
   return (
-    <div className="space-y-8">
-      <Tabs
-        label="Filter formats by vehicle"
-        tabs={filters}
-        value={filter}
-        onValueChange={(v) => setFilter(v as Filter)}
-      />
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(300px,0.8fr)]">
-        <ul className="grid gap-6 sm:grid-cols-2">
+    <div className="bma-format-catalogue">
+      <div className="bma-format-filters" role="group" aria-label="Filter formats by vehicle">
+        {filters.map(({ value, label }) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={filter === value}
+            onClick={() => changeFilter(value)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <p className="sr-only" role="status">
+        {visible.length} {visible.length === 1 ? "format" : "formats"} shown. Selected format:{" "}
+        {selected.title}.
+      </p>
+      <div className="bma-format-layout">
+        <ul className="bma-format-grid" aria-label="Ad formats">
           {visible.map((item) => {
             const isSelected = selected.type === item.type;
+            const SpecIcon = item.type === "helmet" ? Layers3 : Monitor;
             return (
-              <li key={item.type} id={item.type} className="scroll-mt-24">
-                <div
-                  className={cn(
-                    "rounded-lg border bg-surface p-3",
-                    isSelected ? "border-signal ring-1 ring-signal" : "border-line",
-                  )}
-                >
-                  <div className="aspect-[1.75] overflow-hidden rounded-md">
-                    <FormatPreviewArt type={item.type} />
-                  </div>
-                  <h3 className="mt-4 font-heading text-lg font-semibold text-ink">{item.title}</h3>
-                  <p className="mt-1 text-sm text-ink-muted">{item.description}</p>
-                  <dl className="mt-3 space-y-1.5 text-sm text-ink">
-                    <div className="flex items-center gap-2">
-                      <Monitor className="size-4 text-ink-muted" aria-hidden />
-                      <dt className="sr-only">Screen</dt>
-                      <dd>{item.spec}</dd>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Target className="size-4 text-ink-muted" aria-hidden />
-                      <dt className="sr-only">Works well for</dt>
-                      <dd>{item.best}</dd>
-                    </div>
-                  </dl>
-                  <button
-                    type="button"
-                    onClick={() => setSelected(item)}
-                    aria-pressed={isSelected}
-                    className={cn(
-                      "mt-4 min-h-11 w-full rounded-lg border text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal",
-                      isSelected
-                        ? "border-signal bg-signal text-white"
-                        : "border-line-strong text-ink hover:bg-paper",
+              <li key={item.type} id={item.type}>
+                <article className={cn("bma-format-card", isSelected && "is-selected")}>
+                  <div className="bma-format-card-image">
+                    <PlacementPhoto item={item} />
+                    {isSelected && (
+                      <span className="bma-format-selected-mark" aria-label="Selected format">
+                        <Check aria-hidden="true" />
+                      </span>
                     )}
-                  >
-                    {isSelected ? "Showing details" : "Show details"}
-                  </button>
-                </div>
+                  </div>
+                  <div className="bma-format-card-copy">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                    <dl>
+                      <div>
+                        <SpecIcon aria-hidden="true" />
+                        <dt className="sr-only">
+                          {item.type === "helmet" ? "Example placement" : "Example screen"}
+                        </dt>
+                        <dd>{item.spec}</dd>
+                      </div>
+                      <div>
+                        <Target aria-hidden="true" />
+                        <dt className="sr-only">Works well for</dt>
+                        <dd>{item.best}</dd>
+                      </div>
+                    </dl>
+                    <button
+                      type="button"
+                      onClick={() => showDetails(item)}
+                      aria-label={`View details: ${item.title}`}
+                      aria-pressed={isSelected}
+                      aria-controls="selected-format-panel"
+                      className="bma-format-details-button"
+                    >
+                      View details <ArrowRight aria-hidden="true" />
+                    </button>
+                  </div>
+                </article>
               </li>
             );
           })}
         </ul>
         <aside
+          id="selected-format-panel"
+          ref={detailsRef}
+          tabIndex={-1}
           aria-labelledby="format-details"
-          className="h-fit rounded-lg border border-line bg-surface p-5 lg:sticky lg:top-24"
+          className="bma-format-detail"
         >
-          <h2 id="format-details" className="font-heading text-lg font-semibold text-ink">
-            {selected.title}
-          </h2>
-          <div className="mt-4 aspect-[1.75] overflow-hidden rounded-md">
-            <FormatPreviewArt type={selected.type} />
+          <h3 id="format-details">{selected.title}</h3>
+          <div className="bma-format-detail-image">
+            <PlacementPhoto item={selected} detail />
           </div>
-          <p className="mt-4 text-base text-ink-muted">{selected.description}</p>
-          <dl className="mt-5 divide-y divide-line border-y border-line text-sm">
+          <p className="bma-format-detail-description">{selected.description}</p>
+          <dl>
             {[
-              ["Example screen", selected.spec],
+              [selected.type === "helmet" ? "Example placement" : "Example screen", selected.spec],
               ["Works well for", selected.best],
               ["Hardware", "Confirmed per campaign"],
               ["Creative files", "Checked by an admin before scheduling"],
-            ].map(([k, v]) => (
-              <div key={k} className="flex justify-between gap-4 py-2.5">
-                <dt className="text-ink-muted">{k}</dt>
-                <dd className="text-right font-medium text-ink">{v}</dd>
+            ].map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
               </div>
             ))}
           </dl>
-          <div className="mt-5 flex flex-col gap-2">
-            <Link
-              href={"/pricing?format=" + encodeURIComponent(selected.type)}
-              className={primaryButton}
-            >
-              Estimate the cost of this format
-            </Link>
-            <Link href="/signup?role=advertiser" className={outlineButton}>
-              Create an advertiser account
-            </Link>
-          </div>
+          <Link
+            href={"/pricing?format=" + encodeURIComponent(selected.type)}
+            className="bma-formats-button bma-format-estimate"
+            aria-label={`Estimate the cost of this format: ${selected.title}`}
+          >
+            Estimate cost <ArrowRight aria-hidden="true" />
+          </Link>
+          <Link href="/signup?role=advertiser" className="bma-format-account-link">
+            Create an advertiser account <ArrowRight aria-hidden="true" />
+          </Link>
         </aside>
       </div>
-      <InfoNote>
-        The images are illustrations of how each placement could look, not photos of installed
-        BlinkMyAd screens. Exact screen sizes, hardware and availability are confirmed for each
-        campaign before it is booked.
-      </InfoNote>
+      <div className="bma-formats-notice">
+        <Info aria-hidden="true" />
+        <p>
+          The images are illustrations of how each placement could look, not photos of installed
+          BlinkMyAd screens. Exact screen sizes, hardware and availability are confirmed for each
+          campaign before it is booked.
+        </p>
+      </div>
     </div>
   );
 }

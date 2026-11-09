@@ -76,7 +76,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
   }, [mobileOpen]);
 
   return (
-    <div data-portal="public" data-homepage={isHome || undefined} className="min-h-screen bg-background">
+    <div data-portal="public" data-homepage={isHome || undefined} data-page={pathname === "/ad-formats" ? "ad-formats" : undefined} className="min-h-screen bg-background">
       <a href="#public-main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3">Skip to main content</a>
       <header inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className={cn(
         "sticky top-0 z-50 border-b border-line bg-white text-ink transition-[background-color,box-shadow] duration-300",
