@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, BarChart3, Megaphone, ShieldCheck, Wallet } from "lucide-react";
 import type { ReactNode } from "react";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { PublicShell } from "@/components/layout/public-shell";
 
 type Mode = "signup" | "login" | "forgot" | "reset" | "verify";
 
@@ -43,8 +42,15 @@ export function BmaAuthFrame({ mode, children }: { mode: Mode; children: ReactNo
   if (mode === "login" || mode === "signup") {
     const view = visualCopy[mode];
     return (
-      <PublicShell hideFooter authMode={mode}>
-        <div data-bma-auth={mode} className="bma-reference-auth">
+      <div data-portal="public" data-auth-mode={mode} className="bma-auth-minimal-shell">
+        <a href="#public-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3">
+          Skip to authentication form
+        </a>
+        <header className="bma-auth-minimal-header">
+          <BrandLogo href="/" priority width={214} />
+        </header>
+        <main id="public-main" tabIndex={-1} className="bma-auth-minimal-main">
+          <div data-bma-auth={mode} className="bma-reference-auth">
           <aside className="bma-reference-auth-story" aria-label="About BlinkMyAd">
             <Image
               src="/images/hero/signin.png"
@@ -74,8 +80,9 @@ export function BmaAuthFrame({ mode, children }: { mode: Mode; children: ReactNo
           <section className="bma-reference-auth-main" aria-label={mode === "login" ? "Sign in form" : "Create account form"}>
             <div className="bma-auth-form-wrap">{children}</div>
           </section>
-        </div>
-      </PublicShell>
+          </div>
+        </main>
+      </div>
     );
   }
 
