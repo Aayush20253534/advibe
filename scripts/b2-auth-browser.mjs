@@ -67,6 +67,7 @@ try{
  await page.waitForURL("**/login?reset=1");
  await page.getByLabel("Email").fill("driver@example.invalid");
  await page.getByLabel("Password",{exact:true}).fill("SecureSecondPassword!2026");
+ await page.getByRole("group",{name:"Account type"}).getByRole("button",{name:"Driver partner"}).click();
  await page.getByRole("button",{name:"Sign in",exact:true}).click();
  await page.waitForURL("**/driver");
  for(const endpoint of ["/auth/register","/auth/verify","/auth/forgot-password",
