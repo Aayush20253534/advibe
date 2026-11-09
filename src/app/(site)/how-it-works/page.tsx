@@ -152,11 +152,12 @@ export default function HowItWorksPage() {
       <section className="bma-how-hero" aria-labelledby="how-title">
         <div className="bma-how-hero-visual">
           <Image
-            src="/images/blinkmyad/how-it-works/hero-vehicles.webp"
-            alt="BlinkMyAd concept: scooter, auto-rickshaw and car fitted with digital advertising screens on a city roadway"
+            src="/images/hero/img.png"
+            alt="BlinkMyAd campaign workflow with advertising screens on a scooter, auto-rickshaw and car, set against a city roadway and campaign dashboards"
             fill
             priority
-            sizes="(max-width: 620px) 100vw, 67vw"
+            unoptimized
+            sizes="(max-width: 620px) 100vw, (max-width: 900px) 72vw, 68vw"
             className="bma-how-hero-image"
           />
         </div>
