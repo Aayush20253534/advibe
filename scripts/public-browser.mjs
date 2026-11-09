@@ -24,7 +24,7 @@ try{
     await context.route("**/api/backend/**",route=>route.fulfill({status:503,contentType:"application/json",body:JSON.stringify({error:{code:"TEST_UNAVAILABLE",message:"Temporary service interruption"}})}));
     const page=await context.newPage();
     const errors=[];page.on("pageerror",error=>errors.push(error.message));
-    const paths=width===768?["/","/locations","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
+    const paths=width===768?["/","/locations","/how-it-works","/login"]:["/","/for-advertisers","/for-drivers","/ad-formats","/how-it-works","/pricing","/locations","/about","/contact","/help-center","/login","/signup","/forgot-password","/reset-password","/verify"];
     for(const path of paths){
       await page.goto(base+path,{waitUntil:"domcontentloaded",timeout:45000});
       await page.locator("h1").waitFor({state:"visible",timeout:45000});
@@ -37,6 +37,20 @@ try{
         const homeLogo=page.locator(width>900?".bma-reference-auth-home a[href='/']":".bma-reference-auth-mobile-home a[href='/']");
         assert.equal(await homeLogo.count(),1,`${path}: one home-linked BlinkMyAd logo`);
         assert.ok(await homeLogo.isVisible(),`${path}: home logo is visible`);
+      }
+      if(path==="/how-it-works"){
+        assert.equal(await page.getByRole("heading",{name:"How BlinkMyAd works"}).count(),1,"Dedicated workflow hero exists");
+        assert.equal(await page.locator(".bma-how-overview-card").count(),4,"Four overview stages");
+        assert.equal(await page.locator(".bma-how-journey").count(),2,"Both advertiser and driver journeys");
+        assert.equal(await page.locator(".bma-how-detail-card").count(),6,"Six detailed workflow stages");
+        assert.equal(await page.locator(".bma-how-faq details").count(),5,"Five workflow FAQs");
+        const faq=page.locator(".bma-how-faq details").first();
+        await faq.locator("summary").click();
+        assert.ok(await faq.evaluate(node=>node.open),"FAQ disclosure opens");
+        await faq.locator("summary").click();
+        assert.ok(!await faq.evaluate(node=>node.open),"FAQ disclosure closes");
+        assert.equal(await page.getByRole("link",{name:"Start a campaign"}).getAttribute("href"),"/signup?role=advertiser");
+        assert.equal(await page.getByRole("link",{name:"Become a driver partner"}).getAttribute("href"),"/signup?role=driver");
       }
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${path}: no overflow at ${width}`);
       if(width===1440 && (path==="/login"||path==="/signup")){
