@@ -139,10 +139,11 @@ export default function ForDriversPage() {
       <section className="bma-driver-hero" aria-labelledby="driver-title">
         <div className="bma-driver-hero-art">
           <Image
-            src="/images/blinkmyad/ad-formats/auto-rear.webp"
-            alt="Illustration of a BlinkMyAd-enabled auto-rickshaw carrying a rear digital advertising screen"
+            src="/images/hero/234.png"
+            alt="BlinkMyAd driver partner vehicle hero artwork"
             fill
             priority
+            unoptimized
             sizes="(max-width: 700px) 100vw, 62vw"
           />
         </div>
