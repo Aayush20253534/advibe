@@ -43,7 +43,8 @@ try{
         const heroImage=page.locator(".bma-how-hero-visual img");
         assert.equal(await heroImage.count(),1,"One dedicated How It Works image");
         assert.equal(await heroImage.getAttribute("src"),"/images/hero/img.png","Use the full user-uploaded hero asset");
-        assert.equal(await heroImage.evaluate(img=>getComputedStyle(img).objectFit),"contain","Show uncropped hero image");
+        assert.equal(await heroImage.evaluate(img=>getComputedStyle(img).objectFit),"cover","Artwork uses cinematic cover composition");
+        assert.equal(await page.locator(".bma-how-hero-visual").evaluate(el=>getComputedStyle(el).position),"absolute","Vehicle artwork is blended into the hero, not a detached panel");
         assert.ok(await heroImage.evaluate(img=>img.complete&&img.naturalWidth>0),"Hero PNG loads successfully");
         assert.equal(await page.locator(".bma-how-overview-card").count(),4,"Four overview stages");
         assert.equal(await page.locator(".bma-how-journey").count(),2,"Both advertiser and driver journeys");
