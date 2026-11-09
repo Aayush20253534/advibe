@@ -8,7 +8,7 @@ import { brand } from "@/config/brand";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { cn } from "@/lib/utils";
 import { trapOverlayTab } from "@/lib/overlay-focus";
-import { HomepageFooter } from "@/components/landing/homepage-chrome";
+import "./public-footer.css";
 import "@/components/landing/reference-homepage.css";
 
 const primaryNavigation = [
@@ -104,18 +104,23 @@ export function PublicShell({ children, hideFooter = false, authMode }: { childr
         </div>
       </header>
       <main inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} id="public-main" tabIndex={-1} className="min-h-[55dvh] outline-none">{children}</main>
-      {!hideFooter && <footer inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className="border-t border-white/10 bg-night text-white">
-        {isHome ? <HomepageFooter /> : <><div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-16 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr] lg:gap-8 lg:py-20">
-          <div className="space-y-5">
-            <BrandLogo inverse width={200} className="w-[180px]" />
-            <p className="max-w-[250px] text-sm leading-7 text-[#bac1ce]">Vehicle-screen advertising for a more visible India. Starting in Prayagraj.</p>
+      {!hideFooter && <footer inert={mobileOpen} aria-hidden={mobileOpen ? true : undefined} className="bma-public-footer">
+        <div className="bma-public-footer-inner">
+          <div className="bma-public-footer-brand">
+            <BrandLogo inverse width={215} />
+            <p>Vehicle-screen advertising for a more visible India. Starting in Prayagraj.</p>
           </div>
           <FooterLinks title="Explore" links={footerExplore} />
           <FooterLinks title="Company" links={[{ label: "About", href: "/about" }, { label: "Contact", href: "/contact" }, { label: "Help centre", href: "/help-center" }]} />
           <FooterLinks title="Portals" links={[{ label: "Advertiser portal", href: "/advertiser" }, { label: "Driver partner portal", href: "/driver" }, { label: "Sign up", href: "/signup" }]} />
           <FooterLinks title="Legal" links={[{ label: "Privacy policy", href: "/privacy" }, { label: "Terms and conditions", href: "/terms" }]} />
         </div>
-        <div className="border-t border-white/10"><div className="mx-auto max-w-[1280px] px-5 py-6 text-xs text-[#bac1ce] sm:px-8">© 2026 {brand.legalName}. Prayagraj pilot launch.</div></div></>}
+        <div className="bma-public-footer-bottom">
+          <div className="bma-public-footer-bottom-inner">
+            <span>© 2026 {brand.legalName}. Prayagraj pilot launch.</span>
+            <span>Advertising that moves with the city.</span>
+          </div>
+        </div>
       </footer>}
 
       {mobileOpen && <div className="fixed inset-0 z-[90] xl:hidden">
@@ -153,5 +158,5 @@ export function PublicShell({ children, hideFooter = false, authMode }: { childr
 }
 
 function FooterLinks({ title, links }: { title: string; links: ReadonlyArray<{ label: string; href: string }> }) {
-  return <div><h2 className="mb-5 font-heading text-sm font-semibold text-white">{title}</h2><ul className="space-y-3">{links.map(link => <li key={link.href}><Link prefetch={false} href={link.href} className="inline-flex min-h-6 items-center text-sm text-[#bac1ce] transition-colors hover:text-white hover:underline">{link.label}</Link></li>)}</ul></div>;
+  return <div className="bma-public-footer-column"><h2>{title}</h2><ul>{links.map(link => <li key={link.href}><Link prefetch={false} href={link.href}>{link.label}</Link></li>)}</ul></div>;
 }
