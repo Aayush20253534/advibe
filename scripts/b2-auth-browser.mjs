@@ -39,11 +39,16 @@ try{
   return send(200,[]);
  });
  await page.goto(BASE+"/signup?role=driver");
- assert.equal(await page.getByLabel("Account type").inputValue(),"driver");
+ const roles=page.getByRole("group",{name:"Account type"});
+ assert.equal(await roles.getByRole("button",{name:/Driver partner/}).getAttribute("aria-pressed"),"true");
+ await roles.getByRole("button",{name:/Advertiser/}).click();
+ assert.equal(await roles.getByRole("button",{name:/Advertiser/}).getAttribute("aria-pressed"),"true");
+ await roles.getByRole("button",{name:/Driver partner/}).click();
+ assert.equal(await roles.getByRole("button",{name:/Driver partner/}).getAttribute("aria-pressed"),"true");
  await page.getByLabel("Full name").fill("Example Driver");
  await page.getByLabel("Email").fill("driver@example.invalid");
  await page.getByLabel("Password",{exact:true}).fill("SecurePasswordForTesting!2026");
- await page.getByRole("button",{name:"Register"}).click();
+ await page.getByRole("button",{name:"Create account",exact:true}).click();
  await page.waitForURL("**/verify?challengeId="+id);
  await page.reload();
  assert.equal(await page.getByLabel("Challenge ID").count(),0,"Verification identifiers stay out of the user form");
