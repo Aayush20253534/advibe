@@ -1,4 +1,4 @@
-import { BadgeHelp, BookOpen, CarFront, Megaphone, Search } from "lucide-react";
+import { BadgeHelp, BookOpen, CarFront, Megaphone } from "lucide-react";
 import { publicMetadata } from "@/config/public-metadata";
 import { HelpSearch } from "@/components/public/help-search";
 import { DetailPage, DetailHero, DetailSection, DetailCards, DetailCTA } from "@/components/public/secondary-pages";
