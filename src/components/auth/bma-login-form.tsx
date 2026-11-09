@@ -11,7 +11,7 @@ const label = "bma-auth-label";
 
 export function BmaLoginForm() {
   const router = useRouter(), params = useSearchParams();
-  const [role, setRole] = React.useState<"advertiser" | "driver">(params.get("role") === "driver" ? "driver" : "advertiser");
+  const [role, setRole] = React.useState<"advertiser" | "driver">((params.get("role") === "driver" || params.get("next") === "/driver" || params.get("next")?.startsWith("/driver/")) ? "driver" : "advertiser");
   const [email, setEmail] = React.useState(""), [password, setPassword] = React.useState("");
   const [remember, setRemember] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
