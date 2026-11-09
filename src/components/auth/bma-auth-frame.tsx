@@ -46,12 +46,12 @@ export function BmaAuthFrame({ mode, children }: { mode: Mode; children: ReactNo
         <a href="#public-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3">
           Skip to authentication form
         </a>
-        <header className="bma-auth-minimal-header">
-          <BrandLogo href="/" priority width={214} />
-        </header>
         <main id="public-main" tabIndex={-1} className="bma-auth-minimal-main">
           <div data-bma-auth={mode} className="bma-reference-auth">
           <aside className="bma-reference-auth-story" aria-label="About BlinkMyAd">
+            <div className="bma-reference-auth-home">
+              <BrandLogo href="/" inverse priority width={220} />
+            </div>
             <Image
               src="/images/hero/signin.png"
               alt=""
@@ -78,6 +78,9 @@ export function BmaAuthFrame({ mode, children }: { mode: Mode; children: ReactNo
             </div>
           </aside>
           <section className="bma-reference-auth-main" aria-label={mode === "login" ? "Sign in form" : "Create account form"}>
+            <div className="bma-reference-auth-mobile-home">
+              <BrandLogo href="/" priority width={185} />
+            </div>
             <div className="bma-auth-form-wrap">{children}</div>
           </section>
           </div>
