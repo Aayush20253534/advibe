@@ -161,6 +161,17 @@ export default function ForDriversPage() {
               </Link>
             </div>
           </div>
+          <aside className="bma-driver-hero-guide" aria-label="Driver partner process at a glance">
+            <div className="bma-driver-hero-guide-heading">
+              <ShieldCheck aria-hidden="true" />
+              <span>YOUR PARTNER JOURNEY</span>
+            </div>
+            <ol>
+              <li><span>01</span><div><strong>Apply online</strong><small>Create your driver account</small></div></li>
+              <li><span>02</span><div><strong>Get verified</strong><small>Vehicle and eligibility review</small></div></li>
+              <li><span>03</span><div><strong>Start on approved routes</strong><small>Earn from eligible campaigns</small></div></li>
+            </ol>
+          </aside>
         </div>
       </section>
 
