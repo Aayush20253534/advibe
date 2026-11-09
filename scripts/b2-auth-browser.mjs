@@ -30,6 +30,7 @@ try{
    return send(201,{message:"Password updated"});
   }
   if(path==="/auth/login"){signedIn=true;return send(201,{userId:id,role:"driver"});}
+  if(path==="/auth/logout"){signedIn=false;return send(201,{ok:true});}
   if(path==="/auth/session"){
    if(!signedIn)return route.fulfill({status:401,contentType:"application/json",
     body:JSON.stringify({error:{code:"UNAUTHENTICATED",message:"Sign in required"}})});
@@ -67,6 +68,12 @@ try{
  await page.waitForURL("**/login?reset=1");
  await page.getByLabel("Email").fill("driver@example.invalid");
  await page.getByLabel("Password",{exact:true}).fill("SecureSecondPassword!2026");
+ // Legacy servers may ignore role hints. Client must still reject a wrong tab.
+ await page.getByRole("button",{name:"Sign in",exact:true}).click();
+ await page.getByRole("alert").filter({hasText:"does not match the selected account type"}).waitFor();
+ assert.equal(new URL(page.url()).pathname,"/login");
+ assert.equal(signedIn,false,"Wrong-tab login must revoke any provisional session");
+ assert.ok(actions.some(x=>x.path==="/auth/logout"),"Logout invoked on legacy role mismatch");
  await page.getByRole("group",{name:"Account type"}).getByRole("button",{name:"Driver partner"}).click();
  await page.getByRole("button",{name:"Sign in",exact:true}).click();
  await page.waitForURL("**/driver");
