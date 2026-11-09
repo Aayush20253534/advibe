@@ -121,7 +121,7 @@
 /* Rich but clearly non-operative legal previews. */
 .bma-detail-legal-layout {display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.75fr);gap:24px;align-items:start;}
 .bma-detail-legal-panel {padding:clamp(24px,3vw,43px);border:1px solid #dfebf7;border-radius:17px;box-shadow:0 8px 23px rgba(23,62,126,.07);background:#fff;}
-.bma-detail-legal-panel h2 {font-size:clamp(24px,2vw,32px);font-weight:820;line-height:1.25;}
+.bma-detail-legal-panel h2 {margin-top:27px;font-size:clamp(24px,2vw,32px);font-weight:820;line-height:1.25;}
 .bma-detail-legal-panel p {color:#485977;line-height:1.7;font-size:clamp(13px,1vw,15px);margin-top:14px;}
 .bma-detail-legal-panel .bma-detail-ribbon {margin-top:21px;}
 .bma-detail-legal-side {padding:27px;border:1px solid #d5e3fa;border-radius:17px;background:linear-gradient(140deg,#eef5ff,#f9fbff);box-shadow:0 6px 18px rgba(31,75,147,.05);}
