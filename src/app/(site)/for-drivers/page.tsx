@@ -224,7 +224,7 @@ export default function ForDriversPage() {
             </div>
             <div className="bma-driver-faq-list">
               {questions.map(({ question, answer }, index) => (
-                <details key={question} {...(index === 0 ? { defaultOpen: true } : {})}>
+                <details key={question} open={index === 0}>
                   <summary><span>{question}</span><ChevronDown aria-hidden="true" /></summary>
                   <p>{answer}</p>
                 </details>
