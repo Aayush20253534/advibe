@@ -32,7 +32,7 @@ test("B22 fails closed without a secure configured backend",()=>{
 test("All portal layouts require authenticated API mode with no demo fallback",()=>{
  const bridge=read("src/app/api/backend/[...path]/route.ts");
  const layouts=["admin","advertiser","driver"].map(role=>
-  read("src/app/(portals)/"+role+"/layout.tsx"));
+  read("src/app/(portals)/"+(role==="admin"?"0000BMA0/admin":role)+"/layout.tsx"));
  for(const layout of layouts){
   assert.doesNotMatch(layout,/NEXT_PUBLIC_DEMO_MODE|PortalGate|PortalShell/);
   // Each layout wraps its live pages in the authenticated portal (docs/redesign/ROUTING_PROPOSAL.md).
@@ -53,7 +53,7 @@ test("All portal layouts require authenticated API mode with no demo fallback",(
 });
 test("B22 live routes include secure login, MFA and signup without browser-persisted secrets",()=>{
  for(const role of ["admin","driver","advertiser"]){
-  assert.match(read("src/app/(portals)/"+role+"/layout.tsx"),/ApiPortal|AdvertiserPortal|AdminPortal/);
+  assert.match(read("src/app/(portals)/"+(role==="admin"?"0000BMA0/admin":role)+"/layout.tsx"),/ApiPortal|AdvertiserPortal|AdminPortal/);
  }
  const auth=read("src/components/auth/api-auth-screen.tsx");
  assert.match(auth,/\/auth\/login/);

@@ -26,17 +26,19 @@ test("all key public, auth and three portal pages exist as explicit Next.js rout
  const paths=[
   ...publicPaths.map(p=>"src/app/(site)/"+(p?p+"/":"")+"page.tsx"),
   ...authPaths.map(p=>"src/app/(auth)/"+p+"/page.tsx"),
-  ...["admin","advertiser","driver"].map(p=>"src/app/(portals)/"+p+"/page.tsx"),
+  ...["admin","advertiser","driver"].map(p=>"src/app/(portals)/"+(p==="admin"?"0000BMA0/admin":p)+"/page.tsx"),
+  "src/app/(auth)/0000BMA0/admin/login/page.tsx",
   "src/app/api/health/route.ts"
  ];
  for(const file of paths)assert.equal(exists(file),true,"Missing route "+file);
- const all=fs.readdirSync("src/app/(portals)");
- for(const role of all.filter(x=>["admin","advertiser","driver"].includes(x))){
+ const roles=["0000BMA0/admin","advertiser","driver"];
+ for(const role of roles){
   const dirs=fs.readdirSync("src/app/(portals)/"+role,{withFileTypes:true});
   for(const dir of dirs.filter(d=>d.isDirectory()&&!d.name.startsWith("["))){
    assert.equal(exists("src/app/(portals)/"+role+"/"+dir.name+"/page.tsx"),true,"Incomplete route "+role+"/"+dir.name);
   }
  }
+ assert.equal(exists("src/app/(portals)/admin/page.tsx"),false,"Old Admin route should not remain as an independent page");
 });
 test("release scripts, API browser job and legal warnings are present",()=>{
  const workflow=read(".github/workflows/ci.yml");

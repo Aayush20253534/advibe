@@ -102,9 +102,13 @@ test("payments, bookings and KYC stay behind authoritative input boundaries",()=
 test("existing portal navigation is completely covered by frontend-to-API migration matrix",()=>{
  const nav=read("src/config/navigation.ts");
  const map=read("docs/backend/B0_API_MAPPING.md");
- const frontendRoutes=[...new Set([...nav.matchAll(/href:"(\/(?:admin|advertiser|driver)(?:\/[^"]*)?)"/g)].map(x=>x[1]))];
+ const frontendRoutes=[...new Set([...nav.matchAll(/href:"(\/(?:0000BMA0\/admin|advertiser|driver)(?:\/[^"]*)?)"/g)].map(x=>x[1]))];
  assert.ok(frontendRoutes.length>=40);
- for(const path of frontendRoutes)assert.ok(map.includes("| "+path+" |"),"Missing frontend route mapping: "+path);
+ for(const path of frontendRoutes){
+  // Public Admin URLs moved; backend API and its documented mapping keep /admin.
+  const mappedPath=path.startsWith("/0000BMA0/admin")?path.replace("/0000BMA0/admin","/admin"):path;
+  assert.ok(map.includes("| "+mappedPath+" |"),"Missing frontend route mapping: "+path);
+ }
  for(const path of ["/login","/signup","/verify","/forgot-password","/reset-password","/contact","/pricing"])
   assert.ok(map.includes("| "+path+" |"),"Missing public/auth mapping: "+path);
 });
