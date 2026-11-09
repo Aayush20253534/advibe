@@ -33,7 +33,8 @@ try{
       assert.equal(await page.locator("h1").count(),1,`${path}: one primary heading`);
       if(path==="/login"||path==="/signup"){
         assert.equal(await page.locator(".bma-ref-nav").count(),0,`${path}: marketing navbar is absent`);
-        const homeLogo=page.locator(".bma-auth-minimal-header a[href='/']");
+        assert.equal(await page.locator(".bma-auth-minimal-shell > header").count(),0,`${path}: no separate header band`);
+        const homeLogo=page.locator(width>900?".bma-reference-auth-home a[href='/']":".bma-reference-auth-mobile-home a[href='/']");
         assert.equal(await homeLogo.count(),1,`${path}: one home-linked BlinkMyAd logo`);
         assert.ok(await homeLogo.isVisible(),`${path}: home logo is visible`);
       }
@@ -47,10 +48,12 @@ try{
             documentFits: document.documentElement.scrollHeight<=window.innerHeight+2,
             formFits: !!form && form.scrollHeight<=form.clientHeight+2,
             backgroundLoaded: !!backdrop && backdrop.complete && backdrop.naturalWidth>0,
-            panelFits: !!panel && panel.getBoundingClientRect().bottom<=window.innerHeight+2
+            panelFits: !!panel && panel.getBoundingClientRect().top<=2 && panel.getBoundingClientRect().bottom>=window.innerHeight-2 && panel.getBoundingClientRect().bottom<=window.innerHeight+2,
+            cardFits: (()=>{const card=form?.querySelector(".bma-auth-card");if(!card)return false;const b=card.getBoundingClientRect();return b.top>=-2&&b.bottom<=window.innerHeight+2;})(),
+            noInternalScrollbar: !!form && getComputedStyle(form).overflowY!=="auto" && getComputedStyle(form).overflowY!=="scroll"
           };
         });
-        assert.ok(fit.documentFits && fit.formFits && fit.backgroundLoaded && fit.panelFits,
+        assert.ok(fit.documentFits && fit.formFits && fit.backgroundLoaded && fit.panelFits && fit.cardFits && fit.noInternalScrollbar,
           `${path}: desktop auth must fit viewport with the uploaded background: ${JSON.stringify(fit)}`);
       }
       const result=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
