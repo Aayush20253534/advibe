@@ -2,8 +2,9 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Check, CircleAlert, ImageUp } from "lucide-react";
+import { ArrowUpRight, BadgeCheck, Check, CircleAlert, ImageUp, MapPin } from "lucide-react";
 import { api, newIdempotencyKey } from "@/services/api-client";
 import {
   Alert,
@@ -86,6 +87,24 @@ export function Dashboard() {
 
   return (
     <div className="space-y-6">
+      <section className="bma-adv-dashboard-hero" aria-label="Campaign workspace overview">
+        <div className="bma-adv-dashboard-art" aria-hidden="true">
+          <Image src="/images/blinkmyad/fleet.webp" alt="" fill priority sizes="(max-width: 640px) 100vw, 55vw" />
+        </div>
+        <div className="bma-adv-dashboard-copy">
+          <p className="bma-adv-eyebrow"><span aria-hidden="true" /> BLINKMYAD / ADVERTISER WORKSPACE</p>
+          <h2>Make your next<br /><span>move visible.</span></h2>
+          <p>Plan local vehicle-screen campaigns, prepare your creatives and follow every approval in one place.</p>
+          <div className="bma-adv-dashboard-actions">
+            <Link href="/advertiser/create-campaign" className="bma-adv-hero-primary">Start a campaign <ArrowUpRight aria-hidden="true" /></Link>
+            <Link href="/advertiser/ad-formats" className="bma-adv-hero-secondary">Explore ad formats</Link>
+          </div>
+          <div className="bma-adv-dashboard-trust">
+            <span><MapPin aria-hidden="true" /> Prayagraj pilot</span>
+            <span><BadgeCheck aria-hidden="true" /> Human-reviewed campaigns</span>
+          </div>
+        </div>
+      </section>
       {next ? (
         <section className="flex flex-col gap-4 rounded-lg border border-signal bg-signal-soft p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import * as RadixDialog from "@radix-ui/react-dialog";
-import { Bell, LogOut, MapPin, Menu, ShieldCheck, X } from "lucide-react";
+import { ArrowUpRight, Bell, LogOut, MapPin, Menu, ShieldCheck, X } from "lucide-react";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { Button, PageHeader, Tooltip, type Crumb } from "@/components/ui";
 import { portalNavigation, type NavItem, type PortalRole } from "@/config/navigation";
@@ -92,8 +92,9 @@ function NavList({
                       href={item.href}
                       onClick={() => onNavigate(item.href)}
                       aria-current={current ? "page" : undefined}
+                      data-active={current ? "true" : undefined}
                       className={cn(
-                        "flex items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white",
+                        "bma-adv-nav-link flex items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white",
                         dense ? "min-h-9" : "min-h-11",
                         current
                           ? "bg-signal text-white"
@@ -125,14 +126,18 @@ function SidebarContent({
 }) {
   return (
     <>
-      <div className="px-5 pt-5 pb-4">
+      <div className="bma-adv-sidebar-brand px-5 pt-5 pb-4">
         <BrandLogo href={"/" + role} width={154} inverse />
         <p className="mt-3 text-sm font-semibold text-white">{portalLabel[role]}</p>
         <p className="mt-1 text-xs text-[#bdc4d1]">Prayagraj · Pilot workspace</p>
       </div>
-      <nav aria-label={portalLabel[role]} className="flex-1 overflow-y-auto px-2 pb-6">
+      <nav aria-label={portalLabel[role]} className="bma-adv-nav flex-1 overflow-y-auto px-2 pb-6">
         <NavList role={role} pathname={pathname} dense={role === "admin"} onNavigate={onNavigate} />
       </nav>
+      {role === "advertiser" && <Link href="/advertiser/create-campaign" onClick={() => onNavigate("/advertiser/create-campaign")} className="bma-adv-sidebar-promo">
+        <span>YOUR NEXT MOVE</span><strong>Make your brand move with the city.</strong>
+        <span className="bma-adv-sidebar-promo-link">Create campaign <ArrowUpRight aria-hidden="true" /></span>
+      </Link>}
     </>
   );
 }
@@ -170,7 +175,7 @@ export function PortalShell({
   const dense = role === "admin";
 
   return (
-    <div className="min-h-dvh bg-paper text-ink lg:flex">
+    <div data-portal={role} data-portal-page={pathname} className={cn("min-h-dvh bg-paper text-ink lg:flex",role==="advertiser"&&"bma-advertiser-portal")}>
       <a
         href="#portal-content"
         className="sr-only z-50 rounded-md bg-surface px-4 py-2 font-semibold text-ink focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:outline-2 focus:outline-signal"
@@ -179,14 +184,14 @@ export function PortalShell({
       </a>
 
       {/* The ink column stretches to the full page height; the menu inside it stays in view. */}
-      <aside className="hidden w-60 shrink-0 bg-ink lg:block">
+      <aside className="bma-adv-sidebar hidden w-60 shrink-0 bg-ink lg:block">
         <div className="sticky top-0 flex h-dvh flex-col">
           <SidebarContent role={role} pathname={pathname} onNavigate={navigate} />
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-line bg-surface">
+        <header className="bma-adv-topbar sticky top-0 z-30 border-b border-line bg-surface">
           <div className="flex min-h-[60px] items-center gap-3 px-4 sm:px-6 lg:px-8">
             <RadixDialog.Root open={menuOpen} onOpenChange={setMenuOpen}>
               <RadixDialog.Trigger asChild>
@@ -199,7 +204,7 @@ export function PortalShell({
                 <RadixDialog.Overlay className="fixed inset-0 z-50 bg-ink/60 lg:hidden" />
                 <RadixDialog.Content
                   aria-describedby={undefined}
-                  className="fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100vw-3rem))] flex-col bg-ink shadow-overlay focus-visible:outline-none motion-safe:data-[state=open]:animate-[advibe-fade-in_150ms_ease-out] lg:hidden"
+                  className={cn("fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100vw-3rem))] flex-col bg-ink shadow-overlay focus-visible:outline-none motion-safe:data-[state=open]:animate-[advibe-fade-in_150ms_ease-out] lg:hidden",role==="advertiser"&&"bma-adv-sidebar-mobile")}
                 >
                   <RadixDialog.Title className="sr-only">
                     {portalLabel[role]} menu
@@ -264,9 +269,11 @@ export function PortalShell({
           className={cn(
             "mx-auto w-full max-w-[1440px] flex-1 px-4 focus:outline-none sm:px-6 lg:px-8",
             dense ? "space-y-5 py-5" : "space-y-5 py-5 lg:py-6",
+            role==="advertiser"&&"bma-adv-main",
           )}
         >
           <PageHeader
+            className={role==="advertiser"?"bma-adv-page-header":undefined}
             breadcrumbs={crumbs}
             title={pageTitle}
             description={description}

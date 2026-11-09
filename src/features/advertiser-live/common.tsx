@@ -53,7 +53,7 @@ export function Notice({children,kind="info"}:{children:React.ReactNode;kind?:"i
 }
 /** A titled section of a page. */
 export function Panel({title,children,action,description}:{title:string;children:React.ReactNode;action?:React.ReactNode;description?:React.ReactNode}){
- return <section className="rounded-lg border border-line bg-surface p-4">
+ return <section className="bma-adv-panel rounded-lg border border-line bg-surface p-4">
   <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
    <div className="min-w-0"><h2 className="font-heading text-lg font-semibold text-ink">{title}</h2>
     {description?<p className="mt-1 text-sm text-ink-muted">{description}</p>:null}</div>
@@ -73,7 +73,7 @@ export function Pagination({busy,next,hasPrevious,more,first}:{busy:boolean;next
 export function CollectionNotice({busy,error,length,empty="Nothing here yet."}:{busy:boolean;error:string;length:number;empty?:React.ReactNode}){
  return <>{error&&<Notice kind="error">{error}</Notice>}
   {busy&&<SkeletonList rows={2} label="Loading"/>}
-  {!busy&&!error&&length===0&&<p className="rounded-lg border border-dashed border-line bg-paper p-5 text-sm text-ink-muted">{empty}</p>}</>;
+  {!busy&&!error&&length===0&&<p className="bma-adv-empty-state rounded-lg border border-dashed border-line bg-paper p-5 text-sm text-ink-muted">{empty}</p>}</>;
 }
 const statusLabels:Record<string,{label:string;tone:StatusTone}>={
  draft:{label:"Draft",tone:"neutral"},submitted:{label:"In review",tone:"info"},

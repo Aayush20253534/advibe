@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 import {usePathname,useRouter} from "next/navigation";
 import {PortalShell} from "@/components/portal/portal-shell";
 import {PortalAccessRequired,PortalLoading} from "@/components/portal/portal-access";
@@ -73,6 +74,26 @@ export function AdvertiserPortal({children}:{children:React.ReactNode}){
   signInHref={"/login?next="+encodeURIComponent(pathname)} signInLabel="Sign in"
   retryLabel="Retry connection" onRetry={()=>{setLoading(true);setRevision(x=>x+1);}}/>;
  const detailTitle=segment==="campaigns"&&pathname.split("/")[3]?"Campaign details":undefined;
+ const descriptions:Record<string,string>={
+  home:"Plan, review and manage your campaigns from one workspace.",
+  campaigns:"See the status of your drafts and submitted campaigns, with updates from review.",
+  "create-campaign":"Build a free draft, choose your creative and submit it for human review.",
+  creatives:"Organise advertising creatives and track their review status.",
+  "ad-formats":"Compare published placements and prepare creative files for each screen.",
+  locations:"Explore published Prayagraj areas and planning information.",
+  billing:"Review quotes and payment attempts without confusing estimates with receipts.",
+  reports:"Follow recorded campaign activity and export account data.",
+  notifications:"Keep track of account, creative and campaign updates.",
+  support:"Contact the team about campaigns, accounts and platform questions.",
+  settings:"Manage your identity, business details and verification status.",
+ };
+ const pageDescription=pathname.split("/")[3]&&segment==="campaigns"
+  ?"Inspect campaign details, review its status and take permitted actions."
+  :descriptions[segment]??descriptions.home;
+ const createAction=segment!=="create-campaign"?
+  <Link href="/advertiser/create-campaign" className="bma-adv-new-campaign">
+   <Plus aria-hidden="true" /> New campaign
+  </Link>:undefined;
  const businessSwitcher=businesses.length>0?<label className="flex items-center gap-2 text-sm text-ink-muted">
   <span className="shrink-0">Business</span>
   <Select value={activeId} className="min-h-9 py-1.5 sm:max-w-[240px]" onChange={e=>setActiveId(e.target.value)}>
@@ -80,7 +101,8 @@ export function AdvertiserPortal({children}:{children:React.ReactNode}){
   </Select>
  </label>:undefined;
  return <Auth.Provider value={{session,business,businesses,reloadBusinesses,refreshSession}}>
-  <PortalShell role="advertiser" pathname={pathname} title={detailTitle} context={businessSwitcher}
+  <PortalShell role="advertiser" pathname={pathname} title={detailTitle}
+   description={pageDescription} actions={createAction} context={businessSwitcher}
    onSignOut={()=>void signOut()}>
    {authError&&<Notice kind="error">{authError}</Notice>}
    {!business&&segment!=="settings"&&<Notice kind="warning">No business is registered for this account. Create one in <Link className="font-bold underline" href="/advertiser/settings">Profile and settings</Link> before managing campaigns or creatives.</Notice>}
