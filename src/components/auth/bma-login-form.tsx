@@ -18,6 +18,8 @@ export function BmaLoginForm() {
   const [code, setCode] = React.useState(""), [challengeId, setChallengeId] = React.useState(""), [ticket, setTicket] = React.useState("");
   const [loading, setLoading] = React.useState(false), [error, setError] = React.useState(""), [notice, setNotice] = React.useState("");
   const isMfa = Boolean(challengeId && ticket);
+  const adminSignIn = params.get("next") === "/admin" || params.get("next")?.startsWith("/admin/") === true;
+  const intendedRole = adminSignIn ? "admin" : role;
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -37,7 +39,7 @@ export function BmaLoginForm() {
           ...(!remember ? { remember: false } : {}),
         };
         const result = await api<{ challengeId?: string; ticket?: string }>("/auth/login", {
-          method: "POST", body, loginRole: role,
+          method: "POST", body, loginRole: adminSignIn ? undefined : role,
         });
         if (result.challengeId&&result.ticket) {
           setChallengeId(result.challengeId); setTicket(result.ticket); setPassword("");
@@ -46,7 +48,7 @@ export function BmaLoginForm() {
         }
       }
       const session = await liveSession();
-      if (session.role !== role) {
+      if (session.role !== intendedRole) {
         // An older backend might ignore X-Login-Role. Fail closed on the client,
         // revoke the newly issued session and never route into the other portal.
         let revoked = false;
@@ -77,7 +79,8 @@ export function BmaLoginForm() {
         <p className="bma-reference-auth-intro">{isMfa ? "Complete your secure two-step sign-in." : "Access your advertiser or driver partner account."}</p>
       </header>
 
-      {!isMfa && <div className="bma-reference-role-tabs" role="group" aria-label="Account type">
+      {adminSignIn && !isMfa && <p className="mb-4 text-sm font-semibold text-[#174ca8]">Secure admin sign-in · authenticator required</p>}
+      {!adminSignIn && !isMfa && <div className="bma-reference-role-tabs" role="group" aria-label="Account type">
         <button type="button" aria-pressed={role === "advertiser"} disabled={loading} onClick={() => setRole("advertiser")}>
           <Building2 aria-hidden="true" /><span>Advertiser</span>
         </button>
