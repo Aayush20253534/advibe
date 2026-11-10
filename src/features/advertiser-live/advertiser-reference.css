@@ -242,3 +242,8 @@
 .bma-reference-portal .bma-ref-summary strong+span{color:#50647f!important}
 .bma-reference-portal .bma-ref-city-info{color:#425b7a}
 .bma-reference-portal .bma-ref-form-grid>label{color:#243e62}
+
+.bma-reference-portal .bma-ref-empty{color:#50647f}
+.bma-reference-portal .bma-ref-studio-strip h2 span{color:#50647f!important}
+.bma-reference-portal .bma-ref-search-box input::placeholder{color:#526782}
+.bma-reference-portal .bma-ref-media-card p{color:#244161}
