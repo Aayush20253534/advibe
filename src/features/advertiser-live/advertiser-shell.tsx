@@ -56,13 +56,10 @@ export function AdvertiserReferenceShell({title,description,actions,context,onSi
  const [displayName,setDisplayName]=React.useState("Advertiser");
  const [greeting,setGreeting]=React.useState("Welcome back");
  React.useEffect(()=>{
-  const hour=new Date().getHours();
-  setGreeting(hour<12?"Good morning":hour<17?"Good afternoon":"Good evening");
   let active=true;
-  void api<{displayName?:string}>("/me").then(profile=>{if(active&&profile.displayName)setDisplayName(profile.displayName);}).catch(()=>{});
+  void api<{displayName?:string}>("/me").then(profile=>{if(active&&profile.displayName){setDisplayName(profile.displayName);const hour=new Date().getHours();setGreeting(hour<12?"Good morning":hour<17?"Good afternoon":"Good evening");}}).catch(()=>{});
   return ()=>{active=false;};
  },[]);
- React.useEffect(()=>{setMobileOpen(false);setSearchOpen(false);setAccountOpen(false);},[pathname]);
  React.useEffect(()=>{
   if(!mobileOpen)return;
   const previous=document.body.style.overflow;
