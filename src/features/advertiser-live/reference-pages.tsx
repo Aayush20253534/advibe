@@ -4,9 +4,9 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Activity, ArrowRight, BarChart3, CalendarDays, CheckCircle2, ChevronRight,
+  ArrowRight, BarChart3, CheckCircle2, ChevronRight,
   Clock3, FileImage, Layers3, MapPin, Megaphone, Pencil, Play,
-  Plus, Search, ShieldCheck, Upload, Users, Wallet
+  Plus, Search, Upload
 } from "lucide-react";
 import type {LucideIcon} from "lucide-react";
 import {
