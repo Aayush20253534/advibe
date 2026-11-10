@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CampaignEditor } from "@/features/advertiser-live/workflows";
+import { ReferenceCampaignBuilder } from "@/features/advertiser-live/reference-builder";
 import { BusinessScoped } from "@/features/advertiser-live/portal";
 
 export const metadata: Metadata = { title: "Create campaign", robots: { index: false, follow: false } };
@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Create campaign", robots: { index: f
 export default function Page() {
   return (
     <BusinessScoped>
-      <CampaignEditor />
+      <ReferenceCampaignBuilder />
     </BusinessScoped>
   );
 }
