@@ -247,3 +247,6 @@
 .bma-reference-portal .bma-ref-studio-strip h2 span{color:#50647f!important}
 .bma-reference-portal .bma-ref-search-box input::placeholder{color:#526782}
 .bma-reference-portal .bma-ref-media-card p{color:#244161}
+
+.bma-reference-portal .bma-ref-studio-strip h2 span{display:inline-block;margin-left:10px;vertical-align:baseline}
+@media(max-width:600px){.bma-reference-portal .bma-ref-studio-strip h2 span{display:block;margin:5px 0 0}}
