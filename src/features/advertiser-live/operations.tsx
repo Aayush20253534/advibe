@@ -3,6 +3,7 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {PublishedAreaMap} from "@/components/public/published-area-map";
+import type {CoverageZone} from "@/services/maps-coverage.mjs";
 import {api,newIdempotencyKey} from "@/services/api-client";
 import {StatusTag,useAuth,useCollection,Panel,Notice,CollectionNotice,Pagination,field,label,primary,secondary,message,money,formatDate,
  type Campaign,type Site,type ScreenFormat,type Quote,type Payment} from "./common";
@@ -67,6 +68,7 @@ export function BusinessSettings(){
 }
 export function Directory({kind}:{kind:"locations"|"ad-formats"}){
  const sites=useCollection<Site>(kind==="locations"?"/public/locations?citySlug=prayagraj&limit=100":null);
+ const zones=useCollection<CoverageZone>(kind==="locations"?"/public/zones":null);
  const formats=useCollection<ScreenFormat>(kind==="ad-formats"?"/public/formats?limit=100":null);
  const inventory=useCollection<Inventory>("/inventory/screens?citySlug=prayagraj&limit=100");
  const [search,setSearch]=React.useState("");
@@ -92,7 +94,7 @@ export function Directory({kind}:{kind:"locations"|"ad-formats"}){
      <p className="mt-2 text-xs text-ink-muted">Published area. Screen and booking availability are confirmed separately.</p>
     </div>)}
    </div>
-   {!sites.busy&&!sites.error&&<PublishedAreaMap locations={sites.rows.filter(s=>[s.name,s.city,s.zone].join(" ").toLowerCase().includes(search.toLowerCase()))}/>}
+   {!sites.busy&&!sites.error&&<PublishedAreaMap zones={zones.rows} locations={sites.rows.filter(s=>[s.name,s.city,s.zone].join(" ").toLowerCase().includes(search.toLowerCase()))}/>}
    <Pagination hasPrevious={sites.hasPrevious} busy={sites.busy} next={sites.next} more={sites.more} first={sites.first}/>
   </Panel>}
   {kind==="ad-formats"&&<Panel title="Ad formats">
