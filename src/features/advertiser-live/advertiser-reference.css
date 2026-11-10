@@ -211,3 +211,14 @@
 @media(max-width:740px){.bma-ref-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bma-ref-dashboard-top{grid-template-columns:1fr}.bma-ref-performance{grid-column:auto}.bma-ref-dashboard-bottom{grid-template-columns:1fr}.bma-ref-featured{min-height:260px}.bma-ref-featured-content{width:80%}.bma-ref-wizard-layout{grid-template-columns:1fr}.bma-ref-wizard-aside{position:static}.bma-ref-campaign-sidebar{grid-template-columns:1fr}.bma-ref-studio-items{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:540px){.bma-ref-main{padding:17px 13px 35px}.bma-ref-topbar{padding:0 12px;gap:8px;height:62px;min-height:62px}.bma-ref-search-box{width:auto;flex:1;min-width:0;padding:0 9px;gap:6px}.bma-ref-search-box input{font-size:11px}.bma-ref-account-copy,.bma-ref-account>svg{display:none}.bma-ref-topbar-actions{gap:4px}.bma-ref-topbar-separator{display:none}.bma-ref-avatar{width:32px;height:32px;font-size:11px}.bma-ref-bell{min-width:31px}.bma-ref-kpi{min-height:107px}.bma-ref-kpi-icon{width:36px;height:36px}.bma-ref-kpi-copy strong{font-size:21px}.bma-ref-kpi-copy span{font-size:10px}.bma-ref-heading{align-items:flex-start}.bma-ref-heading-actions{width:100%}.bma-ref-heading-actions>label{flex:1}.bma-ref-format-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bma-ref-creative-list,.bma-ref-form-grid{grid-template-columns:1fr}.bma-ref-step-line{display:none}.bma-ref-step{font-size:10px}.bma-ref-featured-content{width:90%}.bma-ref-studio-items{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.bma-reference-portal *{scroll-behavior:auto!important;transition:none!important}}
+
+/* Browser-accessible shell actions and review step links. */
+.bma-ref-breadcrumb{display:flex;align-items:center;gap:6px;margin-bottom:7px;color:#7490b3;font-size:10px;font-weight:700;letter-spacing:.015em}
+.bma-ref-breadcrumb a{color:#0769e4;text-decoration:none}
+.bma-ref-breadcrumb a:hover{text-decoration:underline}
+.bma-ref-signout{display:grid;place-items:center;width:34px;height:36px;min-width:34px;border:1px solid #ffffff30;border-radius:6px;background:#ffffff0b;color:#eef6ff;cursor:pointer}
+.bma-ref-signout:hover{background:#ffffff25}
+.bma-ref-step-actions{display:flex;justify-content:flex-end;margin-top:13px;padding-top:11px}
+.bma-ref-builder-section{scroll-margin-top:95px}
+#campaign-summary{scroll-margin-top:95px}
+@media(max-width:540px){.bma-ref-topbar-actions{gap:2px}.bma-ref-signout{width:28px;min-width:28px;height:31px}.bma-ref-signout svg{width:15px;height:15px}}
