@@ -222,3 +222,23 @@
 .bma-ref-builder-section{scroll-margin-top:95px}
 #campaign-summary{scroll-margin-top:95px}
 @media(max-width:540px){.bma-ref-topbar-actions{gap:2px}.bma-ref-signout{width:28px;min-width:28px;height:31px}.bma-ref-signout svg{width:15px;height:15px}}
+
+/* Readable small-text contrast for WCAG AA while retaining the reference layout. */
+.bma-reference-portal :is(
+ .bma-ref-breadcrumb,.bma-ref-heading-copy>p:last-child,.bma-ref-kpi-copy small,
+ .bma-ref-section-head p,.bma-ref-quick-link small,.bma-ref-plot-caption,
+ .bma-ref-performance-note,.bma-ref-mini-list span,.bma-ref-footnote,
+ .bma-ref-title-cell small,.bma-ref-format-card small,.bma-ref-creative-choice small,
+ .bma-ref-builder-title p,.bma-ref-summary-list span,.bma-ref-studio-strip h2 span,
+ .bma-ref-pagination,.bma-ref-status,.bma-ref-media-grid+.bma-ref-empty
+){color:#50647f}
+.bma-reference-portal .bma-ref-breadcrumb a{color:#075ac5}
+.bma-reference-portal .bma-ref-table th{color:#425773}
+.bma-reference-portal .bma-ref-title-cell small{color:#50647f}
+.bma-reference-portal .bma-ref-status[data-status=approved],
+.bma-reference-portal .bma-ref-status[data-status=active]{color:#0b7142}
+.bma-reference-portal .bma-ref-status[data-status=submitted],
+.bma-reference-portal .bma-ref-status[data-status=changes_requested]{color:#885000}
+.bma-reference-portal .bma-ref-summary strong+span{color:#50647f!important}
+.bma-reference-portal .bma-ref-city-info{color:#425b7a}
+.bma-reference-portal .bma-ref-form-grid>label{color:#243e62}
