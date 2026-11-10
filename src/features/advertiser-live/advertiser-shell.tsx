@@ -31,7 +31,7 @@ function SideLinks({items,pathname,onNavigate}:{items:typeof nav;pathname:string
 function Sidebar({pathname,close}:{pathname:string;close:()=>void}){
  return <div className="bma-ref-sidebar-inner">
   <div className="bma-ref-logo"><BrandLogo href="/advertiser" inverse width={172}/><span>Advertiser workspace</span></div>
-  <nav aria-label="Advertiser navigation" className="bma-ref-sidebar-nav">
+  <nav aria-label="Advertiser portal" className="bma-ref-sidebar-nav">
    <SideLinks items={primary} pathname={pathname} onNavigate={close}/>
    <p className="bma-ref-nav-caption">MANAGEMENT</p>
    <SideLinks items={management} pathname={pathname} onNavigate={close}/>
@@ -55,6 +55,9 @@ export function AdvertiserReferenceShell({title,description,actions,context,onSi
  const [searchOpen,setSearchOpen]=React.useState(false);
  const [displayName,setDisplayName]=React.useState("Advertiser");
  const [greeting,setGreeting]=React.useState("Welcome back");
+ const menuTriggerRef=React.useRef<HTMLButtonElement>(null);
+ const menuDialogRef=React.useRef<HTMLElement>(null);
+ const menuCloseRef=React.useRef<HTMLButtonElement>(null);
  React.useEffect(()=>{
   let active=true;
   void api<{displayName?:string}>("/me").then(profile=>{if(active&&profile.displayName){setDisplayName(profile.displayName);const hour=new Date().getHours();setGreeting(hour<12?"Good morning":hour<17?"Good afternoon":"Good evening");}}).catch(()=>{});
@@ -64,7 +67,16 @@ export function AdvertiserReferenceShell({title,description,actions,context,onSi
   if(!mobileOpen)return;
   const previous=document.body.style.overflow;
   document.body.style.overflow="hidden";
-  const key=(event:KeyboardEvent)=>{if(event.key==="Escape")setMobileOpen(false);};
+  menuCloseRef.current?.focus();
+  const key=(event:KeyboardEvent)=>{
+   if(event.key==="Escape"){event.preventDefault();setMobileOpen(false);requestAnimationFrame(()=>menuTriggerRef.current?.focus());return;}
+   if(event.key!=="Tab"||!menuDialogRef.current)return;
+   const nodes=Array.from(menuDialogRef.current.querySelectorAll<HTMLElement>("a[href],button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex=\"-1\"])")).filter(x=>x.getClientRects().length>0);
+   const first=nodes[0],last=nodes[nodes.length-1];
+   if(!first||!last)return;
+   if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+   else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+  };
   window.addEventListener("keydown",key);
   return ()=>{document.body.style.overflow=previous;window.removeEventListener("keydown",key);};
  },[mobileOpen]);
@@ -81,11 +93,11 @@ export function AdvertiserReferenceShell({title,description,actions,context,onSi
   <aside className="bma-ref-sidebar"><Sidebar pathname={pathname} close={()=>setMobileOpen(false)}/></aside>
   {mobileOpen&&<div className="bma-ref-mobile-layer">
    <button className="bma-ref-mobile-backdrop" type="button" aria-label="Close navigation" onClick={()=>setMobileOpen(false)}/>
-   <aside className="bma-ref-mobile-sidebar"><button className="bma-ref-mobile-close" type="button" aria-label="Close menu" onClick={()=>setMobileOpen(false)}><X size={20}/></button><Sidebar pathname={pathname} close={()=>setMobileOpen(false)}/></aside>
+   <aside ref={menuDialogRef} role="dialog" aria-modal="true" aria-label="Advertiser portal menu" className="bma-ref-mobile-sidebar"><button ref={menuCloseRef} className="bma-ref-mobile-close" type="button" aria-label="Close menu" onClick={()=>setMobileOpen(false)}><X size={20}/></button><Sidebar pathname={pathname} close={()=>setMobileOpen(false)}/></aside>
   </div>}
   <div className="bma-ref-workspace">
    <header className="bma-ref-topbar">
-    <button type="button" className="bma-ref-mobile-trigger" aria-label="Open navigation" aria-expanded={mobileOpen} onClick={()=>setMobileOpen(true)}><Menu size={21}/></button>
+    <button type="button" ref={menuTriggerRef} className="bma-ref-mobile-trigger" aria-label="Open menu" aria-expanded={mobileOpen} onClick={()=>setMobileOpen(true)}><Menu size={21}/></button>
     <div className="bma-ref-search-box">
      <Search size={18} aria-hidden="true"/>
      <form role="search" onSubmit={e=>{e.preventDefault();if(results[0])go(results[0].href);}}>
@@ -99,6 +111,7 @@ export function AdvertiserReferenceShell({title,description,actions,context,onSi
     </div>
     <div className="bma-ref-topbar-actions">
      <Link href="/advertiser/notifications" className="bma-ref-bell" aria-label="Notifications"><Bell size={21}/></Link>
+     <button type="button" className="bma-ref-signout" aria-label="Sign out" title="Sign out" onClick={onSignOut}><LogOut size={18} aria-hidden="true"/></button>
      <span className="bma-ref-topbar-separator"/>
      <div className="bma-ref-account-wrap">
       <button type="button" className="bma-ref-account" aria-expanded={accountOpen} aria-controls="bma-ref-account-menu" onClick={()=>setAccountOpen(x=>!x)}>
@@ -116,8 +129,8 @@ export function AdvertiserReferenceShell({title,description,actions,context,onSi
    <main id="advertiser-content" tabIndex={-1} className="bma-ref-main">
     <div className="bma-ref-heading">
      <div className="bma-ref-heading-copy">
-      <p className="bma-ref-crumb">BLINKMYAD / ADVERTISER WORKSPACE</p>
-      <h1>{isDashboard?<>{greeting}, {displayName.split(" ")[0]}!</>:title}</h1>
+      <nav className="bma-ref-breadcrumb" aria-label="Breadcrumb"><Link href="/advertiser">Advertiser portal</Link><ChevronRight size={13} aria-hidden="true"/><span>{title}</span></nav>
+      <h1 aria-label={isDashboard?"Dashboard":pathname==="/advertiser/campaigns"?"My campaigns":undefined}>{isDashboard?<>{greeting}, {displayName.split(" ")[0]}!</>:title}</h1>
       <p>{isDashboard?"Here's what's happening with your campaigns today.":description}</p>
      </div>
      <div className="bma-ref-heading-actions">{context}{actions}</div>
