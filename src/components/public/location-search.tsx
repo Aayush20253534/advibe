@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { outlineButton } from "./marketing-blocks";
 import { apiPage } from "@/services/api-client";
 import { PublishedAreaMap } from "./published-area-map";
+import type {CoverageZone} from "@/services/maps-coverage.mjs";
 
 type PublishedLocation = {
   id: string;
@@ -16,6 +17,7 @@ type PublishedLocation = {
   zone: string;
   city: string;
   citySlug: string;
+  zoneId: string;
   lat: number;
   lng: number;
 };
@@ -23,6 +25,7 @@ type PublishedLocation = {
 
 export function LocationSearch() {
   const [locations, setLocations] = React.useState<PublishedLocation[]>([]);
+  const [zones, setZones] = React.useState<CoverageZone[]>([]);
   const [query, setQuery] = React.useState("");
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
@@ -53,6 +56,15 @@ export function LocationSearch() {
     void read();
     return () => controller.abort();
   }, [reload, cursor]);
+
+  // Public zone geometry comes from the backend's published catalogue, never a hard-coded circle.
+  React.useEffect(() => {
+    const controller = new AbortController();
+    void apiPage<CoverageZone>("/public/zones", controller.signal)
+      .then((payload) => { if (!controller.signal.aborted) setZones(payload.data); })
+      .catch(() => { if (!controller.signal.aborted) setZones([]); });
+    return () => controller.abort();
+  }, [reload]);
 
   const filtered = locations.filter((item) =>
     [item.name, item.zone].some((value) => value.toLowerCase().includes(query.trim().toLowerCase())),
@@ -111,7 +123,7 @@ export function LocationSearch() {
         <div className="px-5 pb-4"><CursorPagination busy={loading} hasPrevious={!!cursor} hasNext={!!next} onFirst={() => setCursor(null)} onNext={() => setCursor(next)}/></div>
       </div>
       <div className="space-y-5">
-      {!loading && !error && <PublishedAreaMap locations={filtered} />}
+      {!loading && !error && <PublishedAreaMap locations={filtered} zones={zones} />}
       <aside className="h-fit rounded-xl border border-line bg-paper p-6">
         <h2 className="font-heading text-xl font-bold text-ink">Plan around Prayagraj</h2>
         <p className="mt-3 leading-7 text-ink-muted">Published areas help you plan a campaign. They are not a guarantee of active screens, booking slots or delivery.</p>

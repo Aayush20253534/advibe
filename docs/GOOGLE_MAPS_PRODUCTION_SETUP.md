@@ -26,3 +26,26 @@ Next.js compiles `NEXT_PUBLIC_*` into the build. After changing either variable,
 5. Verify both `https://blinkmyad.com/*` and `https://www.blinkmyad.com/*` are allowed HTTP referrers, and check Google Cloud quota/error metrics.
 
 Google Cloud billing may be required even when using a no-charge Maps Embed API. Never enable unrelated Maps APIs just to fix a restricted key.
+
+## Optional interactive zone boundary (Map JavaScript API)
+
+The live frontend can draw the **configured circular zone planning radius**, plus a pin on its published location. For example, a Civil Lines zone whose Admin radius is 2000 metres produces a 2 km radius circle. This is **not** a verified vehicle route, live GPS trace, or guarantee of ad delivery.
+
+This map uses the backend's **published** `/public/zones` geometry; it never invents zone outlines. It is available in both the public Locations explorer and the Advertiser Locations page. If the zone metadata is missing or the optional integration is off, the existing no-charge Embed iframe remains.
+
+**Maps JavaScript API / Dynamic Maps map loads can be billable**; this feature defaults off. Before enabling in production:
+
+1. In Google Cloud enable **Maps JavaScript API**. Keep **Maps Embed API** enabled for fallback.
+2. Create a separate HTTP-referrer-restricted browser key for Maps JavaScript API, allow only BlinkMyAd hostnames and restrict the key to **Maps JavaScript API**. Keep the existing Maps Embed key restricted to Maps Embed API.
+3. Add these **Vercel Production** variables alongside the existing Embed configuration:
+
+```ini
+NEXT_PUBLIC_GOOGLE_MAPS_ENABLED=true
+NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY=<existing Maps Embed API key>
+NEXT_PUBLIC_GOOGLE_MAPS_COVERAGE_ENABLED=true
+NEXT_PUBLIC_GOOGLE_MAPS_JS_KEY=<separate Maps JavaScript API browser key>
+```
+
+4. Configure Google Cloud quota/budget alerts for Dynamic Maps and rebuild the Vercel frontend.
+
+**Rollback:** Set `NEXT_PUBLIC_GOOGLE_MAPS_COVERAGE_ENABLED=false` in Vercel and redeploy. The zero-configuration Embed map still works. Do not use a dummy key or disable validation to force the JavaScript map.

@@ -9,7 +9,7 @@ export type Business={id:string;slug:string;displayName:string;city:string|null;
 export type Creative={id:string;ownerBusinessId:string;title:string;placement:string;mediaAssetId:string;approval:string;reviewReason:string|null;createdAt:string};
 export type Campaign={id:string;ownerBusinessId:string;title:string;creativeId:string;startDate:string;endDate:string;weekdays:number[];timeWindow:{start:string;end:string};status:string;revision:number;reviewReason:string|null;createdAt:string;updatedAt:string};
 export type ScreenFormat={placement:string;label:string;description:string};
-export type Site={id:string;name:string;city:string;citySlug:string;zone:string;lat:number;lng:number};
+export type Site={id:string;name:string;city:string;citySlug:string;zoneId:string;zone:string;lat:number;lng:number};
 export type Quote={id:string;campaignId:string;businessId:string;totalPaise:string;taxPaise:string;currency:string;expiresAt:string;reservationStatus:string;screenIds:string[]};
 export type Payment={id:string;orderId:string;amountPaise:number;state?:string;status?:string;createdAt?:string};
 export type AuthContext={session:LiveSession;business:Business|null;businesses:Business[];reloadBusinesses:()=>Promise<void>;refreshSession:()=>Promise<void>};

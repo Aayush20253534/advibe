@@ -6,6 +6,16 @@ export function validateMapsConfig(env) {
   if (enabled === "true" && (typeof env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY !== "string" ||
       !env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY.trim() || env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY.length > 256))
     throw new Error("NEXT_PUBLIC_GOOGLE_MAPS_ENABLED=true requires NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY");
+  // Interactive outlines use the separately billable Maps JavaScript API.
+  // This switch defaults off so existing no-charge Embed maps keep working.
+  const coverageEnabled=env.NEXT_PUBLIC_GOOGLE_MAPS_COVERAGE_ENABLED??"false";
+  if(coverageEnabled!=="true"&&coverageEnabled!=="false")
+    throw new Error("NEXT_PUBLIC_GOOGLE_MAPS_COVERAGE_ENABLED must be true or false");
+  if(coverageEnabled==="true"&&enabled!=="true")
+    throw new Error("NEXT_PUBLIC_GOOGLE_MAPS_COVERAGE_ENABLED=true requires NEXT_PUBLIC_GOOGLE_MAPS_ENABLED=true");
+  if(coverageEnabled==="true"&&(typeof env.NEXT_PUBLIC_GOOGLE_MAPS_JS_KEY!=="string"||
+     !env.NEXT_PUBLIC_GOOGLE_MAPS_JS_KEY.trim()||env.NEXT_PUBLIC_GOOGLE_MAPS_JS_KEY.length>256))
+    throw new Error("NEXT_PUBLIC_GOOGLE_MAPS_COVERAGE_ENABLED=true requires NEXT_PUBLIC_GOOGLE_MAPS_JS_KEY");
 }
 
 /** Published catalogue coordinates only; this does not establish inventory or delivery. */
