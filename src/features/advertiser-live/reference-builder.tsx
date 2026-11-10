@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {
-  ArrowRight, CalendarDays, Check, ChevronRight, Clock3, FileImage,
-  ImageUp, MapPin, Megaphone, MonitorPlay, Plus, Save, ShieldCheck,
+  ArrowRight, CalendarDays, Check, Clock3, FileImage,
+  ImageUp, MapPin, Megaphone, Plus, Save, ShieldCheck,
   UploadCloud, Wallet
 } from "lucide-react";
 import {api,newIdempotencyKey} from "@/services/api-client";
