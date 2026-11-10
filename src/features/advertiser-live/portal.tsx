@@ -3,7 +3,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import {usePathname,useRouter} from "next/navigation";
-import {PortalShell} from "@/components/portal/portal-shell";
+import {AdvertiserReferenceShell} from "./advertiser-shell";
 import {PortalAccessRequired,PortalLoading} from "@/components/portal/portal-access";
 import {useSessionExpiry} from "@/services/use-session-expiry";
 import {Select} from "@/components/ui";
@@ -100,13 +100,14 @@ export function AdvertiserPortal({children}:{children:React.ReactNode}){
    {businesses.map(b=><option key={b.id} value={b.id}>{b.displayName}</option>)}
   </Select>
  </label>:undefined;
+ const pageTitle=detailTitle??({"home":"Dashboard","campaigns":"My Campaigns","create-campaign":"Create Campaign","creatives":"Creative Library","ad-formats":"Ad Formats","locations":"Locations","billing":"Wallet & Payments","reports":"Reports","notifications":"Notifications","support":"Help & Support","settings":"Profile & Settings"}[segment]??"Dashboard");
  return <Auth.Provider value={{session,business,businesses,reloadBusinesses,refreshSession}}>
-  <PortalShell role="advertiser" pathname={pathname} title={detailTitle}
+  <AdvertiserReferenceShell title={pageTitle}
    description={pageDescription} actions={createAction} context={businessSwitcher}
    onSignOut={()=>void signOut()}>
    {authError&&<Notice kind="error">{authError}</Notice>}
    {!business&&segment!=="settings"&&<Notice kind="warning">No business is registered for this account. Create one in <Link className="font-bold underline" href="/advertiser/settings">Profile and settings</Link> before managing campaigns or creatives.</Notice>}
    {children}
-  </PortalShell>
+  </AdvertiserReferenceShell>
  </Auth.Provider>;
 }
