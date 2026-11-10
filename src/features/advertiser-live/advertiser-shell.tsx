@@ -4,8 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import {usePathname, useRouter} from "next/navigation";
 import {
-  Bell, ChevronDown, ChevronRight, CircleHelp, LogOut, Menu, Plus,
-  Search, X, ArrowRight, PanelLeftClose
+  Bell, ChevronDown, ChevronRight, CircleHelp, LogOut, Menu,
+  Search, X, ArrowRight
 } from "lucide-react";
 import {BrandLogo} from "@/components/brand/brand-logo";
 import {portalNavigation} from "@/config/navigation";
