@@ -17,6 +17,7 @@ type PublishedLocation = {
   zone: string;
   city: string;
   citySlug: string;
+  zoneId: string;
   lat: number;
   lng: number;
 };
