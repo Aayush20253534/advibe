@@ -153,7 +153,7 @@ export function ReferenceCampaignBuilder(){
      <SummaryItem icon={MapPin} label="Pilot region" value="Prayagraj (planning only)"/>
      <SummaryItem icon={CalendarDays} label="Duration" value={datesValid?formatDate(startDate)+" – "+formatDate(endDate)+" ("+duration+" days)":"Select dates"}/>
      <SummaryItem icon={Clock3} label="Display hours" value={fromTime+" – "+toTime}/>
-     <SummaryItem icon={Wallet} label="Estimated cost" value="Quote required"}/>
+     <SummaryItem icon={Wallet} label="Estimated cost" value="Quote required"/>
     </div>
     <div className="bma-ref-summary-actions">
      {attempted&&note&&<p className="bma-ref-validation" role="alert">{note}</p>}
