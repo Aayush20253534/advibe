@@ -102,7 +102,7 @@ export function AdvertiserPortal({children}:{children:React.ReactNode}){
  </label>:undefined;
  const pageTitle=detailTitle??({"home":"Dashboard","campaigns":"My Campaigns","create-campaign":"Create Campaign","creatives":"Creative Library","ad-formats":"Ad Formats","locations":"Locations","billing":"Wallet & Payments","reports":"Reports","notifications":"Notifications","support":"Help & Support","settings":"Profile & Settings"}[segment]??"Dashboard");
  return <Auth.Provider value={{session,business,businesses,reloadBusinesses,refreshSession}}>
-  <AdvertiserReferenceShell title={pageTitle}
+  <AdvertiserReferenceShell key={pathname} title={pageTitle}
    description={pageDescription} actions={createAction} context={businessSwitcher}
    onSignOut={()=>void signOut()}>
    {authError&&<Notice kind="error">{authError}</Notice>}
