@@ -45,7 +45,7 @@ export function ReferenceCampaignBuilder(){
  const [busy,setBusy]=React.useState(false);
  const [error,setError]=React.useState("");
  const [attempted,setAttempted]=React.useState(false);
- const matching=creatives.rows.filter(c=>c.placement===placement);
+ const matching=creatives.rows.filter(c=>!c.placement||c.placement===placement);
  const chosen=creatives.rows.find(c=>c.id===creativeId);
  const format=formatOptions.find(f=>f.id===placement)??formatOptions[0];
  const datesValid=/^\d{4}-\d{2}-\d{2}$/.test(startDate)&&/^\d{4}-\d{2}-\d{2}$/.test(endDate)&&startDate<=endDate;
@@ -106,6 +106,7 @@ export function ReferenceCampaignBuilder(){
        {c.approval==="approved"&&<ShieldCheck size={17} color="#169d66" aria-label="Approved"/>}
       </label>)}</div>
      </fieldset>:<p className="bma-ref-footnote" style={{marginTop:13}}>No creatives for this format yet. Upload a creative in the library first, then return to this form.</p>}
+    <div className="bma-ref-step-actions"><button type="button" className="bma-ref-btn-light" onClick={()=>{document.getElementById("campaign-schedule")?.scrollIntoView({behavior:"smooth",block:"start"});}}>Continue to schedule <ArrowRight size={14} aria-hidden="true"/></button></div>
    </Section>
    <Section number={4} id="campaign-locations" title="Select Location & Screens" description="Explore currently published areas before requesting placement availability.">
     <div className="bma-ref-form-grid">
@@ -120,8 +121,8 @@ export function ReferenceCampaignBuilder(){
    </Section>
    <Section number={5} id="campaign-schedule" title="Schedule & Review" description="Set your flight dates and active display hours, then save your campaign as a draft.">
     <div className="bma-ref-form-grid">
-     <label>Start date *<input type="date" value={startDate} onChange={e=>setStartDate(e.target.value)}/></label>
-     <label>End date *<input type="date" value={endDate} onChange={e=>setEndDate(e.target.value)}/></label>
+     <label>Start date *<input aria-label="First day" type="date" value={startDate} onChange={e=>setStartDate(e.target.value)}/></label>
+     <label>End date *<input aria-label="Last day" type="date" value={endDate} onChange={e=>setEndDate(e.target.value)}/></label>
      <label>Daily start time *<input type="time" value={fromTime} onChange={e=>setFromTime(e.target.value)}/></label>
      <label>Daily end time *<input type="time" value={toTime} onChange={e=>setToTime(e.target.value)}/></label>
     </div>
@@ -132,6 +133,7 @@ export function ReferenceCampaignBuilder(){
       </label>)}
      </div>
     </fieldset>
+    <div className="bma-ref-step-actions"><button type="button" className="bma-ref-btn-light" onClick={()=>document.getElementById("campaign-summary")?.scrollIntoView({behavior:"smooth",block:"start"})}>Continue to review <ArrowRight size={14} aria-hidden="true"/></button></div>
     <div className="bma-ref-city-info" style={{marginTop:16}}><Wallet size={19} color="#1672ee"/>Your final budget is not charged here. Review available screens, quotations and payments separately after approval. <Link style={{color:"#0968ec",fontWeight:750}} href="/advertiser/billing">Billing</Link></div>
     {attempted&&note&&<p className="bma-ref-validation" role="alert" style={{marginTop:12}}>{note}</p>}
     {error&&<p className="bma-ref-error" role="alert" style={{marginTop:12}}>{error}</p>}
@@ -142,7 +144,7 @@ export function ReferenceCampaignBuilder(){
    </Section>
   </div>
   <aside className="bma-ref-wizard-aside" aria-label="Campaign summary and actions">
-   <div className="bma-ref-section bma-ref-summary">
+   <div id="campaign-summary" className="bma-ref-section bma-ref-summary">
     <h2>Campaign Summary</h2>
     <div className="bma-ref-summary-image"><Image src={format.image} alt={"Advertising format illustration: "+format.label} width={350} height={165}/></div>
     <strong style={{display:"block",marginTop:12,fontSize:13,color:"#172e51",overflowWrap:"anywhere"}}>{title.trim()||"Untitled campaign"}</strong>
@@ -158,7 +160,7 @@ export function ReferenceCampaignBuilder(){
     <div className="bma-ref-summary-actions">
      {attempted&&note&&<p className="bma-ref-validation" role="alert">{note}</p>}
      {error&&<p className="bma-ref-error" role="alert">{error}</p>}
-     <button type="button" className="bma-ref-btn-primary" disabled={busy} onClick={()=>void save()}><Save size={16}/>{busy?"Saving draft…":"Save campaign draft"}</button>
+     <button type="button" className="bma-ref-btn-primary" disabled={busy} onClick={()=>void save()}><Save size={16}/>{busy?"Saving draft…":"Save draft from summary"}</button>
      <Link href="/advertiser/creatives" className="bma-ref-btn-light"><ImageUp size={15}/> Manage creatives</Link>
     </div>
    </div>
